@@ -21,76 +21,13 @@
                         <div class="header-menu">
                             <nav>
                                 <ul class="main-menu">
-                                    <li><a href="index.html">home</a>
-                                        <!--Dropdown Menu Start-->
-                                        <ul class="dropdown">
-                                            <li><a href="index.html">Home Page One</a></li>
-                                            <li><a href="index-2.html">Home Page Two</a></li>
-                                            <li><a href="index-3.html">Home Page Three</a></li>
-                                            <li><a href="index-4.html">Home Page Four</a></li>
-                                            <li><a href="index-5.html">Home Page Five</a></li>
-                                            <li><a href="index-6.html">Home Page Six</a></li>
-                                            <li><a href="index-7.html">Home Page Seven</a></li>
-                                        </ul>
-                                        <!--Dropdown Menu End-->
+                                    <li><a href="${pageContext.request.contextPath}/home">home</a>
                                     </li>
                                     <li><a href="shop.html">Shop</a></li>
                                     <li><a href="portfolio.html">Portfolio</a></li>
                                     <li><a href="blog.html">Blog</a></li>
-                                    <li><a href="blog.html">Pages</a>
-                                        <!--Dropdown Menu Start-->
-                                        <ul class="dropdown">
-                                            <li><a href="single-product.html">Single Product</a></li>
-                                            <li><a href="single-product-variable.html">Single Product Variable</a></li>
-                                            <li><a href="single-product-affiliate.html">Single Product Affiliate</a></li>
-                                            <li><a href="shop.html">Shop</a></li>
-                                            <li><a href="shop-list.html">Shop List View</a></li>
-                                            <li><a href="shop-right-sidebar.html">Shop Right Sidebar</a></li>
-                                            <li><a href="cart.html">Shopping Cart</a></li>
-                                            <li><a href="wishlist.html">Wishlist</a></li>
-                                            <li><a href="checkout.html">Checkout</a></li>
-                                            <li><a href="compare.html">Compare</a></li>
-                                            <li><a href="my-account.html">My Account</a></li>
-                                            <li><a href="login-register.html">Log In</a></li>
-                                        </ul>
-                                        <!--Dropdown Menu End-->
-                                    </li>
-                                    <li><a href="#">Features</a>
-                                        <!--Mega Menu Start-->
-                                        <ul class="mega-menu">
-                                            <li><a href="#" class="item-link">Pages</a>
-                                                <ul>
-                                                    <li><a href="about.html">About Us</a></li>
-                                                    <li><a href="about-2.html">About Us 02</a></li>
-                                                    <li><a href="contact.html">Contact Us</a></li>
-                                                    <li><a href="contact-2.html">Contact Us 02</a></li>
-                                                    <li><a href="service.html">Services</a></li>
-                                                    <li><a href="service-2.html">Services 02</a></li>
-                                                    <li><a href="faq.html">Frequently Questions</a></li>
-                                                    <li><a href="404.html">Error 404</a></li>
-                                                </ul>
-                                            </li>
-                                            <li><a href="#" class="item-link">Blog</a>
-                                                <ul>
-                                                    <li><a href="blog-nosidebar.html">None Sidebar</a></li>
-                                                    <li><a href="blog-left-sidebar.html">Sidebar Left</a></li>
-                                                    <li><a href="single-blog.html">Gallery Format</a></li>
-                                                    <li><a href="single-blog.html">Audio Format</a></li>
-                                                    <li><a href="single-blog.html">Video Format</a></li>
-                                                </ul>
-                                            </li>
-                                            <li><a href="#" class="item-link">Shop</a>
-                                                <ul>
-                                                    <li><a href="shop-full-width.html">Full Width</a></li>
-                                                    <li><a href="shop-right-sidebar.html">Sidebar Right</a></li>
-                                                    <li><a href="shop-list.html">List View</a></li>
-                                                    <li><a href="single-product.html">Single Product</a></li>
-                                                    <li><a href="single-product.html">Variable Product</a></li>
-                                                    <li><a href="single-product.html">Grouped Product</a></li>
-                                                </ul>
-                                            </li>
-                                        </ul>
-                                        <!--Mega Menu End-->
+                                    <li><a href="${pageContext.request.contextPath}/authen?action=login">Login</a>
+                                    <li><a href="${pageContext.request.contextPath}/authen?action=sign-up">Register</a>
                                     </li>
                                 </ul>
                             </nav>

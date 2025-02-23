@@ -24,3 +24,5 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/style.css">
 <!-- Responsive CSS -->
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/responsive.css">
+<!-- Add iziToast CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.min.css">

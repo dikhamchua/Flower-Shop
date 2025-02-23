@@ -38,3 +38,24 @@
 <script src="${pageContext.request.contextPath}/assets/js/plugins.js"></script>
 <!--Main Js-->
 <script src="${pageContext.request.contextPath}/assets/js/main.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var toastMessage = "${sessionScope.toastMessage}";
+        var toastType = "${sessionScope.toastType}";
+        if (toastMessage) {
+            iziToast.show({
+                title: toastType === 'success' ? 'Success' : 'Error',
+                message: toastMessage,
+                position: 'topRight',
+                color: toastType === 'success' ? 'green' : 'red',
+                timeout: 5000,
+                onClosing: function () {
+                    fetch('${pageContext.request.contextPath}/remove-toast', {
+                        method: 'POST'
+                    });
+                }
+            });
+        }
+    });
+</script>
