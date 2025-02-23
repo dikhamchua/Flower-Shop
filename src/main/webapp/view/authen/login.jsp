@@ -62,7 +62,7 @@
                                     <h2>Login</h2>
                                 </div>
                                 <div class="login-form">
-                                    <form action="#">
+                                    <form action="${pageContext.request.contextPath}/authen?action=login" method="POST">
                                         <div class="form-fild">
                                             <p><label>Username or email address <span class="required">*</span></label></p>
                                             <input name="username" value="" type="text">
@@ -79,7 +79,7 @@
                                             </label>
                                         </div>
                                         <div class="lost-password">
-                                            <a href="#">Lost your password?</a>
+                                            <a href="${pageContext.request.contextPath}/authen?action=enter-email">Lost your password?</a>
                                         </div>
                                     </form>
                                 </div>

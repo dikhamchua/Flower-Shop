@@ -1,157 +1,221 @@
-<%@page contentType="text/html" pageEncoding="UTF-8" %>
-    <!DOCTYPE html>
-    <html lang="en">
-
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<!doctype html>
+<html class="no-js" lang="en">
     <head>
         <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Login-Register || Plantmore</title>
+        <meta name="description" content="">
+        <meta name="robots" content="noindex, follow" />
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description"
-            content="CycleCity offers a wide range of bicycles, gear, and accessories for every type of cyclist. Explore our collection and gear up for your next adventure!">
-        <meta name="keywords"
-            content="bicycles, bikes, cycling gear, bike accessories, mountain bikes, road bikes, CycleCity">
-        <meta name="author" content="CycleCity Team">
+        <meta name="robots" content="noindex, follow" />
+        <!-- Place favicon.ico in the root directory -->
+        <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico">
+        <!--All Css Here-->
+        <jsp:include page="../common/home/common-css.jsp"></jsp:include>
 
-        <meta property="og:title" content="CycleCity | Quality Bicycles and Cycling Gear">
-        <meta property="og:description"
-            content="Discover the best selection of bicycles, gear, and accessories at CycleCity. Shop now for top brands and quality service.">
-        <meta property="og:image" content="${pageContext.request.contextPath}/assets/images/logo.png">
-        <meta property="og:url" content="">
-        <meta property="og:type" content="website">
+            <style>
+                #padding-form {
+                    padding-left:  20%;
+                    padding-right: 20%;
+                }
 
-        <meta name="twitter:card" content="summary_large_image">
-        <meta name="twitter:title" content="CycleCity | Quality Bicycles and Cycling Gear">
-        <meta name="twitter:description"
-            content="Explore the latest in bicycles, cycling gear, and accessories at CycleCity. Gear up for your next adventure!">
-        <meta name="twitter:image" content="${pageContext.request.contextPath}/assets/images/logo.png">
-        <meta name="twitter:site" content="@CycleCity">
+            </style>
 
-        <title>CycleCity | Reset Password</title>
-        <link rel="shortcut icon" href="${pageContext.request.contextPath}/assets/images/favicon.png"
-            type="image/x-icon">
-        <link href="${pageContext.request.contextPath}/assets/css/style.css" rel="stylesheet">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.min.css">
-        <style>
-            .iziToast-wrapper {
-                z-index: 99999 !important;
-            }
+        </head>
+        <body>
 
-            .iziToast {
-                min-width: 300px;
-            }
-        </style>
-    </head>
-
-    <body>
-        <!-- back to top -->
-        <button class="back-to-top position-fixed end-0 bottom-0 d-center me-5">
-            <span class="text-h4">
-                <i class="ph ph-arrow-up"></i>
-            </span>
-        </button>
-
-        <!-- include header -->
-        <jsp:include page="../common/home/header.jsp"></jsp:include>
-
-        <!-- mouse -->
-        <div class="cursor"></div>
-        <div class="cursor-follower"></div>
-
-        <!-- main start -->
-        <main class="pt-12">
-            <!-- hero section start -->
-            <section class="inner-hero-section px-xl-20 px-lg-10 px-sm-7"
-                style="background-image: url(assets/images/inner-page-banner.png);">
-                <div class="container-fluid">
-                    <span class="text-animation-word text-h1 text-n100 mb-3">Reset Password</span>
-                    <ul class="breadcrumb d-inline-flex align-items-center gap-lg-2 gap-1">
-                        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                        <li class="breadcrumb-item active"><a href="">Reset Password</a></li>
-                    </ul>
-                </div>
-            </section>
-            <!-- hero section end -->
-
-            <!-- reset password section start -->
-            <section class="login-section pt-120 pb-120 px-xl-20 px-lg-10 px-sm-7">
-                <div class="container-fluid">
-                    <div class="row g-6 justify-content-center">
-                        <div class="col-xl-5 col-lg-7 col-md-9">
-                            <div class="register-form p-xl-15 p-lg-10 p-md-8 p-6 radius-16 border border-n100-1 bg-n20">
-                                <div class="register-logo mb-lg-15 mb-md-10 mb-8 mx-auto">
-                                    <img class="w-100" src="${pageContext.request.contextPath}/assets/images/logo.png"
-                                        alt="logo">
+            <div class="wrapper">
+                <!--Header Area Start-->
+            <jsp:include page="/view/common/home/header.jsp"></jsp:include>
+                <!--Header Area End-->
+                <!--Breadcrumb Tow Start-->
+                <div class="breadcrumb-tow mb-120">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="breadcrumb-title">
+                                    <h1>Login - Register</h1>
                                 </div>
-                                <form action="${pageContext.request.contextPath}/authen?action=reset-password"
-                                    method="POST" class="d-grid gap-lg-6 gap-4 mb-lg-10 mb-md-8 mb-6">
-                                    <div class="d-grid gap-lg-4 gap-2">
-                                        <label class="text-n100 font-noto-sans text-base fw-normal">New Password</label>
-                                        <div
-                                            class="d-flex align-items-center py-lg-4 py-2 px-lg-6 px-4 w-100 bg-n0 text-n100 radius-8 border border-n100-1 focus-secondary2">
-                                            <input type="password" name="newPassword" class="w-100 border-0"
-                                                placeholder="Enter New Password" required>
-                                            <button type="button" class="text-xl password-toggle">
-                                                <i class="ph ph-eye-slash"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                    <div class="d-grid gap-lg-4 gap-2">
-                                        <label class="text-n100 font-noto-sans text-base fw-normal">Confirm
-                                            Password</label>
-                                        <div
-                                            class="d-flex align-items-center py-lg-4 py-2 px-lg-6 px-4 w-100 bg-n0 text-n100 radius-8 border border-n100-1 focus-secondary2">
-                                            <input type="password" name="confirmPassword" class="w-100 border-0"
-                                                placeholder="Confirm Password" required>
-                                            <button type="button" class="text-xl password-toggle">
-                                                <i class="ph ph-eye-slash"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                    <button type="submit"
-                                        class="btn-secondary py-lg-4 py-2 px-lg-6 px-4 radius-8 w-100">Reset
-                                        Password</button>
-                                </form>
-
-                                <div class="text-center">
-                                    <span class="text-n50">Remember your password?</span>
-                                    <a href="${pageContext.request.contextPath}/authen?action=login"
-                                        class="text-secondary2 fw-medium">Login</a>
+                                <div class="breadcrumb-content breadcrumb-content-tow">
+                                    <ul>
+                                        <li><a href="index.html">Home</a></li>
+                                        <li class="active">Login-Register</li>
+                                    </ul>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </section>
-            <!-- reset password section end -->
+                <!--Breadcrumb Tow End-->
+                <!--Login Register Area Strat-->
+                <div class="login-register-area mb-80">
+                    <div class="container" id="padding-form">
+                        <div class="customer-login-register register-pt-0">
+                            <div class="form-register-title">
+                                <h2>Reset Password</h2>
+                            </div>
+                            <div class="register-form">
+                                <form action="${pageContext.request.contextPath}/authen?action=reset-password" method="POST">
+                                    <div class="form-fild">
+                                        <p><label>New Password <span class="required">*</span></label></p>
+                                        <input type="password" name="newPassword" 
+                                            class="py-lg-4 py-2 px-lg-6 px-4 w-100 bg-n0 text-n100 radius-8 border border-n100-1 focus-secondary2"
+                                            placeholder="Enter New Password" required>
+                                    </div>
+                                    <div class="form-fild">
+                                        <p><label>Confirm Password <span class="required">*</span></label></p>
+                                        <input type="password" name="confirmPassword" 
+                                            class="py-lg-4 py-2 px-lg-6 px-4 w-100 bg-n0 text-n100 radius-8 border border-n100-1 focus-secondary2"
+                                            placeholder="Confirm New Password" required>
+                                    </div>
+                                    <div class="register-submit">
+                                        <button type="submit" class="form-button">Reset Password</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--Login Register Area End-->
+                <!--Brand Area Start-->
+            <jsp:include page="/view/common/home/brand.jsp"></jsp:include>
+                <!--Brand Area End-->
+                <!--Footer Area Start-->
+            <jsp:include page="/view/common/home/footer.jsp"></jsp:include>
+                <!--Footer Area End-->
+                <!-- Modal Area Strat -->
+                <div class="modal fade" id="open-modal" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"><i class="fa fa-close"></i></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <!--Modal Img-->
+                                    <div class="col-md-5">
+                                        <!--Modal Tab Content Start-->
+                                        <div class="tab-content product-details-large" id="myTabContent">
+                                            <div class="tab-pane fade show active" id="single-slide1" role="tabpanel" aria-labelledby="single-slide-tab-1">
+                                                <!--Single Product Image Start-->
+                                                <div class="single-product-img img-full">
+                                                    <img src="img/single-product/large/single-product1.jpg" alt="">
+                                                </div>
+                                                <!--Single Product Image End-->
+                                            </div>
+                                            <div class="tab-pane fade" id="single-slide2" role="tabpanel" aria-labelledby="single-slide-tab-2">
+                                                <!--Single Product Image Start-->
+                                                <div class="single-product-img img-full">
+                                                    <img src="img/single-product/large/single-product2.jpg" alt="">
+                                                </div>
+                                                <!--Single Product Image End-->
+                                            </div>
+                                            <div class="tab-pane fade" id="single-slide3" role="tabpanel" aria-labelledby="single-slide-tab-3">
+                                                <!--Single Product Image Start-->
+                                                <div class="single-product-img img-full">
+                                                    <img src="img/single-product/large/single-product3.jpg" alt="">
+                                                </div>
+                                                <!--Single Product Image End-->
+                                            </div>
+                                            <div class="tab-pane fade" id="single-slide4" role="tabpanel" aria-labelledby="single-slide-tab-4">
+                                                <!--Single Product Image Start-->
+                                                <div class="single-product-img img-full">
+                                                    <img src="img/single-product/large/single-product4.jpg" alt="">
+                                                </div>
+                                                <!--Single Product Image End-->
+                                            </div>
+                                            <div class="tab-pane fade" id="single-slide5" role="tabpanel" aria-labelledby="single-slide-tab-4">
+                                                <!--Single Product Image Start-->
+                                                <div class="single-product-img img-full">
+                                                    <img src="img/single-product/large/single-product5.jpg" alt="">
+                                                </div>
+                                                <!--Single Product Image End-->
+                                            </div>
+                                            <div class="tab-pane fade" id="single-slide6" role="tabpanel" aria-labelledby="single-slide-tab-4">
+                                                <!--Single Product Image Start-->
+                                                <div class="single-product-img img-full">
+                                                    <img src="img/single-product/large/single-product6.jpg" alt="">
+                                                </div>
+                                                <!--Single Product Image End-->
+                                            </div>
+                                        </div>
+                                        <!--Modal Content End-->
+                                        <!--Modal Tab Menu Start-->
+                                        <div class="single-product-menu">
+                                            <div class="nav single-slide-menu owl-carousel" role="tablist">
+                                                <div class="single-tab-menu img-full">
+                                                    <a class="active" data-bs-toggle="tab" id="single-slide-tab-1" href="#single-slide1"><img src="img/single-product/small/single-product1.jpg" alt=""></a>
+                                                </div>
+                                                <div class="single-tab-menu img-full">
+                                                    <a data-bs-toggle="tab" id="single-slide-tab-2" href="#single-slide2"><img src="img/single-product/small/single-product2.jpg" alt=""></a>
+                                                </div>
+                                                <div class="single-tab-menu img-full">
+                                                    <a data-bs-toggle="tab" id="single-slide-tab-3" href="#single-slide3"><img src="img/single-product/small/single-product3.jpg" alt=""></a>
+                                                </div>
+                                                <div class="single-tab-menu img-full">
+                                                    <a data-bs-toggle="tab" id="single-slide-tab-4" href="#single-slide4"><img src="img/single-product/small/single-product4.jpg" alt=""></a>
+                                                </div>
+                                                <div class="single-tab-menu img-full">
+                                                    <a data-bs-toggle="tab" id="single-slide-tab-5" href="#single-slide5"><img src="img/single-product/small/single-product5.jpg" alt=""></a>
+                                                </div>
+                                                <div class="single-tab-menu img-full">
+                                                    <a data-bs-toggle="tab" id="single-slide-tab-6" href="#single-slide6"><img src="img/single-product/small/single-product6.jpg" alt=""></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--Modal Tab Menu End-->
+                                    </div>
+                                    <!--Modal Img-->
+                                    <!--Modal Content-->
+                                    <div class="col-md-7">
+                                        <div class="modal-product-info">
+                                            <h1>Sit voluptatem</h1>
+                                            <div class="modal-product-price">
+                                                <span class="old-price">$74.00</span>
+                                                <span class="new-price">$69.00</span>
+                                            </div>
+                                            <a href="single-product.html" class="see-all">See all features</a>
+                                            <div class="add-to-cart quantity">
+                                                <form class="add-quantity" action="#">
+                                                    <div class="modal-quantity">
+                                                        <input type="number" value="1">
+                                                    </div>
+                                                    <div class="add-to-link">
+                                                        <button class="form-button" data-text="add to cart">add to cart</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <div class="cart-description">
+                                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco,Proin lectus ipsum, gravida et mattis vulputate, tristique ut lectus.</p>
+                                            </div>
+                                            <div class="social-share">
+                                                <h3>Share this product</h3>
+                                                <ul class="socil-icon2">
+                                                    <li><a href=""><i class="fa fa-facebook"></i></a></li>
+                                                    <li><a href=""><i class="fa fa-twitter"></i></a></li>
+                                                    <li><a href=""><i class="fa fa-pinterest"></i></a></li>
+                                                    <li><a href=""><i class="fa fa-google-plus"></i></a></li>
+                                                    <li><a href=""><i class="fa fa-linkedin"></i></a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--Modal Content-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Modal Area End -->
+            </div>
 
-            <!-- ... existing gallery slider and call to action sections ... -->
-        </main>
-        <!-- main end -->
 
-        <!-- footer section -->
-        <jsp:include page="../common/home/footer.jsp"></jsp:include>
 
-        <script src="${pageContext.request.contextPath}/assets/js/main.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"></script>
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                var toastMessage = "${sessionScope.toastMessage}";
-                var toastType = "${sessionScope.toastType}";
-                if (toastMessage) {
-                    iziToast.show({
-                        title: toastType === 'success' ? 'Success' : 'Error',
-                        message: toastMessage,
-                        position: 'topRight',
-                        color: toastType === 'success' ? 'green' : 'red',
-                        timeout: 5000,
-                        onClosing: function() {
-                            fetch('${pageContext.request.contextPath}/remove-toast', {
-                                method: 'POST'
-                            });
-                        }
-                    });
-                }
-            });
-        </script>
+
+
+            <!--All Js Here-->
+        <jsp:include page="../common/home/common-js.jsp"></jsp:include>
+
     </body>
-
-    </html>
+</html>

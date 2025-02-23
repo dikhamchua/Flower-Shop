@@ -57,14 +57,47 @@
                                 <h2>Register</h2>
                             </div>
                             <div class="register-form">
-                                <form action="#">
+                                <form action="authen?action=sign-up" method="POST">
                                     <div class="form-fild">
-                                        <p><label>Username or email address <span class="required">*</span></label></p>
-                                        <input name="username" value="" type="text">
+                                        <p><label>Username <span class="required">*</span></label></p>
+                                        <input name="username" type="text" required>
+                                    </div>
+                                    <div class="form-fild">
+                                        <p><label>First Name <span class="required">*</span></label></p>
+                                        <input name="firstName" type="text" required>
+                                    </div>
+                                    <div class="form-fild">
+                                        <p><label>Last Name <span class="required">*</span></label></p>
+                                        <input name="lastName" type="text" required>
+                                    </div>
+                                    <div class="form-fild">
+                                        <p style="
+                                        display: inline;
+                                    "><label>Gender <span class="required">*</span></label></p>
+                                        <input type="radio" name="gender" value="true" required="" style="
+                                        width: auto;
+                                        height: auto;
+                                    "> Male
+                                        <input type="radio" name="gender" value="false" required="" style="
+                                        width: auto;
+                                        height: auto;
+                                    "> Female
+                                    </div>
+                                    <div class="form-fild">
+                                        <p><label>Email <span class="required">*</span></label></p>
+                                        <input name="email" type="email" required>
+                                    </div>
+                                    <div class="form-fild">
+                                        <p><label>Mobile <span class="required">*</span></label></p>
+                                        <input name="mobile" type="tel" required>
                                     </div>
                                     <div class="form-fild">
                                         <p><label>Password <span class="required">*</span></label></p>
-                                        <input name="password" value="" type="password">
+                                        <input name="password" type="password" required>
+                                    </div>
+                                    <div class="form-fild">
+                                        <p><label>Confirm Password <span class="required">*</span></label></p>
+                                        <input name="confirmPassword" type="password" required>
                                     </div>
                                     <div class="register-submit">
                                         <button type="submit" class="form-button">Register</button>

@@ -1,3 +1,4 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!--Jquery 3.6.0-->
 <script src="${pageContext.request.contextPath}/assets/js/vendor/modernizr-3.6.0.min.js"></script>
 <script src="${pageContext.request.contextPath}/assets/js/vendor/jquery-3.6.0.min.js"></script>
@@ -49,7 +50,7 @@
                 message: toastMessage,
                 position: 'topRight',
                 color: toastType === 'success' ? 'green' : 'red',
-                timeout: 5000,
+                timeout: 2000,
                 onClosing: function () {
                     fetch('${pageContext.request.contextPath}/remove-toast', {
                         method: 'POST'
