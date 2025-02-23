@@ -1,104 +1,171 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<section class="footer-section px-xl-20 px-lg-10 px-sm-7 bg-n100">
-    <div class="container-fluid">
-        <div class="row g-lg-0 g-6 justify-content-lg-between">
-            <div class="col-xxl-8 col-12">
-                <div class="p-4xl-20 p-xl-10 p-lg-8 p-6 border border-n0-1 bg-n0-5">
-                    <div class="row row-cols-lg-6 g-6 justify-content-between">
-                        <div class="col-lg-4 col-auto">
-                            <div class="mb-lg-6 mb-4">
-                                <div class="footer-logo mb-lg-4 mb-2">
-                                    <img src="${pageContext.request.contextPath}/assets/images/logo-white.png" alt="logo">
-                                </div>
-                                <p class="text-n0 text-base fw-normal ch-40">
-                                    elling premium products, designed to
-                                    elevate your everyday experience
-                                </p>
+<footer>
+    <div class="footer-container">
+        <!--Footer Top Area Start-->
+        <div class="footer-top-area black-bg">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-3 col-md-6">
+                        <!--Single Footer Widget Start-->
+                        <div class="single-footer-widget mb-40">
+                            <div class="footer-title">
+                                <h3>My Account</h3>
                             </div>
-
-                            <ul class="d-flex align-items-center gap-2 mb-lg-10 mb-md-8 mb-6">
-                                <li><a href="" class="icon-40px text-xl text-n0 bg-n2-8 box-style box-secondary2"><i class="ph-fill ph-facebook-logo"></i></a></li>
-                                <li><a href="" class="icon-40px text-xl text-n0 bg-n2-8 box-style box-secondary2"><i class="ph-fill ph-twitter-logo"></i></a></li>
-                                <li><a href="" class="icon-40px text-xl text-n0 bg-n2-8 box-style box-secondary2"><i class="ph-fill ph-instagram-logo"></i></a></li>
-                                <li><a href="" class="icon-40px text-xl text-n0 bg-n2-8 box-style box-secondary2"><i class="ph-fill ph-youtube-logo"></i></a></li>
-                            </ul>
-
-                            <ul class="d-flex align-items-center gap-2">
-                                <li><img src="${pageContext.request.contextPath}/assets/images/visa.png" alt="visa"></li>
-                                <li><img src="${pageContext.request.contextPath}/assets/images/shopify.png" alt="shopify"></li>
-                                <li><img src="${pageContext.request.contextPath}/assets/images/mastercard.png" alt="mastercard"></li>
-                                <li><img src="${pageContext.request.contextPath}/assets/images/paypal.png" alt="paypal"></li>
-                            </ul>
-
-                        </div>
-                        <div class="col-auto">
-                            <h4 class="text-animation-word text-n0 mb-lg-6 mb-4">Shop</h4>
-                            <ul class="d-grid gap-lg-4 gap-2">
-                                <li><a href="shop.html" class="text-n0 text-base fw-normal hover-text-secondary2">Bikes</a>
-                                </li>
-                                <li><a href="shop.html" class="text-n0 text-base fw-normal hover-text-secondary2">Accessories</a>
-                                </li>
-                                <li><a href="shop.html" class="text-n0 text-base fw-normal hover-text-secondary2">Clothing</a>
-                                </li>
-                                <li><a href="shop.html" class="text-n0 text-base fw-normal hover-text-secondary2">Tool</a>
-                                </li>
-                                <li><a href="shop.html" class="text-n0 text-base fw-normal hover-text-secondary2">Hydration</a>
-                                </li>
-                                <li><a href="shop.html" class="text-n0 text-base fw-normal hover-text-secondary2">Equipment</a>
-                                </li>
+                            <ul class="link-widget">
+                                <li><a href="about.html">About Us</a></li>
+                                <li><a href="#">Team Member</a></li>
+                                <li><a href="#">Career</a></li>
+                                <li><a href="#">Specials</a></li>
+                                <li><a href="shop.html">Best sellers</a></li>
+                                <li><a href="#">Our stores</a></li>
+                                <li><a href="contact.html">Contact us</a></li>
                             </ul>
                         </div>
-                        <div class="col-auto">
-                            <h4 class="text-animation-word text-n0 mb-lg-6 mb-4">Pages</h4>
-                            <ul class="d-grid gap-lg-4 gap-2">
-                                <li><a href="index.html" class="text-n0 text-base fw-normal hover-text-secondary2">Home</a>
-                                </li>
-                                <li><a href="about-us.html" class="text-n0 text-base fw-normal hover-text-secondary2">About Us</a>
-                                </li>
-                                <li><a href="services.html" class="text-n0 text-base fw-normal hover-text-secondary2">Services</a></li>
-                                <li><a href="shop.html" class="text-n0 text-base fw-normal hover-text-secondary2">Shop</a>
-                                </li>
-                                <li><a href="blogs.html" class="text-n0 text-base fw-normal hover-text-secondary2">News</a></li>
+                        <!--Single Footer Widget End-->
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <!--Single Footer Widget Start-->
+                        <div class="single-footer-widget mb-40">
+                            <div class="footer-title">
+                                <h3>Information</h3>
+                            </div>
+                            <ul class="link-widget">
+                                <li><a href="about.html">About Us</a></li>
+                                <li><a href="contact.html">Contact Us</a></li>
+                                <li><a href="#">My orders</a></li>
+                                <li><a href="#">Terms & Conditions</a></li>
+                                <li><a href="#">Returns & Exchanges</a></li>
+                                <li><a href="#">Shipping & Delivery</a></li>
+                                <li><a href="#">Privacy Policy</a></li>
                             </ul>
                         </div>
-                        <div class="col-lg-3 col-auto">
-                            <h4 class="text-animation-word text-n0 mb-lg-6 mb-4">Support</h4>
-                            <ul class="d-grid gap-lg-4 gap-2">
-                                <li><a href="faqs.html" class="text-n0 text-base fw-normal hover-text-secondary2">FAQs</a>
-                                </li>
-                                <li><a href="warranty-policy.html" class="text-n0 text-base fw-normal hover-text-secondary2">Warranty
-                                        Policy</a>
-                                </li>
-                                <li><a href="shipping-delivery.html" class="text-n0 text-base fw-normal hover-text-secondary2">Shipping &
-                                        Delivery</a></li>
-                                <li><a href="how-to-order.html" class="text-n0 text-base fw-normal hover-text-secondary2">How
-                                        to Order</a>
-                                </li>
-                                <li><a href="exchange-return.html" class="text-n0 text-base fw-normal hover-text-secondary2">Exchange $
-                                        Return Policy</a></li>
-                                <li><a href="terms-of-offers.html" class="text-n0 text-base fw-normal hover-text-secondary2">Terms of
-                                        Offers</a></li>
+                        <!--Single Footer Widget End-->
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <!--Single Footer Widget Start-->
+                        <div class="single-footer-widget mb-40">
+                            <div class="footer-title">
+                                <h3>Quick Links</h3>
+                            </div>
+                            <ul class="link-widget">
+                                <li><a href="#">Support Center</a></li>
+                                <li><a href="#">Term & Conditions</a></li>
+                                <li><a href="#">Shipping</a></li>
+                                <li><a href="#">Privacy Policy</a></li>
+                                <li><a href="#">Help</a></li>
+                                <li><a href="#">Products Return</a></li>
+                                <li><a href="faq.html">FAQS</a></li>
                             </ul>
                         </div>
+                        <!--Single Footer Widget End-->
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <!--Single Footer Widget Start-->
+                        <div class="single-footer-widget mb-40">
+                            <div class="footer-title">
+                                <h3>Categories</h3>
+                            </div>
+                            <ul class="link-widget">
+                                <li><a href="#">Bedroom</a></li>
+                                <li><a href="#">Furniture</a></li>
+                                <li><a href="#">Livingroom</a></li>
+                                <li><a href="#">Mobiles & Tablets</a></li>
+                                <li><a href="#">Men</a></li>
+                                <li><a href="#">Women</a></li>
+                                <li><a href="#">Accessories</a></li>
+                            </ul>
+                        </div>
+                        <!--Single Footer Widget End-->
                     </div>
                 </div>
             </div>
-            <div class="col-xxl-4">
-                <div class="footer-map">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d42292.8315719577!2d-106.56972643793605!3d52.084128685484096!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x5304f24dba300731%3A0x459e39b334a99d2c!2sCostco%20Wholesale!5e1!3m2!1sen!2sbd!4v1726546261198!5m2!1sen!2sbd" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+        <!--Footer Top Area End-->
+        <!--Footer Middle Area Start-->
+        <div class="footer-middle-area black-bg">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-3 col-md-6">
+                        <!--Single Footer Widget Start-->
+                        <div class="single-footer-widget mb-30">
+                            <div class="footer-logo">
+                                <a href="index.html"><img src="img/logo/logo-footer.png" alt=""></a>
+                            </div>
+                        </div>
+                        <!--Single Footer Widget End-->
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <!--Single Footer Widget Start-->
+                        <div class="single-footer-widget mb-30">
+                            <div class="footer-info">
+                                <div class="icon">
+                                    <i class="fa fa-home"></i>
+                                </div>
+                                <p>Address : No 40 Baria Sreet 15/2 NewYork City, NY, United States.</p>
+                            </div>
+                        </div>
+                        <!--Single Footer Widget End-->
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <!--Single Footer Widget Start-->
+                        <div class="single-footer-widget mb-30">
+                            <div class="footer-info">
+                                <div class="icon">
+                                    <i class="fa fa-envelope-open-o"></i>
+                                </div>
+                                <p>Email: <br>info@yourmail.com</p>
+                            </div>
+                        </div>
+                        <!--Single Footer Widget End-->
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <!--Single Footer Widget Start-->
+                        <div class="single-footer-widget mb-30">
+                            <div class="footer-info">
+                                <div class="icon">
+                                    <i class="fa fa-mobile"></i>
+                                </div>
+                                <p>Phone: <br>(+68) 123 456 7890</p>
+                            </div>
+                        </div>
+                        <!--Single Footer Widget End-->
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="d-between flex-wrap-reverse py-lg-6 py-4">
-            <p class="text-n0 text-base fw-normal">Copyright © <span class="currentYear"></span> <a href="index.html" class="text-secondary2">CycleCity</a>. All
-                Rights Reserved</p>
-            <ul class="d-flex align-items-center gap-lg-6 gap-3">
-                <li><a href="privacy-policy.html" class="text-n0 text-base fw-normal hover-text-secondary2">Privacy
-                        Policy</a></li>
-                <li><a href="terms-conditions.html" class="text-n0 text-base fw-normal hover-text-secondary2">Terms &
-                        Conditions</a>
-                </li>
-            </ul>
+        <!--Footer Middle Area End-->
+        <!--Footer Bottom Area Start-->
+        <div class="footer-bottom-area black-bg pt-50 pb-50">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <!--Footer Payment Start-->
+                        <div class="footer-payments-image">
+                            <img src="img/payment/payment-icon.png" alt="">
+                        </div>
+                        <!--Footer Payment End-->
+                        <!--Footer Menu Start-->
+                        <div class="footer-menu text-center">
+                            <nav>
+                                <ul>
+                                    <li><a href="#">Site Map</a></li>
+                                    <li><a href="#">Search Terms</a></li>
+                                    <li><a href="#">Advanced Search</a></li>
+                                    <li><a href="#">Orders and Returns</a></li>
+                                    <li><a href="#">Contact Us</a></li>
+                                </ul>
+                            </nav>
+                        </div>
+                        <!--Footer Menu End-->
+                        <!--Footer Copyright Start-->
+                        <div class="footer-copyright">
+                            <p class="copyright">&copy; 2021 <strong>Plantmore</strong> Made with <i class="fa fa-heart text-danger" aria-hidden="true"></i> by <a href="https://hasthemes.com/"><strong>HasThemes</strong></a>.</p>
+                        </div>
+                        <!--Footer Copyright End-->
+                    </div>
+                </div>
+            </div>
         </div>
+        <!--Footer Bottom Area End-->
     </div>
-</section>
+</footer>

@@ -1,1596 +1,1229 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html lang="en">
-    <!-- head -->
+<!doctype html>
+<html class="no-js" lang="en">
     <head>
         <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Shop || Plantmore</title>
+        <meta name="description" content="">
+        <meta name="robots" content="noindex, follow" />
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="CycleCity offers a wide range of bicycles, gear, and accessories for every type of cyclist. Explore our collection and gear up for your next adventure!">
-        <meta name="keywords" content="bicycles, bikes, cycling gear, bike accessories, mountain bikes, road bikes, CycleCity">
-        <meta name="author" content="CycleCity Team">
+        <meta name="robots" content="noindex, follow" />
+        <!-- Place favicon.ico in the root directory -->
+        <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico">
+        <!--All Css Here-->
+        <jsp:include page="../common/home/common-css.jsp"></jsp:include>
+       
 
-        <meta property="og:title" content="CycleCity | Quality Bicycles and Cycling Gear">
-        <meta property="og:description" content="Discover the best selection of bicycles, gear, and accessories at CycleCity. Shop now for top brands and quality service.">
-        <meta property="og:image" content="../assets/images/logo.png">
-        <meta property="og:url" content="">
-        <meta property="og:type" content="website">
-
-        <meta name="twitter:card" content="summary_large_image">
-        <meta name="twitter:title" content="CycleCity | Quality Bicycles and Cycling Gear">
-        <meta name="twitter:description" content="Explore the latest in bicycles, cycling gear, and accessories at CycleCity. Gear up for your next adventure!">
-        <meta name="twitter:image" content="../assets/images/logo.png">
-        <meta name="twitter:site" content="@CycleCity">
-
-        <title>CycleCity | Your Hub for Quality Bicycles, Gear, and Accessories</title>
-        <link rel="shortcut icon" href="assets/images/favicon.png" type="image/x-icon">
-        <link href="${pageContext.request.contextPath}/assets/css/style.css" rel="stylesheet">
     </head>
-
     <body>
-        <!-- back to top -->
-        <button class="back-to-top position-fixed end-0 bottom-0 d-center me-5">
-            <span class="text-h4">
-                <i class="ph ph-arrow-up"></i>
-            </span>
-        </button>
-        <!-- include header -->
-        <!-- header -->
-        <!-- mouse -->
-        <div class="cursor"></div>
-        <div class="cursor-follower"></div>
 
-
-        <!-- header section start -->
-        <jsp:include page="../common/home/header.jsp"></jsp:include>
-        <!-- header section end -->
-
-        <!-- cart box -->
-        <jsp:include page="../common/home/cartbox.jsp"></jsp:include>
-        <!-- cart box -->
-        <!-- include newsletter popup -->
-        <!-- main start -->
-        <main class="pt-12">
-            <!-- hero section start -->
-            <section class="inner-hero-section px-xl-20 px-lg-10 px-sm-7" style="background-image: url(assets/images/inner-page-banner.png);">
-                <div class="container-fluid">
-                    <span class="text-animation-word text-h1 text-n100 mb-3">Bikes</span>
-                    <ul class="breadcrumb d-inline-flex align-items-center gap-lg-2 gap-1">
-                        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                        <li class="breadcrumb-item active"><a href="">Bikes</a></li>
-                    </ul>
-                </div>
-            </section>
-            <!-- hero section end -->
-
-            <!-- product section start -->
-            <section class="product-section px-xl-20 px-lg-10 px-sm-7 pt-120 pb-120">
-                <div class="container-fluid">
-                    <div class="row g-6 mb-lg-8 mb-6">
-                        <div class="col-12">
-                            <!-- tab btn area -->
-                            <!-- here using tab option for demonstration purpose, remove tab option for production and use only filter btn -->
-                            <ul class="tab-btn-area d-flex align-items-center gap-2 flex-wrap">
-                                <li>
-                                    <button class="tab-btn filter-btn text-base text-n100 py-lg-2 py-1 px-lg-5 px-sm-3 px-2 radius-pill border border-n100-1 active" data-tab="all">All</button>
-                                </li>
-                                <li>
-                                    <button class="tab-btn filter-btn text-base text-n100 py-lg-2 py-1 px-lg-5 px-sm-3 px-2 radius-pill border border-n100-1" data-tab="city">City</button>
-                                </li>
-                                <li>
-                                    <button class="tab-btn filter-btn text-base text-n100 py-lg-2 py-1 px-lg-5 px-sm-3 px-2 radius-pill border border-n100-1" data-tab="electric">Electric</button>
-                                </li>
-                                <li>
-                                    <button class="tab-btn filter-btn text-base text-n100 py-lg-2 py-1 px-lg-5 px-sm-3 px-2 radius-pill border border-n100-1" data-tab="gravel">Gravel</button>
-                                </li>
-                                <li>
-                                    <button class="tab-btn filter-btn text-base text-n100 py-lg-2 py-1 px-lg-5 px-sm-3 px-2 radius-pill border border-n100-1" data-tab="kids">Kids</button>
-                                </li>
-                                <li>
-                                    <button class="tab-btn filter-btn text-base text-n100 py-lg-2 py-1 px-lg-5 px-sm-3 px-2 radius-pill border border-n100-1" data-tab="mountain">Mountain</button>
-                                </li>
-                                <li>
-                                    <button class="tab-btn filter-btn text-base text-n100 py-lg-2 py-1 px-lg-5 px-sm-3 px-2 radius-pill border border-n100-1" data-tab="road">Road</button>
-                                </li>
-                            </ul>
+        <div class="wrapper">
+            <!--Header Area Start-->
+            <jsp:include page="/view/common/home/header.jsp"></jsp:include>
+            <!--Header Area End-->
+            <!--Shop Area Start-->
+            <div class="shop-area mb-70">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-3 order-2 order-lg-1">
+                        <jsp:include page="/view/common/home/sidebar.jsp"></jsp:include>
                         </div>
-                    </div>
-                    <!-- tab content 1 -->
-                    <div class="tab-content active" data-tab="all">
-                        <div class="row g-0 mb-1">
-                            <div class="col-lg-4 col-xs-6">
-                                <!-- product item -->
-                                <div class="product-card2 position-relative p-xl-10 p-lg-8 p-6 bg-n0 border border-n100-5 box-style box-n20 card-tilt">
-                                    <div class="product-type py-lg-3 py-2 ps-lg-4 ps-2 pe-lg-6 pe-4 bg-secondary2 position-absolute top-0 start-0 parallelogram-path z-2">
-                                        <span class="text-sm fw-medium text-n0">New</span>
+                        <div class="col-lg-9 order-1 order-lg-2">
+                            <div class="shop-layout">
+                                <!--Breadcrumb One Start-->
+                                <div class="breadcrumb-one mb-120">
+                                    <div class="breadcrumb-img">
+                                        <img src="${pageContext.request.contextPath}/assets/img/page-banner/shop-banner-1.jpg" alt="">
                                     </div>
-                                    <div class="product-thumb-wrapper position-relative">
-                                        <button class="single-wishlist-btn text-secondary2 text-xl icon-52px bg-n0 position-absolute top-0 right-0 z-3 tooltip-btn tooltip-left" data-tooltip="Add to wishlist">
-                                            <i class="ph ph-heart"></i>
-                                        </button>
-                                        <div class="product-thumb hover-cursor" data-hover-text="View Product">
-                                            <a href="shop-details.html" class="product-thumb-link d-block">
-                                                <img class="w-100" src="${pageContext.request.contextPath}/assets/images/product-1.png" alt="product thumb">
-                                            </a>
-                                        </div>
+                                    <div class="breadcrumb-content">
+                                        <ul>
+                                            <li><a href="index.html">Home</a></li>
+                                            <li class="active">Shop</li>
+                                        </ul>
                                     </div>
-                                    <span class="d-block h-1px w-100 bg-n100-1 mb-lg-6 mb-4 mt-lg-10 mt-6"></span>
-                                    <div class="product-info-wrapper">
-                                        <div class="mb-xxl-7 mb-md-5 mb-3">
-                                            <a href="shop-details.html">
-                                                <h4 class="text-n100 mb-2 hover-text-secondary2">City
-                                                    Commuter
-                                                </h4>
-                                            </a>
-                                            <span class="text-sm fw-normal text-n50">Enduro</span>
+                                </div>
+                                <!--Breadcrumb One End-->
+                                <!--Grid & List View Start-->
+                                <div class="shop-topbar-wrapper d-md-flex justify-content-md-between align-items-center">
+                                    <div class="grid-list-option">
+                                        <ul class="nav">
+                                            <li>
+                                                <a class="active" data-bs-toggle="tab" href="#grid"><i class="fa fa-th-large"></i></a>
+                                            </li>
+                                            <li>
+                                                <a data-bs-toggle="tab" href="#list"><i class="fa fa-th-list"></i></a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <!--Toolbar Short Area Start-->
+                                    <div class="toolbar-short-area d-md-flex align-items-center">
+                                        <div class="toolbar-shorter ">
+                                            <label>Sort By:</label>
+                                            <select class="wide">
+                                                <option data-display="Select">Nothing</option>
+                                                <option value="Relevance">Relevance</option>
+                                                <option value="Name, A to Z">Name, A to Z</option>
+                                                <option value="Name, Z to A">Name, Z to A</option>
+                                                <option value="Price, low to high">Price, low to high</option>
+                                                <option value="Price, high to low">Price, high to low</option>
+                                            </select>
                                         </div>
-                                        <div class="d-between flex-wrap gap-4">
-                                            <div class="d-grid">
-                                                <span class="text-sm fw-normal text-n50 text-decoration-underline">$21,599.00
-                                                    USD</span>
-                                                <span class="text-xl fw-semibold text-secondary2">$ 14,599.00 USD</span>
+                                        <p class="show-product">Showing 1–9 of 42 results</p>
+                                    </div>
+                                    <!--Toolbar Short Area End-->
+                                </div>
+                                <!--Grid & List View End-->
+                                <!--Shop Product Start-->
+                                <div class="shop-product">
+                                    <div id="myTabContent-2" class="tab-content">
+                                        <div id="grid" class="tab-pane fade show active">
+                                            <div class="product-grid-view">
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <!--Single Product Start-->
+                                                        <div class="single-product mb-25">
+                                                            <div class="product-img img-full">
+                                                                <a href="single-product.html">
+                                                                    <img src="${pageContext.request.contextPath}/assets/img/product/product1.jpg" alt="">
+                                                                </a>
+                                                                <span class="onsale">Sale!</span>
+                                                                <div class="product-action">
+                                                                    <ul>
+                                                                        <li><a href="#open-modal" data-bs-toggle="modal" title="Quick view"><i class="fa fa-search"></i></a></li>
+                                                                        <li><a href="#" title="Whishlist"><i class="fa fa-heart-o"></i></a></li>
+                                                                        <li><a href="#" title="Compare"><i class="fa fa-refresh"></i></a></li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                            <div class="product-content">
+                                                                <h2><a href="single-product.html">Eleifend quam</a></h2>
+                                                                <div class="product-price">
+                                                                    <div class="price-box">
+                                                                        <span class="regular-price">$115.00</span>
+                                                                    </div>
+                                                                    <div class="add-to-cart">
+                                                                        <a href="#">Add To Cart</a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!--Single Product End-->
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <!--Single Product Start-->
+                                                        <div class="single-product mb-25">
+                                                            <div class="product-img img-full">
+                                                                <a href="single-product.html">
+                                                                    <img src="${pageContext.request.contextPath}/assets/img/product/product2.jpg" alt="">
+                                                                </a>
+                                                                <span class="onsale">Sale!</span>
+                                                                <div class="product-action">
+                                                                    <ul>
+                                                                        <li><a href="#open-modal" data-bs-toggle="modal" title="Quick view"><i class="fa fa-search"></i></a></li>
+                                                                        <li><a href="#" title="Whishlist"><i class="fa fa-heart-o"></i></a></li>
+                                                                        <li><a href="#" title="Compare"><i class="fa fa-refresh"></i></a></li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                            <div class="product-content">
+                                                                <h2><a href="single-product.html">Aliquam lobortis</a></h2>
+                                                                <div class="product-price">
+                                                                    <div class="price-box">
+                                                                        <span class="price">$148.00</span>
+                                                                        <span class="regular-price">$145.00</span>
+                                                                    </div>
+                                                                    <div class="add-to-cart">
+                                                                        <a href="#">Add To Cart</a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!--Single Product End-->
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <!--Single Product Start-->
+                                                        <div class="single-product mb-25">
+                                                            <div class="product-img img-full">
+                                                                <a href="single-product.html">
+                                                                    <img src="${pageContext.request.contextPath}/assets/img/product/product24.jpg" alt="">
+                                                                </a>
+                                                                <span class="onsale">Sale!</span>
+                                                                <div class="product-action">
+                                                                    <ul>
+                                                                        <li><a href="#open-modal" data-bs-toggle="modal" title="Quick view"><i class="fa fa-search"></i></a></li>
+                                                                        <li><a href="#" title="Whishlist"><i class="fa fa-heart-o"></i></a></li>
+                                                                        <li><a href="#" title="Compare"><i class="fa fa-refresh"></i></a></li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                            <div class="product-content">
+                                                                <h2><a href="single-product.html">Aliquam sit amet</a></h2>
+                                                                <div class="product-price">
+                                                                    <div class="price-box">
+                                                                        <span class="price">$110.00</span>
+                                                                        <span class="regular-price">$90.00</span>
+                                                                    </div>
+                                                                    <div class="add-to-cart">
+                                                                        <a href="#">Add To Cart</a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!--Single Product End-->
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <!--Single Product Start-->
+                                                        <div class="single-product mb-25">
+                                                            <div class="product-img img-full">
+                                                                <a href="single-product.html">
+                                                                    <img src="${pageContext.request.contextPath}/assets/img/product/product23.jpg" alt="">
+                                                                </a>
+                                                                <span class="onsale">Sale!</span>
+                                                                <div class="product-action">
+                                                                    <ul>
+                                                                        <li><a href="#open-modal" data-bs-toggle="modal" title="Quick view"><i class="fa fa-search"></i></a></li>
+                                                                        <li><a href="#" title="Whishlist"><i class="fa fa-heart-o"></i></a></li>
+                                                                        <li><a href="#" title="Compare"><i class="fa fa-refresh"></i></a></li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                            <div class="product-content">
+                                                                <h2><a href="single-product.html">Aliquet auctor sem</a></h2>
+                                                                <div class="product-price">
+                                                                    <div class="price-box">
+                                                                        <span class="regular-price">$80.00</span>
+                                                                    </div>
+                                                                    <div class="add-to-cart">
+                                                                        <a href="#">Add To Cart</a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!--Single Product End-->
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <!--Single Product Start-->
+                                                        <div class="single-product mb-25">
+                                                            <div class="product-img img-full">
+                                                                <a href="single-product.html">
+                                                                    <img src="${pageContext.request.contextPath}/assets/img/product/product22.jpg" alt="">
+                                                                </a>
+                                                                <span class="onsale">Sale!</span>
+                                                                <div class="product-action">
+                                                                    <ul>
+                                                                        <li><a href="#open-modal" data-bs-toggle="modal" title="Quick view"><i class="fa fa-search"></i></a></li>
+                                                                        <li><a href="#" title="Whishlist"><i class="fa fa-heart-o"></i></a></li>
+                                                                        <li><a href="#" title="Compare"><i class="fa fa-refresh"></i></a></li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                            <div class="product-content">
+                                                                <h2><a href="single-product.html">Aliquet auctor sem</a></h2>
+                                                                <div class="product-price">
+                                                                    <div class="price-box">
+                                                                        <span class="regular-price">$115.00</span>
+                                                                    </div>
+                                                                    <div class="add-to-cart">
+                                                                        <a href="#">Add To Cart</a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!--Single Product End-->
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <!--Single Product Start-->
+                                                        <div class="single-product mb-25">
+                                                            <div class="product-img img-full">
+                                                                <a href="single-product.html">
+                                                                    <img src="${pageContext.request.contextPath}/assets/img/product/product1.jpg" alt="">
+                                                                </a>
+                                                                <span class="onsale">Sale!</span>
+                                                                <div class="product-action">
+                                                                    <ul>
+                                                                        <li><a href="#open-modal" data-bs-toggle="modal" title="Quick view"><i class="fa fa-search"></i></a></li>
+                                                                        <li><a href="#" title="Whishlist"><i class="fa fa-heart-o"></i></a></li>
+                                                                        <li><a href="#" title="Compare"><i class="fa fa-refresh"></i></a></li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                            <div class="product-content">
+                                                                <h2><a href="single-product.html">Eleifend quam</a></h2>
+                                                                <div class="product-price">
+                                                                    <div class="price-box">
+                                                                        <span class="regular-price">$115.00</span>
+                                                                    </div>
+                                                                    <div class="add-to-cart">
+                                                                        <a href="#">Add To Cart</a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!--Single Product End-->
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <!--Single Product Start-->
+                                                        <div class="single-product mb-25">
+                                                            <div class="product-img img-full">
+                                                                <a href="single-product.html">
+                                                                    <img src="${pageContext.request.contextPath}/assets/img/product/product23.jpg" alt="">
+                                                                </a>
+                                                                <span class="onsale">Sale!</span>
+                                                                <div class="product-action">
+                                                                    <ul>
+                                                                        <li><a href="#open-modal" data-bs-toggle="modal" title="Quick view"><i class="fa fa-search"></i></a></li>
+                                                                        <li><a href="#" title="Whishlist"><i class="fa fa-heart-o"></i></a></li>
+                                                                        <li><a href="#" title="Compare"><i class="fa fa-refresh"></i></a></li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                            <div class="product-content">
+                                                                <h2><a href="single-product.html">Condimentum posuere</a></h2>
+                                                                <div class="product-price">
+                                                                    <div class="price-box">
+                                                                        <span class="regular-price">$120.00</span>
+                                                                    </div>
+                                                                    <div class="add-to-cart">
+                                                                        <a href="#">Add To Cart</a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!--Single Product End-->
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <!--Single Product Start-->
+                                                        <div class="single-product mb-25">
+                                                            <div class="product-img img-full">
+                                                                <a href="single-product.html">
+                                                                    <img src="${pageContext.request.contextPath}/assets/img/product/product20.jpg" alt="">
+                                                                </a>
+                                                                <span class="onsale">Sale!</span>
+                                                                <div class="product-action">
+                                                                    <ul>
+                                                                        <li><a href="#open-modal" data-bs-toggle="modal" title="Quick view"><i class="fa fa-search"></i></a></li>
+                                                                        <li><a href="#" title="Whishlist"><i class="fa fa-heart-o"></i></a></li>
+                                                                        <li><a href="#" title="Compare"><i class="fa fa-refresh"></i></a></li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                            <div class="product-content">
+                                                                <h2><a href="single-product.html">Convallis furniture</a></h2>
+                                                                <div class="product-price">
+                                                                    <div class="price-box">
+                                                                        <span class="regular-price">$75.00</span>
+                                                                    </div>
+                                                                    <div class="add-to-cart">
+                                                                        <a href="#">Add To Cart</a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!--Single Product End-->
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <!--Single Product Start-->
+                                                        <div class="single-product mb-25">
+                                                            <div class="product-img img-full">
+                                                                <a href="single-product.html">
+                                                                    <img src="${pageContext.request.contextPath}/assets/img/product/product19.jpg" alt="">
+                                                                </a>
+                                                                <div class="product-action">
+                                                                    <ul>
+                                                                        <li><a href="#open-modal" data-bs-toggle="modal" title="Quick view"><i class="fa fa-search"></i></a></li>
+                                                                        <li><a href="#" title="Whishlist"><i class="fa fa-heart-o"></i></a></li>
+                                                                        <li><a href="#" title="Compare"><i class="fa fa-refresh"></i></a></li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                            <div class="product-content">
+                                                                <h2><a href="single-product.html">Eleifend quam</a></h2>
+                                                                <div class="product-price">
+                                                                    <div class="price-box">
+                                                                        <span class="regular-price">$95.00</span>
+                                                                    </div>
+                                                                    <div class="add-to-cart">
+                                                                        <a href="#">Add To Cart</a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!--Single Product End-->
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <!--Single Product Start-->
+                                                        <div class="single-product mb-25">
+                                                            <div class="product-img img-full">
+                                                                <a href="single-product.html">
+                                                                    <img src="${pageContext.request.contextPath}/assets/img/product/product18.jpg" alt="">
+                                                                </a>
+                                                                <span class="onsale">Sale!</span>
+                                                                <div class="product-action">
+                                                                    <ul>
+                                                                        <li><a href="#open-modal" data-bs-toggle="modal" title="Quick view"><i class="fa fa-search"></i></a></li>
+                                                                        <li><a href="#" title="Whishlist"><i class="fa fa-heart-o"></i></a></li>
+                                                                        <li><a href="#" title="Compare"><i class="fa fa-refresh"></i></a></li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                            <div class="product-content">
+                                                                <h2><a href="single-product.html">Curabitur a purus</a></h2>
+                                                                <div class="product-price">
+                                                                    <div class="price-box">
+                                                                        <span class="regular-price">$82.00</span>
+                                                                    </div>
+                                                                    <div class="add-to-cart">
+                                                                        <a href="#">Add To Cart</a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!--Single Product End-->
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <!--Single Product Start-->
+                                                        <div class="single-product mb-25">
+                                                            <div class="product-img img-full">
+                                                                <a href="single-product.html">
+                                                                    <img src="${pageContext.request.contextPath}/assets/img/product/product17.jpg" alt="">
+                                                                </a>
+                                                                <span class="onsale">Sale!</span>
+                                                                <div class="product-action">
+                                                                    <ul>
+                                                                        <li><a href="#open-modal" data-bs-toggle="modal" title="Quick view"><i class="fa fa-search"></i></a></li>
+                                                                        <li><a href="#" title="Whishlist"><i class="fa fa-heart-o"></i></a></li>
+                                                                        <li><a href="#" title="Compare"><i class="fa fa-refresh"></i></a></li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                            <div class="product-content">
+                                                                <h2><a href="single-product.html">Diam vel neque</a></h2>
+                                                                <div class="product-price">
+                                                                    <div class="price-box">
+                                                                        <span class="regular-price">$40.00</span>
+                                                                    </div>
+                                                                    <div class="add-to-cart">
+                                                                        <a href="#">Add To Cart</a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!--Single Product End-->
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <!--Single Product Start-->
+                                                        <div class="single-product mb-25">
+                                                            <div class="product-img img-full">
+                                                                <a href="single-product.html">
+                                                                    <img src="${pageContext.request.contextPath}/assets/img/product/product16.jpg" alt="">
+                                                                </a>
+                                                                <span class="onsale">Sale!</span>
+                                                                <div class="product-action">
+                                                                    <ul>
+                                                                        <li><a href="#open-modal" data-bs-toggle="modal" title="Quick view"><i class="fa fa-search"></i></a></li>
+                                                                        <li><a href="#" title="Whishlist"><i class="fa fa-heart-o"></i></a></li>
+                                                                        <li><a href="#" title="Compare"><i class="fa fa-refresh"></i></a></li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                            <div class="product-content">
+                                                                <h2><a href="single-product.html">Dignissim furniture</a></h2>
+                                                                <div class="product-price">
+                                                                    <div class="price-box">
+                                                                        <span class="regular-price">$80.00</span>
+                                                                    </div>
+                                                                    <div class="add-to-cart">
+                                                                        <a href="#">Add To Cart</a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!--Single Product End-->
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <!--Single Product Start-->
+                                                        <div class="single-product mb-25">
+                                                            <div class="product-img img-full">
+                                                                <a href="single-product.html">
+                                                                    <img src="${pageContext.request.contextPath}/assets/img/product/product15.jpg" alt="">
+                                                                </a>
+                                                                <span class="onsale">Sale!</span>
+                                                                <div class="product-action">
+                                                                    <ul>
+                                                                        <li><a href="#open-modal" data-bs-toggle="modal" title="Quick view"><i class="fa fa-search"></i></a></li>
+                                                                        <li><a href="#" title="Whishlist"><i class="fa fa-heart-o"></i></a></li>
+                                                                        <li><a href="#" title="Compare"><i class="fa fa-refresh"></i></a></li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                            <div class="product-content">
+                                                                <h2><a href="single-product.html">Dignissim venenatis</a></h2>
+                                                                <div class="product-price">
+                                                                    <div class="price-box">
+                                                                        <span class="regular-price">$70.00</span>
+                                                                    </div>
+                                                                    <div class="add-to-cart">
+                                                                        <a href="#">Add To Cart</a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!--Single Product End-->
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <!--Single Product Start-->
+                                                        <div class="single-product mb-25">
+                                                            <div class="product-img img-full">
+                                                                <a href="single-product.html">
+                                                                    <img src="${pageContext.request.contextPath}/assets/img/product/product14.jpg" alt="">
+                                                                </a>
+                                                                <span class="onsale">Sale!</span>
+                                                                <div class="product-action">
+                                                                    <ul>
+                                                                        <li><a href="#open-modal" data-bs-toggle="modal" title="Quick view"><i class="fa fa-search"></i></a></li>
+                                                                        <li><a href="#" title="Whishlist"><i class="fa fa-heart-o"></i></a></li>
+                                                                        <li><a href="#" title="Compare"><i class="fa fa-refresh"></i></a></li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                            <div class="product-content">
+                                                                <h2><a href="single-product.html">Auctor sem</a></h2>
+                                                                <div class="product-price">
+                                                                    <div class="price-box">
+                                                                        <span class="regular-price">$100.00</span>
+                                                                    </div>
+                                                                    <div class="add-to-cart">
+                                                                        <a href="#">Add To Cart</a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!--Single Product End-->
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <!--Single Product Start-->
+                                                        <div class="single-product mb-25">
+                                                            <div class="product-img img-full">
+                                                                <a href="single-product.html">
+                                                                    <img src="${pageContext.request.contextPath}/assets/img/product/product1.jpg" alt="">
+                                                                </a>
+                                                                <span class="onsale">Sale!</span>
+                                                                <div class="product-action">
+                                                                    <ul>
+                                                                        <li><a href="#open-modal" data-bs-toggle="modal" title="Quick view"><i class="fa fa-search"></i></a></li>
+                                                                        <li><a href="#" title="Whishlist"><i class="fa fa-heart-o"></i></a></li>
+                                                                        <li><a href="#" title="Compare"><i class="fa fa-refresh"></i></a></li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                            <div class="product-content">
+                                                                <h2><a href="single-product.html">Convallis quam sit</a></h2>
+                                                                <div class="product-price">
+                                                                    <div class="price-box">
+                                                                        <span class="regular-price">$130.00</span>
+                                                                    </div>
+                                                                    <div class="add-to-cart">
+                                                                        <a href="#">Add To Cart</a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!--Single Product End-->
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <button class="outline-btn text-n100 fw-medium box-style box-secondary2">ADD
-                                                TO CART </button>
                                         </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-xs-6">
-                                <!-- product item -->
-                                <div class="product-card2 position-relative p-xl-10 p-lg-8 p-6 bg-n0 border border-n100-5 box-style box-n20 card-tilt">
-                                    <div class="product-thumb-wrapper position-relative">
-                                        <button class="single-wishlist-btn text-secondary2 text-xl icon-52px bg-n0 position-absolute top-0 right-0 z-3 tooltip-btn tooltip-left" data-tooltip="Add to wishlist">
-                                            <i class="ph ph-heart"></i>
-                                        </button>
-                                        <div class="product-thumb hover-cursor" data-hover-text="View Product">
-                                            <a href="shop-details.html" class="product-thumb-link d-block">
-                                                <img class="w-100" src="${pageContext.request.contextPath}/assets/images/product-2.png" alt="product thumb">
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <span class="d-block h-1px w-100 bg-n100-1 mb-lg-6 mb-4 mt-lg-10 mt-6"></span>
-                                    <div class="product-info-wrapper">
-                                        <div class="mb-xxl-7 mb-md-5 mb-3">
-                                            <a href="shop-details.html">
-                                                <h4 class="text-n100 mb-2 hover-text-secondary2">
-                                                    Urban Explorer
-                                                </h4>
-                                            </a>
-                                            <span class="text-sm fw-normal text-n50">Enduro</span>
-                                        </div>
-                                        <div class="d-between flex-wrap gap-4">
-                                            <div class="d-grid">
-                                                <span class="text-sm fw-normal text-n50 text-decoration-underline">$21,599.00
-                                                    USD</span>
-                                                <span class="text-xl fw-semibold text-secondary2">$ 14,599.00 USD</span>
+                                        <div id="list" class="tab-pane fade">
+                                            <div class="product-list-view">
+                                                <div class="product-list-item mb-40">
+                                                    <div class="row">
+                                                        <!--Single List Product Start-->
+                                                        <div class="col-md-4">
+                                                            <div class="single-product">
+                                                                <div class="product-img img-full">
+                                                                    <a href="single-product.html">
+                                                                        <img src="${pageContext.request.contextPath}/assets/img/product/product9.jpg" alt="">
+                                                                    </a>
+                                                                    <span class="onsale">Sale!</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-8">
+                                                            <div class="product-content shop-list">
+                                                                <h2><a href="single-product.html">Aliquam furniture</a></h2>
+                                                                <div class="product-reviews">
+                                                                    <i class="fa fa-star"></i>
+                                                                    <i class="fa fa-star"></i>
+                                                                    <i class="fa fa-star"></i>
+                                                                    <i class="fa fa-star"></i>
+                                                                    <i class="fa fa-star-o"></i>
+                                                                </div>
+                                                                <div class="product-description">
+                                                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce posuere metus vitae arcu imperdiet, id aliquet ante scelerisque. Sed sit amet sem vitae urna fringilla tempus.</p>
+                                                                </div>
+                                                                <div class="product-price">
+                                                                    <div class="price-box">
+                                                                        <span class="price">$125.00</span>
+                                                                        <span class="regular-price">$115.00</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="product-list-action">
+                                                                    <div class="add-btn">
+                                                                        <a href="#">Add To Cart</a>
+                                                                    </div>
+                                                                    <ul>
+                                                                        <li><a href="#open-modal" data-bs-toggle="modal" title="Quick view"><i class="fa fa-search"></i></a></li>
+                                                                        <li><a href="#" title="Whishlist"><i class="fa fa-heart-o"></i></a></li>
+                                                                        <li><a href="#" title="Compare"><i class="fa fa-refresh"></i></a></li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!--Single List Product End-->
+                                                    </div>
+                                                </div>
+                                                <div class="product-list-item mb-40">
+                                                    <div class="row">
+                                                        <!--Single List Product Start-->
+                                                        <div class="col-md-4">
+                                                            <div class="single-product">
+                                                                <div class="product-img img-full">
+                                                                    <a href="single-product.html">
+                                                                        <img src="${pageContext.request.contextPath}/assets/img/product/product14.jpg" alt="">
+                                                                    </a>
+                                                                    <span class="onsale">Sale!</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-8">
+                                                            <div class="product-content shop-list">
+                                                                <h2><a href="single-product.html">Aliquam sit amet</a></h2>
+                                                                <div class="product-reviews">
+                                                                    <i class="fa fa-star"></i>
+                                                                    <i class="fa fa-star"></i>
+                                                                    <i class="fa fa-star"></i>
+                                                                    <i class="fa fa-star"></i>
+                                                                    <i class="fa fa-star-o"></i>
+                                                                </div>
+                                                                <div class="product-description">
+                                                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce posuere metus vitae arcu imperdiet, id aliquet ante scelerisque. Sed sit amet sem vitae urna fringilla tempus.</p>
+                                                                </div>
+                                                                <div class="product-price">
+                                                                    <div class="price-box">
+                                                                        <span class="price">$100.00</span>
+                                                                        <span class="regular-price">$90.00</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="product-list-action">
+                                                                    <div class="add-btn">
+                                                                        <a href="#">Add To Cart</a>
+                                                                    </div>
+                                                                    <ul>
+                                                                        <li><a href="#open-modal" data-bs-toggle="modal" title="Quick view"><i class="fa fa-search"></i></a></li>
+                                                                        <li><a href="#" title="Whishlist"><i class="fa fa-heart-o"></i></a></li>
+                                                                        <li><a href="#" title="Compare"><i class="fa fa-refresh"></i></a></li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!--Single List Product End-->
+                                                    </div>
+                                                </div>
+                                                <div class="product-list-item mb-40">
+                                                    <div class="row">
+                                                        <!--Single List Product Start-->
+                                                        <div class="col-md-4">
+                                                            <div class="single-product">
+                                                                <div class="product-img img-full">
+                                                                    <a href="single-product.html">
+                                                                        <img src="${pageContext.request.contextPath}/assets/img/product/product15.jpg" alt="">
+                                                                    </a>
+                                                                    <span class="onsale">Sale!</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-8">
+                                                            <div class="product-content shop-list">
+                                                                <h2><a href="single-product.html">Aliquam sit amet</a></h2>
+                                                                <div class="product-reviews">
+                                                                    <i class="fa fa-star"></i>
+                                                                    <i class="fa fa-star"></i>
+                                                                    <i class="fa fa-star"></i>
+                                                                    <i class="fa fa-star"></i>
+                                                                    <i class="fa fa-star-o"></i>
+                                                                </div>
+                                                                <div class="product-description">
+                                                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce posuere metus vitae arcu imperdiet, id aliquet ante scelerisque. Sed sit amet sem vitae urna fringilla tempus.</p>
+                                                                </div>
+                                                                <div class="product-price">
+                                                                    <div class="price-box">
+                                                                        <span class="regular-price">$90.00</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="product-list-action">
+                                                                    <div class="add-btn">
+                                                                        <a href="#">Add To Cart</a>
+                                                                    </div>
+                                                                    <ul>
+                                                                        <li><a href="#open-modal" data-bs-toggle="modal" title="Quick view"><i class="fa fa-search"></i></a></li>
+                                                                        <li><a href="#" title="Whishlist"><i class="fa fa-heart-o"></i></a></li>
+                                                                        <li><a href="#" title="Compare"><i class="fa fa-refresh"></i></a></li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!--Single List Product End-->
+                                                    </div>
+                                                </div>
+                                                <div class="product-list-item mb-40">
+                                                    <div class="row">
+                                                        <!--Single List Product Start-->
+                                                        <div class="col-md-4">
+                                                            <div class="single-product">
+                                                                <div class="product-img img-full">
+                                                                    <a href="single-product.html">
+                                                                        <img src="${pageContext.request.contextPath}/assets/img/product/product10.jpg" alt="">
+                                                                    </a>
+                                                                    <span class="onsale">Sale!</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-8">
+                                                            <div class="product-content shop-list">
+                                                                <h2><a href="single-product.html">Aliquet auctor sem</a></h2>
+                                                                <div class="product-reviews">
+                                                                    <i class="fa fa-star"></i>
+                                                                    <i class="fa fa-star"></i>
+                                                                    <i class="fa fa-star"></i>
+                                                                    <i class="fa fa-star"></i>
+                                                                    <i class="fa fa-star-o"></i>
+                                                                </div>
+                                                                <div class="product-description">
+                                                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce posuere metus vitae arcu imperdiet, id aliquet ante scelerisque. Sed sit amet sem vitae urna fringilla tempus.</p>
+                                                                </div>
+                                                                <div class="product-price">
+                                                                    <div class="price-box">
+                                                                        <span class="price">$75.00</span>
+                                                                        <span class="regular-price">$50.00</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="product-list-action">
+                                                                    <div class="add-btn">
+                                                                        <a href="#">Add To Cart</a>
+                                                                    </div>
+                                                                    <ul>
+                                                                        <li><a href="#open-modal" data-bs-toggle="modal" title="Quick view"><i class="fa fa-search"></i></a></li>
+                                                                        <li><a href="#" title="Whishlist"><i class="fa fa-heart-o"></i></a></li>
+                                                                        <li><a href="#" title="Compare"><i class="fa fa-refresh"></i></a></li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!--Single List Product End-->
+                                                    </div>
+                                                </div>
+                                                <div class="product-list-item mb-40">
+                                                    <div class="row">
+                                                        <!--Single List Product Start-->
+                                                        <div class="col-md-4">
+                                                            <div class="single-product">
+                                                                <div class="product-img img-full">
+                                                                    <a href="single-product.html">
+                                                                        <img src="${pageContext.request.contextPath}/assets/img/product/product16.jpg" alt="">
+                                                                    </a>
+                                                                    <span class="onsale">Sale!</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-8">
+                                                            <div class="product-content shop-list">
+                                                                <h2><a href="single-product.html">Auctor gravida enim</a></h2>
+                                                                <div class="product-reviews">
+                                                                    <i class="fa fa-star"></i>
+                                                                    <i class="fa fa-star"></i>
+                                                                    <i class="fa fa-star"></i>
+                                                                    <i class="fa fa-star"></i>
+                                                                    <i class="fa fa-star-o"></i>
+                                                                </div>
+                                                                <div class="product-description">
+                                                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce posuere metus vitae arcu imperdiet, id aliquet ante scelerisque. Sed sit amet sem vitae urna fringilla tempus.</p>
+                                                                </div>
+                                                                <div class="product-price">
+                                                                    <div class="price-box">
+                                                                        <span class="price">$85.00</span>
+                                                                        <span class="regular-price">$60.00</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="product-list-action">
+                                                                    <div class="add-btn">
+                                                                        <a href="#">Add To Cart</a>
+                                                                    </div>
+                                                                    <ul>
+                                                                        <li><a href="#open-modal" data-bs-toggle="modal" title="Quick view"><i class="fa fa-search"></i></a></li>
+                                                                        <li><a href="#" title="Whishlist"><i class="fa fa-heart-o"></i></a></li>
+                                                                        <li><a href="#" title="Compare"><i class="fa fa-refresh"></i></a></li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!--Single List Product End-->
+                                                    </div>
+                                                </div>
+                                                <div class="product-list-item mb-40">
+                                                    <div class="row">
+                                                        <!--Single List Product Start-->
+                                                        <div class="col-md-4">
+                                                            <div class="single-product">
+                                                                <div class="product-img img-full">
+                                                                    <a href="single-product.html">
+                                                                        <img src="${pageContext.request.contextPath}/assets/img/product/product7.jpg" alt="">
+                                                                    </a>
+                                                                    <span class="onsale">Sale!</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-8">
+                                                            <div class="product-content shop-list">
+                                                                <h2><a href="single-product.html">Auctor sem</a></h2>
+                                                                <div class="product-reviews">
+                                                                    <i class="fa fa-star"></i>
+                                                                    <i class="fa fa-star"></i>
+                                                                    <i class="fa fa-star"></i>
+                                                                    <i class="fa fa-star"></i>
+                                                                    <i class="fa fa-star-o"></i>
+                                                                </div>
+                                                                <div class="product-description">
+                                                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce posuere metus vitae arcu imperdiet, id aliquet ante scelerisque. Sed sit amet sem vitae urna fringilla tempus.</p>
+                                                                </div>
+                                                                <div class="product-price">
+                                                                    <div class="price-box">
+                                                                        <span class="regular-price">$100.00</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="product-list-action">
+                                                                    <div class="add-btn">
+                                                                        <a href="#">Add To Cart</a>
+                                                                    </div>
+                                                                    <ul>
+                                                                        <li><a href="#open-modal" data-bs-toggle="modal" title="Quick view"><i class="fa fa-search"></i></a></li>
+                                                                        <li><a href="#" title="Whishlist"><i class="fa fa-heart-o"></i></a></li>
+                                                                        <li><a href="#" title="Compare"><i class="fa fa-refresh"></i></a></li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!--Single List Product End-->
+                                                    </div>
+                                                </div>
+                                                <div class="product-list-item mb-40">
+                                                    <div class="row">
+                                                        <!--Single List Product Start-->
+                                                        <div class="col-md-4">
+                                                            <div class="single-product">
+                                                                <div class="product-img img-full">
+                                                                    <a href="single-product.html">
+                                                                        <img src="${pageContext.request.contextPath}/assets/img/product/product2.jpg" alt="">
+                                                                    </a>
+                                                                    <span class="onsale">Sale!</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-8">
+                                                            <div class="product-content shop-list">
+                                                                <h2><a href="single-product.html">Commodo dolor</a></h2>
+                                                                <div class="product-reviews">
+                                                                    <i class="fa fa-star"></i>
+                                                                    <i class="fa fa-star"></i>
+                                                                    <i class="fa fa-star"></i>
+                                                                    <i class="fa fa-star"></i>
+                                                                    <i class="fa fa-star-o"></i>
+                                                                </div>
+                                                                <div class="product-description">
+                                                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce posuere metus vitae arcu imperdiet, id aliquet ante scelerisque. Sed sit amet sem vitae urna fringilla tempus.</p>
+                                                                </div>
+                                                                <div class="product-price">
+                                                                    <div class="price-box">
+                                                                        <span class="regular-price">$80.00</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="product-list-action">
+                                                                    <div class="add-btn">
+                                                                        <a href="#">Add To Cart</a>
+                                                                    </div>
+                                                                    <ul>
+                                                                        <li><a href="#open-modal" data-bs-toggle="modal" title="Quick view"><i class="fa fa-search"></i></a></li>
+                                                                        <li><a href="#" title="Whishlist"><i class="fa fa-heart-o"></i></a></li>
+                                                                        <li><a href="#" title="Compare"><i class="fa fa-refresh"></i></a></li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!--Single List Product End-->
+                                                    </div>
+                                                </div>
+                                                <div class="product-list-item mb-40">
+                                                    <div class="row">
+                                                        <!--Single List Product Start-->
+                                                        <div class="col-md-4">
+                                                            <div class="single-product">
+                                                                <div class="product-img img-full">
+                                                                    <a href="single-product.html">
+                                                                        <img src="${pageContext.request.contextPath}/assets/img/product/product18.jpg" alt="">
+                                                                    </a>
+                                                                    <span class="onsale">Sale!</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-8">
+                                                            <div class="product-content shop-list">
+                                                                <h2><a href="single-product.html">Condimentum furniture</a></h2>
+                                                                <div class="product-reviews">
+                                                                    <i class="fa fa-star"></i>
+                                                                    <i class="fa fa-star"></i>
+                                                                    <i class="fa fa-star"></i>
+                                                                    <i class="fa fa-star"></i>
+                                                                    <i class="fa fa-star-o"></i>
+                                                                </div>
+                                                                <div class="product-description">
+                                                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce posuere metus vitae arcu imperdiet, id aliquet ante scelerisque. Sed sit amet sem vitae urna fringilla tempus.</p>
+                                                                </div>
+                                                                <div class="product-price">
+                                                                    <div class="price-box">
+                                                                        <span class="regular-price">$115.00</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="product-list-action">
+                                                                    <div class="add-btn">
+                                                                        <a href="#">Add To Cart</a>
+                                                                    </div>
+                                                                    <ul>
+                                                                        <li><a href="#open-modal" data-bs-toggle="modal" title="Quick view"><i class="fa fa-search"></i></a></li>
+                                                                        <li><a href="#" title="Whishlist"><i class="fa fa-heart-o"></i></a></li>
+                                                                        <li><a href="#" title="Compare"><i class="fa fa-refresh"></i></a></li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!--Single List Product End-->
+                                                    </div>
+                                                </div>
+                                                <div class="product-list-item mb-40">
+                                                    <div class="row">
+                                                        <!--Single List Product Start-->
+                                                        <div class="col-md-4">
+                                                            <div class="single-product">
+                                                                <div class="product-img img-full">
+                                                                    <a href="single-product.html">
+                                                                        <img src="${pageContext.request.contextPath}/assets/img/product/product19.jpg" alt="">
+                                                                    </a>
+                                                                    <span class="onsale">Sale!</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-8">
+                                                            <div class="product-content shop-list">
+                                                                <h2><a href="single-product.html">Condimentum posuere</a></h2>
+                                                                <div class="product-reviews">
+                                                                    <i class="fa fa-star"></i>
+                                                                    <i class="fa fa-star"></i>
+                                                                    <i class="fa fa-star"></i>
+                                                                    <i class="fa fa-star"></i>
+                                                                    <i class="fa fa-star-o"></i>
+                                                                </div>
+                                                                <div class="product-description">
+                                                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce posuere metus vitae arcu imperdiet, id aliquet ante scelerisque. Sed sit amet sem vitae urna fringilla tempus.</p>
+                                                                </div>
+                                                                <div class="product-price">
+                                                                    <div class="price-box">
+                                                                        <span class="price">$125.00</span>
+                                                                        <span class="regular-price">$115.00</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="product-list-action">
+                                                                    <div class="add-btn">
+                                                                        <a href="#">Add To Cart</a>
+                                                                    </div>
+                                                                    <ul>
+                                                                        <li><a href="#open-modal" data-bs-toggle="modal" title="Quick view"><i class="fa fa-search"></i></a></li>
+                                                                        <li><a href="#" title="Whishlist"><i class="fa fa-heart-o"></i></a></li>
+                                                                        <li><a href="#" title="Compare"><i class="fa fa-refresh"></i></a></li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!--Single List Product End-->
+                                                    </div>
+                                                </div>
+                                                <div class="product-list-item mb-40">
+                                                    <div class="row">
+                                                        <!--Single List Product Start-->
+                                                        <div class="col-md-4">
+                                                            <div class="single-product">
+                                                                <div class="product-img img-full">
+                                                                    <a href="single-product.html">
+                                                                        <img src="${pageContext.request.contextPath}/assets/img/product/product3.jpg" alt="">
+                                                                    </a>
+                                                                    <span class="onsale">Sale!</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-8">
+                                                            <div class="product-content shop-list">
+                                                                <h2><a href="single-product.html">Convallis furniture</a></h2>
+                                                                <div class="product-reviews">
+                                                                    <i class="fa fa-star"></i>
+                                                                    <i class="fa fa-star"></i>
+                                                                    <i class="fa fa-star"></i>
+                                                                    <i class="fa fa-star"></i>
+                                                                    <i class="fa fa-star-o"></i>
+                                                                </div>
+                                                                <div class="product-description">
+                                                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce posuere metus vitae arcu imperdiet, id aliquet ante scelerisque. Sed sit amet sem vitae urna fringilla tempus.</p>
+                                                                </div>
+                                                                <div class="product-price">
+                                                                    <div class="price-box">
+                                                                        <span class="regular-price">$75.00</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="product-list-action">
+                                                                    <div class="add-btn">
+                                                                        <a href="#">Add To Cart</a>
+                                                                    </div>
+                                                                    <ul>
+                                                                        <li><a href="#open-modal" data-bs-toggle="modal" title="Quick view"><i class="fa fa-search"></i></a></li>
+                                                                        <li><a href="#" title="Whishlist"><i class="fa fa-heart-o"></i></a></li>
+                                                                        <li><a href="#" title="Compare"><i class="fa fa-refresh"></i></a></li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!--Single List Product End-->
+                                                    </div>
+                                                </div>
+                                                <div class="product-list-item mb-40">
+                                                    <div class="row">
+                                                        <!--Single List Product Start-->
+                                                        <div class="col-md-4">
+                                                            <div class="single-product">
+                                                                <div class="product-img img-full">
+                                                                    <a href="single-product.html">
+                                                                        <img src="${pageContext.request.contextPath}/assets/img/product/product20.jpg" alt="">
+                                                                    </a>
+                                                                    <span class="onsale">Sale!</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-8">
+                                                            <div class="product-content shop-list">
+                                                                <h2><a href="single-product.html">Convallis quam sit</a></h2>
+                                                                <div class="product-reviews">
+                                                                    <i class="fa fa-star"></i>
+                                                                    <i class="fa fa-star"></i>
+                                                                    <i class="fa fa-star"></i>
+                                                                    <i class="fa fa-star"></i>
+                                                                    <i class="fa fa-star-o"></i>
+                                                                </div>
+                                                                <div class="product-description">
+                                                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce posuere metus vitae arcu imperdiet, id aliquet ante scelerisque. Sed sit amet sem vitae urna fringilla tempus.</p>
+                                                                </div>
+                                                                <div class="product-price">
+                                                                    <div class="price-box">
+                                                                        <span class="regular-price">$95.00</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="product-list-action">
+                                                                    <div class="add-btn">
+                                                                        <a href="#">Add To Cart</a>
+                                                                    </div>
+                                                                    <ul>
+                                                                        <li><a href="#open-modal" data-bs-toggle="modal" title="Quick view"><i class="fa fa-search"></i></a></li>
+                                                                        <li><a href="#" title="Whishlist"><i class="fa fa-heart-o"></i></a></li>
+                                                                        <li><a href="#" title="Compare"><i class="fa fa-refresh"></i></a></li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!--Single List Product End-->
+                                                    </div>
+                                                </div>
+                                                <div class="product-list-item mb-40">
+                                                    <div class="row">
+                                                        <!--Single List Product Start-->
+                                                        <div class="col-md-4">
+                                                            <div class="single-product">
+                                                                <div class="product-img img-full">
+                                                                    <a href="single-product.html">
+                                                                        <img src="${pageContext.request.contextPath}/assets/img/product/product21.jpg" alt="">
+                                                                    </a>
+                                                                    <span class="onsale">Sale!</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-8">
+                                                            <div class="product-content shop-list">
+                                                                <h2><a href="single-product.html">Curabitur a purus</a></h2>
+                                                                <div class="product-reviews">
+                                                                    <i class="fa fa-star"></i>
+                                                                    <i class="fa fa-star"></i>
+                                                                    <i class="fa fa-star"></i>
+                                                                    <i class="fa fa-star"></i>
+                                                                    <i class="fa fa-star-o"></i>
+                                                                </div>
+                                                                <div class="product-description">
+                                                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce posuere metus vitae arcu imperdiet, id aliquet ante scelerisque. Sed sit amet sem vitae urna fringilla tempus.</p>
+                                                                </div>
+                                                                <div class="product-price">
+                                                                    <div class="price-box">
+                                                                        <span class="regular-price">$115.00</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="product-list-action">
+                                                                    <div class="add-btn">
+                                                                        <a href="#">Add To Cart</a>
+                                                                    </div>
+                                                                    <ul>
+                                                                        <li><a href="#open-modal" data-bs-toggle="modal" title="Quick view"><i class="fa fa-search"></i></a></li>
+                                                                        <li><a href="#" title="Whishlist"><i class="fa fa-heart-o"></i></a></li>
+                                                                        <li><a href="#" title="Compare"><i class="fa fa-refresh"></i></a></li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!--Single List Product End-->
+                                                    </div>
+                                                </div>
+                                                <div class="product-list-item mb-40">
+                                                    <div class="row">
+                                                        <!--Single List Product Start-->
+                                                        <div class="col-md-4">
+                                                            <div class="single-product">
+                                                                <div class="product-img img-full">
+                                                                    <a href="single-product.html">
+                                                                        <img src="${pageContext.request.contextPath}/assets/img/product/product11.jpg" alt="">
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-8">
+                                                            <div class="product-content shop-list">
+                                                                <h2><a href="single-product.html">Diam vel neque</a></h2>
+                                                                <div class="product-reviews">
+                                                                    <i class="fa fa-star"></i>
+                                                                    <i class="fa fa-star"></i>
+                                                                    <i class="fa fa-star"></i>
+                                                                    <i class="fa fa-star"></i>
+                                                                    <i class="fa fa-star-o"></i>
+                                                                </div>
+                                                                <div class="product-description">
+                                                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce posuere metus vitae arcu imperdiet, id aliquet ante scelerisque. Sed sit amet sem vitae urna fringilla tempus.</p>
+                                                                </div>
+                                                                <div class="product-price">
+                                                                    <div class="price-box">
+                                                                        <span class="regular-price">$40.00</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="product-list-action">
+                                                                    <div class="add-btn">
+                                                                        <a href="#">Add To Cart</a>
+                                                                    </div>
+                                                                    <ul>
+                                                                        <li><a href="#open-modal" data-bs-toggle="modal" title="Quick view"><i class="fa fa-search"></i></a></li>
+                                                                        <li><a href="#" title="Whishlist"><i class="fa fa-heart-o"></i></a></li>
+                                                                        <li><a href="#" title="Compare"><i class="fa fa-refresh"></i></a></li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!--Single List Product End-->
+                                                    </div>
+                                                </div>
+                                                <div class="product-list-item mb-40">
+                                                    <div class="row">
+                                                        <!--Single List Product Start-->
+                                                        <div class="col-md-4">
+                                                            <div class="single-product">
+                                                                <div class="product-img img-full">
+                                                                    <a href="single-product.html">
+                                                                        <img src="${pageContext.request.contextPath}/assets/img/product/product23.jpg" alt="">
+                                                                    </a>
+                                                                    <span class="onsale">Sale!</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-8">
+                                                            <div class="product-content shop-list">
+                                                                <h2><a href="single-product.html">Dignissim furniture</a></h2>
+                                                                <div class="product-reviews">
+                                                                    <i class="fa fa-star"></i>
+                                                                    <i class="fa fa-star"></i>
+                                                                    <i class="fa fa-star"></i>
+                                                                    <i class="fa fa-star"></i>
+                                                                    <i class="fa fa-star-o"></i>
+                                                                </div>
+                                                                <div class="product-description">
+                                                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce posuere metus vitae arcu imperdiet, id aliquet ante scelerisque. Sed sit amet sem vitae urna fringilla tempus.</p>
+                                                                </div>
+                                                                <div class="product-price">
+                                                                    <div class="price-box">
+                                                                        <span class="price">$175.00</span>
+                                                                        <span class="regular-price">$150.00</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="product-list-action">
+                                                                    <div class="add-btn">
+                                                                        <a href="#">Add To Cart</a>
+                                                                    </div>
+                                                                    <ul>
+                                                                        <li><a href="#open-modal" data-bs-toggle="modal" title="Quick view"><i class="fa fa-search"></i></a></li>
+                                                                        <li><a href="#" title="Whishlist"><i class="fa fa-heart-o"></i></a></li>
+                                                                        <li><a href="#" title="Compare"><i class="fa fa-refresh"></i></a></li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!--Single List Product End-->
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <button class="outline-btn text-n100 fw-medium box-style box-secondary2">ADD
-                                                TO CART </button>
                                         </div>
+                                        <!--Pagination Start-->
+                                        <div class="product-pagination">
+                                            <ul>
+                                                <li class="active"><a href="#">1</a></li>
+                                                <li><a href="#">2</a></li>
+                                                <li><a href="#">3</a></li>
+                                                <li><a href="#">4</a></li>
+                                                <li><a href="#">5</a></li>
+                                                <li><a href="#"><i class="fa fa-angle-double-right"></i></a></li>
+                                            </ul>
+                                        </div>
+                                        <!--Pagination End-->
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-lg-4 col-xs-6">
-                                <!-- product item -->
-                                <div class="product-card2 position-relative p-xl-10 p-lg-8 p-6 bg-n0 border border-n100-5 box-style box-n20 card-tilt">
-                                    <div class="product-type py-lg-3 py-2 ps-lg-4 ps-2 pe-lg-6 pe-4 bg-secondary2 position-absolute top-0 start-0 parallelogram-path z-2">
-                                        <span class="text-sm fw-medium text-n0">New</span>
-                                    </div>
-                                    <div class="product-thumb-wrapper position-relative">
-                                        <button class="single-wishlist-btn text-secondary2 text-xl icon-52px bg-n0 position-absolute top-0 right-0 z-3 tooltip-btn tooltip-left" data-tooltip="Add to wishlist">
-                                            <i class="ph ph-heart"></i>
-                                        </button>
-                                        <div class="product-thumb hover-cursor" data-hover-text="View Product">
-                                            <a href="shop-details.html" class="product-thumb-link d-block">
-                                                <img class="w-100" src="${pageContext.request.contextPath}/assets/images/product-3.png" alt="product thumb">
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <span class="d-block h-1px w-100 bg-n100-1 mb-lg-6 mb-4 mt-lg-10 mt-6"></span>
-                                    <div class="product-info-wrapper">
-                                        <div class="mb-xxl-7 mb-md-5 mb-3">
-                                            <a href="shop-details.html">
-                                                <h4 class="text-n100 mb-2 hover-text-secondary2">
-                                                    Urban Wanderer
-                                                </h4>
-                                            </a>
-                                            <span class="text-sm fw-normal text-n50">Enduro</span>
-                                        </div>
-                                        <div class="d-between flex-wrap gap-4">
-                                            <div class="d-grid">
-                                                <span class="text-sm fw-normal text-n50 text-decoration-underline">$21,599.00
-                                                    USD</span>
-                                                <span class="text-xl fw-semibold text-secondary2">$ 14,599.00 USD</span>
-                                            </div>
-                                            <button class="outline-btn text-n100 fw-medium box-style box-secondary2">ADD
-                                                TO CART </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-xs-6">
-                                <!-- product item -->
-                                <div class="product-card2 position-relative p-xl-10 p-lg-8 p-6 bg-n0 border border-n100-5 box-style box-n20 card-tilt">
-                                    <div class="product-thumb-wrapper position-relative">
-                                        <button class="single-wishlist-btn text-secondary2 text-xl icon-52px bg-n0 position-absolute top-0 right-0 z-3 tooltip-btn tooltip-left" data-tooltip="Add to wishlist">
-                                            <i class="ph ph-heart"></i>
-                                        </button>
-                                        <div class="product-thumb hover-cursor" data-hover-text="View Product">
-                                            <a href="shop-details.html" class="product-thumb-link d-block">
-                                                <img class="w-100" src="${pageContext.request.contextPath}/assets/images/product-4.png" alt="product thumb">
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <span class="d-block h-1px w-100 bg-n100-1 mb-lg-6 mb-4 mt-lg-10 mt-6"></span>
-                                    <div class="product-info-wrapper">
-                                        <div class="mb-xxl-7 mb-md-5 mb-3">
-                                            <a href="shop-details.html">
-                                                <h4 class="text-n100 mb-2 hover-text-secondary2">
-                                                    Electro Cruise
-                                                </h4>
-                                            </a>
-                                            <span class="text-sm fw-normal text-n50">Enduro</span>
-                                        </div>
-                                        <div class="d-between flex-wrap gap-4">
-                                            <div class="d-grid">
-                                                <span class="text-sm fw-normal text-n50 text-decoration-underline">$21,599.00
-                                                    USD</span>
-                                                <span class="text-xl fw-semibold text-secondary2">$ 14,599.00 USD</span>
-                                            </div>
-                                            <button class="outline-btn text-n100 fw-medium box-style box-secondary2">ADD
-                                                TO CART </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-xs-6">
-                                <!-- product item -->
-                                <div class="product-card2 position-relative p-xl-10 p-lg-8 p-6 bg-n0 border border-n100-5 box-style box-n20 card-tilt">
-                                    <div class="product-thumb-wrapper position-relative">
-                                        <button class="single-wishlist-btn text-secondary2 text-xl icon-52px bg-n0 position-absolute top-0 right-0 z-3 tooltip-btn tooltip-left" data-tooltip="Add to wishlist">
-                                            <i class="ph ph-heart"></i>
-                                        </button>
-                                        <div class="product-thumb hover-cursor" data-hover-text="View Product">
-                                            <a href="shop-details.html" class="product-thumb-link d-block">
-                                                <img class="w-100" src="${pageContext.request.contextPath}/assets/images/product-5.png" alt="product thumb">
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <span class="d-block h-1px w-100 bg-n100-1 mb-lg-6 mb-4 mt-lg-10 mt-6"></span>
-                                    <div class="product-info-wrapper">
-                                        <div class="mb-xxl-7 mb-md-5 mb-3">
-                                            <a href="shop-details.html">
-                                                <h4 class="text-n100 mb-2 hover-text-secondary2">
-                                                    Watt Wheels
-                                                </h4>
-                                            </a>
-                                            <span class="text-sm fw-normal text-n50">Enduro</span>
-                                        </div>
-                                        <div class="d-between flex-wrap gap-4">
-                                            <div class="d-grid">
-                                                <span class="text-sm fw-normal text-n50 text-decoration-underline">$21,599.00
-                                                    USD</span>
-                                                <span class="text-xl fw-semibold text-secondary2">$ 14,599.00 USD</span>
-                                            </div>
-                                            <button class="outline-btn text-n100 fw-medium box-style box-secondary2">ADD
-                                                TO CART </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-xs-6">
-                                <!-- product item -->
-                                <div class="product-card2 position-relative p-xl-10 p-lg-8 p-6 bg-n0 border border-n100-5 box-style box-n20 card-tilt">
-                                    <div class="product-type py-lg-3 py-2 ps-lg-4 ps-2 pe-lg-6 pe-4 bg-secondary2 position-absolute top-0 start-0 parallelogram-path z-2">
-                                        <span class="text-sm fw-medium text-n0">New</span>
-                                    </div>
-                                    <div class="product-thumb-wrapper position-relative">
-                                        <button class="single-wishlist-btn text-secondary2 text-xl icon-52px bg-n0 position-absolute top-0 right-0 z-3 tooltip-btn tooltip-left" data-tooltip="Add to wishlist">
-                                            <i class="ph ph-heart"></i>
-                                        </button>
-                                        <div class="product-thumb hover-cursor" data-hover-text="View Product">
-                                            <a href="shop-details.html" class="product-thumb-link d-block">
-                                                <img class="w-100" src="${pageContext.request.contextPath}/assets/images/product-6.png" alt="product thumb">
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <span class="d-block h-1px w-100 bg-n100-1 mb-lg-6 mb-4 mt-lg-10 mt-6"></span>
-                                    <div class="product-info-wrapper">
-                                        <div class="mb-xxl-7 mb-md-5 mb-3">
-                                            <a href="shop-details.html">
-                                                <h4 class="text-n100 mb-2 hover-text-secondary2">
-                                                    Electro Boost
-                                                </h4>
-                                            </a>
-                                            <span class="text-sm fw-normal text-n50">Enduro</span>
-                                        </div>
-                                        <div class="d-between flex-wrap gap-4">
-                                            <div class="d-grid">
-                                                <span class="text-sm fw-normal text-n50 text-decoration-underline">$21,599.00
-                                                    USD</span>
-                                                <span class="text-xl fw-semibold text-secondary2">$ 14,599.00 USD</span>
-                                            </div>
-                                            <button class="outline-btn text-n100 fw-medium box-style box-secondary2">ADD
-                                                TO CART </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-xs-6">
-                                <!-- product item -->
-                                <div class="product-card2 position-relative p-xl-10 p-lg-8 p-6 bg-n0 border border-n100-5 box-style box-n20 card-tilt">
-                                    <div class="product-type py-lg-3 py-2 ps-lg-4 ps-2 pe-lg-6 pe-4 bg-secondary2 position-absolute top-0 start-0 parallelogram-path z-2">
-                                        <span class="text-sm fw-medium text-n0">New</span>
-                                    </div>
-                                    <div class="product-thumb-wrapper position-relative">
-                                        <button class="single-wishlist-btn text-secondary2 text-xl icon-52px bg-n0 position-absolute top-0 right-0 z-3 tooltip-btn tooltip-left" data-tooltip="Add to wishlist">
-                                            <i class="ph ph-heart"></i>
-                                        </button>
-                                        <div class="product-thumb hover-cursor" data-hover-text="View Product">
-                                            <a href="shop-details.html" class="product-thumb-link d-block">
-                                                <img class="w-100" src="${pageContext.request.contextPath}/assets/images/product-7.png" alt="product thumb">
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <span class="d-block h-1px w-100 bg-n100-1 mb-lg-6 mb-4 mt-lg-10 mt-6"></span>
-                                    <div class="product-info-wrapper">
-                                        <div class="mb-xxl-7 mb-md-5 mb-3">
-                                            <a href="shop-details.html">
-                                                <h4 class="text-n100 mb-2 hover-text-secondary2">
-                                                    Gravel Master
-                                                </h4>
-                                            </a>
-                                            <span class="text-sm fw-normal text-n50">Enduro</span>
-                                        </div>
-                                        <div class="d-between flex-wrap gap-4">
-                                            <div class="d-grid">
-                                                <span class="text-sm fw-normal text-n50 text-decoration-underline">$21,599.00
-                                                    USD</span>
-                                                <span class="text-xl fw-semibold text-secondary2">$ 14,599.00 USD</span>
-                                            </div>
-                                            <button class="outline-btn text-n100 fw-medium box-style box-secondary2">ADD
-                                                TO CART </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-xs-6">
-                                <!-- product item -->
-                                <div class="product-card2 position-relative p-xl-10 p-lg-8 p-6 bg-n0 border border-n100-5 box-style box-n20 card-tilt">
-                                    <div class="product-thumb-wrapper position-relative">
-                                        <button class="single-wishlist-btn text-secondary2 text-xl icon-52px bg-n0 position-absolute top-0 right-0 z-3 tooltip-btn tooltip-left" data-tooltip="Add to wishlist">
-                                            <i class="ph ph-heart"></i>
-                                        </button>
-                                        <div class="product-thumb hover-cursor" data-hover-text="View Product">
-                                            <a href="shop-details.html" class="product-thumb-link d-block">
-                                                <img class="w-100" src="${pageContext.request.contextPath}/assets/images/product-8.png" alt="product thumb">
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <span class="d-block h-1px w-100 bg-n100-1 mb-lg-6 mb-4 mt-lg-10 mt-6"></span>
-                                    <div class="product-info-wrapper">
-                                        <div class="mb-xxl-7 mb-md-5 mb-3">
-                                            <a href="shop-details.html">
-                                                <h4 class="text-n100 mb-2 hover-text-secondary2">
-                                                    Rough Rider
-                                                </h4>
-                                            </a>
-                                            <span class="text-sm fw-normal text-n50">Enduro</span>
-                                        </div>
-                                        <div class="d-between flex-wrap gap-4">
-                                            <div class="d-grid">
-                                                <span class="text-sm fw-normal text-n50 text-decoration-underline">$21,599.00
-                                                    USD</span>
-                                                <span class="text-xl fw-semibold text-secondary2">$ 14,599.00 USD</span>
-                                            </div>
-                                            <button class="outline-btn text-n100 fw-medium box-style box-secondary2">ADD
-                                                TO CART </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-xs-6">
-                                <!-- product item -->
-                                <div class="product-card2 position-relative p-xl-10 p-lg-8 p-6 bg-n0 border border-n100-5 box-style box-n20 card-tilt">
-                                    <div class="product-type py-lg-3 py-2 ps-lg-4 ps-2 pe-lg-6 pe-4 bg-secondary2 position-absolute top-0 start-0 parallelogram-path z-2">
-                                        <span class="text-sm fw-medium text-n0">New</span>
-                                    </div>
-                                    <div class="product-thumb-wrapper position-relative">
-                                        <button class="single-wishlist-btn text-secondary2 text-xl icon-52px bg-n0 position-absolute top-0 right-0 z-3 tooltip-btn tooltip-left" data-tooltip="Add to wishlist">
-                                            <i class="ph ph-heart"></i>
-                                        </button>
-                                        <div class="product-thumb hover-cursor" data-hover-text="View Product">
-                                            <a href="shop-details.html" class="product-thumb-link d-block">
-                                                <img class="w-100" src="${pageContext.request.contextPath}/assets/images/product-9.png" alt="product thumb">
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <span class="d-block h-1px w-100 bg-n100-1 mb-lg-6 mb-4 mt-lg-10 mt-6"></span>
-                                    <div class="product-info-wrapper">
-                                        <div class="mb-xxl-7 mb-md-5 mb-3">
-                                            <a href="shop-details.html">
-                                                <h4 class="text-n100 mb-2 hover-text-secondary2">
-                                                    Terra Roamer
-                                                </h4>
-                                            </a>
-                                            <span class="text-sm fw-normal text-n50">Enduro</span>
-                                        </div>
-                                        <div class="d-between flex-wrap gap-4">
-                                            <div class="d-grid">
-                                                <span class="text-sm fw-normal text-n50 text-decoration-underline">$21,599.00
-                                                    USD</span>
-                                                <span class="text-xl fw-semibold text-secondary2">$ 14,599.00 USD</span>
-                                            </div>
-                                            <button class="outline-btn text-n100 fw-medium box-style box-secondary2">ADD
-                                                TO CART </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-xs-6">
-                                <!-- product item -->
-                                <div class="product-card2 position-relative p-xl-10 p-lg-8 p-6 bg-n0 border border-n100-5 box-style box-n20 card-tilt">
-                                    <div class="product-type py-lg-3 py-2 ps-lg-4 ps-2 pe-lg-6 pe-4 bg-secondary2 position-absolute top-0 start-0 parallelogram-path z-2">
-                                        <span class="text-sm fw-medium text-n0">New</span>
-                                    </div>
-                                    <div class="product-thumb-wrapper position-relative">
-                                        <button class="single-wishlist-btn text-secondary2 text-xl icon-52px bg-n0 position-absolute top-0 right-0 z-3 tooltip-btn tooltip-left" data-tooltip="Add to wishlist">
-                                            <i class="ph ph-heart"></i>
-                                        </button>
-                                        <div class="product-thumb hover-cursor" data-hover-text="View Product">
-                                            <a href="shop-details.html" class="product-thumb-link d-block">
-                                                <img class="w-100" src="${pageContext.request.contextPath}/assets/images/product-10.png" alt="product thumb">
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <span class="d-block h-1px w-100 bg-n100-1 mb-lg-6 mb-4 mt-lg-10 mt-6"></span>
-                                    <div class="product-info-wrapper">
-                                        <div class="mb-xxl-7 mb-md-5 mb-3">
-                                            <a href="shop-details.html">
-                                                <h4 class="text-n100 mb-2 hover-text-secondary2">Electro
-                                                    Cruise
-                                                </h4>
-                                            </a>
-                                            <span class="text-sm fw-normal text-n50">Enduro</span>
-                                        </div>
-                                        <div class="d-between flex-wrap gap-4">
-                                            <div class="d-grid">
-                                                <span class="text-sm fw-normal text-n50 text-decoration-underline">$21,599.00
-                                                    USD</span>
-                                                <span class="text-xl fw-semibold text-secondary2">$ 14,599.00 USD</span>
-                                            </div>
-                                            <button class="outline-btn text-n100 fw-medium box-style box-secondary2">ADD
-                                                TO CART </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-xs-6">
-                                <!-- product item -->
-                                <div class="product-card2 position-relative p-xl-10 p-lg-8 p-6 bg-n0 border border-n100-5 box-style box-n20 card-tilt">
-                                    <div class="product-thumb-wrapper position-relative">
-                                        <button class="single-wishlist-btn text-secondary2 text-xl icon-52px bg-n0 position-absolute top-0 right-0 z-3 tooltip-btn tooltip-left" data-tooltip="Add to wishlist">
-                                            <i class="ph ph-heart"></i>
-                                        </button>
-                                        <div class="product-thumb hover-cursor" data-hover-text="View Product">
-                                            <a href="shop-details.html" class="product-thumb-link d-block">
-                                                <img class="w-100" src="${pageContext.request.contextPath}/assets/images/product-11.png" alt="product thumb">
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <span class="d-block h-1px w-100 bg-n100-1 mb-lg-6 mb-4 mt-lg-10 mt-6"></span>
-                                    <div class="product-info-wrapper">
-                                        <div class="mb-xxl-7 mb-md-5 mb-3">
-                                            <a href="shop-details.html">
-                                                <h4 class="text-n100 mb-2 hover-text-secondary2">
-                                                    Gravel Master
-                                                </h4>
-                                            </a>
-                                            <span class="text-sm fw-normal text-n50">Enduro</span>
-                                        </div>
-                                        <div class="d-between flex-wrap gap-4">
-                                            <div class="d-grid">
-                                                <span class="text-sm fw-normal text-n50 text-decoration-underline">$21,599.00
-                                                    USD</span>
-                                                <span class="text-xl fw-semibold text-secondary2">$ 14,599.00 USD</span>
-                                            </div>
-                                            <button class="outline-btn text-n100 fw-medium box-style box-secondary2">ADD
-                                                TO CART </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-xs-6">
-                                <!-- product item -->
-                                <div class="product-card2 position-relative p-xl-10 p-lg-8 p-6 bg-n0 border border-n100-5 box-style box-n20 card-tilt">
-                                    <div class="product-type py-lg-3 py-2 ps-lg-4 ps-2 pe-lg-6 pe-4 bg-secondary2 position-absolute top-0 start-0 parallelogram-path z-2">
-                                        <span class="text-sm fw-medium text-n0">New</span>
-                                    </div>
-                                    <div class="product-thumb-wrapper position-relative">
-                                        <button class="single-wishlist-btn text-secondary2 text-xl icon-52px bg-n0 position-absolute top-0 right-0 z-3 tooltip-btn tooltip-left" data-tooltip="Add to wishlist">
-                                            <i class="ph ph-heart"></i>
-                                        </button>
-                                        <div class="product-thumb hover-cursor" data-hover-text="View Product">
-                                            <a href="shop-details.html" class="product-thumb-link d-block">
-                                                <img class="w-100" src="${pageContext.request.contextPath}/assets/images/product-12.png" alt="product thumb">
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <span class="d-block h-1px w-100 bg-n100-1 mb-lg-6 mb-4 mt-lg-10 mt-6"></span>
-                                    <div class="product-info-wrapper">
-                                        <div class="mb-xxl-7 mb-md-5 mb-3">
-                                            <a href="shop-details.html">
-                                                <h4 class="text-n100 mb-2 hover-text-secondary2">
-                                                    Rough Rider
-                                                </h4>
-                                            </a>
-                                            <span class="text-sm fw-normal text-n50">Enduro</span>
-                                        </div>
-                                        <div class="d-between flex-wrap gap-4">
-                                            <div class="d-grid">
-                                                <span class="text-sm fw-normal text-n50 text-decoration-underline">$21,599.00
-                                                    USD</span>
-                                                <span class="text-xl fw-semibold text-secondary2">$ 14,599.00 USD</span>
-                                            </div>
-                                            <button class="outline-btn text-n100 fw-medium box-style box-secondary2">ADD
-                                                TO CART </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-xs-6">
-                                <!-- product item -->
-                                <div class="product-card2 position-relative p-xl-10 p-lg-8 p-6 bg-n0 border border-n100-5 box-style box-n20 card-tilt">
-                                    <div class="product-thumb-wrapper position-relative">
-                                        <button class="single-wishlist-btn text-secondary2 text-xl icon-52px bg-n0 position-absolute top-0 right-0 z-3 tooltip-btn tooltip-left" data-tooltip="Add to wishlist">
-                                            <i class="ph ph-heart"></i>
-                                        </button>
-                                        <div class="product-thumb hover-cursor" data-hover-text="View Product">
-                                            <a href="shop-details.html" class="product-thumb-link d-block">
-                                                <img class="w-100" src="${pageContext.request.contextPath}/assets/images/product-13.png" alt="product thumb">
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <span class="d-block h-1px w-100 bg-n100-1 mb-lg-6 mb-4 mt-lg-10 mt-6"></span>
-                                    <div class="product-info-wrapper">
-                                        <div class="mb-xxl-7 mb-md-5 mb-3">
-                                            <a href="shop-details.html">
-                                                <h4 class="text-n100 mb-2 hover-text-secondary2">
-                                                    Terra Roamer
-                                                </h4>
-                                            </a>
-                                            <span class="text-sm fw-normal text-n50">Enduro</span>
-                                        </div>
-                                        <div class="d-between flex-wrap gap-4">
-                                            <div class="d-grid">
-                                                <span class="text-sm fw-normal text-n50 text-decoration-underline">$21,599.00
-                                                    USD</span>
-                                                <span class="text-xl fw-semibold text-secondary2">$ 14,599.00 USD</span>
-                                            </div>
-                                            <button class="outline-btn text-n100 fw-medium box-style box-secondary2">ADD
-                                                TO CART </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-xs-6">
-                                <!-- product item -->
-                                <div class="product-card2 position-relative p-xl-10 p-lg-8 p-6 bg-n0 border border-n100-5 box-style box-n20 card-tilt">
-                                    <div class="product-thumb-wrapper position-relative">
-                                        <button class="single-wishlist-btn text-secondary2 text-xl icon-52px bg-n0 position-absolute top-0 right-0 z-3 tooltip-btn tooltip-left" data-tooltip="Add to wishlist">
-                                            <i class="ph ph-heart"></i>
-                                        </button>
-                                        <div class="product-thumb hover-cursor" data-hover-text="View Product">
-                                            <a href="shop-details.html" class="product-thumb-link d-block">
-                                                <img class="w-100" src="${pageContext.request.contextPath}/assets/images/product-14.png" alt="product thumb">
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <span class="d-block h-1px w-100 bg-n100-1 mb-lg-6 mb-4 mt-lg-10 mt-6"></span>
-                                    <div class="product-info-wrapper">
-                                        <div class="mb-xxl-7 mb-md-5 mb-3">
-                                            <a href="shop-details.html">
-                                                <h4 class="text-n100 mb-2 hover-text-secondary2">
-                                                    Junior Journeymen
-                                                </h4>
-                                            </a>
-                                            <span class="text-sm fw-normal text-n50">Enduro</span>
-                                        </div>
-                                        <div class="d-between flex-wrap gap-4">
-                                            <div class="d-grid">
-                                                <span class="text-sm fw-normal text-n50 text-decoration-underline">$21,599.00
-                                                    USD</span>
-                                                <span class="text-xl fw-semibold text-secondary2">$ 14,599.00 USD</span>
-                                            </div>
-                                            <button class="outline-btn text-n100 fw-medium box-style box-secondary2">ADD
-                                                TO CART </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-xs-6">
-                                <!-- product item -->
-                                <div class="product-card2 position-relative p-xl-10 p-lg-8 p-6 bg-n0 border border-n100-5 box-style box-n20 card-tilt">
-                                    <div class="product-type py-lg-3 py-2 ps-lg-4 ps-2 pe-lg-6 pe-4 bg-secondary2 position-absolute top-0 start-0 parallelogram-path z-2">
-                                        <span class="text-sm fw-medium text-n0">New</span>
-                                    </div>
-                                    <div class="product-thumb-wrapper position-relative">
-                                        <button class="single-wishlist-btn text-secondary2 text-xl icon-52px bg-n0 position-absolute top-0 right-0 z-3 tooltip-btn tooltip-left" data-tooltip="Add to wishlist">
-                                            <i class="ph ph-heart"></i>
-                                        </button>
-                                        <div class="product-thumb hover-cursor" data-hover-text="View Product">
-                                            <a href="shop-details.html" class="product-thumb-link d-block">
-                                                <img class="w-100" src="${pageContext.request.contextPath}/assets/images/product-15.png" alt="product thumb">
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <span class="d-block h-1px w-100 bg-n100-1 mb-lg-6 mb-4 mt-lg-10 mt-6"></span>
-                                    <div class="product-info-wrapper">
-                                        <div class="mb-xxl-7 mb-md-5 mb-3">
-                                            <a href="shop-details.html">
-                                                <h4 class="text-n100 mb-2 hover-text-secondary2">
-                                                    Tiny Trailblazers
-                                                </h4>
-                                            </a>
-                                            <span class="text-sm fw-normal text-n50">Enduro</span>
-                                        </div>
-                                        <div class="d-between flex-wrap gap-4">
-                                            <div class="d-grid">
-                                                <span class="text-sm fw-normal text-n50 text-decoration-underline">$21,599.00
-                                                    USD</span>
-                                                <span class="text-xl fw-semibold text-secondary2">$ 14,599.00 USD</span>
-                                            </div>
-                                            <button class="outline-btn text-n100 fw-medium box-style box-secondary2">ADD
-                                                TO CART </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-xs-6">
-                                <!-- product item -->
-                                <div class="product-card2 position-relative p-xl-10 p-lg-8 p-6 bg-n0 border border-n100-5 box-style box-n20 card-tilt">
-                                    <div class="product-type py-lg-3 py-2 ps-lg-4 ps-2 pe-lg-6 pe-4 bg-secondary2 position-absolute top-0 start-0 parallelogram-path z-2">
-                                        <span class="text-sm fw-medium text-n0">New</span>
-                                    </div>
-                                    <div class="product-thumb-wrapper position-relative">
-                                        <button class="single-wishlist-btn text-secondary2 text-xl icon-52px bg-n0 position-absolute top-0 right-0 z-3 tooltip-btn tooltip-left" data-tooltip="Add to wishlist">
-                                            <i class="ph ph-heart"></i>
-                                        </button>
-                                        <div class="product-thumb hover-cursor" data-hover-text="View Product">
-                                            <a href="shop-details.html" class="product-thumb-link d-block">
-                                                <img class="w-100" src="${pageContext.request.contextPath}/assets/images/product-16.png" alt="product thumb">
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <span class="d-block h-1px w-100 bg-n100-1 mb-lg-6 mb-4 mt-lg-10 mt-6"></span>
-                                    <div class="product-info-wrapper">
-                                        <div class="mb-xxl-7 mb-md-5 mb-3">
-                                            <a href="shop-details.html">
-                                                <h4 class="text-n100 mb-2 hover-text-secondary2">
-                                                    Rugged Rascals
-                                                </h4>
-                                            </a>
-                                            <span class="text-sm fw-normal text-n50">Enduro</span>
-                                        </div>
-                                        <div class="d-between flex-wrap gap-4">
-                                            <div class="d-grid">
-                                                <span class="text-sm fw-normal text-n50 text-decoration-underline">$21,599.00
-                                                    USD</span>
-                                                <span class="text-xl fw-semibold text-secondary2">$ 14,599.00 USD</span>
-                                            </div>
-                                            <button class="outline-btn text-n100 fw-medium box-style box-secondary2">ADD
-                                                TO CART </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-xs-6">
-                                <!-- product item -->
-                                <div class="product-card2 position-relative p-xl-10 p-lg-8 p-6 bg-n0 border border-n100-5 box-style box-n20 card-tilt">
-                                    <div class="product-thumb-wrapper position-relative">
-                                        <button class="single-wishlist-btn text-secondary2 text-xl icon-52px bg-n0 position-absolute top-0 right-0 z-3 tooltip-btn tooltip-left" data-tooltip="Add to wishlist">
-                                            <i class="ph ph-heart"></i>
-                                        </button>
-                                        <div class="product-thumb hover-cursor" data-hover-text="View Product">
-                                            <a href="shop-details.html" class="product-thumb-link d-block">
-                                                <img class="w-100" src="${pageContext.request.contextPath}/assets/images/product-5.png" alt="product thumb">
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <span class="d-block h-1px w-100 bg-n100-1 mb-lg-6 mb-4 mt-lg-10 mt-6"></span>
-                                    <div class="product-info-wrapper">
-                                        <div class="mb-xxl-7 mb-md-5 mb-3">
-                                            <a href="shop-details.html">
-                                                <h4 class="text-n100 mb-2 hover-text-secondary2">
-                                                    Rough Rider
-                                                </h4>
-                                            </a>
-                                            <span class="text-sm fw-normal text-n50">Enduro</span>
-                                        </div>
-                                        <div class="d-between flex-wrap gap-4">
-                                            <div class="d-grid">
-                                                <span class="text-sm fw-normal text-n50 text-decoration-underline">$21,599.00
-                                                    USD</span>
-                                                <span class="text-xl fw-semibold text-secondary2">$ 14,599.00 USD</span>
-                                            </div>
-                                            <button class="outline-btn text-n100 fw-medium box-style box-secondary2">ADD
-                                                TO CART </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-xs-6">
-                                <!-- product item -->
-                                <div class="product-card2 position-relative p-xl-10 p-lg-8 p-6 bg-n0 border border-n100-5 box-style box-n20 card-tilt">
-                                    <div class="product-type py-lg-3 py-2 ps-lg-4 ps-2 pe-lg-6 pe-4 bg-secondary2 position-absolute top-0 start-0 parallelogram-path z-2">
-                                        <span class="text-sm fw-medium text-n0">New</span>
-                                    </div>
-                                    <div class="product-thumb-wrapper position-relative">
-                                        <button class="single-wishlist-btn text-secondary2 text-xl icon-52px bg-n0 position-absolute top-0 right-0 z-3 tooltip-btn tooltip-left" data-tooltip="Add to wishlist">
-                                            <i class="ph ph-heart"></i>
-                                        </button>
-                                        <div class="product-thumb hover-cursor" data-hover-text="View Product">
-                                            <a href="shop-details.html" class="product-thumb-link d-block">
-                                                <img class="w-100" src="${pageContext.request.contextPath}/assets/images/product-9.png" alt="product thumb">
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <span class="d-block h-1px w-100 bg-n100-1 mb-lg-6 mb-4 mt-lg-10 mt-6"></span>
-                                    <div class="product-info-wrapper">
-                                        <div class="mb-xxl-7 mb-md-5 mb-3">
-                                            <a href="shop-details.html">
-                                                <h4 class="text-n100 mb-2 hover-text-secondary2">
-                                                    Terra Roamer
-                                                </h4>
-                                            </a>
-                                            <span class="text-sm fw-normal text-n50">Enduro</span>
-                                        </div>
-                                        <div class="d-between flex-wrap gap-4">
-                                            <div class="d-grid">
-                                                <span class="text-sm fw-normal text-n50 text-decoration-underline">$21,599.00
-                                                    USD</span>
-                                                <span class="text-xl fw-semibold text-secondary2">$ 14,599.00 USD</span>
-                                            </div>
-                                            <button class="outline-btn text-n100 fw-medium box-style box-secondary2">ADD
-                                                TO CART </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- tab content 2 -->
-                    <div class="tab-content" data-tab="city">
-                        <div class="row g-0 mb-1">
-                            <div class="col-lg-4 col-xs-6">
-                                <!-- product item -->
-                                <div class="product-card2 position-relative p-xl-10 p-lg-8 p-6 bg-n0 border border-n100-5 box-style box-n20 card-tilt">
-                                    <div class="product-type py-lg-3 py-2 ps-lg-4 ps-2 pe-lg-6 pe-4 bg-secondary2 position-absolute top-0 start-0 parallelogram-path z-2">
-                                        <span class="text-sm fw-medium text-n0">New</span>
-                                    </div>
-                                    <div class="product-thumb-wrapper position-relative">
-                                        <button class="single-wishlist-btn text-secondary2 text-xl icon-52px bg-n0 position-absolute top-0 right-0 z-3 tooltip-btn tooltip-left" data-tooltip="Add to wishlist">
-                                            <i class="ph ph-heart"></i>
-                                        </button>
-                                        <div class="product-thumb hover-cursor" data-hover-text="View Product">
-                                            <a href="shop-details.html" class="product-thumb-link d-block">
-                                                <img class="w-100" src="${pageContext.request.contextPath}/assets/images/product-1.png" alt="product thumb">
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <span class="d-block h-1px w-100 bg-n100-1 mb-lg-6 mb-4 mt-lg-10 mt-6"></span>
-                                    <div class="product-info-wrapper">
-                                        <div class="mb-xxl-7 mb-md-5 mb-3">
-                                            <a href="shop-details.html">
-                                                <h4 class="text-n100 mb-2 hover-text-secondary2">City
-                                                    Commuter
-                                                </h4>
-                                            </a>
-                                            <span class="text-sm fw-normal text-n50">Enduro</span>
-                                        </div>
-                                        <div class="d-between flex-wrap gap-4">
-                                            <div class="d-grid">
-                                                <span class="text-sm fw-normal text-n50 text-decoration-underline">$21,599.00
-                                                    USD</span>
-                                                <span class="text-xl fw-semibold text-secondary2">$ 14,599.00 USD</span>
-                                            </div>
-                                            <button class="outline-btn text-n100 fw-medium box-style box-secondary2">ADD
-                                                TO CART </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-xs-6">
-                                <!-- product item -->
-                                <div class="product-card2 position-relative p-xl-10 p-lg-8 p-6 bg-n0 border border-n100-5 box-style box-n20 card-tilt">
-                                    <div class="product-thumb-wrapper position-relative">
-                                        <button class="single-wishlist-btn text-secondary2 text-xl icon-52px bg-n0 position-absolute top-0 right-0 z-3 tooltip-btn tooltip-left" data-tooltip="Add to wishlist">
-                                            <i class="ph ph-heart"></i>
-                                        </button>
-                                        <div class="product-thumb hover-cursor" data-hover-text="View Product">
-                                            <a href="shop-details.html" class="product-thumb-link d-block">
-                                                <img class="w-100" src="${pageContext.request.contextPath}/assets/images/product-2.png" alt="product thumb">
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <span class="d-block h-1px w-100 bg-n100-1 mb-lg-6 mb-4 mt-lg-10 mt-6"></span>
-                                    <div class="product-info-wrapper">
-                                        <div class="mb-xxl-7 mb-md-5 mb-3">
-                                            <a href="shop-details.html">
-                                                <h4 class="text-n100 mb-2 hover-text-secondary2">
-                                                    Urban Explorer
-                                                </h4>
-                                            </a>
-                                            <span class="text-sm fw-normal text-n50">Enduro</span>
-                                        </div>
-                                        <div class="d-between flex-wrap gap-4">
-                                            <div class="d-grid">
-                                                <span class="text-sm fw-normal text-n50 text-decoration-underline">$21,599.00
-                                                    USD</span>
-                                                <span class="text-xl fw-semibold text-secondary2">$ 14,599.00 USD</span>
-                                            </div>
-                                            <button class="outline-btn text-n100 fw-medium box-style box-secondary2">ADD
-                                                TO CART </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-xs-6">
-                                <!-- product item -->
-                                <div class="product-card2 position-relative p-xl-10 p-lg-8 p-6 bg-n0 border border-n100-5 box-style box-n20 card-tilt">
-                                    <div class="product-type py-lg-3 py-2 ps-lg-4 ps-2 pe-lg-6 pe-4 bg-secondary2 position-absolute top-0 start-0 parallelogram-path z-2">
-                                        <span class="text-sm fw-medium text-n0">New</span>
-                                    </div>
-                                    <div class="product-thumb-wrapper position-relative">
-                                        <button class="single-wishlist-btn text-secondary2 text-xl icon-52px bg-n0 position-absolute top-0 right-0 z-3 tooltip-btn tooltip-left" data-tooltip="Add to wishlist">
-                                            <i class="ph ph-heart"></i>
-                                        </button>
-                                        <div class="product-thumb hover-cursor" data-hover-text="View Product">
-                                            <a href="shop-details.html" class="product-thumb-link d-block">
-                                                <img class="w-100" src="${pageContext.request.contextPath}/assets/images/product-3.png" alt="product thumb">
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <span class="d-block h-1px w-100 bg-n100-1 mb-lg-6 mb-4 mt-lg-10 mt-6"></span>
-                                    <div class="product-info-wrapper">
-                                        <div class="mb-xxl-7 mb-md-5 mb-3">
-                                            <a href="shop-details.html">
-                                                <h4 class="text-n100 mb-2 hover-text-secondary2">
-                                                    Urban Wanderer
-                                                </h4>
-                                            </a>
-                                            <span class="text-sm fw-normal text-n50">Enduro</span>
-                                        </div>
-                                        <div class="d-between flex-wrap gap-4">
-                                            <div class="d-grid">
-                                                <span class="text-sm fw-normal text-n50 text-decoration-underline">$21,599.00
-                                                    USD</span>
-                                                <span class="text-xl fw-semibold text-secondary2">$ 14,599.00 USD</span>
-                                            </div>
-                                            <button class="outline-btn text-n100 fw-medium box-style box-secondary2">ADD
-                                                TO CART </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- tab content 3 -->
-                    <div class="tab-content" data-tab="electric">
-                        <div class="row g-0 mb-1">
-                            <div class="col-lg-4 col-xs-6">
-                                <!-- product item -->
-                                <div class="product-card2 position-relative p-xl-10 p-lg-8 p-6 bg-n0 border border-n100-5 box-style box-n20 card-tilt">
-                                    <div class="product-thumb-wrapper position-relative">
-                                        <button class="single-wishlist-btn text-secondary2 text-xl icon-52px bg-n0 position-absolute top-0 right-0 z-3 tooltip-btn tooltip-left" data-tooltip="Add to wishlist">
-                                            <i class="ph ph-heart"></i>
-                                        </button>
-                                        <div class="product-thumb hover-cursor" data-hover-text="View Product">
-                                            <a href="shop-details.html" class="product-thumb-link d-block">
-                                                <img class="w-100" src="${pageContext.request.contextPath}/assets/images/product-4.png" alt="product thumb">
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <span class="d-block h-1px w-100 bg-n100-1 mb-lg-6 mb-4 mt-lg-10 mt-6"></span>
-                                    <div class="product-info-wrapper">
-                                        <div class="mb-xxl-7 mb-md-5 mb-3">
-                                            <a href="shop-details.html">
-                                                <h4 class="text-n100 mb-2 hover-text-secondary2">
-                                                    Electro Cruise
-                                                </h4>
-                                            </a>
-                                            <span class="text-sm fw-normal text-n50">Enduro</span>
-                                        </div>
-                                        <div class="d-between flex-wrap gap-4">
-                                            <div class="d-grid">
-                                                <span class="text-sm fw-normal text-n50 text-decoration-underline">$21,599.00
-                                                    USD</span>
-                                                <span class="text-xl fw-semibold text-secondary2">$ 14,599.00 USD</span>
-                                            </div>
-                                            <button class="outline-btn text-n100 fw-medium box-style box-secondary2">ADD
-                                                TO CART </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-xs-6">
-                                <!-- product item -->
-                                <div class="product-card2 position-relative p-xl-10 p-lg-8 p-6 bg-n0 border border-n100-5 box-style box-n20 card-tilt">
-                                    <div class="product-thumb-wrapper position-relative">
-                                        <button class="single-wishlist-btn text-secondary2 text-xl icon-52px bg-n0 position-absolute top-0 right-0 z-3 tooltip-btn tooltip-left" data-tooltip="Add to wishlist">
-                                            <i class="ph ph-heart"></i>
-                                        </button>
-                                        <div class="product-thumb hover-cursor" data-hover-text="View Product">
-                                            <a href="shop-details.html" class="product-thumb-link d-block">
-                                                <img class="w-100" src="${pageContext.request.contextPath}/assets/images/product-5.png" alt="product thumb">
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <span class="d-block h-1px w-100 bg-n100-1 mb-lg-6 mb-4 mt-lg-10 mt-6"></span>
-                                    <div class="product-info-wrapper">
-                                        <div class="mb-xxl-7 mb-md-5 mb-3">
-                                            <a href="shop-details.html">
-                                                <h4 class="text-n100 mb-2 hover-text-secondary2">
-                                                    Watt Wheels
-                                                </h4>
-                                            </a>
-                                            <span class="text-sm fw-normal text-n50">Enduro</span>
-                                        </div>
-                                        <div class="d-between flex-wrap gap-4">
-                                            <div class="d-grid">
-                                                <span class="text-sm fw-normal text-n50 text-decoration-underline">$21,599.00
-                                                    USD</span>
-                                                <span class="text-xl fw-semibold text-secondary2">$ 14,599.00 USD</span>
-                                            </div>
-                                            <button class="outline-btn text-n100 fw-medium box-style box-secondary2">ADD
-                                                TO CART </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-xs-6">
-                                <!-- product item -->
-                                <div class="product-card2 position-relative p-xl-10 p-lg-8 p-6 bg-n0 border border-n100-5 box-style box-n20 card-tilt">
-                                    <div class="product-type py-lg-3 py-2 ps-lg-4 ps-2 pe-lg-6 pe-4 bg-secondary2 position-absolute top-0 start-0 parallelogram-path z-2">
-                                        <span class="text-sm fw-medium text-n0">New</span>
-                                    </div>
-                                    <div class="product-thumb-wrapper position-relative">
-                                        <button class="single-wishlist-btn text-secondary2 text-xl icon-52px bg-n0 position-absolute top-0 right-0 z-3 tooltip-btn tooltip-left" data-tooltip="Add to wishlist">
-                                            <i class="ph ph-heart"></i>
-                                        </button>
-                                        <div class="product-thumb hover-cursor" data-hover-text="View Product">
-                                            <a href="shop-details.html" class="product-thumb-link d-block">
-                                                <img class="w-100" src="${pageContext.request.contextPath}/assets/images/product-6.png" alt="product thumb">
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <span class="d-block h-1px w-100 bg-n100-1 mb-lg-6 mb-4 mt-lg-10 mt-6"></span>
-                                    <div class="product-info-wrapper">
-                                        <div class="mb-xxl-7 mb-md-5 mb-3">
-                                            <a href="shop-details.html">
-                                                <h4 class="text-n100 mb-2 hover-text-secondary2">
-                                                    Electro Boost
-                                                </h4>
-                                            </a>
-                                            <span class="text-sm fw-normal text-n50">Enduro</span>
-                                        </div>
-                                        <div class="d-between flex-wrap gap-4">
-                                            <div class="d-grid">
-                                                <span class="text-sm fw-normal text-n50 text-decoration-underline">$21,599.00
-                                                    USD</span>
-                                                <span class="text-xl fw-semibold text-secondary2">$ 14,599.00 USD</span>
-                                            </div>
-                                            <button class="outline-btn text-n100 fw-medium box-style box-secondary2">ADD
-                                                TO CART </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- tab content 4 -->
-                    <div class="tab-content" data-tab="gravel">
-                        <div class="row g-0 mb-1">
-
-                            <div class="col-lg-4 col-xs-6">
-                                <!-- product item -->
-                                <div class="product-card2 position-relative p-xl-10 p-lg-8 p-6 bg-n0 border border-n100-5 box-style box-n20 card-tilt">
-                                    <div class="product-type py-lg-3 py-2 ps-lg-4 ps-2 pe-lg-6 pe-4 bg-secondary2 position-absolute top-0 start-0 parallelogram-path z-2">
-                                        <span class="text-sm fw-medium text-n0">New</span>
-                                    </div>
-                                    <div class="product-thumb-wrapper position-relative">
-                                        <button class="single-wishlist-btn text-secondary2 text-xl icon-52px bg-n0 position-absolute top-0 right-0 z-3 tooltip-btn tooltip-left" data-tooltip="Add to wishlist">
-                                            <i class="ph ph-heart"></i>
-                                        </button>
-                                        <div class="product-thumb hover-cursor" data-hover-text="View Product">
-                                            <a href="shop-details.html" class="product-thumb-link d-block">
-                                                <img class="w-100" src="${pageContext.request.contextPath}/assets/images/product-10.png" alt="product thumb">
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <span class="d-block h-1px w-100 bg-n100-1 mb-lg-6 mb-4 mt-lg-10 mt-6"></span>
-                                    <div class="product-info-wrapper">
-                                        <div class="mb-xxl-7 mb-md-5 mb-3">
-                                            <a href="shop-details.html">
-                                                <h4 class="text-n100 mb-2 hover-text-secondary2">Electro
-                                                    Cruise
-                                                </h4>
-                                            </a>
-                                            <span class="text-sm fw-normal text-n50">Enduro</span>
-                                        </div>
-                                        <div class="d-between flex-wrap gap-4">
-                                            <div class="d-grid">
-                                                <span class="text-sm fw-normal text-n50 text-decoration-underline">$21,599.00
-                                                    USD</span>
-                                                <span class="text-xl fw-semibold text-secondary2">$ 14,599.00 USD</span>
-                                            </div>
-                                            <button class="outline-btn text-n100 fw-medium box-style box-secondary2">ADD
-                                                TO CART </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-xs-6">
-                                <!-- product item -->
-                                <div class="product-card2 position-relative p-xl-10 p-lg-8 p-6 bg-n0 border border-n100-5 box-style box-n20 card-tilt">
-                                    <div class="product-thumb-wrapper position-relative">
-                                        <button class="single-wishlist-btn text-secondary2 text-xl icon-52px bg-n0 position-absolute top-0 right-0 z-3 tooltip-btn tooltip-left" data-tooltip="Add to wishlist">
-                                            <i class="ph ph-heart"></i>
-                                        </button>
-                                        <div class="product-thumb hover-cursor" data-hover-text="View Product">
-                                            <a href="shop-details.html" class="product-thumb-link d-block">
-                                                <img class="w-100" src="${pageContext.request.contextPath}/assets/images/product-11.png" alt="product thumb">
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <span class="d-block h-1px w-100 bg-n100-1 mb-lg-6 mb-4 mt-lg-10 mt-6"></span>
-                                    <div class="product-info-wrapper">
-                                        <div class="mb-xxl-7 mb-md-5 mb-3">
-                                            <a href="shop-details.html">
-                                                <h4 class="text-n100 mb-2 hover-text-secondary2">
-                                                    Gravel Master
-                                                </h4>
-                                            </a>
-                                            <span class="text-sm fw-normal text-n50">Enduro</span>
-                                        </div>
-                                        <div class="d-between flex-wrap gap-4">
-                                            <div class="d-grid">
-                                                <span class="text-sm fw-normal text-n50 text-decoration-underline">$21,599.00
-                                                    USD</span>
-                                                <span class="text-xl fw-semibold text-secondary2">$ 14,599.00 USD</span>
-                                            </div>
-                                            <button class="outline-btn text-n100 fw-medium box-style box-secondary2">ADD
-                                                TO CART </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-xs-6">
-                                <!-- product item -->
-                                <div class="product-card2 position-relative p-xl-10 p-lg-8 p-6 bg-n0 border border-n100-5 box-style box-n20 card-tilt">
-                                    <div class="product-type py-lg-3 py-2 ps-lg-4 ps-2 pe-lg-6 pe-4 bg-secondary2 position-absolute top-0 start-0 parallelogram-path z-2">
-                                        <span class="text-sm fw-medium text-n0">New</span>
-                                    </div>
-                                    <div class="product-thumb-wrapper position-relative">
-                                        <button class="single-wishlist-btn text-secondary2 text-xl icon-52px bg-n0 position-absolute top-0 right-0 z-3 tooltip-btn tooltip-left" data-tooltip="Add to wishlist">
-                                            <i class="ph ph-heart"></i>
-                                        </button>
-                                        <div class="product-thumb hover-cursor" data-hover-text="View Product">
-                                            <a href="shop-details.html" class="product-thumb-link d-block">
-                                                <img class="w-100" src="${pageContext.request.contextPath}/assets/images/product-12.png" alt="product thumb">
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <span class="d-block h-1px w-100 bg-n100-1 mb-lg-6 mb-4 mt-lg-10 mt-6"></span>
-                                    <div class="product-info-wrapper">
-                                        <div class="mb-xxl-7 mb-md-5 mb-3">
-                                            <a href="shop-details.html">
-                                                <h4 class="text-n100 mb-2 hover-text-secondary2">
-                                                    Rough Rider
-                                                </h4>
-                                            </a>
-                                            <span class="text-sm fw-normal text-n50">Enduro</span>
-                                        </div>
-                                        <div class="d-between flex-wrap gap-4">
-                                            <div class="d-grid">
-                                                <span class="text-sm fw-normal text-n50 text-decoration-underline">$21,599.00
-                                                    USD</span>
-                                                <span class="text-xl fw-semibold text-secondary2">$ 14,599.00 USD</span>
-                                            </div>
-                                            <button class="outline-btn text-n100 fw-medium box-style box-secondary2">ADD
-                                                TO CART </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- tab content 5 -->
-                    <div class="tab-content" data-tab="kids">
-                        <div class="row g-0 mb-1">
-                            <div class="col-lg-4 col-xs-6">
-                                <!-- product item -->
-                                <div class="product-card2 position-relative p-xl-10 p-lg-8 p-6 bg-n0 border border-n100-5 box-style box-n20 card-tilt">
-                                    <div class="product-type py-lg-3 py-2 ps-lg-4 ps-2 pe-lg-6 pe-4 bg-secondary2 position-absolute top-0 start-0 parallelogram-path z-2">
-                                        <span class="text-sm fw-medium text-n0">New</span>
-                                    </div>
-                                    <div class="product-thumb-wrapper position-relative">
-                                        <button class="single-wishlist-btn text-secondary2 text-xl icon-52px bg-n0 position-absolute top-0 right-0 z-3 tooltip-btn tooltip-left" data-tooltip="Add to wishlist">
-                                            <i class="ph ph-heart"></i>
-                                        </button>
-                                        <div class="product-thumb hover-cursor" data-hover-text="View Product">
-                                            <a href="shop-details.html" class="product-thumb-link d-block">
-                                                <img class="w-100" src="${pageContext.request.contextPath}/assets/images/product-10.png" alt="product thumb">
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <span class="d-block h-1px w-100 bg-n100-1 mb-lg-6 mb-4 mt-lg-10 mt-6"></span>
-                                    <div class="product-info-wrapper">
-                                        <div class="mb-xxl-7 mb-md-5 mb-3">
-                                            <a href="shop-details.html">
-                                                <h4 class="text-n100 mb-2 hover-text-secondary2">Electro
-                                                    Cruise
-                                                </h4>
-                                            </a>
-                                            <span class="text-sm fw-normal text-n50">Enduro</span>
-                                        </div>
-                                        <div class="d-between flex-wrap gap-4">
-                                            <div class="d-grid">
-                                                <span class="text-sm fw-normal text-n50 text-decoration-underline">$21,599.00
-                                                    USD</span>
-                                                <span class="text-xl fw-semibold text-secondary2">$ 14,599.00 USD</span>
-                                            </div>
-                                            <button class="outline-btn text-n100 fw-medium box-style box-secondary2">ADD
-                                                TO CART </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-xs-6">
-                                <!-- product item -->
-                                <div class="product-card2 position-relative p-xl-10 p-lg-8 p-6 bg-n0 border border-n100-5 box-style box-n20 card-tilt">
-                                    <div class="product-thumb-wrapper position-relative">
-                                        <button class="single-wishlist-btn text-secondary2 text-xl icon-52px bg-n0 position-absolute top-0 right-0 z-3 tooltip-btn tooltip-left" data-tooltip="Add to wishlist">
-                                            <i class="ph ph-heart"></i>
-                                        </button>
-                                        <div class="product-thumb hover-cursor" data-hover-text="View Product">
-                                            <a href="shop-details.html" class="product-thumb-link d-block">
-                                                <img class="w-100" src="${pageContext.request.contextPath}/assets/images/product-11.png" alt="product thumb">
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <span class="d-block h-1px w-100 bg-n100-1 mb-lg-6 mb-4 mt-lg-10 mt-6"></span>
-                                    <div class="product-info-wrapper">
-                                        <div class="mb-xxl-7 mb-md-5 mb-3">
-                                            <a href="shop-details.html">
-                                                <h4 class="text-n100 mb-2 hover-text-secondary2">
-                                                    Gravel Master
-                                                </h4>
-                                            </a>
-                                            <span class="text-sm fw-normal text-n50">Enduro</span>
-                                        </div>
-                                        <div class="d-between flex-wrap gap-4">
-                                            <div class="d-grid">
-                                                <span class="text-sm fw-normal text-n50 text-decoration-underline">$21,599.00
-                                                    USD</span>
-                                                <span class="text-xl fw-semibold text-secondary2">$ 14,599.00 USD</span>
-                                            </div>
-                                            <button class="outline-btn text-n100 fw-medium box-style box-secondary2">ADD
-                                                TO CART </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-xs-6">
-                                <!-- product item -->
-                                <div class="product-card2 position-relative p-xl-10 p-lg-8 p-6 bg-n0 border border-n100-5 box-style box-n20 card-tilt">
-                                    <div class="product-type py-lg-3 py-2 ps-lg-4 ps-2 pe-lg-6 pe-4 bg-secondary2 position-absolute top-0 start-0 parallelogram-path z-2">
-                                        <span class="text-sm fw-medium text-n0">New</span>
-                                    </div>
-                                    <div class="product-thumb-wrapper position-relative">
-                                        <button class="single-wishlist-btn text-secondary2 text-xl icon-52px bg-n0 position-absolute top-0 right-0 z-3 tooltip-btn tooltip-left" data-tooltip="Add to wishlist">
-                                            <i class="ph ph-heart"></i>
-                                        </button>
-                                        <div class="product-thumb hover-cursor" data-hover-text="View Product">
-                                            <a href="shop-details.html" class="product-thumb-link d-block">
-                                                <img class="w-100" src="${pageContext.request.contextPath}/assets/images/product-12.png" alt="product thumb">
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <span class="d-block h-1px w-100 bg-n100-1 mb-lg-6 mb-4 mt-lg-10 mt-6"></span>
-                                    <div class="product-info-wrapper">
-                                        <div class="mb-xxl-7 mb-md-5 mb-3">
-                                            <a href="shop-details.html">
-                                                <h4 class="text-n100 mb-2 hover-text-secondary2">
-                                                    Rough Rider
-                                                </h4>
-                                            </a>
-                                            <span class="text-sm fw-normal text-n50">Enduro</span>
-                                        </div>
-                                        <div class="d-between flex-wrap gap-4">
-                                            <div class="d-grid">
-                                                <span class="text-sm fw-normal text-n50 text-decoration-underline">$21,599.00
-                                                    USD</span>
-                                                <span class="text-xl fw-semibold text-secondary2">$ 14,599.00 USD</span>
-                                            </div>
-                                            <button class="outline-btn text-n100 fw-medium box-style box-secondary2">ADD
-                                                TO CART </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- tab content 6 -->
-                    <div class="tab-content" data-tab="mountain">
-                        <div class="row g-0 mb-1">
-                            <div class="col-lg-4 col-xs-6">
-                                <!-- product item -->
-                                <div class="product-card2 position-relative p-xl-10 p-lg-8 p-6 bg-n0 border border-n100-5 box-style box-n20 card-tilt">
-                                    <div class="product-thumb-wrapper position-relative">
-                                        <button class="single-wishlist-btn text-secondary2 text-xl icon-52px bg-n0 position-absolute top-0 right-0 z-3 tooltip-btn tooltip-left" data-tooltip="Add to wishlist">
-                                            <i class="ph ph-heart"></i>
-                                        </button>
-                                        <div class="product-thumb hover-cursor" data-hover-text="View Product">
-                                            <a href="shop-details.html" class="product-thumb-link d-block">
-                                                <img class="w-100" src="${pageContext.request.contextPath}/assets/images/product-13.png" alt="product thumb">
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <span class="d-block h-1px w-100 bg-n100-1 mb-lg-6 mb-4 mt-lg-10 mt-6"></span>
-                                    <div class="product-info-wrapper">
-                                        <div class="mb-xxl-7 mb-md-5 mb-3">
-                                            <a href="shop-details.html">
-                                                <h4 class="text-n100 mb-2 hover-text-secondary2">
-                                                    Terra Roamer
-                                                </h4>
-                                            </a>
-                                            <span class="text-sm fw-normal text-n50">Enduro</span>
-                                        </div>
-                                        <div class="d-between flex-wrap gap-4">
-                                            <div class="d-grid">
-                                                <span class="text-sm fw-normal text-n50 text-decoration-underline">$21,599.00
-                                                    USD</span>
-                                                <span class="text-xl fw-semibold text-secondary2">$ 14,599.00 USD</span>
-                                            </div>
-                                            <button class="outline-btn text-n100 fw-medium box-style box-secondary2">ADD
-                                                TO CART </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-xs-6">
-                                <!-- product item -->
-                                <div class="product-card2 position-relative p-xl-10 p-lg-8 p-6 bg-n0 border border-n100-5 box-style box-n20 card-tilt">
-                                    <div class="product-thumb-wrapper position-relative">
-                                        <button class="single-wishlist-btn text-secondary2 text-xl icon-52px bg-n0 position-absolute top-0 right-0 z-3 tooltip-btn tooltip-left" data-tooltip="Add to wishlist">
-                                            <i class="ph ph-heart"></i>
-                                        </button>
-                                        <div class="product-thumb hover-cursor" data-hover-text="View Product">
-                                            <a href="shop-details.html" class="product-thumb-link d-block">
-                                                <img class="w-100" src="${pageContext.request.contextPath}/assets/images/product-14.png" alt="product thumb">
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <span class="d-block h-1px w-100 bg-n100-1 mb-lg-6 mb-4 mt-lg-10 mt-6"></span>
-                                    <div class="product-info-wrapper">
-                                        <div class="mb-xxl-7 mb-md-5 mb-3">
-                                            <a href="shop-details.html">
-                                                <h4 class="text-n100 mb-2 hover-text-secondary2">
-                                                    Junior Journeymen
-                                                </h4>
-                                            </a>
-                                            <span class="text-sm fw-normal text-n50">Enduro</span>
-                                        </div>
-                                        <div class="d-between flex-wrap gap-4">
-                                            <div class="d-grid">
-                                                <span class="text-sm fw-normal text-n50 text-decoration-underline">$21,599.00
-                                                    USD</span>
-                                                <span class="text-xl fw-semibold text-secondary2">$ 14,599.00 USD</span>
-                                            </div>
-                                            <button class="outline-btn text-n100 fw-medium box-style box-secondary2">ADD
-                                                TO CART </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-xs-6">
-                                <!-- product item -->
-                                <div class="product-card2 position-relative p-xl-10 p-lg-8 p-6 bg-n0 border border-n100-5 box-style box-n20 card-tilt">
-                                    <div class="product-type py-lg-3 py-2 ps-lg-4 ps-2 pe-lg-6 pe-4 bg-secondary2 position-absolute top-0 start-0 parallelogram-path z-2">
-                                        <span class="text-sm fw-medium text-n0">New</span>
-                                    </div>
-                                    <div class="product-thumb-wrapper position-relative">
-                                        <button class="single-wishlist-btn text-secondary2 text-xl icon-52px bg-n0 position-absolute top-0 right-0 z-3 tooltip-btn tooltip-left" data-tooltip="Add to wishlist">
-                                            <i class="ph ph-heart"></i>
-                                        </button>
-                                        <div class="product-thumb hover-cursor" data-hover-text="View Product">
-                                            <a href="shop-details.html" class="product-thumb-link d-block">
-                                                <img class="w-100" src="${pageContext.request.contextPath}/assets/images/product-15.png" alt="product thumb">
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <span class="d-block h-1px w-100 bg-n100-1 mb-lg-6 mb-4 mt-lg-10 mt-6"></span>
-                                    <div class="product-info-wrapper">
-                                        <div class="mb-xxl-7 mb-md-5 mb-3">
-                                            <a href="shop-details.html">
-                                                <h4 class="text-n100 mb-2 hover-text-secondary2">
-                                                    Tiny Trailblazers
-                                                </h4>
-                                            </a>
-                                            <span class="text-sm fw-normal text-n50">Enduro</span>
-                                        </div>
-                                        <div class="d-between flex-wrap gap-4">
-                                            <div class="d-grid">
-                                                <span class="text-sm fw-normal text-n50 text-decoration-underline">$21,599.00
-                                                    USD</span>
-                                                <span class="text-xl fw-semibold text-secondary2">$ 14,599.00 USD</span>
-                                            </div>
-                                            <button class="outline-btn text-n100 fw-medium box-style box-secondary2">ADD
-                                                TO CART </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- tab content 7 -->
-                    <div class="tab-content" data-tab="road">
-                        <div class="row g-0 mb-1">
-                            <div class="col-lg-4 col-xs-6">
-                                <!-- product item -->
-                                <div class="product-card2 position-relative p-xl-10 p-lg-8 p-6 bg-n0 border border-n100-5 box-style box-n20 card-tilt">
-                                    <div class="product-type py-lg-3 py-2 ps-lg-4 ps-2 pe-lg-6 pe-4 bg-secondary2 position-absolute top-0 start-0 parallelogram-path z-2">
-                                        <span class="text-sm fw-medium text-n0">New</span>
-                                    </div>
-                                    <div class="product-thumb-wrapper position-relative">
-                                        <button class="single-wishlist-btn text-secondary2 text-xl icon-52px bg-n0 position-absolute top-0 right-0 z-3 tooltip-btn tooltip-left" data-tooltip="Add to wishlist">
-                                            <i class="ph ph-heart"></i>
-                                        </button>
-                                        <div class="product-thumb hover-cursor" data-hover-text="View Product">
-                                            <a href="shop-details.html" class="product-thumb-link d-block">
-                                                <img class="w-100" src="${pageContext.request.contextPath}/assets/images/product-16.png" alt="product thumb">
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <span class="d-block h-1px w-100 bg-n100-1 mb-lg-6 mb-4 mt-lg-10 mt-6"></span>
-                                    <div class="product-info-wrapper">
-                                        <div class="mb-xxl-7 mb-md-5 mb-3">
-                                            <a href="shop-details.html">
-                                                <h4 class="text-n100 mb-2 hover-text-secondary2">
-                                                    Rugged Rascals
-                                                </h4>
-                                            </a>
-                                            <span class="text-sm fw-normal text-n50">Enduro</span>
-                                        </div>
-                                        <div class="d-between flex-wrap gap-4">
-                                            <div class="d-grid">
-                                                <span class="text-sm fw-normal text-n50 text-decoration-underline">$21,599.00
-                                                    USD</span>
-                                                <span class="text-xl fw-semibold text-secondary2">$ 14,599.00 USD</span>
-                                            </div>
-                                            <button class="outline-btn text-n100 fw-medium box-style box-secondary2">ADD
-                                                TO CART </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-xs-6">
-                                <!-- product item -->
-                                <div class="product-card2 position-relative p-xl-10 p-lg-8 p-6 bg-n0 border border-n100-5 box-style box-n20 card-tilt">
-                                    <div class="product-thumb-wrapper position-relative">
-                                        <button class="single-wishlist-btn text-secondary2 text-xl icon-52px bg-n0 position-absolute top-0 right-0 z-3 tooltip-btn tooltip-left" data-tooltip="Add to wishlist">
-                                            <i class="ph ph-heart"></i>
-                                        </button>
-                                        <div class="product-thumb hover-cursor" data-hover-text="View Product">
-                                            <a href="shop-details.html" class="product-thumb-link d-block">
-                                                <img class="w-100" src="${pageContext.request.contextPath}/assets/images/product-5.png" alt="product thumb">
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <span class="d-block h-1px w-100 bg-n100-1 mb-lg-6 mb-4 mt-lg-10 mt-6"></span>
-                                    <div class="product-info-wrapper">
-                                        <div class="mb-xxl-7 mb-md-5 mb-3">
-                                            <a href="shop-details.html">
-                                                <h4 class="text-n100 mb-2 hover-text-secondary2">
-                                                    Rough Rider
-                                                </h4>
-                                            </a>
-                                            <span class="text-sm fw-normal text-n50">Enduro</span>
-                                        </div>
-                                        <div class="d-between flex-wrap gap-4">
-                                            <div class="d-grid">
-                                                <span class="text-sm fw-normal text-n50 text-decoration-underline">$21,599.00
-                                                    USD</span>
-                                                <span class="text-xl fw-semibold text-secondary2">$ 14,599.00 USD</span>
-                                            </div>
-                                            <button class="outline-btn text-n100 fw-medium box-style box-secondary2">ADD
-                                                TO CART </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-xs-6">
-                                <!-- product item -->
-                                <div class="product-card2 position-relative p-xl-10 p-lg-8 p-6 bg-n0 border border-n100-5 box-style box-n20 card-tilt">
-                                    <div class="product-type py-lg-3 py-2 ps-lg-4 ps-2 pe-lg-6 pe-4 bg-secondary2 position-absolute top-0 start-0 parallelogram-path z-2">
-                                        <span class="text-sm fw-medium text-n0">New</span>
-                                    </div>
-                                    <div class="product-thumb-wrapper position-relative">
-                                        <button class="single-wishlist-btn text-secondary2 text-xl icon-52px bg-n0 position-absolute top-0 right-0 z-3 tooltip-btn tooltip-left" data-tooltip="Add to wishlist">
-                                            <i class="ph ph-heart"></i>
-                                        </button>
-                                        <div class="product-thumb hover-cursor" data-hover-text="View Product">
-                                            <a href="shop-details.html" class="product-thumb-link d-block">
-                                                <img class="w-100" src="${pageContext.request.contextPath}/assets/images/product-9.png" alt="product thumb">
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <span class="d-block h-1px w-100 bg-n100-1 mb-lg-6 mb-4 mt-lg-10 mt-6"></span>
-                                    <div class="product-info-wrapper">
-                                        <div class="mb-xxl-7 mb-md-5 mb-3">
-                                            <a href="shop-details.html">
-                                                <h4 class="text-n100 mb-2 hover-text-secondary2">
-                                                    Terra Roamer
-                                                </h4>
-                                            </a>
-                                            <span class="text-sm fw-normal text-n50">Enduro</span>
-                                        </div>
-                                        <div class="d-between flex-wrap gap-4">
-                                            <div class="d-grid">
-                                                <span class="text-sm fw-normal text-n50 text-decoration-underline">$21,599.00
-                                                    USD</span>
-                                                <span class="text-xl fw-semibold text-secondary2">$ 14,599.00 USD</span>
-                                            </div>
-                                            <button class="outline-btn text-n100 fw-medium box-style box-secondary2">ADD
-                                                TO CART </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            <!-- product section end -->
-
-            <!-- gallery slider -->
-            <!-- gallery slider start -->
-            <div class="overflow-hidden position-relative z-0">
-                <div class="swiper gallery-slider">
-                    <div class="swiper-wrapper align-items-center z-1">
-                        <div class="swiper-slide w-fit z-1">
-                            <div class="gallery-item position-relative">
-                                <img src="${pageContext.request.contextPath}/assets/images/gallery-1.png" alt="gallery logo">
-                                <div class="overlay position-absolute top-0 start-0 w-100 h-100 d-center">
-                                    <a href="#" class="icon-52px bg-n0 text-secondary2 text-xl hover-bg-primary2 hover-text-n0">
-                                        <i class="ph ph-instagram-logo"></i>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="swiper-slide w-fit z-1">
-                            <div class="gallery-item position-relative">
-                                <img src="${pageContext.request.contextPath}/assets/images/gallery-2.png" alt="gallery logo">
-                                <div class="overlay position-absolute top-0 start-0 w-100 h-100 d-center">
-                                    <a href="#" class="icon-52px bg-n0 text-secondary2 text-xl hover-bg-primary2 hover-text-n0">
-                                        <i class="ph ph-instagram-logo"></i>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="swiper-slide w-fit z-1">
-                            <div class="gallery-item position-relative">
-                                <img src="${pageContext.request.contextPath}/assets/images/gallery-3.png" alt="gallery logo">
-                                <div class="overlay position-absolute top-0 start-0 w-100 h-100 d-center">
-                                    <a href="#" class="icon-52px bg-n0 text-secondary2 text-xl hover-bg-primary2 hover-text-n0">
-                                        <i class="ph ph-instagram-logo"></i>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="swiper-slide w-fit z-1">
-                            <div class="gallery-item position-relative">
-                                <img src="${pageContext.request.contextPath}/assets/images/gallery-4.png" alt="gallery logo">
-                                <div class="overlay position-absolute top-0 start-0 w-100 h-100 d-center">
-                                    <a href="#" class="icon-52px bg-n0 text-secondary2 text-xl hover-bg-primary2 hover-text-n0">
-                                        <i class="ph ph-instagram-logo"></i>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="swiper-slide w-fit z-1">
-                            <div class="gallery-item position-relative">
-                                <img src="${pageContext.request.contextPath}/assets/images/gallery-5.png" alt="gallery logo">
-                                <div class="overlay position-absolute top-0 start-0 w-100 h-100 d-center">
-                                    <a href="#" class="icon-52px bg-n0 text-secondary2 text-xl hover-bg-primary2 hover-text-n0">
-                                        <i class="ph ph-instagram-logo"></i>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="swiper-slide w-fit z-1">
-                            <div class="gallery-item position-relative">
-                                <img src="${pageContext.request.contextPath}/assets/images/gallery-6.png" alt="gallery logo">
-                                <div class="overlay position-absolute top-0 start-0 w-100 h-100 d-center">
-                                    <a href="#" class="icon-52px bg-n0 text-secondary2 text-xl hover-bg-primary2 hover-text-n0">
-                                        <i class="ph ph-instagram-logo"></i>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="swiper-slide w-fit z-1">
-                            <div class="gallery-item position-relative">
-                                <img src="${pageContext.request.contextPath}/assets/images/gallery-7.png" alt="gallery logo">
-                                <div class="overlay position-absolute top-0 start-0 w-100 h-100 d-center">
-                                    <a href="#" class="icon-52px bg-n0 text-secondary2 text-xl hover-bg-primary2 hover-text-n0">
-                                        <i class="ph ph-instagram-logo"></i>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="swiper-slide w-fit z-1">
-                            <div class="gallery-item position-relative">
-                                <img src="${pageContext.request.contextPath}/assets/images/gallery-8.png" alt="gallery logo">
-                                <div class="overlay position-absolute top-0 start-0 w-100 h-100 d-center">
-                                    <a href="#" class="icon-52px bg-n0 text-secondary2 text-xl hover-bg-primary2 hover-text-n0">
-                                        <i class="ph ph-instagram-logo"></i>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="swiper-slide w-fit z-1">
-                            <div class="gallery-item position-relative">
-                                <img src="${pageContext.request.contextPath}/assets/images/gallery-9.png" alt="gallery logo">
-                                <div class="overlay position-absolute top-0 start-0 w-100 h-100 d-center">
-                                    <a href="#" class="icon-52px bg-n0 text-secondary2 text-xl hover-bg-primary2 hover-text-n0">
-                                        <i class="ph ph-instagram-logo"></i>
-                                    </a>
-                                </div>
+                                <!--Shop Product End-->
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- gallery slider end -->
+            <!--Shop Area End-->
+            <!--Brand Area Start-->
+            <jsp:include page="/view/common/home/brand.jsp"></jsp:include>
+            <!--Brand Area End-->
+            <!--Footer Area Start-->
+            <jsp:include page="/view/common/home/footer.jsp"></jsp:include>
+            <!--Footer Area End-->
+            <!-- Modal Area Strat -->
+            <jsp:include page="/view/common/home/modalProductDetails.jsp"></jsp:include>
+            <!-- Modal Area End -->
+        </div>
 
-            <!-- call to action -->
-            <!-- call to action section start -->
-            <section class="call-to-action-section px-xl-20 px-lg-10 px-sm-7 pt-120 pb-120 bg-n100">
-                <div class="container-fluid">
-                    <div class="row justify-content-center">
-                        <div class="col-lg-8">
-                            <div class="text-center mb-lg-8 mb-6">
-                                <h2 class="text-animation-word display-four text-n0 text-uppercase mb-lg-5 mb-3">
-                                    JOIN THE
-                                    <span class="text-secondary2 text-decoration-underline">CYCLECITY</span>
-                                    COMMUNITY
-                                </h2>
-                                <p class="text-sm text-n30 fw-normal ch-100 mx-auto">
-                                    Stay updated with the latest in cycling. Sign up for our newsletter to receive exclusive
-                                    offers, product updates, and tips straight to your inbox. Join our biking community
-                                    today!
-                                </p>
-                            </div>
-                            <form action="#" class="d-center flex-wrap flex-sm-nowrap cta-form mx-auto">
-                                <input type="email" placeholder="Enter your email address" class="bg-transparent text-n0  py-lg-4 py-3 px-lg-6 px-4 border border-n20-1 focus-primary">
-                                <button type="submit" class="text-n100 fw-medium text-capitalize bg-n0 font-instrument py-lg-4 py-3 px-lg-6 px-4 hover-text-n0 box-style box-primary2">Subscribe</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            <!-- call to action section end -->
 
-        </main>
-        <!-- main end -->
 
-        <!-- footer section -->
-        <!-- footer section start -->
-        <jsp:include page="../common/home/footer.jsp"></jsp:include>
-        <!-- footer section end -->
-        <script  src="${pageContext.request.contextPath}/assets/js/main.js"></script>
 
+
+        <!--All Js Here-->
+    <jsp:include page="../common/home/common-js.jsp"></jsp:include>
     </body>
-
 </html>
