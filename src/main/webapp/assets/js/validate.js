@@ -20,6 +20,18 @@ const MESSAGES = {
     GENDER: "Please select a valid gender"
 };
 
+// Category validation constants
+const CATEGORY_REGEX = {
+    NAME: /^.{1,100}$/  // 1-100 characters for category name
+};
+
+// Category validation messages
+const CATEGORY_MESSAGES = {
+    NAME_REQUIRED: "Category name is required",
+    NAME_LENGTH: "Category name must be less than 100 characters",
+    STATUS_REQUIRED: "Please select a status"
+};
+
 // Check if field is empty
 function isEmpty(value) {
     return value.trim() === '';
@@ -41,6 +53,28 @@ function clearError(inputElement) {
         errorElement.textContent = '';
         errorElement.style.display = 'none';
     }
+}
+
+// Helper function to show error message for Bootstrap forms
+function showBootstrapError(inputElement, message) {
+    inputElement.classList.add('is-invalid');
+    const feedback = inputElement.nextElementSibling;
+    if (feedback && feedback.classList.contains('invalid-feedback')) {
+        feedback.textContent = message;
+        feedback.style.display = 'block';
+    }
+    return false;
+}
+
+// Helper function to clear error for Bootstrap forms
+function clearBootstrapError(inputElement) {
+    inputElement.classList.remove('is-invalid');
+    const feedback = inputElement.nextElementSibling;
+    if (feedback && feedback.classList.contains('invalid-feedback')) {
+        feedback.textContent = '';
+        feedback.style.display = 'none';
+    }
+    return true;
 }
 
 // Individual field validations
@@ -190,6 +224,42 @@ function validateForm() {
     }
     
     return true;
+}
+
+// Validate category name
+function validateCategoryName(nameInput) {
+    const value = nameInput.value;
+    if (isEmpty(value)) {
+        return showBootstrapError(nameInput, CATEGORY_MESSAGES.NAME_REQUIRED);
+    }
+    if (!CATEGORY_REGEX.NAME.test(value)) {
+        return showBootstrapError(nameInput, CATEGORY_MESSAGES.NAME_LENGTH);
+    }
+    return clearBootstrapError(nameInput);
+}
+
+// Validate category status
+function validateCategoryStatus(statusSelect) {
+    const value = statusSelect.value;
+    if (value === "" || value === null) {
+        return showBootstrapError(statusSelect, CATEGORY_MESSAGES.STATUS_REQUIRED);
+    }
+    return clearBootstrapError(statusSelect);
+}
+
+// Validate category form
+function validateCategoryForm() {
+    const fields = {
+        name: document.querySelector('input[name="name"]'),
+        status: document.querySelector('select[name="status"]')
+    };
+    
+    // Validate each field
+    const isNameValid = validateCategoryName(fields.name);
+    const isStatusValid = validateCategoryStatus(fields.status);
+    
+    // Return overall validation result
+    return isNameValid && isStatusValid;
 }
 
 
