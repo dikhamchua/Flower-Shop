@@ -64,9 +64,15 @@
       </li>     
 
       <li>
-        <a href="${pageContext.request.contextPath}/manage-users">
+        <a href="${pageContext.request.contextPath}/admin/manage-account">
           <iconify-icon icon="flowbite:users-group-outline" class="menu-icon"></iconify-icon>
           <span>Users Management</span> 
+        </a>
+      </li>
+      <li>
+        <a href="${pageContext.request.contextPath}/admin/manage-category">
+          <iconify-icon icon="flowbite:users-group-outline" class="menu-icon"></iconify-icon>
+          <span>Category Management</span> 
         </a>
       </li>
       
