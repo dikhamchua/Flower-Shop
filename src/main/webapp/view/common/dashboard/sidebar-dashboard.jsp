@@ -75,7 +75,12 @@
           <span>Category Management</span> 
         </a>
       </li>
-      
+      <li>
+        <a href="${pageContext.request.contextPath}/admin/manage-slider">
+          <iconify-icon icon="flowbite:users-group-outline" class="menu-icon"></iconify-icon>
+          <span>Slider Management</span> 
+        </a>
+      </li>
       <li>
         <a href="${pageContext.request.contextPath}/manage-settings">
           <iconify-icon icon="icon-park-outline:setting-two" class="menu-icon"></iconify-icon>
