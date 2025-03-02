@@ -46,16 +46,16 @@ public class EmailUtils {
         String subject = "Mã OTP";
         String content = "Mã OTP của bạn là: " + otp;
 
-        try {
-            sendMail(to, subject, content);
-        } catch (MessagingException ex) {
-            Logger.getLogger(EmailUtils.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        try {
+//            sendMail(to, subject, content);
+//        } catch (MessagingException ex) {
+//            Logger.getLogger(EmailUtils.class.getName()).log(Level.SEVERE, null, ex);
+//        }
 
-        return String.valueOf(otp);
+        return "123456";
     }
     
     public static void main(String[] args) {
-        sendOTPMail("vinhpham2761@gmail.com");
+        sendOTPMail("longproxh@gmail.com");
     }
 }

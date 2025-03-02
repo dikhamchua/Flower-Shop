@@ -103,14 +103,14 @@ function validateMobile(mobileInput) {
 function validatePassword(passwordInput) {
     const value = passwordInput.value;
     if (isEmpty(value)) {
-        showError(passwordInput.parentElement, MESSAGES.REQUIRED);
+        showError(passwordInput, MESSAGES.REQUIRED);
         return false;
     }
     if (!REGEX.PASSWORD_COMPLEXITY.test(value)) {
-        showError(passwordInput.parentElement, MESSAGES.PASSWORD);
+        showError(passwordInput, MESSAGES.PASSWORD);
         return false;
     }
-    clearError(passwordInput.parentElement);
+    clearError(passwordInput);
     return true;
 }
 
@@ -118,24 +118,42 @@ function validateConfirmPassword(passwordInput, confirmPasswordInput) {
     const value = confirmPasswordInput.value;
     const passwordValue = passwordInput.value;
     if (isEmpty(value)) {
-        showError(confirmPasswordInput.parentElement, MESSAGES.REQUIRED);
+        showError(confirmPasswordInput, MESSAGES.REQUIRED);
         return false;
     }
     if (value !== passwordValue) {
-        showError(confirmPasswordInput.parentElement, MESSAGES.PASSWORD_MATCH);
+        showError(confirmPasswordInput, MESSAGES.PASSWORD_MATCH);
         return false;
     }
-    clearError(confirmPasswordInput.parentElement);
+    clearError(confirmPasswordInput);
     return true;
 }
 
-function validateGender(genderSelect) {
-    const value = genderSelect.value;
-    if (value !== "true" && value !== "false") {
-        showError(genderSelect, MESSAGES.GENDER);
+function validateGenderRadios(radios) {
+    let isSelected = false;
+    for (let i = 0; i < radios.length; i++) {
+        if (radios[i].checked) {
+            isSelected = true;
+            break;
+        }
+    }
+    
+    if (!isSelected) {
+        // Find the error message span after the last radio button
+        const errorElement = radios[radios.length - 1].nextElementSibling;
+        if (errorElement && errorElement.classList.contains('error-message')) {
+            errorElement.textContent = MESSAGES.GENDER;
+            errorElement.style.display = 'block';
+        }
         return false;
     }
-    clearError(genderSelect);
+    
+    // Clear any error message
+    const errorElement = radios[radios.length - 1].nextElementSibling;
+    if (errorElement && errorElement.classList.contains('error-message')) {
+        errorElement.textContent = '';
+        errorElement.style.display = 'none';
+    }
     return true;
 }
 
@@ -148,10 +166,12 @@ function validateForm() {
         email: document.querySelector('input[name="email"]'),
         mobile: document.querySelector('input[name="mobile"]'),
         password: document.querySelector('input[name="password"]'),
-        confirmPassword: document.querySelector('input[name="confirmPassword"]'),
-        gender: document.querySelector('select[name="gender"]')
+        confirmPassword: document.querySelector('input[name="confirmPassword"]')
     };
-
+    
+    // Get gender radio buttons
+    const genderRadios = document.querySelectorAll('input[name="gender"]');
+    
     // Validate each field
     const isValid = [
         validateUsername(fields.username),
@@ -161,10 +181,15 @@ function validateForm() {
         validateMobile(fields.mobile),
         validatePassword(fields.password),
         validateConfirmPassword(fields.password, fields.confirmPassword),
-        validateGender(fields.gender)
+        validateGenderRadios(genderRadios)
     ].every(result => result);
-
-    return isValid;
+    
+    // If not valid, prevent form submission
+    if (!isValid) {
+        return false;
+    }
+    
+    return true;
 }
 
 

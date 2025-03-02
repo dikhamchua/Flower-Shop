@@ -10,6 +10,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -34,6 +35,13 @@ public class HomeController extends HttpServlet {
    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
+        // Kiểm tra trạng thái đăng nhập của người dùng
+        HttpSession session = request.getSession();
+        Object loggedInUser = session.getAttribute("account");
+        
+        // Truyền trạng thái đăng nhập đến trang JSP
+        request.setAttribute("isLoggedIn", loggedInUser != null);
+        
         request.getRequestDispatcher(HOME_PAGE).forward(request, response);    
     } 
 

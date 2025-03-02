@@ -26,9 +26,18 @@
                                     <li><a href="shop.html">Shop</a></li>
                                     <li><a href="portfolio.html">Portfolio</a></li>
                                     <li><a href="blog.html">Blog</a></li>
-                                    <li><a href="${pageContext.request.contextPath}/authen?action=login">Login</a>
-                                    <li><a href="${pageContext.request.contextPath}/authen?action=sign-up">Register</a>
-                                    </li>
+                                    
+                                    <!-- Hiển thị nút đăng nhập/đăng ký chỉ khi chưa đăng nhập -->
+                                    <c:if test="${isLoggedIn == null || isLoggedIn == false}">
+                                        <li><a href="${pageContext.request.contextPath}/authen?action=login">Login</a></li>
+                                        <li><a href="${pageContext.request.contextPath}/authen?action=sign-up">Register</a></li>
+                                    </c:if>
+                                    
+                                    <!-- Hiển thị nút My Account và Logout khi đã đăng nhập -->
+                                    <c:if test="${isLoggedIn == true}">
+                                        <li><a href="${pageContext.request.contextPath}/user/profile">My Account</a></li>
+                                        <li><a href="${pageContext.request.contextPath}/authen?action=logout">Logout</a></li>
+                                    </c:if>
                                 </ul>
                             </nav>
                         </div>
@@ -99,11 +108,19 @@
                                         <a href="#"><i class="fa fa-th"></i></a>
                                         <div class="currency-dropdown">
                                             <ul class="menu-top-menu">
-                                                <li><a href="my-account.html">My Account</a></li>
-                                                <li><a href="wishlist.html">Wishlist</a></li>
-                                                <li><a href="cart.html">Shopping cart</a></li>
-                                                <li><a href="checkout.html">Checkout</a></li>
-                                                <li><a href="login-register.html">Log In</a></li>
+                                                <!-- Điều chỉnh menu dropdown dựa trên trạng thái đăng nhập -->
+                                                <c:if test="${isLoggedIn == true}">
+                                                    <li><a href="${pageContext.request.contextPath}/user/profile">My Account</a></li>
+                                                    <li><a href="wishlist.html">Wishlist</a></li>
+                                                    <li><a href="cart.html">Shopping cart</a></li>
+                                                    <li><a href="checkout.html">Checkout</a></li>
+                                                    <li><a href="${pageContext.request.contextPath}/authen?action=logout">Logout</a></li>
+                                                </c:if>
+                                                <c:if test="${isLoggedIn == null || isLoggedIn == false}">
+                                                    <li><a href="cart.html">Shopping cart</a></li>
+                                                    <li><a href="checkout.html">Checkout</a></li>
+                                                    <li><a href="${pageContext.request.contextPath}/authen?action=login">Log In</a></li>
+                                                </c:if>
                                             </ul>
                                             <div class="switcher">
                                                 <div class="language">

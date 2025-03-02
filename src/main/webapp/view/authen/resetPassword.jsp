@@ -56,7 +56,7 @@
                                 <h2>Reset Password</h2>
                             </div>
                             <div class="register-form">
-                                <form action="${pageContext.request.contextPath}/authen?action=reset-password" method="POST">
+                                <form action="${pageContext.request.contextPath}/authen?action=reset-password" method="POST" onsubmit="return validateForm()">
                                     <div class="form-fild">
                                         <p><label>New Password <span class="required">*</span></label></p>
                                         <input type="password" name="newPassword" 
@@ -216,6 +216,41 @@
 
             <!--All Js Here-->
         <jsp:include page="../common/home/common-js.jsp"></jsp:include>
+
+    <script>
+        function validateForm() {
+            var newPassword = document.getElementsByName("newPassword")[0].value;
+            var confirmPassword = document.getElementsByName("confirmPassword")[0].value;
+            var isValid = true;
+
+            // Reset error messages
+            document.querySelectorAll('.error-message').forEach(function(el) {
+                el.style.display = 'none';
+            });
+
+            if (!newPassword || !confirmPassword) {
+                document.querySelector('[name="newPassword"]').nextElementSibling.textContent = "Both password fields are required.";
+                document.querySelector('[name="newPassword"]').nextElementSibling.style.display = 'block';
+                isValid = false;
+            }
+            
+            // Kiểm tra điều kiện mật khẩu mới
+            var passwordRegex = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/;
+            if (newPassword && !passwordRegex.test(newPassword)) {
+                document.querySelector('[name="newPassword"]').nextElementSibling.textContent = "Password must contain 8+ characters, at least one uppercase letter, one lowercase letter, and one number.";
+                document.querySelector('[name="newPassword"]').nextElementSibling.style.display = 'block';
+                isValid = false;
+            }
+
+            if (newPassword && confirmPassword && newPassword !== confirmPassword) {
+                document.querySelector('[name="confirmPassword"]').nextElementSibling.textContent = "Passwords do not match.";
+                document.querySelector('[name="confirmPassword"]').nextElementSibling.style.display = 'block';
+                isValid = false;
+            }
+            
+            return isValid; // Cho phép gửi form
+        }
+    </script>
 
     </body>
 </html>
