@@ -35,7 +35,7 @@
                                     
                                     <!-- Hiển thị nút My Account và Logout khi đã đăng nhập -->
                                     <c:if test="${isLoggedIn == true}">
-                                        <li><a href="${pageContext.request.contextPath}/user/profile">My Account</a></li>
+                                        <li><a href="${pageContext.request.contextPath}/profile">My Account</a></li>
                                         <li><a href="${pageContext.request.contextPath}/authen?action=logout">Logout</a></li>
                                     </c:if>
                                 </ul>

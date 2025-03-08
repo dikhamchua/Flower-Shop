@@ -93,6 +93,12 @@
           <span>Change Password</span> 
         </a>
       </li>
+      <li>
+        <a href="${pageContext.request.contextPath}/admin/manage-product">
+          <iconify-icon icon="icon-park-outline:setting-two" class="menu-icon"></iconify-icon>
+          <span>Product Management</span>
+        </a>
+      </li>
     </ul>
   </div>
 </aside>
