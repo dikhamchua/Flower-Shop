@@ -132,7 +132,7 @@
                         <tr>
                             <td>${product.productId}</td>
                             <td>
-                                <img src="${product.image}" alt="${product.productName}" class="product-image">
+                                <img src="${pageContext.request.contextPath}/${product.image}" alt="${product.productName}" class="product-image">
                             </td>
                             <td>
                                 <c:choose>
