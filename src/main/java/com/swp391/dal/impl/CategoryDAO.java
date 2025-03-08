@@ -3,6 +3,8 @@ package com.swp391.dal.impl;
 import java.sql.*;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.HashMap;
 import com.swp391.entity.Category;
 import com.swp391.dal.I_DAO;
 import com.swp391.dal.DBContext;
@@ -295,5 +297,155 @@ public class CategoryDAO extends DBContext implements I_DAO<Category> {
         // Test findAll
         List<Category> allCategories = categoryDAO.findAll();
         System.out.println("Total categories: " + allCategories.size());
+    }
+
+    public List<Category> findAllWithProductCount() {
+        List<Category> categories = new ArrayList<>();
+        
+        try {
+            // Chuẩn bị kết nối
+            connection = getConnection();
+            
+            // Tạo câu truy vấn SQL để lấy danh mục và đếm số lượng sản phẩm
+            String sql = "SELECT c.category_id, c.name, c.description, c.status, " +
+                         "COUNT(p.product_id) as product_count " +
+                         "FROM categories c " +
+                         "LEFT JOIN products p ON c.category_id = p.category_id " +
+                         "WHERE c.status = 1 " +  // Chỉ lấy các danh mục đang hoạt động
+                         "GROUP BY c.category_id, c.name, c.description, c.status " +
+                         "ORDER BY c.name";
+            
+            // Tạo statement và thực thi truy vấn
+            statement = connection.prepareStatement(sql);
+            resultSet = statement.executeQuery();
+            
+            // Xử lý kết quả
+            while (resultSet.next()) {
+                Category category = new Category();
+                category.setCategoryId(resultSet.getInt("category_id"));
+                category.setName(resultSet.getString("name"));
+                category.setDescription(resultSet.getString("description"));
+                category.setStatus(resultSet.getByte("status"));
+                
+                // Thêm số lượng sản phẩm vào đối tượng Category
+                // Giả sử bạn đã thêm thuộc tính productCount vào lớp Category
+                categories.add(category);
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error finding categories with product count: " + ex.getMessage());
+        } finally {
+            closeResources();
+        }
+        
+        return categories;
+    }
+
+    /**
+     * Lấy số lượng sản phẩm trong một danh mục cụ thể
+     * @param categoryId ID của danh mục cần đếm sản phẩm
+     * @return Số lượng sản phẩm trong danh mục
+     */
+    public int getProductCountByCategory(int categoryId) {
+        int count = 0;
+        
+        try {
+            // Chuẩn bị kết nối
+            connection = getConnection();
+            
+            // Tạo câu truy vấn SQL để đếm số lượng sản phẩm trong danh mục
+            String sql = "SELECT COUNT(*) FROM products WHERE category_id = ? AND status = 1";
+            
+            // Tạo statement và thiết lập tham số
+            statement = connection.prepareStatement(sql);
+            statement.setInt(1, categoryId);
+            
+            // Thực thi truy vấn
+            resultSet = statement.executeQuery();
+            
+            // Lấy kết quả
+            if (resultSet.next()) {
+                count = resultSet.getInt(1);
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error counting products in category: " + ex.getMessage());
+        } finally {
+            closeResources();
+        }
+        
+        return count;
+    }
+
+    /**
+     * Lấy số lượng sản phẩm cho tất cả các danh mục
+     * @return Map với key là category_id và value là số lượng sản phẩm
+     */
+    public Map<Integer, Integer> getAllCategoryProductCounts() {
+        Map<Integer, Integer> countMap = new HashMap<>();
+        
+        try {
+            // Chuẩn bị kết nối
+            connection = getConnection();
+            
+            // Tạo câu truy vấn SQL để đếm số lượng sản phẩm cho mỗi danh mục
+            String sql = "SELECT c.category_id, COUNT(p.product_id) as product_count " +
+                         "FROM categories c " +
+                         "LEFT JOIN products p ON c.category_id = p.category_id AND p.status = 1 " +
+                         "WHERE c.status = 1 " +
+                         "GROUP BY c.category_id";
+            
+            // Tạo statement và thực thi truy vấn
+            statement = connection.prepareStatement(sql);
+            resultSet = statement.executeQuery();
+            
+            // Xử lý kết quả
+            while (resultSet.next()) {
+                int categoryId = resultSet.getInt("category_id");
+                int count = resultSet.getInt("product_count");
+                countMap.put(categoryId, count);
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error getting category product counts: " + ex.getMessage());
+        } finally {
+            closeResources();
+        }
+        
+        return countMap;
+    }
+
+    /**
+     * Lấy tất cả danh mục đang hoạt động
+     * @return Danh sách các danh mục
+     */
+    public List<Category> findAllActive() {
+        List<Category> categories = new ArrayList<>();
+        
+        try {
+            // Chuẩn bị kết nối
+            connection = getConnection();
+            
+            // Tạo câu truy vấn SQL để lấy tất cả danh mục đang hoạt động
+            String sql = "SELECT * FROM categories WHERE status = 1 ORDER BY name";
+            
+            // Tạo statement và thực thi truy vấn
+            statement = connection.prepareStatement(sql);
+            resultSet = statement.executeQuery();
+            
+            // Xử lý kết quả
+            while (resultSet.next()) {
+                Category category = new Category();
+                category.setCategoryId(resultSet.getInt("category_id"));
+                category.setName(resultSet.getString("name"));
+                category.setDescription(resultSet.getString("description"));
+                category.setStatus(resultSet.getByte("status"));
+                
+                categories.add(category);
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error finding all active categories: " + ex.getMessage());
+        } finally {
+            closeResources();
+        }
+        
+        return categories;
     }
 }
