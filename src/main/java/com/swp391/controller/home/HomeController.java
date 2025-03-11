@@ -5,6 +5,7 @@
 
 package com.swp391.controller.home;
 
+import com.swp391.config.GlobalConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -33,11 +34,39 @@ public class HomeController extends HttpServlet {
 
     private final String HOME_PAGE = "view/home/shop.jsp";
     private final int TOP_RATE = 5;
+    private final String PRODUCT_DETAILS_PAGE = "/view/home/product-details.jsp";
+    private final int RELATED_PRODUCTS_COUNT = 4;
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
+            // Lấy action từ request
+            String action = request.getParameter("action");
+            
+            // Kiểm tra trạng thái đăng nhập và lưu vào request attribute
+            HttpSession session = request.getSession();
+            boolean isLoggedIn = session.getAttribute(GlobalConfig.SESSION_ACCOUNT) != null;
+            request.setAttribute("isLoggedIn", isLoggedIn);
+            
+            // Nếu action là "product-details", xử lý hiển thị chi tiết sản phẩm
+            if ("product-details".equals(action)) {
+                showProductDetails(request, response);
+                return;
+            }
+            
+            // Debug session
+            Object account = session.getAttribute(GlobalConfig.SESSION_ACCOUNT);
+            System.out.println("SESSION_ACCOUNT in HomeController: " + account);
+            
+            // Kiểm tra tất cả các thuộc tính trong session
+            System.out.println("All session attributes:");
+            java.util.Enumeration<String> attributeNames = session.getAttributeNames();
+            while (attributeNames.hasMoreElements()) {
+                String name = attributeNames.nextElement();
+                System.out.println(name + " = " + session.getAttribute(name));
+            }
+            
             // Khởi tạo các DAO cần thiết
             CategoryDAO categoryDAO = new CategoryDAO();
             ProductDAO productDAO = new ProductDAO();
@@ -172,7 +201,7 @@ public class HomeController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        response.sendRedirect(HOME_PAGE);
     }
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -204,6 +233,69 @@ public class HomeController extends HttpServlet {
             case "newest":
                 Collections.sort(products, (a, b) -> b.getCreatedAt().compareTo(a.getCreatedAt()));
                 break;
+        }
+    }
+
+    /**
+     * Xử lý hiển thị chi tiết sản phẩm
+     */
+    private void showProductDetails(HttpServletRequest request, HttpServletResponse response) 
+            throws ServletException, IOException {
+        try {
+            // Lấy ID sản phẩm từ request
+            String productIdStr = request.getParameter("id");
+            
+            if (productIdStr == null || productIdStr.isEmpty()) {
+                response.sendRedirect(request.getContextPath() + "/home");
+                return;
+            }
+            
+            int productId = Integer.parseInt(productIdStr);
+            
+            // Khởi tạo DAO
+            ProductDAO productDAO = new ProductDAO();
+            CategoryDAO categoryDAO = new CategoryDAO();
+            
+            // Lấy thông tin chi tiết sản phẩm
+            Product product = productDAO.findById(productId);
+            
+            if (product == null) {
+                response.sendRedirect(request.getContextPath() + "/home");
+                return;
+            }
+            
+            // Lấy danh sách sản phẩm liên quan (cùng danh mục)
+            List<Product> relatedProducts = productDAO.findRelatedProducts(product.getCategoryId(), productId, RELATED_PRODUCTS_COUNT);
+            
+            // Kiểm tra trạng thái đăng nhập và lưu vào request attribute
+            HttpSession session = request.getSession();
+            boolean isLoggedIn = session.getAttribute(GlobalConfig.SESSION_ACCOUNT) != null;
+            request.setAttribute("isLoggedIn", isLoggedIn);
+            
+            // Đặt thuộc tính cho request
+            request.setAttribute("product", product);
+            request.setAttribute("relatedProducts", relatedProducts);
+            
+            // Lấy tên danh mục
+            String categoryName = categoryDAO.findById(product.getCategoryId()).getName();
+            request.setAttribute("categoryName", categoryName);
+            
+            // Kiểm tra thông báo từ session và xóa sau khi sử dụng
+            String cartMessage = (String) session.getAttribute("cartMessage");
+            if (cartMessage != null) {
+                request.setAttribute("cartMessage", cartMessage);
+                session.removeAttribute("cartMessage"); // Xóa thông báo sau khi sử dụng
+            }
+            
+            // Forward đến trang chi tiết sản phẩm
+            request.getRequestDispatcher(PRODUCT_DETAILS_PAGE).forward(request, response);
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            if (!response.isCommitted()) {
+                request.setAttribute("errorMessage", "Đã xảy ra lỗi: " + e.getMessage());
+                request.getRequestDispatcher("/view/error.jsp").forward(request, response);
+            }
         }
     }
 
