@@ -20,6 +20,18 @@ const MESSAGES = {
     GENDER: "Please select a valid gender"
 };
 
+// Category validation constants
+const CATEGORY_REGEX = {
+    NAME: /^.{1,100}$/  // 1-100 characters for category name
+};
+
+// Category validation messages
+const CATEGORY_MESSAGES = {
+    NAME_REQUIRED: "Category name is required",
+    NAME_LENGTH: "Category name must be less than 100 characters",
+    STATUS_REQUIRED: "Please select a status"
+};
+
 // Check if field is empty
 function isEmpty(value) {
     return value.trim() === '';
@@ -41,6 +53,28 @@ function clearError(inputElement) {
         errorElement.textContent = '';
         errorElement.style.display = 'none';
     }
+}
+
+// Helper function to show error message for Bootstrap forms
+function showBootstrapError(inputElement, message) {
+    inputElement.classList.add('is-invalid');
+    const feedback = inputElement.nextElementSibling;
+    if (feedback && feedback.classList.contains('invalid-feedback')) {
+        feedback.textContent = message;
+        feedback.style.display = 'block';
+    }
+    return false;
+}
+
+// Helper function to clear error for Bootstrap forms
+function clearBootstrapError(inputElement) {
+    inputElement.classList.remove('is-invalid');
+    const feedback = inputElement.nextElementSibling;
+    if (feedback && feedback.classList.contains('invalid-feedback')) {
+        feedback.textContent = '';
+        feedback.style.display = 'none';
+    }
+    return true;
 }
 
 // Individual field validations
@@ -103,14 +137,14 @@ function validateMobile(mobileInput) {
 function validatePassword(passwordInput) {
     const value = passwordInput.value;
     if (isEmpty(value)) {
-        showError(passwordInput.parentElement, MESSAGES.REQUIRED);
+        showError(passwordInput, MESSAGES.REQUIRED);
         return false;
     }
     if (!REGEX.PASSWORD_COMPLEXITY.test(value)) {
-        showError(passwordInput.parentElement, MESSAGES.PASSWORD);
+        showError(passwordInput, MESSAGES.PASSWORD);
         return false;
     }
-    clearError(passwordInput.parentElement);
+    clearError(passwordInput);
     return true;
 }
 
@@ -118,24 +152,42 @@ function validateConfirmPassword(passwordInput, confirmPasswordInput) {
     const value = confirmPasswordInput.value;
     const passwordValue = passwordInput.value;
     if (isEmpty(value)) {
-        showError(confirmPasswordInput.parentElement, MESSAGES.REQUIRED);
+        showError(confirmPasswordInput, MESSAGES.REQUIRED);
         return false;
     }
     if (value !== passwordValue) {
-        showError(confirmPasswordInput.parentElement, MESSAGES.PASSWORD_MATCH);
+        showError(confirmPasswordInput, MESSAGES.PASSWORD_MATCH);
         return false;
     }
-    clearError(confirmPasswordInput.parentElement);
+    clearError(confirmPasswordInput);
     return true;
 }
 
-function validateGender(genderSelect) {
-    const value = genderSelect.value;
-    if (value !== "true" && value !== "false") {
-        showError(genderSelect, MESSAGES.GENDER);
+function validateGenderRadios(radios) {
+    let isSelected = false;
+    for (let i = 0; i < radios.length; i++) {
+        if (radios[i].checked) {
+            isSelected = true;
+            break;
+        }
+    }
+    
+    if (!isSelected) {
+        // Find the error message span after the last radio button
+        const errorElement = radios[radios.length - 1].nextElementSibling;
+        if (errorElement && errorElement.classList.contains('error-message')) {
+            errorElement.textContent = MESSAGES.GENDER;
+            errorElement.style.display = 'block';
+        }
         return false;
     }
-    clearError(genderSelect);
+    
+    // Clear any error message
+    const errorElement = radios[radios.length - 1].nextElementSibling;
+    if (errorElement && errorElement.classList.contains('error-message')) {
+        errorElement.textContent = '';
+        errorElement.style.display = 'none';
+    }
     return true;
 }
 
@@ -148,10 +200,12 @@ function validateForm() {
         email: document.querySelector('input[name="email"]'),
         mobile: document.querySelector('input[name="mobile"]'),
         password: document.querySelector('input[name="password"]'),
-        confirmPassword: document.querySelector('input[name="confirmPassword"]'),
-        gender: document.querySelector('select[name="gender"]')
+        confirmPassword: document.querySelector('input[name="confirmPassword"]')
     };
-
+    
+    // Get gender radio buttons
+    const genderRadios = document.querySelectorAll('input[name="gender"]');
+    
     // Validate each field
     const isValid = [
         validateUsername(fields.username),
@@ -161,10 +215,51 @@ function validateForm() {
         validateMobile(fields.mobile),
         validatePassword(fields.password),
         validateConfirmPassword(fields.password, fields.confirmPassword),
-        validateGender(fields.gender)
+        validateGenderRadios(genderRadios)
     ].every(result => result);
+    
+    // If not valid, prevent form submission
+    if (!isValid) {
+        return false;
+    }
+    
+    return true;
+}
 
-    return isValid;
+// Validate category name
+function validateCategoryName(nameInput) {
+    const value = nameInput.value;
+    if (isEmpty(value)) {
+        return showBootstrapError(nameInput, CATEGORY_MESSAGES.NAME_REQUIRED);
+    }
+    if (!CATEGORY_REGEX.NAME.test(value)) {
+        return showBootstrapError(nameInput, CATEGORY_MESSAGES.NAME_LENGTH);
+    }
+    return clearBootstrapError(nameInput);
+}
+
+// Validate category status
+function validateCategoryStatus(statusSelect) {
+    const value = statusSelect.value;
+    if (value === "" || value === null) {
+        return showBootstrapError(statusSelect, CATEGORY_MESSAGES.STATUS_REQUIRED);
+    }
+    return clearBootstrapError(statusSelect);
+}
+
+// Validate category form
+function validateCategoryForm() {
+    const fields = {
+        name: document.querySelector('input[name="name"]'),
+        status: document.querySelector('select[name="status"]')
+    };
+    
+    // Validate each field
+    const isNameValid = validateCategoryName(fields.name);
+    const isStatusValid = validateCategoryStatus(fields.status);
+    
+    // Return overall validation result
+    return isNameValid && isStatusValid;
 }
 
 

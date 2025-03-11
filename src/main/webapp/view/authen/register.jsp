@@ -57,59 +57,59 @@
                                 <h2>Register</h2>
                             </div>
                             <div class="register-form">
-                                <form action="authen?action=sign-up" method="POST">
+                                <form action="authen?action=sign-up" method="POST" id="registerForm" onsubmit="return validateForm()">
                                     <div class="form-fild">
                                         <p><label>Username <span class="required">*</span></label></p>
-                                        <input name="username" type="text" required>
-                                    </div>
-                                    <div class="form-fild">
-                                        <p><label>First Name <span class="required">*</span></label></p>
-                                        <input name="firstName" type="text" required>
-                                    </div>
-                                    <div class="form-fild">
-                                        <p><label>Last Name <span class="required">*</span></label></p>
-                                        <input name="lastName" type="text" required>
-                                    </div>
-                                    <div class="form-fild">
-                                        <p style="
-                                        display: inline;
-                                    "><label>Gender <span class="required">*</span></label></p>
-                                        <input type="radio" name="gender" value="true" required="" style="
-                                        width: auto;
-                                        height: auto;
-                                    "> Male
-                                        <input type="radio" name="gender" value="false" required="" style="
-                                        width: auto;
-                                        height: auto;
-                                    "> Female
-                                    </div>
-                                    <div class="form-fild">
-                                        <p><label>Email <span class="required">*</span></label></p>
-                                        <input name="email" type="email" required>
-                                    </div>
-                                    <div class="form-fild">
-                                        <p><label>Mobile <span class="required">*</span></label></p>
-                                        <input name="mobile" type="tel" required>
-                                    </div>
-                                    <div class="form-fild">
-                                        <p><label>Password <span class="required">*</span></label></p>
-                                        <input name="password" type="password" required>
-                                    </div>
-                                    <div class="form-fild">
-                                        <p><label>Confirm Password <span class="required">*</span></label></p>
-                                        <input name="confirmPassword" type="password" required>
-                                    </div>
-                                    <div class="register-submit">
-                                        <button type="submit" class="form-button">Register</button>
-                                    </div>
-                                </form>
-                            </div>
+                                        <input name="username" type="text"  value="${param.username}">
+                                    <span class="error-message" style="color: red; display: none;"></span>
+                                </div>
+                                <div class="form-fild">
+                                    <p><label>First Name <span class="required">*</span></label></p>
+                                    <input name="firstName" type="text"  value="${param.firstName}">
+                                    <span class="error-message" style="color: red; display: none;"></span>
+                                </div>
+                                <div class="form-fild">
+                                    <p><label>Last Name <span class="required">*</span></label></p>
+                                    <input name="lastName" type="text" value="${param.lastName}">
+                                    <span class="error-message" style="color: red; display: none;"></span>
+                                </div>
+                                <div class="form-fild">
+                                    <p style="display: inline;"><label>Gender <span class="required">*</span></label></p>
+                                    <input type="radio" name="gender" value="true"  style="width: auto; height: auto;" ${param.gender == 'true' ? 'checked' : ''}> Male
+                                    <input type="radio" name="gender" value="false"  style="width: auto; height: auto;" ${param.gender == 'false' ? 'checked' : ''}> Female
+                                    <span class="error-message" style="color: red; display: none;"></span>
+                                </div>
+                                <div class="form-fild">
+                                    <p><label>Email <span class="required">*</span></label></p>
+                                    <input name="email" type="email"  value="${param.email}">
+                                    <span class="error-message" style="color: red; display: none;"></span>
+                                </div>
+                                <div class="form-fild">
+                                    <p><label>Mobile <span class="required">*</span></label></p>
+                                    <input name="mobile" type="tel"  value="${param.mobile}">
+                                    <span class="error-message" style="color: red; display: none;"></span>
+                                </div>
+                                <div class="form-fild">
+                                    <p><label>Password <span class="required">*</span></label></p>
+                                    <input name="password" type="password" >
+                                    <span class="error-message" style="color: red; display: none;"></span>
+                                </div>
+                                <div class="form-fild">
+                                    <p><label>Confirm Password <span class="required">*</span></label></p>
+                                    <input name="confirmPassword" type="password" >
+                                    <span class="error-message" style="color: red; display: none;"></span>
+                                </div>
+                                <div class="register-submit">
+                                    <button type="submit" class="form-button">Register</button>
+                                </div>
+                            </form>
                         </div>
-                        <!--Register Form End-->
                     </div>
+                    <!--Register Form End-->
                 </div>
-                <!--Login Register Area End-->
-                <!--Brand Area Start-->
+            </div>
+            <!--Login Register Area End-->
+            <!--Brand Area Start-->
             <jsp:include page="/view/common/home/brand.jsp"></jsp:include>
                 <!--Brand Area End-->
                 <!--Footer Area Start-->
@@ -247,6 +247,6 @@
 
             <!--All Js Here-->
         <jsp:include page="../common/home/common-js.jsp"></jsp:include>
-
+        <script src="${pageContext.request.contextPath}/assets/js/validate.js"></script>
     </body>
 </html>

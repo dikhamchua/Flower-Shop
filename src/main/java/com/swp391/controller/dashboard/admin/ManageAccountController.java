@@ -17,6 +17,9 @@ import com.swp391.entity.Account;
 import java.util.List;
 import jakarta.servlet.RequestDispatcher;
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.regex.Pattern;
 
 @WebServlet(name="ManageAccountController", urlPatterns={"/admin/manage-account"})
 public class ManageAccountController extends HttpServlet {
@@ -157,14 +160,11 @@ public class ManageAccountController extends HttpServlet {
         try {
             // Lấy thông tin từ request
             int accountId = Integer.parseInt(request.getParameter("id"));
-            // String username = request.getParameter("username");
-            // String email = request.getParameter("email");
             String password = request.getParameter("password");
             String firstName = request.getParameter("firstName");
             String lastName = request.getParameter("lastName");
             String phone = request.getParameter("phone");
             String address = request.getParameter("address");
-            // String role = request.getParameter("role");
             boolean status = Boolean.parseBoolean(request.getParameter("status"));
 
             // Lấy account từ database
@@ -172,14 +172,25 @@ public class ManageAccountController extends HttpServlet {
             Account account = accountDAO.findById(accountId);
 
             if (account != null) {
+                // Validate input data (chỉ kiểm tra phone và password nếu có thay đổi)
+                Map<String, String> errors = validateAccountData(null, null, phone, 
+                    password.isEmpty() ? null : password, accountId);
+                
+                if (!errors.isEmpty()) {
+                    // Nếu có lỗi, lưu thông tin lỗi và dữ liệu đã nhập vào session
+                    request.getSession().setAttribute("errors", errors);
+                    request.getSession().setAttribute("formData", request.getParameterMap());
+                    
+                    // Chuyển hướng về form chỉnh sửa tài khoản
+                    response.sendRedirect(request.getContextPath() + "/admin/manage-account?action=edit&id=" + accountId);
+                    return;
+                }
+                
                 // Cập nhật các trường có thể thay đổi
-                // account.setUsername(username);
-                // account.setEmail(email);
                 account.setFirstName(firstName);
                 account.setLastName(lastName);
                 account.setPhone(phone);
                 account.setAddress(address);
-                // account.setRole(role);
                 account.setStatus(status);
                 
                 // Cập nhật password nếu có
@@ -278,6 +289,19 @@ public class ManageAccountController extends HttpServlet {
             String address = request.getParameter("address");
             String role = request.getParameter("role");
             boolean status = Boolean.parseBoolean(request.getParameter("status"));
+            
+            // Validate input data
+            Map<String, String> errors = validateAccountData(username, email, phone, password, null);
+            
+            if (!errors.isEmpty()) {
+                // Nếu có lỗi, lưu thông tin lỗi và dữ liệu đã nhập vào session
+                request.getSession().setAttribute("errors", errors);
+                request.getSession().setAttribute("formData", request.getParameterMap());
+                
+                // Chuyển hướng về form thêm tài khoản
+                response.sendRedirect(request.getContextPath() + "/admin/manage-account?action=add");
+                return;
+            }
 
             // Tạo đối tượng Account mới
             Account newAccount = Account.builder()
@@ -313,5 +337,61 @@ public class ManageAccountController extends HttpServlet {
         
         // Chuyển hướng về trang list
         response.sendRedirect(request.getContextPath() + "/admin/manage-account?action=list");
+    }
+    
+    /**
+     * Validate account data
+     * @param username Username to validate (null if not validating)
+     * @param email Email to validate (null if not validating)
+     * @param phone Phone to validate (null if not validating)
+     * @param password Password to validate (null if not validating)
+     * @param accountId Account ID (null for new accounts)
+     * @return Map of field names to error messages
+     */
+    private Map<String, String> validateAccountData(String username, String email, String phone, 
+            String password, Integer accountId) {
+        Map<String, String> errors = new HashMap<>();
+        AccountDAO accountDAO = new AccountDAO();
+        
+        // Validate username
+        if (username != null && !username.isEmpty()) {
+            if (username.length() < 3 || username.length() > 50) {
+                errors.put("username", "Username must be between 3 and 50 characters");
+            } else if (!Pattern.matches("^[a-zA-Z0-9_]+$", username)) {
+                errors.put("username", "Username can only contain letters, numbers, and underscores");
+            } else if (accountDAO.isUsernameExists(username)) {
+                errors.put("username", "Username already exists");
+            }
+        }
+        
+        // Validate email
+        if (email != null && !email.isEmpty()) {
+            String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
+            if (!Pattern.matches(emailRegex, email)) {
+                errors.put("email", "Invalid email format");
+            } else if (accountDAO.isEmailExists(email, accountId)) {
+                errors.put("email", "Email already exists");
+            }
+        }
+        
+        // Validate phone
+        if (phone != null && !phone.isEmpty()) {
+            if (!Pattern.matches("^[0-9]{10,15}$", phone)) {
+                errors.put("phone", "Phone number must be between 10 and 15 digits");
+            } else if (accountDAO.isPhoneExists(phone, accountId)) {
+                errors.put("phone", "Phone number already exists");
+            }
+        }
+        
+        // Validate password
+        if (password != null && !password.isEmpty()) {
+            if (password.length() < 8) {
+                errors.put("password", "Password must be at least 8 characters");
+            } else if (!Pattern.matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).+$", password)) {
+                errors.put("password", "Password must contain at least one uppercase letter, one lowercase letter, and one number");
+            }
+        }
+        
+        return errors;
     }
 }

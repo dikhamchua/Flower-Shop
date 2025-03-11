@@ -10,7 +10,7 @@
     <iconify-icon icon="radix-icons:cross-2"></iconify-icon>
   </button>
   <div>
-    <a href="index.html" class="sidebar-logo">
+    <a href="${pageContext.request.contextPath}/home" class="sidebar-logo">
       <img src="${pageContext.request.contextPath}/assets/admin/images/STORE 24.png" alt="site logo" class="light-logo">
       <img src="${pageContext.request.contextPath}/assets/admin/images/logo-light.png" alt="site logo" class="dark-logo">
       <img src="${pageContext.request.contextPath}/assets/admin/images/logo-icon.png" alt="site logo" class="logo-icon">
@@ -64,12 +64,23 @@
       </li>     
 
       <li>
-        <a href="${pageContext.request.contextPath}/manage-users">
+        <a href="${pageContext.request.contextPath}/admin/manage-account">
           <iconify-icon icon="flowbite:users-group-outline" class="menu-icon"></iconify-icon>
           <span>Users Management</span> 
         </a>
       </li>
-      
+      <li>
+        <a href="${pageContext.request.contextPath}/admin/manage-category">
+          <iconify-icon icon="flowbite:users-group-outline" class="menu-icon"></iconify-icon>
+          <span>Category Management</span> 
+        </a>
+      </li>
+      <li>
+        <a href="${pageContext.request.contextPath}/admin/manage-slider">
+          <iconify-icon icon="flowbite:users-group-outline" class="menu-icon"></iconify-icon>
+          <span>Slider Management</span> 
+        </a>
+      </li>
       <li>
         <a href="${pageContext.request.contextPath}/manage-settings">
           <iconify-icon icon="icon-park-outline:setting-two" class="menu-icon"></iconify-icon>
@@ -80,6 +91,24 @@
         <a href="${pageContext.request.contextPath}/change-password">
           <iconify-icon icon="icon-park-outline:setting-two" class="menu-icon"></iconify-icon>
           <span>Change Password</span> 
+        </a>
+      </li>
+      <li>
+        <a href="${pageContext.request.contextPath}/admin/manage-product">
+          <iconify-icon icon="icon-park-outline:setting-two" class="menu-icon"></iconify-icon>
+          <span>Product Management</span>
+        </a>
+      </li>
+      <li>
+        <a href="${pageContext.request.contextPath}/admin/manage-order">
+          <iconify-icon icon="icon-park-outline:setting-two" class="menu-icon"></iconify-icon>
+          <span>Order Management</span>
+        </a>
+      </li>
+      <li>
+        <a href="${pageContext.request.contextPath}/orderControll">
+          <iconify-icon icon="icon-park-outline:setting-two" class="menu-icon"></iconify-icon>
+          <span>My Order</span>
         </a>
       </li>
     </ul>

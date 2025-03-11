@@ -27,21 +27,21 @@ public class AccountDAO extends DBContext implements I_DAO<Account> {
 
     @Override
     public List<Account> findAll() {
-        List<Account> accounts = new ArrayList<>();
+        List<Account> account = new ArrayList<>();
         String sql = "SELECT * FROM account";
         try {
             connection = getConnection();
             statement = connection.prepareStatement(sql);
             resultSet = statement.executeQuery();
             while (resultSet.next()) {
-                accounts.add(getFromResultSet(resultSet));
+                account.add(getFromResultSet(resultSet));
             }
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         } finally {
             closeResources();
         }
-        return accounts;
+        return account;
     }
 
     @Override
@@ -139,7 +139,7 @@ public class AccountDAO extends DBContext implements I_DAO<Account> {
     }
 
     public List<Account> findAllNonAdminAccounts(int page, int pageSize) {
-        List<Account> accounts = new ArrayList<>();
+        List<Account> account = new ArrayList<>();
         String sql = "SELECT * FROM account WHERE role_id != ? ORDER BY id LIMIT ? OFFSET ?";
         try {
             connection = getConnection();
@@ -149,14 +149,14 @@ public class AccountDAO extends DBContext implements I_DAO<Account> {
             statement.setInt(3, (page - 1) * pageSize);
             resultSet = statement.executeQuery();
             while (resultSet.next()) {
-                accounts.add(getFromResultSet(resultSet));
+                account.add(getFromResultSet(resultSet));
             }
         } catch (SQLException ex) {
-            System.out.println("Error finding non-admin accounts: " + ex.getMessage());
+            System.out.println("Error finding non-admin account: " + ex.getMessage());
         } finally {
             closeResources();
         }
-        return accounts;
+        return account;
     }
 
     public int getTotalNonAdminAccounts() {
@@ -170,7 +170,7 @@ public class AccountDAO extends DBContext implements I_DAO<Account> {
                 return resultSet.getInt(1);
             }
         } catch (SQLException ex) {
-            System.out.println("Error counting non-admin accounts: " + ex.getMessage());
+            System.out.println("Error counting non-admin account: " + ex.getMessage());
         } finally {
             closeResources();
         }
@@ -322,7 +322,7 @@ public class AccountDAO extends DBContext implements I_DAO<Account> {
 
     public List<Account> findAccountsWithFilters(String roleFilter,
             String statusFilter, String searchFilter, int page, int pageSize) {
-        List<Account> accounts = new ArrayList<>();
+        List<Account> account = new ArrayList<>();
         StringBuilder sql = new StringBuilder("SELECT * FROM account WHERE 1=1 ");
         List<Object> params = new ArrayList<>();
 
@@ -359,14 +359,14 @@ public class AccountDAO extends DBContext implements I_DAO<Account> {
 
             resultSet = statement.executeQuery();
             while (resultSet.next()) {
-                accounts.add(getFromResultSet(resultSet));
+                account.add(getFromResultSet(resultSet));
             }
         } catch (SQLException ex) {
-            System.out.println("Error finding filtered accounts: " + ex.getMessage());
+            System.out.println("Error finding filtered account: " + ex.getMessage());
         } finally {
             closeResources();
         }
-        return accounts;
+        return account;
     }
 
     public int getTotalFilteredAccounts(String roleFilter, 
@@ -405,18 +405,119 @@ public class AccountDAO extends DBContext implements I_DAO<Account> {
                 return resultSet.getInt(1);
             }
         } catch (SQLException ex) {
-            System.out.println("Error counting filtered accounts: " + ex.getMessage());
+            System.out.println("Error counting filtered account: " + ex.getMessage());
         } finally {
             closeResources();
         }
         return 0;
     }
 
+    /**
+     * Check if username already exists
+     * @param username Username to check
+     * @return true if username exists, false otherwise
+     */
+    public boolean isUsernameExists(String username) {
+        String sql = "SELECT COUNT(*) FROM account WHERE username = ?";
+        try {
+            connection = getConnection();
+            statement = connection.prepareStatement(sql);
+            statement.setString(1, username);
+            resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getInt(1) > 0;
+            }
+        } catch (SQLException e) {
+            System.out.println("Error checking username existence: " + e.getMessage());
+        } finally {
+            closeResources();
+        }
+        return false;
+    }
+
+    /**
+     * Check if email already exists
+     * @param email Email to check
+     * @param excludeId Account ID to exclude from check (for updates)
+     * @return true if email exists, false otherwise
+     */
+    public boolean isEmailExists(String email, Integer excludeId) {
+        String sql = "SELECT COUNT(*) FROM account WHERE email = ?";
+        if (excludeId != null) {
+            sql += " AND id != ?";
+        }
+        try {
+            connection = getConnection();
+            statement = connection.prepareStatement(sql);
+            statement.setString(1, email);
+            if (excludeId != null) {
+                statement.setInt(2, excludeId);
+            }
+            resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getInt(1) > 0;
+            }
+        } catch (SQLException e) {
+            System.out.println("Error checking email existence: " + e.getMessage());
+        } finally {
+            closeResources();
+        }
+        return false;
+    }
+
+    /**
+     * Check if phone already exists
+     * @param phone Phone to check
+     * @param excludeId Account ID to exclude from check (for updates)
+     * @return true if phone exists, false otherwise
+     */
+    public boolean isPhoneExists(String phone, Integer excludeId) {
+        String sql = "SELECT COUNT(*) FROM account WHERE phone = ?";
+        if (excludeId != null) {
+            sql += " AND id != ?";
+        }
+        try {
+            connection = getConnection();
+            statement = connection.prepareStatement(sql);
+            statement.setString(1, phone);
+            if (excludeId != null) {
+                statement.setInt(2, excludeId);
+            }
+            resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getInt(1) > 0;
+            }
+        } catch (SQLException e) {
+            System.out.println("Error checking phone existence: " + e.getMessage());
+        } finally {
+            closeResources();
+        }
+        return false;
+    }
+
     public static void main(String[] args) {
         AccountDAO accountDAO = new AccountDAO();
-        List<Account> accounts = accountDAO.findAll();
-        for (Account account : accounts) {
-            System.out.println(account);
+        
+        // Create a new account
+        Account newAccount = new Account();
+        newAccount.setUsername("1234565");
+        newAccount.setEmail("ass@example.com");
+        newAccount.setPassword("test123");
+        newAccount.setAvatar("default.jpg");
+        newAccount.setFirstName("Test");
+        newAccount.setLastName("User");
+        newAccount.setPhone("1234567890");
+        newAccount.setAddress("123 Test Street");
+        newAccount.setRole("USER");
+        newAccount.setStatus(true);
+        
+        // Insert the account
+        int newId = accountDAO.insert(newAccount);
+        
+        if (newId > 0) {
+            System.out.println("Account inserted successfully! New ID: " + newId);
+        } else {
+            System.out.println("Failed to insert account.");
         }
     }
 

@@ -11,6 +11,8 @@
         <meta name="robots" content="noindex, follow" />
         <!-- Place favicon.ico in the root directory -->
         <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico">
+        <!-- Font Awesome CDN -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
         <!--All Css Here-->
         <jsp:include page="../common/home/common-css.jsp"></jsp:include>
 
@@ -20,6 +22,31 @@
                 padding-right: 20%;
             }
             
+            .google-login-button {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                padding: 10px 20px;
+                background-color: #ffffff;
+                color: #757575;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+                text-decoration: none;
+                font-size: 14px;
+                font-weight: 500;
+                transition: background-color 0.3s ease;
+            }
+
+            .google-login-button:hover {
+                background-color: #f8f8f8;
+                border-color: #ccc;
+            }
+
+            .google-login-button img {
+                width: 20px;
+                height: 20px;
+                margin-right: 10px;
+            }
         </style>
 
     </head>
@@ -77,6 +104,12 @@
                                                 <input class="checkbox" name="rememberme" value="" type="checkbox">
                                                 <span>Remember me</span>
                                             </label>
+                                        </div>
+                                        <div class="login-with-google">
+                                            <a href="#" class="google-login-button" onclick="loginWithGoogle()">
+                                                <i class="fab fa-google"></i> &nbsp; &nbsp;
+                                                <span>Login with Google</span>
+                                            </a>
                                         </div>
                                         <div class="lost-password">
                                             <a href="${pageContext.request.contextPath}/authen?action=enter-email">Lost your password?</a>
