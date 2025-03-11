@@ -94,19 +94,19 @@
                                                             <!--Single Product Start-->
                                                             <div class="single-product mb-25">
                                                                 <div class="product-img img-full">
-                                                                    <a href="${pageContext.request.contextPath}/product?id=${product.productId}">
-                                                                        <img src="${pageContext.request.contextPath}/${product.image}" alt="${product.productName}">
+                                                                    <a href="${pageContext.request.contextPath}/home?action=product-details&id=${product.productId}">
+                                                                        <img src="${product.image}" alt="${product.productName}">
                                                                     </a>
                                                                      <div class="product-action">
                                                                         <ul>
-                                                                            <li><a href="#open-modal" data-bs-toggle="modal" data-product-id="${product.productId}" title="Quick view"><i class="fa fa-search"></i></a></li>
+                                                                            <li><a href="${pageContext.request.contextPath}/home?action=product-details&id=${product.productId}" title="Quick view"><i class="fa fa-eye"></i></a></li>
                                                                             <li><a href="#" class="add-to-wishlist" data-product-id="${product.productId}" title="Wishlist"><i class="fa fa-heart-o"></i></a></li>
                                                                             <li><a href="#" title="Compare"><i class="fa fa-refresh"></i></a></li>
                                                                         </ul>
                                                                     </div>
                                                                 </div>
                                                                 <div class="product-content">
-                                                                    <h2><a href="${pageContext.request.contextPath}/product?id=${product.productId}">${product.productName}</a></h2>
+                                                                    <h2><a href="${pageContext.request.contextPath}/home?action=product-details&id=${product.productId}">${product.productName}</a></h2>
                                                                     <div class="product-price">
                                                                         <div class="price-box">
                                                                             <span class="regular-price">$${product.price}</span>
@@ -131,14 +131,14 @@
                                                         <div class="row">
                                                             <div class="col-md-4">
                                                                 <div class="list-product-img img-full">
-                                                                    <a href="${pageContext.request.contextPath}/product?id=${product.productId}">
-                                                                        <img src="${pageContext.request.contextPath}/${product.image}" alt="${product.productName}">
+                                                                    <a href="${pageContext.request.contextPath}/home?action=product-details&id=${product.productId}">
+                                                                        <img src="${product.image}" alt="${product.productName}">
                                                                     </a>
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-8">
                                                                 <div class="product-content shop-list">
-                                                                    <h2><a href="${pageContext.request.contextPath}/product?id=${product.productId}">${product.productName}</a></h2>
+                                                                    <h2><a href="${pageContext.request.contextPath}/home?action=product-details&id=${product.productId}">${product.productName}</a></h2>
                                                                     <div class="product-price">
                                                                         <div class="price-box">
                                                                             <span class="regular-price">$${product.price}</span>
@@ -240,6 +240,19 @@
         <!-- All JS Files -->
         <jsp:include page="../common/home/common-js.jsp"></jsp:include>
         
+        <!-- Toast container -->
+        <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+            <div id="cartToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast-header bg-success text-white">
+                    <strong class="me-auto">Thông báo</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div class="toast-body">
+                    Sản phẩm đã được thêm vào giỏ hàng
+                </div>
+            </div>
+        </div>
+        
         <script>
             // Đợi DOM load xong
             document.addEventListener('DOMContentLoaded', function() {
@@ -301,19 +314,52 @@
                 e.preventDefault();
                 const productId = $(this).data('product-id');
                 
+                // Kiểm tra đăng nhập trước khi thêm vào giỏ hàng
+                <c:if test="${empty sessionScope.account}">
+                    // Hiển thị thông báo yêu cầu đăng nhập
+                    const toast = new bootstrap.Toast(document.getElementById('cartToast'));
+                    $('#cartToast').removeClass('bg-success').addClass('bg-warning');
+                    $('#cartToast .toast-body').text('Vui lòng đăng nhập để thêm sản phẩm vào giỏ hàng');
+                    toast.show();
+                    
+                    // Chuyển hướng đến trang đăng nhập sau 2 giây
+                    setTimeout(function() {
+                        window.location.href = '${pageContext.request.contextPath}/authen?action=login';
+                    }, 2000);
+                    return;
+                </c:if>
+                
+                // Nếu đã đăng nhập, tiếp tục thêm vào giỏ hàng
                 $.ajax({
-                    url: '${pageContext.request.contextPath}/cart/add',
+                    url: '${pageContext.request.contextPath}/cart',
                     type: 'POST',
-                    data: { productId: productId, quantity: 1 },
+                    data: { action: 'add', productId: productId, quantity: 1 },
                     success: function(response) {
                         // Update cart count in header
-                        updateCartCount();
+                        $('.cart-quantity').text(response);
                         
-                        // Show success message
-                        showNotification('success', 'Product added to cart successfully');
+                        // Show toast message
+                        const toast = new bootstrap.Toast(document.getElementById('cartToast'));
+                        $('#cartToast').removeClass('bg-danger').addClass('bg-success');
+                        $('#cartToast .toast-body').text('Sản phẩm đã được thêm vào giỏ hàng');
+                        toast.show();
+                        
+                        // Auto hide toast after 3 seconds
+                        setTimeout(function() {
+                            toast.hide();
+                        }, 3000);
                     },
-                    error: function() {
-                        showNotification('error', 'Failed to add product to cart');
+                    error: function(xhr) {
+                        // Show error toast
+                        $('#cartToast').removeClass('bg-success').addClass('bg-danger');
+                        $('#cartToast .toast-body').text('Có lỗi xảy ra khi thêm sản phẩm vào giỏ hàng');
+                        const toast = new bootstrap.Toast(document.getElementById('cartToast'));
+                        toast.show();
+                        
+                        // Auto hide toast after 3 seconds
+                        setTimeout(function() {
+                            toast.hide();
+                        }, 3000);
                     }
                 });
             });
