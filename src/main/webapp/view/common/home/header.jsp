@@ -9,8 +9,8 @@
                     <!--Header Logo Start-->
                     <div class="col-lg-3 col-md-3">
                         <div class="logo-area">
-                            <a href="index.html">
-                                <img src="img/logo/logo.png" alt="">
+                            <a href="${pageContext.request.contextPath}/home">
+                                <img src="${pageContext.request.contextPath}/img/logo/logo.png" alt="">
                             </a>
                         </div>
                     </div>
@@ -23,18 +23,18 @@
                                 <ul class="main-menu">
                                     <li><a href="${pageContext.request.contextPath}/home">home</a>
                                     </li>
-                                    <li><a href="shop.html">Shop</a></li>
+                                    <li><a href="${pageContext.request.contextPath}/home">Shop</a></li>
                                     <li><a href="portfolio.html">Portfolio</a></li>
-                                    <li><a href="blog.html">Blog</a></li>
+                                    <li><a href="${pageContext.request.contextPath}/admin/manage-order">Blog</a></li>
                                     
                                     <!-- Hiển thị nút đăng nhập/đăng ký chỉ khi chưa đăng nhập -->
-                                    <c:if test="${isLoggedIn == null || isLoggedIn == false}">
+                                    <c:if test="${sessionScope.SESSION_ACCOUNT == null && sessionScope.account == null}">
                                         <li><a href="${pageContext.request.contextPath}/authen?action=login">Login</a></li>
                                         <li><a href="${pageContext.request.contextPath}/authen?action=sign-up">Register</a></li>
                                     </c:if>
                                     
                                     <!-- Hiển thị nút My Account và Logout khi đã đăng nhập -->
-                                    <c:if test="${isLoggedIn == true}">
+                                    <c:if test="${sessionScope.SESSION_ACCOUNT != null || sessionScope.account != null}">
                                         <li><a href="${pageContext.request.contextPath}/profile">My Account</a></li>
                                         <li><a href="${pageContext.request.contextPath}/authen?action=logout">Logout</a></li>
                                     </c:if>
@@ -46,45 +46,53 @@
                         <div class="header-option">
                             <div class="mini-cart-search">
                                 <div class="mini-cart">
-                                    <a href="#">
+                                    <a href="${pageContext.request.contextPath}/cart">
                                         <span class="cart-icon">
-                                            <span class="cart-quantity">2</span>
+                                            <c:set var="cartSize" value="${empty sessionScope.cart ? 0 : sessionScope.cart.size()}" />
+                                            <span class="cart-quantity">${cartSize}</span>
                                         </span>
-                                        <span class="cart-title">Your cart <br><strong>$190.00</strong></span> 
+                                        <c:set var="cartTotal" value="0" />
+                                        <c:forEach items="${sessionScope.cart.values()}" var="item">
+                                            <c:set var="cartTotal" value="${cartTotal + item.subtotal}" />
+                                        </c:forEach>
+                                        <span class="cart-title">Your cart <br><strong>$${cartTotal}</strong></span> 
                                     </a>
                                     <!--Cart Dropdown Start-->
                                     <div class="cart-dropdown">
-                                        <ul>
-                                            <li class="single-cart-item">
-                                                <div class="cart-img">
-                                                    <a href="single-product.html"><img src="img/cart/cart1.jpg" alt=""></a>
-                                                </div>
-                                                <div class="cart-content">
-                                                    <h5 class="product-name"><a href="single-product.html">Odio tortor consequat</a></h5>
-                                                    <span class="cart-price">1 × $90.00</span>
-                                                </div>
-                                                <div class="cart-remove">
-                                                    <a title="Remove" href="#"><i class="fa fa-times"></i></a>
-                                                </div>
-                                            </li>
-                                            <li class="single-cart-item">
-                                                <div class="cart-img">
-                                                    <a href="single-product.html"><img src="img/cart/cart2.jpg" alt=""></a>
-                                                </div>
-                                                <div class="cart-content">
-                                                    <h5 class="product-name"><a href="single-product.html">Auctor sem</a></h5>
-                                                    <span class="cart-price">1 × $100.00</span>
-                                                </div>
-                                                <div class="cart-remove">
-                                                    <a title="Remove" href="#"><i class="fa fa-times"></i></a>
-                                                </div>
-                                            </li>
-                                        </ul> 
-                                        <p class="cart-subtotal"><strong>Subtotal:</strong> <span class="float-right">$190.00</span></p> 
-                                        <p class="cart-btn">
-                                            <a href="cart.html">View cart</a>
-                                            <a href="checkout.html">Checkout</a>
-                                        </p>
+                                        <c:choose>
+                                            <c:when test="${empty sessionScope.cart}">
+                                                <p class="text-center">Your cart is empty</p>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <ul>
+                                                    <c:forEach items="${sessionScope.cart.values()}" var="item">
+                                                        <li class="single-cart-item">
+                                                            <div class="cart-img">
+                                                                <a href="${pageContext.request.contextPath}/home?action=product-details&id=${item.product.productId}">
+                                                                    <img src="${item.product.image}" alt="${item.product.productName}">
+                                                                </a>
+                                                            </div>
+                                                            <div class="cart-content">
+                                                                <h5 class="product-name">
+                                                                    <a href="${pageContext.request.contextPath}/home?action=product-details&id=${item.product.productId}">${item.product.productName}</a>
+                                                                </h5>
+                                                                <span class="cart-price">${item.quantity} × $${item.product.price}</span>
+                                                            </div>
+                                                            <div class="cart-remove">
+                                                                <a title="Remove" href="${pageContext.request.contextPath}/cart?action=remove&productId=${item.product.productId}">
+                                                                    <i class="fa fa-times"></i>
+                                                                </a>
+                                                            </div>
+                                                        </li>
+                                                    </c:forEach>
+                                                </ul>
+                                                <p class="cart-subtotal"><strong>Subtotal:</strong> <span class="float-right">$${cartTotal}</span></p>
+                                                <p class="cart-btn">
+                                                    <a href="${pageContext.request.contextPath}/cart">View cart</a>
+                                                    <a href="${pageContext.request.contextPath}/cart?action=checkout">Checkout</a>
+                                                </p>
+                                            </c:otherwise>
+                                        </c:choose>
                                     </div>
                                     <!--Cart Dropdown End--> 
                                 </div>
@@ -92,12 +100,8 @@
                                     <div class="search-box">
                                         <a href="#"><i class="fa fa-search"></i></a>
                                         <div class="search-dropdown">
-                                            <form action="#">
-                                                <input name="search" id="search" placeholder="" value="Search product..." onblur="if (this.value == '') {
-                                                            this.value = 'Search product...'
-                                                        }" onfocus="if (this.value == 'Search product...') {
-                                                                    this.value = ''
-                                                                }" type="text">
+                                            <form action="${pageContext.request.contextPath}/home" method="GET">
+                                                <input name="search" id="search" placeholder="Search product..." value="${param.search}" type="text">
                                                 <button type="submit"><i class="fa fa-search"></i></button>
                                             </form>
                                         </div>
@@ -109,46 +113,19 @@
                                         <div class="currency-dropdown">
                                             <ul class="menu-top-menu">
                                                 <!-- Điều chỉnh menu dropdown dựa trên trạng thái đăng nhập -->
-                                                <c:if test="${isLoggedIn == true}">
+                                                <c:if test="${sessionScope.SESSION_ACCOUNT != null || sessionScope.account != null}">
                                                     <li><a href="${pageContext.request.contextPath}/user/profile">My Account</a></li>
                                                     <li><a href="wishlist.html">Wishlist</a></li>
-                                                    <li><a href="cart.html">Shopping cart</a></li>
-                                                    <li><a href="checkout.html">Checkout</a></li>
+                                                    <li><a href="${pageContext.request.contextPath}/cart">Shopping cart</a></li>
+                                                    <li><a href="${pageContext.request.contextPath}/cart?action=checkout">Checkout</a></li>
                                                     <li><a href="${pageContext.request.contextPath}/authen?action=logout">Logout</a></li>
                                                 </c:if>
-                                                <c:if test="${isLoggedIn == null || isLoggedIn == false}">
-                                                    <li><a href="cart.html">Shopping cart</a></li>
-                                                    <li><a href="checkout.html">Checkout</a></li>
+                                                <c:if test="${sessionScope.SESSION_ACCOUNT == null && sessionScope.account == null}">
+                                                    <li><a href="${pageContext.request.contextPath}/cart">Shopping cart</a></li>
+                                                    <li><a href="${pageContext.request.contextPath}/cart?action=checkout">Checkout</a></li>
                                                     <li><a href="${pageContext.request.contextPath}/authen?action=login">Log In</a></li>
                                                 </c:if>
                                             </ul>
-                                            <div class="switcher">
-                                                <div class="language">
-                                                    <span class="switcher-title">Language: </span>
-                                                    <div class="switcher-menu">
-                                                        <ul>
-                                                            <li><a href="#">English</a>
-                                                                <ul class="switcher-dropdown">
-                                                                    <li><a href="#">German</a></li>
-                                                                    <li><a href="#">French</a></li>
-                                                                </ul>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                                <div class="currency">
-                                                    <span class="switcher-title">Currency: </span>
-                                                    <div class="switcher-menu">
-                                                        <ul>
-                                                            <li><a href="#">$ USD</a>
-                                                                <ul class="switcher-dropdown">
-                                                                    <li><a href="#">€ EUR</a></li>
-                                                                </ul>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -169,3 +146,13 @@
         </div>
     </div>
 </header>
+
+<!-- Debug session - sẽ ẩn trong production -->
+<div style="display: none;">
+    SESSION_ACCOUNT: ${sessionScope.SESSION_ACCOUNT}<br>
+    SESSION_ACCOUNT class: ${sessionScope.SESSION_ACCOUNT.getClass().getName()}<br>
+    All session attributes: 
+    <c:forEach items="${sessionScope}" var="attr">
+        ${attr.key}: ${attr.value}<br>
+    </c:forEach>
+</div>

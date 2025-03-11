@@ -4,248 +4,343 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>Login-Register || Plantmore</title>
+        <title>Register || Plantmore</title>
         <meta name="description" content="">
         <meta name="robots" content="noindex, follow" />
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="robots" content="noindex, follow" />
         <!-- Place favicon.ico in the root directory -->
         <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico">
+        <!-- Font Awesome CDN -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+        <!-- Google Fonts -->
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
         <!--All Css Here-->
         <jsp:include page="../common/home/common-css.jsp"></jsp:include>
 
-            <style>
-                #padding-form {
-                    padding-left:  20%;
-                    padding-right: 20%;
+        <style>
+            body {
+                font-family: 'Poppins', sans-serif;
+                background-color: #f5f7fa;
+            }
+            
+            .register-page-wrapper {
+                padding: 80px 0;
+                background-color: #f5f7fa;
+            }
+            
+            .register-card {
+                background: #fff;
+                border-radius: 10px;
+                overflow: hidden;
+                box-shadow: 0 15px 30px rgba(0,0,0,0.05);
+                margin-bottom: 50px;
+            }
+            
+            .register-card-header {
+                background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+                padding: 40px;
+                text-align: center;
+                color: white;
+            }
+            
+            .register-card-header h2 {
+                font-size: 32px;
+                font-weight: 600;
+                margin-bottom: 10px;
+            }
+            
+            .register-card-header p {
+                font-size: 16px;
+                opacity: 0.9;
+            }
+            
+            .register-card-body {
+                padding: 40px;
+            }
+            
+            .form-group {
+                margin-bottom: 25px;
+                position: relative;
+            }
+            
+            .form-group label {
+                display: block;
+                margin-bottom: 10px;
+                font-weight: 500;
+                color: #333;
+                font-size: 15px;
+            }
+            
+            .form-control {
+                width: 100%;
+                padding: 15px 20px;
+                border: 1px solid #e1e5eb;
+                border-radius: 8px;
+                font-size: 15px;
+                transition: all 0.3s;
+                background-color: #f9fafb;
+            }
+            
+            .form-control:focus {
+                border-color: #28a745;
+                background-color: #fff;
+                box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.15);
+                outline: none;
+            }
+            
+            .form-icon {
+                position: absolute;
+                top: 45px;
+                right: 15px;
+                color: #adb5bd;
+            }
+            
+            .gender-options {
+                display: flex;
+                gap: 20px;
+                margin-top: 10px;
+            }
+            
+            .gender-option {
+                display: flex;
+                align-items: center;
+                cursor: pointer;
+            }
+            
+            .gender-option input {
+                margin-right: 8px;
+                width: 18px;
+                height: 18px;
+            }
+            
+            .btn-register {
+                display: block;
+                width: 100%;
+                padding: 15px;
+                background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+                color: white;
+                border: none;
+                border-radius: 8px;
+                font-size: 16px;
+                font-weight: 500;
+                cursor: pointer;
+                transition: all 0.3s;
+                text-align: center;
+                margin-bottom: 25px;
+            }
+            
+            .btn-register:hover {
+                background: linear-gradient(135deg, #218838 0%, #1ba87e 100%);
+                transform: translateY(-2px);
+                box-shadow: 0 5px 15px rgba(40, 167, 69, 0.2);
+            }
+            
+            .login-prompt {
+                text-align: center;
+                margin-top: 20px;
+                padding-top: 20px;
+                border-top: 1px solid #e1e5eb;
+            }
+            
+            .login-prompt p {
+                margin-bottom: 15px;
+                color: #6c757d;
+                font-size: 15px;
+            }
+            
+            .btn-login {
+                display: inline-block;
+                padding: 12px 25px;
+                background-color: #f8f9fa;
+                color: #495057;
+                border: 1px solid #e1e5eb;
+                border-radius: 8px;
+                font-size: 15px;
+                font-weight: 500;
+                cursor: pointer;
+                transition: all 0.3s;
+                text-decoration: none;
+            }
+            
+            .btn-login:hover {
+                background-color: #e9ecef;
+                color: #212529;
+                border-color: #dae0e5;
+                transform: translateY(-2px);
+                box-shadow: 0 3px 6px rgba(0,0,0,0.08);
+            }
+            
+            .error-message {
+                color: #dc3545;
+                font-size: 13px;
+                margin-top: 5px;
+                display: block;
+            }
+            
+            /* Responsive adjustments */
+            @media (max-width: 767px) {
+                .register-card-header, .register-card-body {
+                    padding: 30px 20px;
                 }
-
-            </style>
-
-        </head>
-        <body>
-
-            <div class="wrapper">
-                <!--Header Area Start-->
+                
+                .gender-options {
+                    flex-direction: column;
+                    gap: 10px;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="wrapper">
+            <!--Header Area Start-->
             <jsp:include page="/view/common/home/header.jsp"></jsp:include>
-                <!--Header Area End-->
-                <!--Breadcrumb Tow Start-->
-                <div class="breadcrumb-tow mb-120">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="breadcrumb-title">
-                                    <h1>Login - Register</h1>
-                                </div>
-                                <div class="breadcrumb-content breadcrumb-content-tow">
-                                    <ul>
-                                        <li><a href="index.html">Home</a></li>
-                                        <li class="active">Login-Register</li>
-                                    </ul>
-                                </div>
+            <!--Header Area End-->
+            
+            <!--Breadcrumb Area Start-->
+            <div class="breadcrumb-area" style="background-color: #f9f9f9; padding: 20px 0;">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12 text-center">
+                            <div class="breadcrumb-title">
+                                <h2 style="font-size: 28px; margin-bottom: 15px; color: #333;">Account Register</h2>
+                            </div>
+                            <div class="breadcrumb-list" style="display: flex; justify-content: center;">
+                                <ul style="display: inline-flex; padding-left: 0; margin-bottom: 0; list-style: none;">
+                                    <li style="display: flex; align-items: center;">
+                                        <span style="color: #28a745; margin-right: 5px;">•</span>
+                                        <a href="${pageContext.request.contextPath}/home" style="color: #28a745; text-decoration: none;">Home</a>
+                                    </li>
+                                    <li style="display: flex; align-items: center; margin: 0 10px;">
+                                        <span style="color: #ccc;">/</span>
+                                    </li>
+                                    <li style="display: flex; align-items: center; margin: 0 10px;">
+                                        <span style="color: #ccc;">/</span>
+                                    </li>
+                                    <li style="display: flex; align-items: center;">
+                                        <span style="color: #777;">Register</span>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
                     </div>
-                </div>
-                <!--Breadcrumb Tow End-->
-                <!--Login Register Area Strat-->
-                <div class="login-register-area mb-80">
-                    <div class="container" id="padding-form">
-                        <!--Register Form Start-->
-                        <div class="customer-login-register register-pt-0">
-                            <div class="form-register-title">
-                                <h2>Register</h2>
-                            </div>
-                            <div class="register-form">
-                                <form action="authen?action=sign-up" method="POST" id="registerForm" onsubmit="return validateForm()">
-                                    <div class="form-fild">
-                                        <p><label>Username <span class="required">*</span></label></p>
-                                        <input name="username" type="text"  value="${param.username}">
-                                    <span class="error-message" style="color: red; display: none;"></span>
-                                </div>
-                                <div class="form-fild">
-                                    <p><label>First Name <span class="required">*</span></label></p>
-                                    <input name="firstName" type="text"  value="${param.firstName}">
-                                    <span class="error-message" style="color: red; display: none;"></span>
-                                </div>
-                                <div class="form-fild">
-                                    <p><label>Last Name <span class="required">*</span></label></p>
-                                    <input name="lastName" type="text" value="${param.lastName}">
-                                    <span class="error-message" style="color: red; display: none;"></span>
-                                </div>
-                                <div class="form-fild">
-                                    <p style="display: inline;"><label>Gender <span class="required">*</span></label></p>
-                                    <input type="radio" name="gender" value="true"  style="width: auto; height: auto;" ${param.gender == 'true' ? 'checked' : ''}> Male
-                                    <input type="radio" name="gender" value="false"  style="width: auto; height: auto;" ${param.gender == 'false' ? 'checked' : ''}> Female
-                                    <span class="error-message" style="color: red; display: none;"></span>
-                                </div>
-                                <div class="form-fild">
-                                    <p><label>Email <span class="required">*</span></label></p>
-                                    <input name="email" type="email"  value="${param.email}">
-                                    <span class="error-message" style="color: red; display: none;"></span>
-                                </div>
-                                <div class="form-fild">
-                                    <p><label>Mobile <span class="required">*</span></label></p>
-                                    <input name="mobile" type="tel"  value="${param.mobile}">
-                                    <span class="error-message" style="color: red; display: none;"></span>
-                                </div>
-                                <div class="form-fild">
-                                    <p><label>Password <span class="required">*</span></label></p>
-                                    <input name="password" type="password" >
-                                    <span class="error-message" style="color: red; display: none;"></span>
-                                </div>
-                                <div class="form-fild">
-                                    <p><label>Confirm Password <span class="required">*</span></label></p>
-                                    <input name="confirmPassword" type="password" >
-                                    <span class="error-message" style="color: red; display: none;"></span>
-                                </div>
-                                <div class="register-submit">
-                                    <button type="submit" class="form-button">Register</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                    <!--Register Form End-->
                 </div>
             </div>
-            <!--Login Register Area End-->
+            <!--Breadcrumb Area End-->
+            
+            <!--Register Page Start-->
+            <div class="register-page-wrapper">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-8 col-md-10">
+                            <div class="register-card">
+                                <div class="register-card-header">
+                                    <h2>Create Account</h2>
+                                    <p>Fill in the form below to create your account</p>
+                                </div>
+                                <div class="register-card-body">
+                                    <form action="${pageContext.request.contextPath}/authen?action=sign-up" method="POST" id="registerForm" onsubmit="return validateForm()">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="username">Username <span class="required">*</span></label>
+                                                    <input type="text" class="form-control" id="username" name="username" value="${param.username}" placeholder="Choose a username">
+                                                    <i class="fas fa-user form-icon"></i>
+                                                    <span class="error-message"></span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="email">Email <span class="required">*</span></label>
+                                                    <input type="email" class="form-control" id="email" name="email" value="${param.email}" placeholder="Enter your email">
+                                                    <i class="fas fa-envelope form-icon"></i>
+                                                    <span class="error-message"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="firstName">First Name <span class="required">*</span></label>
+                                                    <input type="text" class="form-control" id="firstName" name="firstName" value="${param.firstName}" placeholder="Enter your first name">
+                                                    <span class="error-message"></span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="lastName">Last Name <span class="required">*</span></label>
+                                                    <input type="text" class="form-control" id="lastName" name="lastName" value="${param.lastName}" placeholder="Enter your last name">
+                                                    <span class="error-message"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label>Gender <span class="required">*</span></label>
+                                            <div class="gender-options">
+                                                <label class="gender-option">
+                                                    <input type="radio" name="gender" value="true" ${param.gender == 'true' ? 'checked' : ''}>
+                                                    <span>Male</span>
+                                                </label>
+                                                <label class="gender-option">
+                                                    <input type="radio" name="gender" value="false" ${param.gender == 'false' ? 'checked' : ''}>
+                                                    <span>Female</span>
+                                                </label>
+                                            </div>
+                                            <span class="error-message"></span>
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label for="mobile">Mobile <span class="required">*</span></label>
+                                            <input type="tel" class="form-control" id="mobile" name="mobile" value="${param.mobile}" placeholder="Enter your mobile number">
+                                            <i class="fas fa-phone form-icon"></i>
+                                            <span class="error-message"></span>
+                                        </div>
+                                        
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="password">Password <span class="required">*</span></label>
+                                                    <input type="password" class="form-control" id="password" name="password" placeholder="Create a password">
+                                                    <i class="fas fa-lock form-icon"></i>
+                                                    <span class="error-message"></span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="confirmPassword">Confirm Password <span class="required">*</span></label>
+                                                    <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="Confirm your password">
+                                                    <i class="fas fa-lock form-icon"></i>
+                                                    <span class="error-message"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <button type="submit" class="btn-register">Create Account</button>
+                                        
+                                        <div class="login-prompt">
+                                            <p>Already have an account?</p>
+                                            <a href="${pageContext.request.contextPath}/authen?action=login" class="btn-login">Sign In</a>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--Register Page End-->
+            
             <!--Brand Area Start-->
             <jsp:include page="/view/common/home/brand.jsp"></jsp:include>
-                <!--Brand Area End-->
-                <!--Footer Area Start-->
+            <!--Brand Area End-->
+            
+            <!--Footer Area Start-->
             <jsp:include page="/view/common/home/footer.jsp"></jsp:include>
-                <!--Footer Area End-->
-                <!-- Modal Area Strat -->
-                <div class="modal fade" id="open-modal" tabindex="-1" role="dialog" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"><i class="fa fa-close"></i></button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="row">
-                                    <!--Modal Img-->
-                                    <div class="col-md-5">
-                                        <!--Modal Tab Content Start-->
-                                        <div class="tab-content product-details-large" id="myTabContent">
-                                            <div class="tab-pane fade show active" id="single-slide1" role="tabpanel" aria-labelledby="single-slide-tab-1">
-                                                <!--Single Product Image Start-->
-                                                <div class="single-product-img img-full">
-                                                    <img src="img/single-product/large/single-product1.jpg" alt="">
-                                                </div>
-                                                <!--Single Product Image End-->
-                                            </div>
-                                            <div class="tab-pane fade" id="single-slide2" role="tabpanel" aria-labelledby="single-slide-tab-2">
-                                                <!--Single Product Image Start-->
-                                                <div class="single-product-img img-full">
-                                                    <img src="img/single-product/large/single-product2.jpg" alt="">
-                                                </div>
-                                                <!--Single Product Image End-->
-                                            </div>
-                                            <div class="tab-pane fade" id="single-slide3" role="tabpanel" aria-labelledby="single-slide-tab-3">
-                                                <!--Single Product Image Start-->
-                                                <div class="single-product-img img-full">
-                                                    <img src="img/single-product/large/single-product3.jpg" alt="">
-                                                </div>
-                                                <!--Single Product Image End-->
-                                            </div>
-                                            <div class="tab-pane fade" id="single-slide4" role="tabpanel" aria-labelledby="single-slide-tab-4">
-                                                <!--Single Product Image Start-->
-                                                <div class="single-product-img img-full">
-                                                    <img src="img/single-product/large/single-product4.jpg" alt="">
-                                                </div>
-                                                <!--Single Product Image End-->
-                                            </div>
-                                            <div class="tab-pane fade" id="single-slide5" role="tabpanel" aria-labelledby="single-slide-tab-4">
-                                                <!--Single Product Image Start-->
-                                                <div class="single-product-img img-full">
-                                                    <img src="img/single-product/large/single-product5.jpg" alt="">
-                                                </div>
-                                                <!--Single Product Image End-->
-                                            </div>
-                                            <div class="tab-pane fade" id="single-slide6" role="tabpanel" aria-labelledby="single-slide-tab-4">
-                                                <!--Single Product Image Start-->
-                                                <div class="single-product-img img-full">
-                                                    <img src="img/single-product/large/single-product6.jpg" alt="">
-                                                </div>
-                                                <!--Single Product Image End-->
-                                            </div>
-                                        </div>
-                                        <!--Modal Content End-->
-                                        <!--Modal Tab Menu Start-->
-                                        <div class="single-product-menu">
-                                            <div class="nav single-slide-menu owl-carousel" role="tablist">
-                                                <div class="single-tab-menu img-full">
-                                                    <a class="active" data-bs-toggle="tab" id="single-slide-tab-1" href="#single-slide1"><img src="img/single-product/small/single-product1.jpg" alt=""></a>
-                                                </div>
-                                                <div class="single-tab-menu img-full">
-                                                    <a data-bs-toggle="tab" id="single-slide-tab-2" href="#single-slide2"><img src="img/single-product/small/single-product2.jpg" alt=""></a>
-                                                </div>
-                                                <div class="single-tab-menu img-full">
-                                                    <a data-bs-toggle="tab" id="single-slide-tab-3" href="#single-slide3"><img src="img/single-product/small/single-product3.jpg" alt=""></a>
-                                                </div>
-                                                <div class="single-tab-menu img-full">
-                                                    <a data-bs-toggle="tab" id="single-slide-tab-4" href="#single-slide4"><img src="img/single-product/small/single-product4.jpg" alt=""></a>
-                                                </div>
-                                                <div class="single-tab-menu img-full">
-                                                    <a data-bs-toggle="tab" id="single-slide-tab-5" href="#single-slide5"><img src="img/single-product/small/single-product5.jpg" alt=""></a>
-                                                </div>
-                                                <div class="single-tab-menu img-full">
-                                                    <a data-bs-toggle="tab" id="single-slide-tab-6" href="#single-slide6"><img src="img/single-product/small/single-product6.jpg" alt=""></a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!--Modal Tab Menu End-->
-                                    </div>
-                                    <!--Modal Img-->
-                                    <!--Modal Content-->
-                                    <div class="col-md-7">
-                                        <div class="modal-product-info">
-                                            <h1>Sit voluptatem</h1>
-                                            <div class="modal-product-price">
-                                                <span class="old-price">$74.00</span>
-                                                <span class="new-price">$69.00</span>
-                                            </div>
-                                            <a href="single-product.html" class="see-all">See all features</a>
-                                            <div class="add-to-cart quantity">
-                                                <form class="add-quantity" action="#">
-                                                    <div class="modal-quantity">
-                                                        <input type="number" value="1">
-                                                    </div>
-                                                    <div class="add-to-link">
-                                                        <button class="form-button" data-text="add to cart">add to cart</button>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                            <div class="cart-description">
-                                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco,Proin lectus ipsum, gravida et mattis vulputate, tristique ut lectus.</p>
-                                            </div>
-                                            <div class="social-share">
-                                                <h3>Share this product</h3>
-                                                <ul class="socil-icon2">
-                                                    <li><a href=""><i class="fa fa-facebook"></i></a></li>
-                                                    <li><a href=""><i class="fa fa-twitter"></i></a></li>
-                                                    <li><a href=""><i class="fa fa-pinterest"></i></a></li>
-                                                    <li><a href=""><i class="fa fa-google-plus"></i></a></li>
-                                                    <li><a href=""><i class="fa fa-linkedin"></i></a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!--Modal Content-->
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Modal Area End -->
-            </div>
+            <!--Footer Area End-->
+        </div>
 
-
-
-
-
-            <!--All Js Here-->
+        <!--All Js Here-->
         <jsp:include page="../common/home/common-js.jsp"></jsp:include>
         <script src="${pageContext.request.contextPath}/assets/js/validate.js"></script>
     </body>
