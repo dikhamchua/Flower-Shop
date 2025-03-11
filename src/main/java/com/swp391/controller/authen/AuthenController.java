@@ -28,7 +28,7 @@ public class AuthenController extends HttpServlet {
     private static final String ENTER_EMAIL_PAGE = "view/authen/enterEmailForgotPassword.jsp";
     private static final String VERIFY_OTP_PAGE = "view/authen/verifyOTP.jsp";
     private static final String RESET_PASSWORD_PAGE = "view/authen/resetPassword.jsp";
-    private static final String HOME_PAGE = "home";
+    private static final String HOME_PAGE = "/home";
 
     private static final String PASSWORD_COMPLEXITY_REGEX = "(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"; // 8+ chars, 1 uppercase, 1 lowercase, 1 number
 
@@ -45,8 +45,8 @@ public class AuthenController extends HttpServlet {
         String url;
         switch (action) {
             case "login":
-                url = LOGIN_PAGE;
-                // url = fakeLogin(request, response);
+//                url = LOGIN_PAGE;
+                 url = fakeLogin(request, response);
                 break;
             case "logout":
                 url = logOut(request, response);
@@ -93,8 +93,13 @@ public class AuthenController extends HttpServlet {
             default:
                 url = HOME_PAGE;
         }
-        request.getRequestDispatcher(url).forward(request, response);
-
+        
+        // Kiểm tra nếu url bắt đầu bằng "/" thì redirect, ngược lại thì forward
+        if (url != null && url.startsWith("/")) {
+            response.sendRedirect(request.getContextPath() + url);
+        } else {
+            request.getRequestDispatcher(url).forward(request, response);
+        }
     }
 
     private String logOut(HttpServletRequest request, HttpServletResponse response) {
@@ -118,7 +123,9 @@ public class AuthenController extends HttpServlet {
         Account accFoundByUsernamePass = accountDAO.findByEmailOrUsernameAndPass(account);
         // true => trang home ( set account vao trong session )
         if (accFoundByUsernamePass != null) {
+            // Lưu thông tin người dùng vào session
             session.setAttribute(GlobalConfig.SESSION_ACCOUNT, accFoundByUsernamePass);
+            
             url = HOME_PAGE;
         } else {
             session.setAttribute("toastMessage", "Username or password incorrect!!");
@@ -231,6 +238,9 @@ public class AuthenController extends HttpServlet {
         String enteredOTP = request.getParameter("otp");
         String purpose = (String) session.getAttribute("otp_purpose");
 
+        System.out.println("Verifying OTP: entered=" + enteredOTP + ", stored=" + storedOTP);
+        System.out.println("Purpose: " + purpose + ", Email: " + email);
+
         if (storedOTP == null || email == null) {
             session.setAttribute("toastMessage", "Session expired. Please try again.");
             session.setAttribute("toastType", "error");
@@ -238,16 +248,20 @@ public class AuthenController extends HttpServlet {
         }
 
         if (storedOTP.equals(enteredOTP)) {
+            System.out.println("OTP verified successfully!");
             session.setAttribute("toastMessage", "OTP verified successfully!");
             session.setAttribute("toastType", "success");
             // OTP is correct
             session.removeAttribute("otp");
 
             if ("activation".equals(purpose)) {
+                System.out.println("Handling account activation");
                 return handleAccountActivation(request, session);
             } else if ("password_reset".equals(purpose)) {
+                System.out.println("Handling password reset");
                 return handlePasswordReset(request, session);
             } else {
+                System.out.println("Invalid purpose: " + purpose);
                 request.setAttribute("error", "Invalid OTP purpose.");
                 return VERIFY_OTP_PAGE;
             }
@@ -364,8 +378,8 @@ public class AuthenController extends HttpServlet {
     private String fakeLogin(HttpServletRequest request, HttpServletResponse response) {
         String url = null;
         // get về các thong tin người dufg nhập
-        String email = "admin";
-        String password = "1";
+        String email = "long10";
+        String password = "Edison@28";
         // kiểm tra thông tin có tồn tại trong DB ko
         Account account = Account.builder()
                 .username(email)
@@ -377,6 +391,7 @@ public class AuthenController extends HttpServlet {
         if (accFoundByUsernamePass != null) {
             request.getSession().setAttribute(GlobalConfig.SESSION_ACCOUNT,
                     accFoundByUsernamePass);
+            
             url = HOME_PAGE;
             // false => quay tro lai trang login ( set them thong bao loi )
         } else {
