@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.math.BigDecimal;
+import java.sql.Connection;
 
 public class ProductDAO extends DBContext implements I_DAO<Product> {
 
@@ -639,5 +640,86 @@ public class ProductDAO extends DBContext implements I_DAO<Product> {
         }
         
         return products;
+    }
+
+    /**
+     * Tìm các sản phẩm liên quan (cùng danh mục) với sản phẩm hiện tại
+     * @param categoryId ID danh mục
+     * @param currentProductId ID sản phẩm hiện tại (để loại trừ)
+     * @param limit Số lượng sản phẩm muốn lấy
+     * @return Danh sách sản phẩm liên quan
+     */
+    public List<Product> findRelatedProducts(int categoryId, int currentProductId, int limit) {
+        List<Product> relatedProducts = new ArrayList<>();
+        
+        try {
+            String sql = "SELECT * FROM products WHERE category_id = ? AND product_id != ? AND status = 1 ORDER BY RAND() LIMIT ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, categoryId);
+            statement.setInt(2, currentProductId);
+            statement.setInt(3, limit);
+            
+            ResultSet rs = statement.executeQuery();
+            
+            while (rs.next()) {
+                Product product = new Product();
+                product.setProductId(rs.getInt("product_id"));
+                product.setCategoryId(rs.getInt("category_id"));
+                product.setProductName(rs.getString("name"));
+                product.setDescription(rs.getString("description"));
+                product.setPrice(rs.getBigDecimal("price"));
+                product.setStock(rs.getInt("stock"));
+                product.setImage(rs.getString("image"));
+                product.setStatus((byte) (rs.getBoolean("status") ? 1 : 0));
+                product.setCreatedAt(rs.getTimestamp("created_at"));
+                product.setUpdatedAt(rs.getTimestamp("updated_at"));
+                
+                relatedProducts.add(product);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+        return relatedProducts;
+    }
+
+    /**
+     * Lấy thông tin sản phẩm theo ID
+     * @param productId ID của sản phẩm cần lấy
+     * @return Đối tượng Product nếu tìm thấy, null nếu không tìm thấy
+     */
+    public Product getProductById(int productId) {
+        Product product = null;
+        
+        try {
+            connection = getConnection();
+            String sql = "SELECT * FROM products WHERE product_id = ?";
+            statement = connection.prepareStatement(sql);
+            statement.setInt(1, productId);
+            
+            resultSet = statement.executeQuery();
+            
+            if (resultSet.next()) {
+                product = new Product();
+                product.setProductId(resultSet.getInt("product_id"));
+                product.setCategoryId(resultSet.getInt("category_id"));
+                product.setProductName(resultSet.getString("name"));
+                product.setDescription(resultSet.getString("description"));
+                product.setPrice(new java.math.BigDecimal(resultSet.getDouble("price")));
+                product.setStock(resultSet.getInt("stock"));
+                product.setQuantity(resultSet.getInt("quantity"));
+                product.setImage(resultSet.getString("image"));
+                product.setStatus((byte) (resultSet.getBoolean("status") ? 1 : 0));
+                product.setCreatedAt(resultSet.getTimestamp("created_at"));
+                product.setUpdatedAt(resultSet.getTimestamp("updated_at"));
+            }
+        } catch (SQLException e) {
+            System.out.println("Error getting product by ID: " + e.getMessage());
+            e.printStackTrace();
+        } finally {
+            closeResources();
+        }
+        
+        return product;
     }
 }
