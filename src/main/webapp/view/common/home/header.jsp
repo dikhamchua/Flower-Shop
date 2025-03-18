@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <header>
     <div class="header-container">
@@ -47,54 +48,12 @@
                             <div class="mini-cart-search">
                                 <div class="mini-cart">
                                     <a href="${pageContext.request.contextPath}/cart">
-                                        <span class="cart-icon">
-                                            <c:set var="cartSize" value="${empty sessionScope.cart ? 0 : sessionScope.cart.size()}" />
-                                            <span class="cart-quantity">${cartSize}</span>
-                                        </span>
                                         <c:set var="cartTotal" value="0" />
                                         <c:forEach items="${sessionScope.cart.values()}" var="item">
-                                            <c:set var="cartTotal" value="${cartTotal + item.subtotal}" />
+                                            <c:set var="cartTotal" value="${cartTotal + (item.product.price * item.quantity)}" />
                                         </c:forEach>
-                                        <span class="cart-title">Your cart <br><strong>$${cartTotal}</strong></span> 
+                                        <span class="cart-title">Your cart <br></span> 
                                     </a>
-                                    <!--Cart Dropdown Start-->
-                                    <div class="cart-dropdown">
-                                        <c:choose>
-                                            <c:when test="${empty sessionScope.cart}">
-                                                <p class="text-center">Your cart is empty</p>
-                                            </c:when>
-                                            <c:otherwise>
-                                                <ul>
-                                                    <c:forEach items="${sessionScope.cart.values()}" var="item">
-                                                        <li class="single-cart-item">
-                                                            <div class="cart-img">
-                                                                <a href="${pageContext.request.contextPath}/home?action=product-details&id=${item.product.productId}">
-                                                                    <img src="${item.product.image}" alt="${item.product.productName}">
-                                                                </a>
-                                                            </div>
-                                                            <div class="cart-content">
-                                                                <h5 class="product-name">
-                                                                    <a href="${pageContext.request.contextPath}/home?action=product-details&id=${item.product.productId}">${item.product.productName}</a>
-                                                                </h5>
-                                                                <span class="cart-price">${item.quantity} × $${item.product.price}</span>
-                                                            </div>
-                                                            <div class="cart-remove">
-                                                                <a title="Remove" href="${pageContext.request.contextPath}/cart?action=remove&productId=${item.product.productId}">
-                                                                    <i class="fa fa-times"></i>
-                                                                </a>
-                                                            </div>
-                                                        </li>
-                                                    </c:forEach>
-                                                </ul>
-                                                <p class="cart-subtotal"><strong>Subtotal:</strong> <span class="float-right">$${cartTotal}</span></p>
-                                                <p class="cart-btn">
-                                                    <a href="${pageContext.request.contextPath}/cart">View cart</a>
-                                                    <a href="${pageContext.request.contextPath}/cart?action=checkout">Checkout</a>
-                                                </p>
-                                            </c:otherwise>
-                                        </c:choose>
-                                    </div>
-                                    <!--Cart Dropdown End--> 
                                 </div>
                                 <div class="header-search">
                                     <div class="search-box">
