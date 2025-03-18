@@ -118,6 +118,12 @@
         </a>
       </li>
       <li>
+        <a href="${pageContext.request.contextPath}/admin/manage-blog">
+          <iconify-icon icon="icon-park-outline:setting-two" class="menu-icon"></iconify-icon>
+          <span>Blog Management</span>
+        </a>
+      </li>
+      <li>
         <a href="${pageContext.request.contextPath}/orderControll">
           <iconify-icon icon="icon-park-outline:setting-two" class="menu-icon"></iconify-icon>
           <span>My Order</span>

@@ -244,7 +244,7 @@
                 <iconify-icon icon="icon-park-outline:setting-two" class="icon text-xl"></iconify-icon>  Setting</a>
               </li>
               <li>
-                <a class="dropdown-item text-black px-0 py-8 hover-bg-transparent hover-text-danger d-flex align-items-center gap-3" href="javascript:void(0)"> 
+                <a class="dropdown-item text-black px-0 py-8 hover-bg-transparent hover-text-danger d-flex align-items-center gap-3" href="${pageContext.request.contextPath}/authen?action=logout"> 
                 <iconify-icon icon="lucide:power" class="icon text-xl"></iconify-icon>  Log Out</a>
               </li>
             </ul>
