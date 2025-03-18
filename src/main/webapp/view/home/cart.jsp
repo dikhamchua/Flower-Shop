@@ -88,12 +88,12 @@
             </div>
             <!--Breadcrumb One End-->
             
-            <!--Shopping Cart Area Strat-->
+            <!--Shopping Cart Area Start-->
             <div class="Shopping-cart-area mb-110">
                 <div class="container">
                     <div class="row">
                         <div class="col-12">
-                            <form action="${pageContext.request.contextPath}/cart" method="post">
+                            <form action="${pageContext.request.contextPath}/cart" method="post" id="cartForm">
                                 <input type="hidden" name="action" value="update">
                                 <div class="table-content table-responsive">
                                     <table class="table">
@@ -127,7 +127,9 @@
                                                         <a href="${pageContext.request.contextPath}/home?action=product-details&id=${item.product.productId}">${item.product.productName}</a>
                                                     </td>
                                                     <td class="plantmore-product-price">
-                                                        <span class="amount">${item.product.price} VND</span>
+                                                        <span class="amount">
+                                                            <fmt:formatNumber value="${item.product.price}" pattern="#,##0" /> VND
+                                                        </span>
                                                     </td>
                                                     <td class="plantmore-product-quantity">
                                                         <input type="hidden" name="productId" value="${item.product.productId}">
@@ -149,34 +151,88 @@
                                         </tbody>
                                     </table>
                                 </div>
-                                <div class="row">
-                                    <div class="col-12">
-                                        <div class="coupon-all">
-                                            <div class="coupon">
-                                                <input id="coupon_code" class="input-text" name="coupon_code" value="" placeholder="Coupon code" type="text">
-                                                <input class="button" name="apply_coupon" value="Apply coupon" type="submit">
-                                            </div>
-                                            <div class="coupon2">
-                                                <input class="button" name="update_cart" value="Update cart" type="submit">
-                                                <a href="${pageContext.request.contextPath}/cart?action=proceed-to-checkout" class="button checkout-btn" style="background: linear-gradient(to right, #80b82d, #8cc640); color: white; padding: 10px 20px; font-weight: bold; box-shadow: 0 2px 5px rgba(0,0,0,0.1); border-radius: 4px; transition: all 0.3s ease;">
-                                                    <i class="fa fa-check-circle" style="margin-right: 8px;"></i> Proceed to checkout
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-5 ml-auto">
-                                        <div class="cart-page-total">
-                                            <h2>Cart totals</h2>
-                                            <ul>
-                                                <li>Subtotal <span><fmt:formatNumber value="${cartTotal}" pattern="#,##0" /> VND</span></li>
-                                                <li>Total <span><fmt:formatNumber value="${cartTotal}" pattern="#,##0" /> VND</span></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
                             </form>
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="coupon-all">
+                                        <!-- Hiển thị thông báo từ việc áp dụng coupon -->
+                                        <c:if test="${not empty sessionScope.couponMessage}">
+                                            <div class="alert ${sessionScope.couponMessage.contains('thành công') ? 'alert-success' : 'alert-warning'}" style="margin-bottom: 15px; padding: 10px 15px; border-radius: 4px;">
+                                                ${sessionScope.couponMessage}
+                                                <% session.removeAttribute("couponMessage"); %>
+                                            </div>
+                                        </c:if>
+                                        
+                                        <c:choose>
+                                            <c:when test="${empty sessionScope.appliedCoupon}">
+                                                <!-- Form nhập mã giảm giá - Tách riêng ra khỏi form cập nhật giỏ hàng -->
+                                                <div class="coupon">
+                                                    <form action="${pageContext.request.contextPath}/cart" method="post" id="couponForm">
+                                                        <input type="hidden" name="action" value="apply-coupon">
+                                                        <input id="couponCode" class="input-text" name="couponCode" value="" placeholder="Coupon code" type="text" required>
+                                                        <button type="submit" class="button" name="apply_coupon">Apply coupon</button>
+                                                    </form>
+                                                </div>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <!-- Hiển thị coupon đã áp dụng -->
+                                                <div class="applied-coupon" style="display: flex; align-items: center; background: #f9f9f9; padding: 10px 15px; border-radius: 4px; margin-bottom: 15px; border: 1px dashed #ddd;">
+                                                    <div style="flex-grow: 1;">
+                                                        <strong>Applied coupon: ${sessionScope.appliedCoupon.code}</strong>
+                                                        <div class="text-success" style="color: #28a745; margin-top: 5px;">
+                                                            Discount: <fmt:formatNumber value="${sessionScope.couponDiscount}" pattern="#,##0" /> ₫
+                                                        </div>
+                                                    </div>
+                                                    <a href="${pageContext.request.contextPath}/cart?action=remove-coupon" class="button" style="background: #dc3545; color: white; padding: 5px 10px; border-radius: 4px; text-decoration: none;">
+                                                        Remove
+                                                    </a>
+                                                </div>
+                                            </c:otherwise>
+                                        </c:choose>
+                                        
+                                        <div class="coupon2">
+                                            <input class="button" name="update_cart" value="Update cart" type="submit" form="cartForm">
+                                            <a href="${pageContext.request.contextPath}/cart?action=proceed-to-checkout" class="button checkout-btn" style="background: linear-gradient(to right, #80b82d, #8cc640); color: white; padding: 10px 20px; font-weight: bold; box-shadow: 0 2px 5px rgba(0,0,0,0.1); border-radius: 4px; transition: all 0.3s ease; text-decoration: none; display: inline-block;">
+                                                <i class="fa fa-check-circle" style="margin-right: 8px;"></i> Proceed to checkout
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-5 ml-auto">
+                                    <div class="cart-page-total" style="margin-top: 30px;">
+                                        <h2>Cart totals</h2>
+                                        <ul style="padding: 0; list-style: none;">
+                                            <li style="padding: 10px 0; display: flex; justify-content: space-between; border-bottom: 1px solid #eee;">
+                                                <span>Subtotal</span>
+                                                <span><fmt:formatNumber value="${cartTotal}" pattern="#,##0" /> ₫</span>
+                                            </li>
+                                            
+                                            <c:if test="${not empty sessionScope.couponDiscount}">
+                                                <li style="padding: 10px 0; display: flex; justify-content: space-between; border-bottom: 1px solid #eee; color: #28a745;">
+                                                    <span>Discount</span>
+                                                    <span>-<fmt:formatNumber value="${sessionScope.couponDiscount}" pattern="#,##0" /> ₫</span>
+                                                </li>
+                                            </c:if>
+                                            
+                                            <li style="padding: 15px 0; display: flex; justify-content: space-between; font-weight: bold; font-size: 1.1em;">
+                                                <span>Total</span>
+                                                <span>
+                                                    <c:choose>
+                                                        <c:when test="${not empty sessionScope.couponDiscount}">
+                                                            <fmt:formatNumber value="${cartTotal - sessionScope.couponDiscount}" pattern="#,##0" /> ₫
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <fmt:formatNumber value="${cartTotal}" pattern="#,##0" /> ₫
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                </span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -228,15 +284,26 @@
                 });
                 
                 // Hiển thị toast nếu có thông báo từ server
-                <c:if test="${not empty cartMessage}">
+                <c:if test="${not empty sessionScope.cartMessage}">
                     const toast = new bootstrap.Toast(document.getElementById('cartToast'));
-                    $('#cartToast .toast-body').text('${cartMessage}');
+                    const message = `${sessionScope.cartMessage}`;
+                    $('#cartToast .toast-body').text(message);
+                    
+                    // Thay đổi màu header của toast dựa vào loại thông báo
+                    if (message.includes("exceed available stock")) {
+                        $('#cartToast .toast-header').addClass('bg-danger text-white');
+                    } else {
+                        $('#cartToast .toast-header').addClass('bg-success text-white');
+                    }
+                    
                     toast.show();
                     
-                    // Auto hide toast after 3 seconds
+                    // Auto hide toast after 5 seconds for stock error messages, 3 seconds for others
                     setTimeout(function() {
                         toast.hide();
-                    }, 3000);
+                    }, message.includes("exceed available stock") ? 5000 : 3000);
+                    
+                    <% session.removeAttribute("cartMessage"); %>
                 </c:if>
             });
         </script>
@@ -244,12 +311,12 @@
         <!-- Toast container -->
         <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 11">
             <div id="cartToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-                <div class="toast-header bg-success text-white">
+                <div class="toast-header">
                     <strong class="me-auto">Thông báo</strong>
                     <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
                 </div>
-                <div class="toast-body">
-                    Giỏ hàng đã được cập nhật
+                <div class="toast-body" style="white-space: pre-line">
+                    <!-- white-space: pre-line để hiển thị đúng định dạng xuống dòng -->
                 </div>
             </div>
         </div>

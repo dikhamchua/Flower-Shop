@@ -113,7 +113,15 @@
                                     <option value="cancelled" ${status == 'cancelled' ? 'selected' : ''}>Cancelled</option>
                                 </select>
                             </div>
-                            <div class="col-md-7">
+                            <div class="col-md-3">
+                                <select class="form-select" name="paymentMethod">
+                                    <option value="">All Payment Methods</option>
+                                    <option value="Cash on Delivery" ${paymentMethod == 'Cash on Delivery' ? 'selected' : ''}>Cash on Delivery</option>
+                                    <option value="Digital Wallet" ${paymentMethod == 'Digital Wallet' ? 'selected' : ''}>Digital Wallet</option>
+                                    <option value="Bank Transfer" ${paymentMethod == 'Bank Transfer' ? 'selected' : ''}>Bank Transfer</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
                                 <input type="text" class="form-control" name="search" placeholder="Search by order ID, customer name, email..."
                                        value="${search}">
                             </div>
@@ -136,6 +144,7 @@
                                     <th>Customer</th>
                                     <th>Address</th>
                                     <th>Total</th>
+                                    <th>Payment Method</th>
                                     <th>Status</th>
                                     <th>Created Date</th>
                                     <th>Actions</th>
@@ -144,7 +153,26 @@
                             <tbody>
                                 <c:if test="${empty orders}">
                                     <tr>
-                                        <td colspan="7" class="text-center">No orders found</td>
+                                        <td colspan="8" class="text-center">
+                                            <div class="py-4">
+                                                <i class="fas fa-search fs-1 text-muted mb-3"></i>
+                                                <h5>No orders found</h5>
+                                                <p class="text-muted">
+                                                    <c:choose>
+                                                        <c:when test="${not empty status || not empty search}">
+                                                            No orders match your search criteria. Try adjusting your filters.
+                                                            <br>
+                                                            <a href="${pageContext.request.contextPath}/admin/manage-order" class="btn btn-outline-primary mt-2">
+                                                                <i class="fas fa-times me-2"></i>Clear Filters
+                                                            </a>
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            There are no orders in the system yet.
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                </p>
+                                            </div>
+                                        </td>
                                     </tr>
                                 </c:if>
                                 <c:forEach var="order" items="${orders}">
@@ -157,6 +185,11 @@
                                         </td>
                                         <td>${order.shippingAddress}</td>
                                         <td><fmt:formatNumber value="${order.total}" type="currency" currencySymbol="" maxFractionDigits="0"/> VNĐ</td>
+                                        <td>
+                                            <span class="badge bg-info">
+                                                ${order.paymentMethod}
+                                            </span>
+                                        </td>
                                         <td>
                                             <span class="badge ${order.status == 'pending' ? 'bg-warning' : 
                                                                 order.status == 'accepted' ? 'bg-info' : 
