@@ -201,10 +201,10 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-12 text-center">
-                            <div class="breadcrumb-title">
+<!--                            <div class="breadcrumb-title">
                                 <h2 style="font-size: 28px; margin-bottom: 15px; color: #333;">Account Register</h2>
-                            </div>
-                            <div class="breadcrumb-list" style="display: flex; justify-content: center;">
+                            </div>-->
+<!--                            <div class="breadcrumb-list" style="display: flex; justify-content: center;">
                                 <ul style="display: inline-flex; padding-left: 0; margin-bottom: 0; list-style: none;">
                                     <li style="display: flex; align-items: center;">
                                         <span style="color: #28a745; margin-right: 5px;">•</span>
@@ -213,14 +213,11 @@
                                     <li style="display: flex; align-items: center; margin: 0 10px;">
                                         <span style="color: #ccc;">/</span>
                                     </li>
-                                    <li style="display: flex; align-items: center; margin: 0 10px;">
-                                        <span style="color: #ccc;">/</span>
-                                    </li>
                                     <li style="display: flex; align-items: center;">
                                         <span style="color: #777;">Register</span>
                                     </li>
                                 </ul>
-                            </div>
+                            </div>-->
                         </div>
                     </div>
                 </div>
