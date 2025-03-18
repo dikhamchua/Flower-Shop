@@ -116,7 +116,7 @@ public class OrderDAO extends DBContext implements I_DAO<Order> {
         return order;
     }
 
-    public List<Order> findOrdersWithFilters(String status, String searchQuery, int page, int pageSize) {
+    public List<Order> findOrdersWithFilters(String status, String paymentMethod, int page, int pageSize) {
         List<Order> orders = new ArrayList<>();
         StringBuilder sql = new StringBuilder("SELECT o.*, a.username, a.email, a.phone "
                 + "FROM orders o "
@@ -129,12 +129,9 @@ public class OrderDAO extends DBContext implements I_DAO<Order> {
             params.add(status);
         }
 
-        if (searchQuery != null && !searchQuery.trim().isEmpty()) {
-            sql.append("AND (a.username LIKE ? OR a.email LIKE ? OR CAST(o.order_id AS CHAR) = ?) ");
-            String searchPattern = "%" + searchQuery.trim() + "%";
-            params.add(searchPattern);
-            params.add(searchPattern);
-            params.add(searchQuery);
+        if (paymentMethod != null && !paymentMethod.isEmpty()) {
+            sql.append("AND o.payment_method = ? ");
+            params.add(paymentMethod);
         }
 
         sql.append("ORDER BY o.created_at DESC LIMIT ? OFFSET ?");
@@ -160,7 +157,7 @@ public class OrderDAO extends DBContext implements I_DAO<Order> {
         return orders;
     }
 
-    public int getTotalFilteredOrders(String status, String searchQuery) {
+    public int getTotalFilteredOrders(String status, String paymentMethod) {
         StringBuilder sql = new StringBuilder("SELECT COUNT(*) "
                 + "FROM orders o "
                 + "JOIN account a ON o.user_id = a.user_id "
@@ -172,12 +169,9 @@ public class OrderDAO extends DBContext implements I_DAO<Order> {
             params.add(status);
         }
 
-        if (searchQuery != null && !searchQuery.trim().isEmpty()) {
-            sql.append("AND (a.username LIKE ? OR a.email LIKE ? OR CAST(o.order_id AS CHAR) = ?) ");
-            String searchPattern = "%" + searchQuery.trim() + "%";
-            params.add(searchPattern);
-            params.add(searchPattern);
-            params.add(searchQuery);
+        if (paymentMethod != null && !paymentMethod.isEmpty()) {
+            sql.append("AND o.payment_method = ? ");
+            params.add(paymentMethod);
         }
 
         try {
@@ -333,7 +327,7 @@ public class OrderDAO extends DBContext implements I_DAO<Order> {
     /**
      * Find orders by user ID with optional status filter and pagination
      */
-    public List<Order> findOrdersByUserId(int userId, String status, int page, int pageSize) {
+    public List<Order> findOrdersByUserId(int userId, String status, String paymentMethod, int page, int pageSize) {
         List<Order> orders = new ArrayList<>();
         StringBuilder sql = new StringBuilder("SELECT o.*, a.username, a.email, a.phone "
                 + "FROM orders o "
@@ -345,6 +339,11 @@ public class OrderDAO extends DBContext implements I_DAO<Order> {
         if (status != null && !status.isEmpty()) {
             sql.append("AND o.status = ? ");
             params.add(status);
+        }
+        
+        if (paymentMethod != null && !paymentMethod.isEmpty()) {
+            sql.append("AND o.payment_method = ? ");
+            params.add(paymentMethod);
         }
 
         sql.append("ORDER BY o.created_at DESC LIMIT ? OFFSET ?");
@@ -373,7 +372,7 @@ public class OrderDAO extends DBContext implements I_DAO<Order> {
     /**
      * Get total number of orders for a user with optional status filter
      */
-    public int getTotalOrdersByUserId(int userId, String status) {
+    public int getTotalOrdersByUserId(int userId, String status, String paymentMethod) {
         StringBuilder sql = new StringBuilder("SELECT COUNT(*) "
                 + "FROM orders o "
                 + "WHERE o.user_id = ? ");
@@ -383,6 +382,11 @@ public class OrderDAO extends DBContext implements I_DAO<Order> {
         if (status != null && !status.isEmpty()) {
             sql.append("AND o.status = ? ");
             params.add(status);
+        }
+        
+        if (paymentMethod != null && !paymentMethod.isEmpty()) {
+            sql.append("AND o.payment_method = ? ");
+            params.add(paymentMethod);
         }
 
         try {
@@ -402,5 +406,200 @@ public class OrderDAO extends DBContext implements I_DAO<Order> {
             closeResources();
         }
         return 0;
+    }
+
+    public List<Order> searchOrders(String search, String status, String paymentMethod, int page, int pageSize) {
+        List<Order> orders = new ArrayList<>();
+        StringBuilder sql = new StringBuilder("SELECT o.*, a.username, a.email, a.phone "
+                + "FROM orders o "
+                + "JOIN account a ON o.user_id = a.user_id "
+                + "WHERE (a.username LIKE ? OR a.email LIKE ? OR CAST(o.order_id AS CHAR) = ?) ");
+        List<Object> params = new ArrayList<>();
+        
+        String searchPattern = "%" + search.trim() + "%";
+        params.add(searchPattern);
+        params.add(searchPattern);
+        params.add(search);
+
+        if (status != null && !status.isEmpty()) {
+            sql.append("AND o.status = ? ");
+            params.add(status);
+        }
+
+        if (paymentMethod != null && !paymentMethod.isEmpty()) {
+            sql.append("AND o.payment_method = ? ");
+            params.add(paymentMethod);
+        }
+
+        sql.append("ORDER BY o.created_at DESC LIMIT ? OFFSET ?");
+        params.add(pageSize);
+        params.add((page - 1) * pageSize);
+
+        try {
+            connection = getConnection();
+            statement = connection.prepareStatement(sql.toString());
+            for (int i = 0; i < params.size(); i++) {
+                statement.setObject(i + 1, params.get(i));
+            }
+
+            resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                orders.add(getFromResultSet(resultSet));
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error searching orders: " + ex.getMessage());
+        } finally {
+            closeResources();
+        }
+        return orders;
+    }
+
+    public int getTotalSearchResults(String search, String status, String paymentMethod) {
+        StringBuilder sql = new StringBuilder("SELECT COUNT(*) "
+                + "FROM orders o "
+                + "JOIN account a ON o.user_id = a.user_id "
+                + "WHERE (a.username LIKE ? OR a.email LIKE ? OR CAST(o.order_id AS CHAR) = ?) ");
+        List<Object> params = new ArrayList<>();
+        
+        String searchPattern = "%" + search.trim() + "%";
+        params.add(searchPattern);
+        params.add(searchPattern);
+        params.add(search);
+
+        if (status != null && !status.isEmpty()) {
+            sql.append("AND o.status = ? ");
+            params.add(status);
+        }
+
+        if (paymentMethod != null && !paymentMethod.isEmpty()) {
+            sql.append("AND o.payment_method = ? ");
+            params.add(paymentMethod);
+        }
+
+        try {
+            connection = getConnection();
+            statement = connection.prepareStatement(sql.toString());
+            for (int i = 0; i < params.size(); i++) {
+                statement.setObject(i + 1, params.get(i));
+            }
+
+            resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getInt(1);
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error counting search results: " + ex.getMessage());
+        } finally {
+            closeResources();
+        }
+        return 0;
+    }
+
+    /**
+     * Kiểm tra xem một đơn hàng đã hoàn thành chưa
+     * @param orderId ID của đơn hàng cần kiểm tra
+     * @return true nếu đơn hàng đã hoàn thành, ngược lại trả về false
+     */
+    public boolean isOrderCompleted(int orderId) {
+        String sql = "SELECT COUNT(*) FROM orders WHERE order_id = ? AND status = 'completed'";
+        
+        try {
+            connection = getConnection();
+            statement = connection.prepareStatement(sql);
+            statement.setInt(1, orderId);
+            
+            resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getInt(1) > 0;
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error checking if order is completed: " + ex.getMessage());
+        } finally {
+            closeResources();
+        }
+        return false;
+    }
+
+    /**
+     * Kiểm tra xem một đơn hàng có thuộc về người dùng cụ thể hay không
+     * @param orderId ID của đơn hàng cần kiểm tra
+     * @param userId ID của người dùng cần kiểm tra
+     * @return true nếu đơn hàng thuộc về người dùng, ngược lại trả về false
+     */
+    public boolean isOrderBelongsToUser(int orderId, int userId) {
+        String sql = "SELECT COUNT(*) FROM orders WHERE order_id = ? AND user_id = ?";
+        
+        try {
+            connection = getConnection();
+            statement = connection.prepareStatement(sql);
+            statement.setInt(1, orderId);
+            statement.setInt(2, userId);
+            
+            resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getInt(1) > 0;
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error checking if order belongs to user: " + ex.getMessage());
+        } finally {
+            closeResources();
+        }
+        return false;
+    }
+
+    /**
+     * Kiểm tra xem một đơn hàng đã hoàn thành và thuộc về người dùng cụ thể hay không
+     * @param orderId ID của đơn hàng cần kiểm tra
+     * @param userId ID của người dùng cần kiểm tra
+     * @return true nếu đơn hàng đã hoàn thành và thuộc về người dùng, ngược lại trả về false
+     */
+    public boolean isOrderCompletedAndBelongsToUser(int orderId, int userId) {
+        String sql = "SELECT COUNT(*) FROM orders WHERE order_id = ? AND user_id = ? AND status = 'completed'";
+        
+        try {
+            connection = getConnection();
+            statement = connection.prepareStatement(sql);
+            statement.setInt(1, orderId);
+            statement.setInt(2, userId);
+            
+            resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getInt(1) > 0;
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error checking if order completed and belongs to user: " + ex.getMessage());
+        } finally {
+            closeResources();
+        }
+        return false;
+    }
+
+    /**
+     * Kiểm tra xem người dùng đã mua sản phẩm này chưa và đơn hàng đã hoàn thành
+     * @param userId ID của người dùng
+     * @param productId ID của sản phẩm
+     * @return true nếu người dùng đã mua sản phẩm và đơn hàng đã hoàn thành, ngược lại trả về false
+     */
+    public boolean hasUserPurchasedProduct(int userId, int productId) {
+        String sql = "SELECT COUNT(*) FROM orders o " +
+                    "JOIN order_items oi ON o.order_id = oi.order_id " +
+                    "WHERE o.user_id = ? AND oi.product_id = ? AND o.status = 'completed'";
+        
+        try {
+            connection = getConnection();
+            statement = connection.prepareStatement(sql);
+            statement.setInt(1, userId);
+            statement.setInt(2, productId);
+            
+            resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getInt(1) > 0;
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error checking if user purchased product: " + ex.getMessage());
+        } finally {
+            closeResources();
+        }
+        return false;
     }
 }

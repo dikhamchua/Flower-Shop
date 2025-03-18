@@ -209,24 +209,10 @@
                                     <div class="payment-method-section">
                                         <h4 class="mb-3">Payment Method</h4>
                                         
-                                        <!-- Digital Wallet -->
-                                        <div class="payment-option">
-                                            <div class="payment-label">
-                                                <input type="radio" id="digital-wallet" name="paymentMethod" value="digital_wallet" checked>
-                                                <div class="payment-icon">
-                                                    <iconify-icon icon="uil:wallet" width="24" height="24" style="color: #80b82d;"></iconify-icon>
-                                                </div>
-                                                <label for="digital-wallet">Digital Wallet</label>
-                                            </div>
-                                            <div class="payment-details">
-                                                Pay via digital wallet services. Your payment will be processed securely through our verified payment gateway.
-                                            </div>
-                                        </div>
-                                        
                                         <!-- Cash on Delivery -->
                                         <div class="payment-option">
                                             <div class="payment-label">
-                                                <input type="radio" id="cash-on-delivery" name="paymentMethod" value="cash_on_delivery">
+                                                <input type="radio" id="cash-on-delivery" name="paymentMethod" value="cash on delivery" checked>
                                                 <div class="payment-icon">
                                                     <iconify-icon icon="uil:money-bill" width="24" height="24" style="color: #80b82d;"></iconify-icon>
                                                 </div>
@@ -237,10 +223,24 @@
                                             </div>
                                         </div>
                                         
+                                        <!-- Digital Wallet -->
+                                        <div class="payment-option">
+                                            <div class="payment-label">
+                                                <input type="radio" id="digital-wallet" name="paymentMethod" value="digital wallet" >
+                                                <div class="payment-icon">
+                                                    <iconify-icon icon="uil:wallet" width="24" height="24" style="color: #80b82d;"></iconify-icon>
+                                                </div>
+                                                <label for="digital-wallet">Digital Wallet</label>
+                                            </div>
+                                            <div class="payment-details">
+                                                Pay via digital wallet services. Your payment will be processed securely through our verified payment gateway.
+                                            </div>
+                                        </div>
+                                        
                                         <!-- Bank Transfer -->
                                         <div class="payment-option">
                                             <div class="payment-label">
-                                                <input type="radio" name="paymentMethod" id="bank-transfer" value="bank-transfer">
+                                                <input type="radio" name="paymentMethod" id="bank-transfer" value="bank transfer">
                                                 <div class="payment-icon">
                                                     <iconify-icon icon="mdi:bank-outline" width="24" height="24" style="color: #80b82d;"></iconify-icon>
                                                 </div>
@@ -278,13 +278,19 @@
                                                 <th>Subtotal</th>
                                                 <td style="text-align: right;"><fmt:formatNumber value="${cartTotal}" type="number" groupingUsed="true" maxFractionDigits="0"/> VNĐ</td>
                                             </tr>
+                                            <c:if test="${not empty couponDiscount}">
+                                                <tr>
+                                                    <th>Discount <c:if test="${not empty appliedCoupon}"><small>(${appliedCoupon.code})</small></c:if></th>
+                                                    <td style="text-align: right; color: #e83e8c;">-<fmt:formatNumber value="${couponDiscount}" type="number" groupingUsed="true" maxFractionDigits="0"/> VNĐ</td>
+                                                </tr>
+                                            </c:if>
                                             <tr>
                                                 <th>Shipping</th>
                                                 <td style="text-align: right;">Free</td>
                                             </tr>
                                             <tr class="order-total">
                                                 <th>Total</th>
-                                                <td style="text-align: right;"><fmt:formatNumber value="${cartTotal}" type="number" groupingUsed="true" maxFractionDigits="0"/> VNĐ</td>
+                                                <td style="text-align: right;"><fmt:formatNumber value="${finalTotal}" type="number" groupingUsed="true" maxFractionDigits="0"/> VNĐ</td>
                                             </tr>
                                         </tfoot>
                                     </table>
@@ -363,11 +369,6 @@
             <c:if test="${not empty sessionScope.orderSuccessMessage}">
                 $(document).ready(function() {
                     showToast("${sessionScope.orderSuccessMessage}", "success");
-                    
-                    // Redirect after 3 seconds
-                    setTimeout(function() {
-                        window.location.href = "${pageContext.request.contextPath}/orderControll";
-                    }, 3000);
                     
                     // Remove the message from session
                     <% session.removeAttribute("orderSuccessMessage"); %>

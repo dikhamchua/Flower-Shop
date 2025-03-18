@@ -100,21 +100,33 @@
         </a>
       </li>
       <li>
+        <a href="${pageContext.request.contextPath}/admin/manage-supplier">
+          <iconify-icon icon="icon-park-outline:setting-two" class="menu-icon"></iconify-icon>
+          <span>Supplier Management</span>
+        </a>
+      </li>
+      <li>
         <a href="${pageContext.request.contextPath}/admin/manage-order">
           <iconify-icon icon="icon-park-outline:setting-two" class="menu-icon"></iconify-icon>
           <span>Order Management</span>
         </a>
       </li>
       <li>
-        <a href="${pageContext.request.contextPath}/admin/manage-blog">
+        <a href="${pageContext.request.contextPath}/admin/manage-coupon">
           <iconify-icon icon="icon-park-outline:setting-two" class="menu-icon"></iconify-icon>
-          <span>Blog Management</span>
+          <span>Coupon Management</span>
         </a>
       </li>
       <li>
         <a href="${pageContext.request.contextPath}/orderControll">
           <iconify-icon icon="icon-park-outline:setting-two" class="menu-icon"></iconify-icon>
           <span>My Order</span>
+        </a>
+      </li>
+      <li>
+        <a href="${pageContext.request.contextPath}/feedbackControl">
+          <iconify-icon icon="icon-park-outline:setting-two" class="menu-icon"></iconify-icon>
+          <span>My Feedback</span>
         </a>
       </li>
     </ul>

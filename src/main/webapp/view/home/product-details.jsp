@@ -1,5 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!doctype html>
 <html class="no-js" lang="en">
     <head>
@@ -14,6 +15,22 @@
         <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico">
         <!--All Css Here-->
         <jsp:include page="../common/home/common-css.jsp"></jsp:include>
+
+        <style>
+            /* Override any existing price styling */
+            .single-product-price .price {
+                text-decoration: none !important;  /* Ngăn chặn gạch ngang */
+                font-size: 24px;
+                font-weight: 600;
+                color: #333;
+            }
+            
+            /* Ẩn các class có thể gây gạch ngang */
+            .old-price,
+            .new-price {
+                text-decoration: none !important;
+            }
+        </style>
 
         </head>
         <body>
@@ -96,7 +113,9 @@
                                         <a class="review-link" href="#">(1 customer review)</a>
                                     </div>
                                     <div class="single-product-price">
-                                        <span class="price new-price">${product.price} VND</span>
+                                        <span class="price">
+                                            <fmt:formatNumber value="${product.price}" pattern="#,##0"/> VND
+                                        </span>
                                     </div>
                                     <div class="single-product-quantity">
                                         <c:choose>
@@ -106,9 +125,11 @@
                                                     <input type="hidden" name="productId" value="${product.productId}">
                                                     <div class="product-quantity">
                                                         <div class="cart-plus-minus">
-                                                            <input class="cart-plus-minus-box" type="text" name="quantity" value="1">
-                                                            <div class="dec qtybutton">-</div>
-                                                            <div class="inc qtybutton">+</div>
+                                                            <input class="cart-plus-minus-box" type="text" name="quantity" value="1" min="1">
+                                                            <div class="qtybutton-container">
+                                                                <div class="inc qtybutton">▲</div>
+                                                                <div class="dec qtybutton">▼</div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                     <div class="add-to-link">
@@ -120,8 +141,10 @@
                                                 <div class="product-quantity">
                                                     <div class="cart-plus-minus">
                                                         <input class="cart-plus-minus-box" type="text" value="1" disabled>
-                                                        <div class="dec qtybutton">-</div>
-                                                        <div class="inc qtybutton">+</div>
+                                                        <div class="qtybutton-container">
+                                                            <div class="inc qtybutton">▲</div>
+                                                            <div class="dec qtybutton">▼</div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                                 <div class="add-to-link">
@@ -169,7 +192,7 @@
                                             <a class="active" data-bs-toggle="tab" href="#description">Description</a>
                                         </li>
                                         <li>
-                                            <a data-bs-toggle="tab" href="#reviews">Reviews (1)</a>
+                                            <a data-bs-toggle="tab" href="#reviews">Reviews</a>
                                         </li>
                                     </ul>
                                     <!--Review And Description Tab Menu End-->
@@ -182,65 +205,98 @@
                                         </div>
                                         <div class="tab-pane fade" id="reviews">
                                             <div class="review-page-comment">
-                                                <h2>1 review for ${product.productName}</h2>
-                                                <ul>
-                                                    <li>
-                                                        <div class="product-comment">
-                                                            <img src="img/icon/author.png" alt="">
-                                                            <div class="product-comment-content">
-                                                                <div class="product-reviews">
-                                                                    <i class="fa fa-star"></i>
-                                                                    <i class="fa fa-star"></i>
-                                                                    <i class="fa fa-star"></i>
-                                                                    <i class="fa fa-star"></i>
-                                                                    <i class="fa fa-star-o"></i>
-                                                                </div>
-                                                                <p class="meta">
-                                                                    <strong>admin</strong> - <span>November 22, 2023</span>
-                                                                <div class="description">
-                                                                    <p>Good Product</p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </li>
-                                                </ul>
+                                                <c:choose>
+                                                    <c:when test="${not empty productFeedbacks}">
+                                                        <h2>${productFeedbacks.size()} review(s) for ${product.productName}</h2>
+                                                        <ul>
+                                                            <c:forEach items="${productFeedbacks}" var="feedback">
+                                                                <li>
+                                                                    <div class="product-comment">
+                                                                        <img src="${pageContext.request.contextPath}/img/icon/author.png" alt="">
+                                                                        <div class="product-comment-content">
+                                                                            <div class="product-reviews">
+                                                                                <c:forEach begin="1" end="5" var="i">
+                                                                                    <c:choose>
+                                                                                        <c:when test="${i <= feedback.rating}">
+                                                                                            <i class="fa fa-star"></i>
+                                                                                        </c:when>
+                                                                                        <c:otherwise>
+                                                                                            <i class="fa fa-star-o"></i>
+                                                                                        </c:otherwise>
+                                                                                    </c:choose>
+                                                                                </c:forEach>
+                                                                            </div>
+                                                                            <p class="meta">
+                                                                                <strong>${feedback.userName}</strong> - 
+                                                                                <span><fmt:formatDate value="${feedback.createdAt}" pattern="MMMM dd, yyyy" /></span>
+                                                                            </p>
+                                                                            <div class="description">
+                                                                                <p>${feedback.content}</p>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </li>
+                                                            </c:forEach>
+                                                        </ul>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <h2>No reviews yet for ${product.productName}</h2>
+                                                        <p>Be the first to review this product!</p>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                                
                                                 <div class="review-form-wrapper">
                                                     <div class="review-form">
                                                         <span class="comment-reply-title">Add a review </span>
-                                                        <form action="#">
-                                                            <p class="comment-notes">
-                                                                <span id="email-notes">Your email address will not be published.</span>
-                                                                Required fields are marked
-                                                                <span class="required">*</span>
-                                                            </p>
-                                                            <div class="comment-form-rating">
-                                                                <label>Your rating</label>
-                                                                <div class="rating">
-                                                                    <i class="fa fa-star-o"></i>
-                                                                    <i class="fa fa-star-o"></i>
-                                                                    <i class="fa fa-star-o"></i>
-                                                                    <i class="fa fa-star-o"></i>
-                                                                    <i class="fa fa-star-o"></i>
-                                                                </div>
-                                                            </div>
-                                                            <div class="input-element">
-                                                                <div class="comment-form-comment">
-                                                                    <label>Comment</label>
-                                                                    <textarea name="message" cols="40" rows="8"></textarea>
-                                                                </div>
-                                                                <div class="review-comment-form-author">
-                                                                    <label>Name </label>
-                                                                    <input required="required" type="text">
-                                                                </div>
-                                                                <div class="review-comment-form-email">
-                                                                    <label>Email </label>
-                                                                    <input required="required" type="text">
-                                                                </div>
-                                                                <div class="comment-submit">
-                                                                    <button type="submit" class="form-button">Submit</button>
-                                                                </div>
-                                                            </div>
-                                                        </form>
+                                                        <c:choose>
+                                                            <c:when test="${not empty sessionScope.account}">
+                                                                <c:choose>
+                                                                    <c:when test="${canReview}">
+                                                                        <form action="${pageContext.request.contextPath}/feedbackControl" method="post">
+                                                                            <input type="hidden" name="action" value="submit-product-review">
+                                                                            <input type="hidden" name="productId" value="${product.productId}">
+                                                                            
+                                                                            <div class="comment-form-rating">
+                                                                                <label>Your rating</label>
+                                                                                <div class="rating-stars">
+                                                                                    <input type="radio" id="star5" name="rating" value="5" required />
+                                                                                    <label for="star5" title="5 stars"><i class="fa fa-star"></i></label>
+                                                                                    
+                                                                                    <input type="radio" id="star4" name="rating" value="4" />
+                                                                                    <label for="star4" title="4 stars"><i class="fa fa-star"></i></label>
+                                                                                    
+                                                                                    <input type="radio" id="star3" name="rating" value="3" />
+                                                                                    <label for="star3" title="3 stars"><i class="fa fa-star"></i></label>
+                                                                                    
+                                                                                    <input type="radio" id="star2" name="rating" value="2" />
+                                                                                    <label for="star2" title="2 stars"><i class="fa fa-star"></i></label>
+                                                                                    
+                                                                                    <input type="radio" id="star1" name="rating" value="1" />
+                                                                                    <label for="star1" title="1 star"><i class="fa fa-star"></i></label>
+                                                                                </div>
+                                                                            </div>
+                                                                            
+                                                                            <div class="input-element">
+                                                                                <div class="comment-form-comment">
+                                                                                    <label>Your review</label>
+                                                                                    <textarea name="content" required></textarea>
+                                                                                </div>
+                                                                                <div class="form-submit">
+                                                                                    <input type="submit" value="Submit" class="comment-submit">
+                                                                                </div>
+                                                                            </div>
+                                                                        </form>
+                                                                    </c:when>
+                                                                    <c:otherwise>
+                                                                        <p class="review-notice">You can only review products you've purchased.</p>
+                                                                        <p>Please purchase this product to leave a review.</p>
+                                                                    </c:otherwise>
+                                                                </c:choose>
+                                                            </c:when>
+                                                            <c:otherwise>
+                                                                <p class="review-notice">Please <a href="${pageContext.request.contextPath}/authen?action=login">log in</a> to leave a review.</p>
+                                                            </c:otherwise>
+                                                        </c:choose>
                                                     </div>
                                                 </div>
                                             </div>
@@ -685,6 +741,17 @@
                 <!-- Modal Area End -->
             </div>
 
+            <!-- Toast Container -->
+            <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+                <div id="cartToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                    <div class="toast-header bg-warning text-white">
+                        <strong class="me-auto">Thông báo</strong>
+                        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                    <div class="toast-body"></div>
+                </div>
+            </div>
+
             <!--All Js Here-->
         <jsp:include page="../common/home/common-js.jsp"></jsp:include>
         <script>
@@ -779,14 +846,13 @@
                 $('.login-required').on('click', function(e) {
                     e.preventDefault();
                     
-                    // Hiển thị thông báo yêu cầu đăng nhập
+                    // Hiển thị thông báo
                     const toast = new bootstrap.Toast(document.getElementById('cartToast'));
-                    $('#cartToast').removeClass('bg-success').addClass('bg-warning');
                     $('#cartToast .toast-body').text('Vui lòng đăng nhập để thêm sản phẩm vào giỏ hàng');
                     toast.show();
                     
-                    // Chuyển hướng đến trang đăng nhập sau 2 giây
-                    setTimeout(function() {
+                    // Chuyển hướng sau 2 giây
+                    setTimeout(() => {
                         window.location.href = '${pageContext.request.contextPath}/authen?action=login';
                     }, 2000);
                 });
@@ -806,8 +872,81 @@
                     // Xử lý thêm vào wishlist nếu đã đăng nhập
                     // ... existing code ...
                 });
+                
+                // Xử lý nút tăng giảm số lượng
+                $('.qtybutton').on('click', function() {
+                    var $button = $(this);
+                    var oldValue = $button.parent().parent().find('input').val();
+                    
+                    if ($button.hasClass('inc')) {
+                        var newVal = parseFloat(oldValue) + 1;
+                    } else {
+                        // Không cho phép giảm xuống dưới 1
+                        if (oldValue > 1) {
+                            var newVal = parseFloat(oldValue) - 1;
+                        } else {
+                            newVal = 1;
+                        }
+                    }
+                    
+                    $button.parent().parent().find('input').val(newVal);
+                });
+                
+                // Kiểm tra giá trị nhập vào
+                $('.cart-plus-minus-box').on('change', function() {
+                    var value = parseInt($(this).val());
+                    if (isNaN(value) || value < 1) {
+                        $(this).val(1);
+                    }
+                });
+                
+                // Ngăn chặn nhập giá trị âm hoặc 0
+                $('.cart-plus-minus-box').on('keypress', function(e) {
+                    var key = String.fromCharCode(e.which);
+                    if (!/[1-9]/.test(key) && !(e.which === 8 || e.which === 0)) {
+                        e.preventDefault();
+                    }
+                });
             });
         </script>
+
+        <style>
+            /* Custom CSS for quantity input */
+            .cart-plus-minus {
+                position: relative;
+                display: inline-flex;
+                border: 1px solid #ddd;
+            }
+            .cart-plus-minus-box {
+                width: 40px;
+                height: 40px;
+                border: none;
+                text-align: center;
+                padding: 0;
+                background: #fff;
+            }
+            .qtybutton-container {
+                display: flex;
+                flex-direction: column;
+                border-left: 1px solid #ddd;
+            }
+            .qtybutton {
+                width: 20px;
+                height: 20px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                background: #f9f9f9;
+                user-select: none;
+            }
+            .inc.qtybutton {
+                border-bottom: 1px solid #ddd;
+            }
+            .qtybutton:hover {
+                background: #e9e9e9;
+            }
+        </style>
 
     </body>
 </html>

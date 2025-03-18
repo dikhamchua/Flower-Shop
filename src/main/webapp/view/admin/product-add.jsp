@@ -18,6 +18,54 @@
             color: #dc3545;
             margin-top: 5px;
         }
+        .supplier-input-container {
+            position: relative;
+        }
+        .supplier-suggestions {
+            position: absolute;
+            width: 100%;
+            max-height: 200px;
+            overflow-y: auto;
+            background: white;
+            border: 1px solid #ced4da;
+            border-radius: 0.25rem;
+            z-index: 1000;
+            display: none;
+        }
+        .supplier-suggestion {
+            padding: 8px 12px;
+            cursor: pointer;
+        }
+        .supplier-suggestion:hover {
+            background-color: #f8f9fa;
+        }
+        .selected-suppliers {
+            margin-top: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        .selected-supplier {
+            background-color: #e9ecef;
+            border: 1px solid #ced4da;
+            border-radius: 0.25rem;
+            padding: 8px 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .remove-supplier {
+            cursor: pointer;
+            color: #dc3545;
+            font-size: 16px;
+        }
+        .supplier-name {
+            font-weight: 500;
+            color: #333;
+            flex-grow: 1;
+            margin-right: 10px;
+            word-break: break-word;
+        }
     </style>
 </head>
 
@@ -102,6 +150,18 @@
                         <div class="invalid-feedback"></div>
                     </div>
 
+                    <div class="col-md-6">
+                        <label class="form-label">Suppliers <span class="text-danger">*</span></label>
+                        <div class="supplier-input-container">
+                            <input type="text" class="form-control" id="supplierInput" placeholder="Type to search suppliers...">
+                            <div id="supplierSuggestions" class="supplier-suggestions"></div>
+                            <div class="selected-suppliers" id="selectedSuppliers"></div>
+                            <input type="hidden" name="supplierIds" id="supplierIdsInput">
+                            <div class="invalid-feedback"></div>
+                        </div>
+                        <small class="text-muted">Type supplier name and select from suggestions</small>
+                    </div>
+
                     <!-- Submit Button -->
                     <div class="col-md-12 mt-4">
                         <button type="submit" class="btn btn-primary">Add Product</button>
@@ -114,228 +174,25 @@
     </div>
 </div>
 
+<!-- Thêm đoạn này trước khi include file JS -->
+<script>
+    // Khởi tạo biến suppliers để có thể truy cập từ file JS
+    window.suppliers = [];
+    <c:forEach var="supplier" items="${suppliers}">
+        window.suppliers.push({
+            id: '<c:out value="${supplier.supplierId}"/>',
+            name: '<c:out value="${supplier.name}"/>'
+        });
+    </c:forEach>
+</script>
+
+<!-- Include file JS -->
+<script src="${pageContext.request.contextPath}/assets/js/productAdd.js"></script>
+
 <!-- JS here -->
 <jsp:include page="../common/dashboard/js-dashboard.jsp"></jsp:include>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"></script>
 <script src="${pageContext.request.contextPath}/assets/js/validate.js"></script>
 
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Toast message handling
-        var toastMessage = "${sessionScope.toastMessage}";
-        var toastType = "${sessionScope.toastType}";
-        if (toastMessage) {
-            iziToast.show({
-                title: toastType === 'success' ? 'Success' : 'Error',
-                message: toastMessage,
-                position: 'topRight',
-                color: toastType === 'success' ? 'green' : 'red',
-                timeout: 5000,
-                onClosing: function() {
-                    fetch('${pageContext.request.contextPath}/remove-toast', {
-                        method: 'POST'
-                    });
-                }
-            });
-        }
-
-        // Form validation
-        const form = document.getElementById('productForm');
-        const nameInput = form.querySelector('input[name="name"]');
-        const categorySelect = form.querySelector('select[name="categoryId"]');
-        const priceInput = form.querySelector('input[name="price"]');
-        const stockInput = form.querySelector('input[name="stock"]');
-        const imageInput = form.querySelector('input[name="image"]');
-        const statusSelect = form.querySelector('select[name="status"]');
-
-        // Add input event listeners for real-time validation
-        nameInput.addEventListener('input', function() {
-            validateProductName(this);
-        });
-
-        categorySelect.addEventListener('change', function() {
-            validateCategory(this);
-        });
-
-        priceInput.addEventListener('input', function() {
-            validatePrice(this);
-        });
-
-        stockInput.addEventListener('input', function() {
-            validateStock(this);
-        });
-
-        imageInput.addEventListener('change', function() {
-            validateImage(this);
-        });
-
-        statusSelect.addEventListener('change', function() {
-            validateStatus(this);
-        });
-
-        // Validate on form submit
-        form.addEventListener('submit', function(event) {
-            // Prevent default form submission
-            event.preventDefault();
-            console.log("Form submit triggered");
-
-            // Validate all fields
-            const isNameValid = validateProductName(nameInput);
-            const isCategoryValid = validateCategory(categorySelect);
-            const isPriceValid = validatePrice(priceInput);
-            const isStockValid = validateStock(stockInput);
-            const isImageValid = validateImage(imageInput);
-            const isStatusValid = validateStatus(statusSelect);
-
-            console.log("Validation results:");
-            console.log("Name valid:", isNameValid);
-            console.log("Category valid:", isCategoryValid);
-            console.log("Price valid:", isPriceValid);
-            console.log("Stock valid:", isStockValid);
-            console.log("Image valid:", isImageValid);
-            console.log("Status valid:", isStatusValid);
-            console.log("All valid:", isNameValid && isCategoryValid && isPriceValid && isStockValid && isImageValid && isStatusValid);
-
-            // If all validations pass, submit the form
-            if (isNameValid && isCategoryValid && isPriceValid && isStockValid && isImageValid && isStatusValid) {
-                console.log("All validations passed, submitting form");
-                this.submit();
-            } else {
-                console.log("Validation failed, form not submitted");
-                // Show error message
-                iziToast.error({
-                    title: 'Error',
-                    message: 'Please correct the errors before submitting the form',
-                    position: 'topRight',
-                    timeout: 1000
-                });
-
-                // Focus on the first invalid field
-                if (!isNameValid) nameInput.focus();
-                else if (!isCategoryValid) categorySelect.focus();
-                else if (!isPriceValid) priceInput.focus();
-                else if (!isStockValid) stockInput.focus();
-                else if (!isImageValid) imageInput.focus();
-                else if (!isStatusValid) statusSelect.focus();
-            }
-        });
-
-        // Validation functions
-        function validateProductName(input) {
-            const value = input.value.trim();
-            const feedback = input.nextElementSibling;
-            
-            if (value === '') {
-                setInvalid(input, feedback, 'Product name is required');
-                return false;
-            } else if (value.length < 3) {
-                setInvalid(input, feedback, 'Product name must be at least 3 characters');
-                return false;
-            } else if (value.length > 100) {
-                setInvalid(input, feedback, 'Product name must be less than 100 characters');
-                return false;
-            } else {
-                setValid(input, feedback);
-                return true;
-            }
-        }
-
-        function validateCategory(select) {
-            const value = select.value;
-            const feedback = select.nextElementSibling;
-            
-            if (value === '' || value === null) {
-                setInvalid(select, feedback, 'Please select a category');
-                return false;
-            } else {
-                setValid(select, feedback);
-                return true;
-            }
-        }
-
-        function validatePrice(input) {
-            const value = input.value.trim();
-            const feedback = input.nextElementSibling;
-            
-            if (value === '') {
-                setInvalid(input, feedback, 'Price is required');
-                return false;
-            } else if (isNaN(value) || parseFloat(value) < 0) {
-                setInvalid(input, feedback, 'Price must be a positive number');
-                return false;
-            } else {
-                setValid(input, feedback);
-                return true;
-            }
-        }
-
-        function validateStock(input) {
-            const value = input.value.trim();
-            const feedback = input.nextElementSibling;
-            
-            if (value === '') {
-                setInvalid(input, feedback, 'Stock is required');
-                return false;
-            } else if (isNaN(value) || parseInt(value) < 0) {
-                setInvalid(input, feedback, 'Stock must be a positive number');
-                return false;
-            } else {
-                setValid(input, feedback);
-                return true;
-            }
-        }
-
-        function validateImage(input) {
-            const feedback = input.nextElementSibling;
-            
-            if (input.files.length === 0) {
-                setInvalid(input, feedback, 'Please select an image');
-                return false;
-            } else {
-                const file = input.files[0];
-                const fileType = file.type;
-                const validImageTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
-                
-                if (!validImageTypes.includes(fileType)) {
-                    setInvalid(input, feedback, 'Please select a valid image file (JPEG, PNG, GIF, WEBP)');
-                    return false;
-                } else if (file.size > 20 * 1024 * 1024) { // 20MB
-                    setInvalid(input, feedback, 'Image size should be less than 5MB');
-                    return false;
-                } else {
-                    setValid(input, feedback);
-                    return true;
-                }
-            }
-        }
-
-        function validateStatus(select) {
-            const value = select.value;
-            const feedback = select.nextElementSibling;
-            
-            if (value === '' || value === null) {
-                setInvalid(select, feedback, 'Please select a status');
-                return false;
-            } else {
-                setValid(select, feedback);
-                return true;
-            }
-        }
-
-        function setInvalid(input, feedback, message) {
-            input.classList.add('is-invalid');
-            input.classList.remove('is-valid');
-            feedback.textContent = message;
-            feedback.style.display = 'block';
-        }
-
-        function setValid(input, feedback) {
-            input.classList.remove('is-invalid');
-            input.classList.add('is-valid');
-            feedback.textContent = '';
-            feedback.style.display = 'none';
-        }
-    });
-</script>
 </body>
 </html>

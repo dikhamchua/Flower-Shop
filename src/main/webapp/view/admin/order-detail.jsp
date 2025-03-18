@@ -103,38 +103,69 @@
                 <div class="col-md-4">
                     <div class="card">
                         <div class="card-header">
-                            <h6 class="card-title mb-0">Update Status</h6>
+                            <h6 class="card-title mb-0">Status Information</h6>
                         </div>
                         <div class="card-body">
-                            <form action="${pageContext.request.contextPath}/admin/manage-order" method="post">
-                                <input type="hidden" name="action" value="updateStatus">
-                                <input type="hidden" name="orderId" value="${order.orderId}">
+                            <c:choose>
+                                <%-- For completed or cancelled orders - Read only view --%>
+                                <c:when test="${order.status == 'completed' || order.status == 'cancelled'}">
+                                    <div class="mb-3">
+                                        <label class="form-label">Current Status</label>
+                                        <div class="d-flex align-items-center">
+                                            <span class="badge ${order.status == 'completed' ? 'bg-success' : 'bg-danger'} fs-6">
+                                                ${order.status}
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <small class="text-muted">
+                                            <i class="fas fa-info-circle me-1"></i>
+                                            This order has been ${order.status} and cannot be modified further.
+                                        </small>
+                                    </div>
+                                    <div>
+                                        <a href="${pageContext.request.contextPath}/admin/manage-order" 
+                                           class="btn btn-secondary">
+                                            Back to Order List
+                                        </a>
+                                    </div>
+                                </c:when>
                                 
-                                <div class="mb-3">
-                                    <label class="form-label">New Status</label>
-                                    <select class="form-select" name="newStatus" required>
-                                        <option value="">-- Select Status --</option>
-                                        <c:if test="${order.status == 'pending'}">
-                                            <option value="accepted">Accept Order</option>
-                                            <option value="cancelled">Cancel Order</option>
-                                        </c:if>
-                                        <c:if test="${order.status == 'accepted'}">
-                                            <option value="completed">Complete Order</option>
-                                            <option value="cancelled">Cancel Order</option>
-                                        </c:if>
-                                    </select>
-                                </div>
-                                
-                                <div class="mb-3">
-                                    <label class="form-label">Note</label>
-                                    <textarea class="form-control" name="note" rows="3" placeholder="Enter note..."></textarea>
-                                </div>
-                                
-                                <div class="d-flex gap-2">
-                                    <button type="submit" class="btn btn-primary">Update</button>
-                                    <a href="${pageContext.request.contextPath}/admin/manage-order" class="btn btn-secondary">Back</a>
-                                </div>
-                            </form>
+                                <%-- For pending or accepted orders - Allow updates --%>
+                                <c:otherwise>
+                                    <form action="${pageContext.request.contextPath}/admin/manage-order" method="post">
+                                        <input type="hidden" name="action" value="updateStatus">
+                                        <input type="hidden" name="orderId" value="${order.orderId}">
+                                        
+                                        <div class="mb-3">
+                                            <label class="form-label">New Status</label>
+                                            <select class="form-select" name="newStatus" required>
+                                                <option value="">-- Select Status --</option>
+                                                <c:if test="${order.status == 'pending'}">
+                                                    <option value="accepted">Accept Order</option>
+                                                    <option value="cancelled">Cancel Order</option>
+                                                </c:if>
+                                                <c:if test="${order.status == 'accepted'}">
+                                                    <option value="completed">Complete Order</option>
+                                                    <option value="cancelled">Cancel Order</option>
+                                                </c:if>
+                                            </select>
+                                        </div>
+                                        
+                                        <div class="mb-3">
+                                            <label class="form-label">Note</label>
+                                            <textarea class="form-control" name="note" rows="3" 
+                                                      placeholder="Enter note..."></textarea>
+                                        </div>
+                                        
+                                        <div class="d-flex gap-2">
+                                            <button type="submit" class="btn btn-primary">Update</button>
+                                            <a href="${pageContext.request.contextPath}/admin/manage-order" 
+                                               class="btn btn-secondary">Back</a>
+                                        </div>
+                                    </form>
+                                </c:otherwise>
+                            </c:choose>
                         </div>
                     </div>
                 </div>

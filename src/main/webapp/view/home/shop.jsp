@@ -1,5 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!doctype html>
 <html class="no-js" lang="en">
     <head>
@@ -109,7 +110,9 @@
                                                                     <h2><a href="${pageContext.request.contextPath}/home?action=product-details&id=${product.productId}">${product.productName}</a></h2>
                                                                     <div class="product-price">
                                                                         <div class="price-box">
-                                                                            <span class="regular-price">$${product.price}</span>
+                                                                            <span class="regular-price">
+                                                                                <fmt:formatNumber value="${product.price}" pattern="#,##0"/> VND
+                                                                            </span>
                                                                         </div>
                                                                         <div class="add-to-cart">
                                                                             <a href="#" class="add-to-cart-btn" data-product-id="${product.productId}">Add To Cart</a>
@@ -141,7 +144,9 @@
                                                                     <h2><a href="${pageContext.request.contextPath}/home?action=product-details&id=${product.productId}">${product.productName}</a></h2>
                                                                     <div class="product-price">
                                                                         <div class="price-box">
-                                                                            <span class="regular-price">$${product.price}</span>
+                                                                            <span class="regular-price">
+                                                                                <fmt:formatNumber value="${product.price}" pattern="#,##0"/> VND
+                                                                            </span>
                                                                         </div>
                                                                     </div>
                                                                     <div class="product-desc">

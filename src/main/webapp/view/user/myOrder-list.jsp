@@ -135,6 +135,14 @@
                                     <option value="cancelled" ${status == 'cancelled' ? 'selected' : ''}>Cancelled</option>
                                 </select>
                             </div>
+                            <div class="col-md-3">
+                                <select class="form-select" name="paymentMethod">
+                                    <option value="">All Payment Methods</option>
+                                    <option value="Cash on Delivery" ${paymentMethod == 'Cash on Delivery' ? 'selected' : ''}>Cash on Delivery</option>
+                                    <option value="Digital Wallet" ${paymentMethod == 'Digital Wallet' ? 'selected' : ''}>Digital Wallet</option>
+                                    <option value="Bank Transfer" ${paymentMethod == 'Bank Transfer' ? 'selected' : ''}>Bank Transfer</option>
+                                </select>
+                            </div>
                             <div class="col-md-2">
                                 <button type="submit" class="btn btn-primary w-100">Filter</button>
                             </div>
@@ -164,12 +172,26 @@
                                     <tr>
                                         <td colspan="7" class="text-center">
                                             <div class="py-4">
-                                                <i class="fas fa-shopping-bag fs-1 text-muted mb-3"></i>
-                                                <h5>You haven't placed any orders yet</h5>
-                                                <p class="text-muted">Explore our products and place your first order!</p>
-                                                <a href="${pageContext.request.contextPath}/home" class="btn btn-primary mt-2">
-                                                    <i class="fas fa-shopping-cart me-2"></i>Shop Now
-                                                </a>
+                                                <i class="fas fa-search fs-1 text-muted mb-3"></i>
+                                                <h5>No orders found</h5>
+                                                <p class="text-muted">
+                                                    <c:choose>
+                                                        <c:when test="${not empty status || not empty paymentMethod}">
+                                                            No orders match your filter criteria. Try adjusting your filters.
+                                                            <br>
+                                                            <a href="${pageContext.request.contextPath}/orderControll" class="btn btn-outline-primary mt-2">
+                                                                <i class="fas fa-times me-2"></i>Clear Filters
+                                                            </a>
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            You haven't placed any orders yet.
+                                                            <br>
+                                                            <a href="${pageContext.request.contextPath}/home" class="btn btn-primary mt-2">
+                                                                <i class="fas fa-shopping-cart me-2"></i>Shop Now
+                                                            </a>
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                </p>
                                             </div>
                                         </td>
                                     </tr>
@@ -196,6 +218,13 @@
                                                 </span>
                                                 <span class="view-text">View Details</span>
                                             </a>
+                                            
+                                            <c:if test="${order.status == 'completed'}">
+                                                <a href="${pageContext.request.contextPath}/feedbackControl?action=select-product&orderId=${order.orderId}" 
+                                                   class="btn btn-sm btn-success ml-2">
+                                                    <i class="fas fa-star me-1"></i>Reviews
+                                                </a>
+                                            </c:if>
                                         </td>
                                     </tr>
                                 </c:forEach>

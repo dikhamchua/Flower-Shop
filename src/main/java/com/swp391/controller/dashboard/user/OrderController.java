@@ -62,9 +62,19 @@ public class OrderController extends HttpServlet {
             return;
         }
         
+        // Clear any stale messages if this is a fresh page load (not from a form submission)
+        String fromPost = (String) session.getAttribute("fromPost");
+        if (fromPost == null) {
+            session.removeAttribute("successMessage");
+            session.removeAttribute("errorMessage");
+        } else {
+            session.removeAttribute("fromPost");
+        }
+        
         // Lấy thông tin từ request
         String action = request.getParameter("action");
         String status = request.getParameter("status");
+        String paymentMethod = request.getParameter("paymentMethod");
         
         // Xử lý phân trang
         int page = 1;
@@ -109,8 +119,8 @@ public class OrderController extends HttpServlet {
         }
         
         // Lấy danh sách đơn hàng của người dùng hiện tại
-        List<Order> orders = orderDAO.findOrdersByUserId(account.getUserId(), status, page, pageSize);
-        int totalOrders = orderDAO.getTotalOrdersByUserId(account.getUserId(), status);
+        List<Order> orders = orderDAO.findOrdersByUserId(account.getUserId(), status, paymentMethod, page, pageSize);
+        int totalOrders = orderDAO.getTotalOrdersByUserId(account.getUserId(), status, paymentMethod);
         
         // Tính tổng số trang
         int totalPages = (int) Math.ceil((double) totalOrders / pageSize);
@@ -120,6 +130,7 @@ public class OrderController extends HttpServlet {
         request.setAttribute("currentPage", page);
         request.setAttribute("totalPages", totalPages);
         request.setAttribute("status", status);
+        request.setAttribute("paymentMethod", paymentMethod);
         
         request.getRequestDispatcher(MY_ORDERS_PAGE).forward(request, response);
     }
@@ -174,6 +185,9 @@ public class OrderController extends HttpServlet {
                     // Thông báo lỗi nếu cập nhật không thành công
                     session.setAttribute("errorMessage", "Failed to cancel order. Please try again.");
                 }
+                
+                // Mark that we're coming from a POST request
+                session.setAttribute("fromPost", "true");
             } else {
                 // Thông báo lỗi nếu không thể hủy
                 session.setAttribute("errorMessage", "Cannot cancel this order. It may not exist, not belong to you, or already processed.");
