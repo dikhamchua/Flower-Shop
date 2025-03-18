@@ -3,11 +3,15 @@ package com.swp391.controller.home;
 import com.swp391.config.GlobalConfig;
 import com.swp391.dal.impl.CartDAO;
 import com.swp391.dal.impl.CartItemDAO;
+import com.swp391.dal.impl.CouponDAO;
+import com.swp391.dal.impl.CouponUsageDAO;
 import com.swp391.dal.impl.OrderDAO;
 import com.swp391.dal.impl.OrderItemDAO;
 import com.swp391.dal.impl.ProductDAO;
 import com.swp391.entity.Account;
 import com.swp391.entity.CartItem;
+import com.swp391.entity.Coupon;
+import com.swp391.entity.CouponUsage;
 import com.swp391.entity.Order;
 import com.swp391.entity.OrderItem;
 import com.swp391.entity.Product;
@@ -20,6 +24,7 @@ import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
 @WebServlet(name = "CartController", urlPatterns = {"/cart"})
@@ -59,6 +64,9 @@ public class CartController extends HttpServlet {
                         break;
                     case "proceed-to-checkout":
                         handleProceedToCheckout(request, response);
+                        break;
+                    case "remove-coupon":
+                        handleRemoveCoupon(request, response);
                         break;
                     default:
                         handleShowCart(request, response);
@@ -108,6 +116,9 @@ public class CartController extends HttpServlet {
                     case "checkout":
                         handleProcessCheckout(request, response);
                         break;
+                    case "apply-coupon":
+                        handleApplyCoupon(request, response);
+                        break;
                     default:
                         response.sendRedirect(request.getContextPath() + "/cart");
                         break;
@@ -144,9 +155,18 @@ public class CartController extends HttpServlet {
         // Tính tổng giá trị giỏ hàng
         double cartTotal = calculateCartTotal(cartItems);
         
+        // Áp dụng giảm giá nếu có
+        BigDecimal couponDiscount = (BigDecimal) session.getAttribute("couponDiscount");
+        double finalTotal = cartTotal;
+        if (couponDiscount != null) {
+            finalTotal = cartTotal - couponDiscount.doubleValue();
+            if (finalTotal < 0) finalTotal = 0;
+        }
+        
         // Đặt thuộc tính cho request
         request.setAttribute("cartItems", cartItems);
         request.setAttribute("cartTotal", cartTotal);
+        request.setAttribute("finalTotal", finalTotal);
         
         // Forward đến trang giỏ hàng
         request.getRequestDispatcher(CART_PAGE).forward(request, response);
@@ -310,7 +330,6 @@ public class CartController extends HttpServlet {
         int cartId = cartDAO.getCartIdByUserId(account.getUserId());
         
         if (cartId == 0) {
-            // Nếu người dùng chưa có giỏ hàng, chuyển hướng về trang giỏ hàng
             session.setAttribute("cartMessage", "Your cart is empty");
             response.sendRedirect(request.getContextPath() + "/cart");
             return;
@@ -321,21 +340,51 @@ public class CartController extends HttpServlet {
         List<CartItem> cartItems = cartItemDAO.getCartItemsByCartId(cartId);
         
         if (cartItems.isEmpty()) {
-            // Nếu giỏ hàng trống, chuyển hướng về trang giỏ hàng với thông báo
             session.setAttribute("cartMessage", "Your cart is empty. Please add items before checkout.");
             response.sendRedirect(request.getContextPath() + "/cart");
             return;
         }
         
-        // Tính tổng giá trị giỏ hàng
+        // Kiểm tra số lượng tồn kho
+        ProductDAO productDAO = new ProductDAO();
+        StringBuilder errorMessage = new StringBuilder();
+        boolean hasStockError = false;
+        
+        for (CartItem item : cartItems) {
+            Product product = productDAO.findById(item.getProduct().getProductId());
+            if (product != null && item.getQuantity() > product.getStock()) {
+                hasStockError = true;
+                errorMessage.append("- ").append(product.getProductName())
+                           .append(": Only ").append(product.getStock())
+                           .append(" items available (you requested ").append(item.getQuantity())
+                           .append(")\n");
+            }
+        }
+        
+        if (hasStockError) {
+            session.setAttribute("cartMessage", "Some items in your cart exceed available stock:\n" + errorMessage.toString());
+            response.sendRedirect(request.getContextPath() + "/cart");
+            return;
+        }
+        
+        // Nếu mọi thứ OK, tiếp tục với checkout
         double cartTotal = calculateCartTotal(cartItems);
         
-        // Đặt thuộc tính cho request
+        // Áp dụng giảm giá nếu có
+        double finalTotal = cartTotal;
+        BigDecimal couponDiscount = (BigDecimal) session.getAttribute("couponDiscount");
+        if (couponDiscount != null) {
+            finalTotal = cartTotal - couponDiscount.doubleValue();
+            if (finalTotal < 0) finalTotal = 0;
+        }
+        
         request.setAttribute("cartItems", cartItems);
         request.setAttribute("cartTotal", cartTotal);
-        request.setAttribute("account", account); // Truyền thông tin tài khoản để hiển thị
+        request.setAttribute("finalTotal", finalTotal);
+        request.setAttribute("couponDiscount", couponDiscount);
+        request.setAttribute("appliedCoupon", session.getAttribute("appliedCoupon"));
+        request.setAttribute("account", account);
         
-        // Forward đến trang checkout
         request.getRequestDispatcher(CHECKOUT_PAGE).forward(request, response);
     }
 
@@ -367,14 +416,23 @@ public class CartController extends HttpServlet {
         }
         
         // Tính tổng giá trị
-        double total = calculateCartTotal(cartItems);
+        double cartTotal = calculateCartTotal(cartItems);
         
-        // Tạo đơn hàng trong database
+        // Áp dụng giảm giá nếu có
+        BigDecimal couponDiscount = (BigDecimal) session.getAttribute("couponDiscount");
+        Coupon appliedCoupon = (Coupon) session.getAttribute("appliedCoupon");
+        double finalTotal = cartTotal;
+        if (couponDiscount != null) {
+            finalTotal = cartTotal - couponDiscount.doubleValue();
+            if (finalTotal < 0) finalTotal = 0;
+        }
+        
+        // Tạo đơn hàng trong database với finalTotal thay vì cartTotal
         OrderDAO orderDAO = new OrderDAO();
         Order order = new Order();
         order.setUserId(account.getUserId());
         order.setStatus("pending");  // Trạng thái mặc định là "pending"
-        order.setTotal(new BigDecimal(total));
+        order.setTotal(new BigDecimal(finalTotal)); // Sử dụng finalTotal thay vì total
         order.setShippingAddress(address);
         order.setPaymentMethod(paymentMethod);
         
@@ -406,6 +464,20 @@ public class CartController extends HttpServlet {
                 }
             }
             
+            // Lưu thông tin sử dụng coupon nếu có
+            if (appliedCoupon != null) {
+                CouponUsageDAO couponUsageDAO = new CouponUsageDAO();
+                CouponUsage couponUsage = new CouponUsage();
+                couponUsage.setCouponId(appliedCoupon.getCouponId());
+                couponUsage.setUserId(account.getUserId());
+                couponUsage.setOrderId(orderId);
+                couponUsageDAO.insertCouponUsage(couponUsage);
+                
+                // Xóa coupon khỏi session sau khi sử dụng
+                session.removeAttribute("appliedCoupon");
+                session.removeAttribute("couponDiscount");
+            }
+            
             if (allItemsInserted) {
                 // Sau khi đặt hàng thành công, xóa giỏ hàng
                 cartItemDAO.deleteAllCartItems(cartId);
@@ -424,6 +496,116 @@ public class CartController extends HttpServlet {
         response.sendRedirect(request.getContextPath() + "/cart?action=proceed-to-checkout");
     }
 
+    // GET handler for removing coupon
+    private void handleRemoveCoupon(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        // Xóa coupon khỏi session
+        session.removeAttribute("appliedCoupon");
+        session.removeAttribute("couponDiscount");
+        session.setAttribute("couponMessage", "Đã xóa mã giảm giá");
+        
+        // Chuyển hướng về trang giỏ hàng
+        response.sendRedirect(request.getContextPath() + "/cart");
+    }
+
+    // POST handler for applying coupon
+    private void handleApplyCoupon(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        String couponCode = request.getParameter("couponCode");
+        HttpSession session = request.getSession();
+        Account account = (Account) session.getAttribute(GlobalConfig.SESSION_ACCOUNT);
+        
+        if (couponCode == null || couponCode.trim().isEmpty()) {
+            session.setAttribute("couponMessage", "Vui lòng nhập mã giảm giá");
+            response.sendRedirect(request.getContextPath() + "/cart");
+            return;
+        }
+        
+        // Kiểm tra coupon trong database
+        CouponDAO couponDAO = new CouponDAO();
+        Coupon coupon = couponDAO.getCouponByCode(couponCode.trim());
+        
+        if (coupon == null) {
+            session.setAttribute("couponMessage", "Mã giảm giá không tồn tại");
+            response.sendRedirect(request.getContextPath() + "/cart");
+            return;
+        }
+        
+        // Kiểm tra xem coupon có đang hoạt động không
+        if (!coupon.isActive()) {
+            session.setAttribute("couponMessage", "Mã giảm giá này không còn hiệu lực");
+            response.sendRedirect(request.getContextPath() + "/cart");
+            return;
+        }
+        
+        // Kiểm tra thời hạn
+        Date now = new Date();
+        if (now.before(coupon.getStartDate()) || now.after(coupon.getEndDate())) {
+            session.setAttribute("couponMessage", "Mã giảm giá đã hết hạn hoặc chưa đến thời gian sử dụng");
+            response.sendRedirect(request.getContextPath() + "/cart");
+            return;
+        }
+        
+        // Kiểm tra giới hạn sử dụng
+        if (coupon.getUsageLimit() != null && coupon.getUsageCount() >= coupon.getUsageLimit()) {
+            session.setAttribute("couponMessage", "Mã giảm giá đã hết lượt sử dụng");
+            response.sendRedirect(request.getContextPath() + "/cart");
+            return;
+        }
+        
+        // Kiểm tra xem người dùng đã sử dụng coupon này chưa
+        CouponUsageDAO couponUsageDAO = new CouponUsageDAO();
+        if (couponUsageDAO.hasCouponBeenUsedByUser(coupon.getCouponId(), account.getUserId())) {
+            session.setAttribute("couponMessage", "Bạn đã sử dụng mã giảm giá này trước đó");
+            response.sendRedirect(request.getContextPath() + "/cart");
+            return;
+        }
+        
+        // Lấy giỏ hàng và tính tổng giá trị
+        CartDAO cartDAO = new CartDAO();
+        int cartId = cartDAO.getCartIdByUserId(account.getUserId());
+        CartItemDAO cartItemDAO = new CartItemDAO();
+        List<CartItem> cartItems = cartItemDAO.getCartItemsByCartId(cartId);
+        double cartTotal = calculateCartTotal(cartItems);
+        
+        // Kiểm tra giá trị tối thiểu
+        if (coupon.getMinPurchase() != null && new BigDecimal(cartTotal).compareTo(coupon.getMinPurchase()) < 0) {
+            session.setAttribute("couponMessage", "Giá trị đơn hàng chưa đạt tối thiểu để sử dụng mã giảm giá này (tối thiểu: " 
+                    + formatCurrency(coupon.getMinPurchase()) + ")");
+            response.sendRedirect(request.getContextPath() + "/cart");
+            return;
+        }
+        
+        // Tính toán giá trị giảm giá
+        BigDecimal discount;
+        if ("percentage".equals(coupon.getDiscountType())) {
+            // Giảm giá theo phần trăm
+            discount = new BigDecimal(cartTotal).multiply(coupon.getDiscountValue().divide(new BigDecimal(100), 2, BigDecimal.ROUND_HALF_UP));
+            
+            // Kiểm tra giới hạn giảm giá tối đa
+            if (coupon.getMaxDiscount() != null && discount.compareTo(coupon.getMaxDiscount()) > 0) {
+                discount = coupon.getMaxDiscount();
+            }
+        } else {
+            // Giảm giá cố định
+            discount = coupon.getDiscountValue();
+            
+            // Đảm bảo giảm giá không vượt quá tổng giá trị đơn hàng
+            if (discount.compareTo(new BigDecimal(cartTotal)) > 0) {
+                discount = new BigDecimal(cartTotal);
+            }
+        }
+        
+        // Lưu coupon và giá trị giảm giá vào session
+        session.setAttribute("appliedCoupon", coupon);
+        session.setAttribute("couponDiscount", discount);
+        session.setAttribute("couponMessage", "Áp dụng mã giảm giá thành công! Giảm " 
+                + formatCurrency(discount) + " từ giá trị đơn hàng.");
+        
+        response.sendRedirect(request.getContextPath() + "/cart");
+    }
+
     // Helper methods
     private double calculateCartTotal(List<CartItem> cartItems) {
         double total = 0;
@@ -433,5 +615,11 @@ public class CartController extends HttpServlet {
         }
         
         return total;
+    }
+
+    // Helper method để định dạng tiền tệ
+    private String formatCurrency(BigDecimal amount) {
+        if (amount == null) return "0₫";
+        return String.format("%,.0f", amount) + "₫";
     }
 }

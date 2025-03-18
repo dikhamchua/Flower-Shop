@@ -25,8 +25,13 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import com.swp391.dal.impl.CategoryDAO;
 import com.swp391.dal.impl.ProductDAO;
+import com.swp391.dal.impl.FeedbacksDAO;
+import com.swp391.dal.impl.OrderDAO;
 import com.swp391.entity.Category;
 import com.swp391.entity.Product;
+import com.swp391.entity.CartItem;
+import com.swp391.entity.Account;
+import com.swp391.entity.Feedbacks;
 
 
 @WebServlet(name = "HomeController", urlPatterns = {"/home"})
@@ -255,6 +260,8 @@ public class HomeController extends HttpServlet {
             // Khởi tạo DAO
             ProductDAO productDAO = new ProductDAO();
             CategoryDAO categoryDAO = new CategoryDAO();
+            FeedbacksDAO feedbacksDAO = new FeedbacksDAO();
+            OrderDAO orderDAO = new OrderDAO();
             
             // Lấy thông tin chi tiết sản phẩm
             Product product = productDAO.findById(productId);
@@ -271,6 +278,23 @@ public class HomeController extends HttpServlet {
             HttpSession session = request.getSession();
             boolean isLoggedIn = session.getAttribute(GlobalConfig.SESSION_ACCOUNT) != null;
             request.setAttribute("isLoggedIn", isLoggedIn);
+            
+            // Lấy danh sách đánh giá của sản phẩm
+            List<Feedbacks> productFeedbacks = feedbacksDAO.getFeedbacksByProductId(productId);
+            request.setAttribute("productFeedbacks", productFeedbacks);
+            
+            // Kiểm tra xem người dùng đã đăng nhập có thể đánh giá sản phẩm này không
+            boolean canReview = false;
+            if (isLoggedIn) {
+                Account loggedInUser = (Account) session.getAttribute(GlobalConfig.SESSION_ACCOUNT);
+                // Kiểm tra xem người dùng đã mua sản phẩm này chưa
+                canReview = orderDAO.hasUserPurchasedProduct(loggedInUser.getUserId(), productId);
+                // Kiểm tra xem người dùng đã đánh giá sản phẩm này chưa
+                if (canReview) {
+                    canReview = !feedbacksDAO.hasUserReviewedProduct(loggedInUser.getUserId(), productId);
+                }
+            }
+            request.setAttribute("canReview", canReview);
             
             // Đặt thuộc tính cho request
             request.setAttribute("product", product);
