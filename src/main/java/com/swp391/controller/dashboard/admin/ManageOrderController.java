@@ -112,19 +112,34 @@ public class ManageOrderController extends HttpServlet {
         
         // Get filter parameters
         String status = request.getParameter("status");
+        String paymentMethod = request.getParameter("paymentMethod");
         String search = request.getParameter("search");
         int page = 1;
         int pageSize = 10;
         
         try {
-            page = Integer.parseInt(request.getParameter("page"));
+            if (request.getParameter("page") != null) {
+                page = Integer.parseInt(request.getParameter("page"));
+                if (page < 1) page = 1;
+            }
         } catch (NumberFormatException e) {
             // Keep default value
         }
         
         // Get orders with filters
-        List<Order> orders = orderDAO.findOrdersWithFilters(status, search, page, pageSize);
-        int totalOrders = orderDAO.getTotalFilteredOrders(status, search);
+        List<Order> orders;
+        int totalOrders;
+        
+        if (search != null && !search.trim().isEmpty()) {
+            // If there's a search term, use search with payment method
+            orders = orderDAO.searchOrders(search, status, paymentMethod, page, pageSize);
+            totalOrders = orderDAO.getTotalSearchResults(search, status, paymentMethod);
+        } else {
+            // If no search, use regular filters
+            orders = orderDAO.findOrdersWithFilters(status, paymentMethod, page, pageSize);
+            totalOrders = orderDAO.getTotalFilteredOrders(status, paymentMethod);
+        }
+        
         int totalPages = (int) Math.ceil((double) totalOrders / pageSize);
         
         // Set attributes
@@ -132,6 +147,7 @@ public class ManageOrderController extends HttpServlet {
         request.setAttribute("currentPage", page);
         request.setAttribute("totalPages", totalPages);
         request.setAttribute("status", status);
+        request.setAttribute("paymentMethod", paymentMethod);
         request.setAttribute("search", search);
         
         // Forward to the order list page
