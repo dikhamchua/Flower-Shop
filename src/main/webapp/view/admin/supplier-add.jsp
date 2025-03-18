@@ -55,7 +55,10 @@
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <label for="phone" class="form-label">Phone <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" id="phone" name="phone" required>
+                                <input type="text" class="form-control" id="phone" name="phone" required
+                                       pattern="[0-9]{10}" 
+                                       title="Phone number must be 10 digits">
+                                <div class="invalid-feedback">Please enter a valid 10-digit phone number.</div>
                             </div>
                             <div class="col-md-6">
                                 <label for="status" class="form-label">Status</label>
@@ -87,5 +90,24 @@
 
         <!-- JS here -->
         <jsp:include page="../common/dashboard/js-dashboard.jsp"></jsp:include>
+
+        <script>
+            // Add form validation
+            (function () {
+                'use strict'
+                
+                // Fetch the form we want to apply custom Bootstrap validation styles to
+                const form = document.querySelector('form')
+                
+                form.addEventListener('submit', function (event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+                    
+                    form.classList.add('was-validated')
+                }, false)
+            })()
+        </script>
     </body>
 </html>

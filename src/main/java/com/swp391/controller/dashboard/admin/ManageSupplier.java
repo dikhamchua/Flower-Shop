@@ -182,6 +182,13 @@ public class ManageSupplier extends HttpServlet {
         String description = request.getParameter("description");
         int status = Integer.parseInt(request.getParameter("status"));
         
+        // Validate phone number
+        if (!phone.matches("\\d{10}")) {
+            setToastMessage(request, "Invalid phone number. Must be 10 digits.", "error");
+            response.sendRedirect(request.getContextPath() + "/admin/manage-supplier?action=add");
+            return;
+        }
+        
         // Create supplier object
         Supplier supplier = new Supplier();
         supplier.setName(name);
@@ -191,7 +198,7 @@ public class ManageSupplier extends HttpServlet {
         supplier.setDescription(description);
         supplier.setStatus(status);
         
-        // Add supplier to database - gọi trực tiếp insert() thay vì addSupplier()
+        // Add supplier to database
         int newSupplierId = supplierDAO.insert(supplier);
         
         if (newSupplierId > 0) {
