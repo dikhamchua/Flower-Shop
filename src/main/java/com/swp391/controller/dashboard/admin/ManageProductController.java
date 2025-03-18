@@ -21,9 +21,24 @@ import com.swp391.entity.Category;
 import java.sql.Timestamp;
 import java.math.BigDecimal;
 import java.io.File;
+import com.swp391.dal.impl.SupplierDAO;
+import com.swp391.dal.impl.ProductSupplierDAO;
+import com.swp391.entity.Supplier;
+import java.util.Arrays;
+import java.util.stream.Collectors;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
-@MultipartConfig
-
+@MultipartConfig(
+    fileSizeThreshold = 1024 * 1024,  // 1 MB
+    maxFileSize = 1024 * 1024 * 10,   // 10 MB
+    maxRequestSize = 1024 * 1024 * 50  // 50 MB
+)
 @WebServlet(name="ManageProductController", urlPatterns={"/admin/manage-product"})
 public class ManageProductController extends HttpServlet {
 
@@ -71,6 +86,9 @@ public class ManageProductController extends HttpServlet {
                 break;
             case "update":
                 updateProduct(request, response);
+                break;
+            case "import":
+                importProductsFromExcel(request, response);
                 break;
             default:
                 listProduct(request, response);
@@ -144,16 +162,37 @@ public class ManageProductController extends HttpServlet {
             // Get all categories for the dropdown
             List<Category> categories = categoryDAO.findAll();
             
+            // Get all suppliers for the dropdown
+            SupplierDAO supplierDAO = new SupplierDAO();
+            List<Supplier> suppliers = supplierDAO.findAll();
+            
             // Create a map of categoryId to Category for easy lookup in JSP
             Map<Integer, Category> categoryMap = new HashMap<>();
             for (Category category : categories) {
                 categoryMap.put(category.getCategoryId(), category);
             }
-
+            
+            // Create a map of supplierId to Supplier for easy lookup in JSP
+            Map<Integer, Supplier> supplierMap = new HashMap<>();
+            for (Supplier supplier : suppliers) {
+                supplierMap.put(supplier.getSupplierId(), supplier);
+            }
+            
+            // Get supplier information for each product
+            ProductSupplierDAO psDAO = new ProductSupplierDAO();
+            Map<Integer, List<Supplier>> productSuppliersMap = new HashMap<>();
+            for (Product product : products) {
+                List<Supplier> productSuppliers = psDAO.getSuppliersByProductId(product.getProductId());
+                productSuppliersMap.put(product.getProductId(), productSuppliers);
+            }
+            
             // Set attributes for JSP
             request.setAttribute("products", products);
             request.setAttribute("categories", categories);
+            request.setAttribute("suppliers", suppliers);
             request.setAttribute("categoryMap", categoryMap);
+            request.setAttribute("supplierMap", supplierMap);
+            request.setAttribute("productSuppliersMap", productSuppliersMap);
             request.setAttribute("currentPage", page);
             request.setAttribute("totalPages", totalPages);
             request.setAttribute("totalProducts", totalProducts);
@@ -234,8 +273,18 @@ public class ManageProductController extends HttpServlet {
                     CategoryDAO categoryDAO = new CategoryDAO();
                     List<Category> categories = categoryDAO.findAll();
                     
+                    // Lấy danh sách nhà cung cấp
+                    SupplierDAO supplierDAO = new SupplierDAO();
+                    List<Supplier> suppliers = supplierDAO.findAll();
+                    
+                    // Lấy danh sách ID nhà cung cấp của sản phẩm
+                    ProductSupplierDAO psDAO = new ProductSupplierDAO();
+                    List<Integer> selectedSupplierIds = psDAO.getSupplierIdsByProductId(productId);
+                    
                     request.setAttribute("product", product);
                     request.setAttribute("categories", categories);
+                    request.setAttribute("suppliers", suppliers);
+                    request.setAttribute("selectedSupplierIds", selectedSupplierIds);
             
                     request.getRequestDispatcher("/view/admin/product-edit.jsp").forward(request, response);
                     return;
@@ -260,11 +309,17 @@ public class ManageProductController extends HttpServlet {
             CategoryDAO categoryDAO = new CategoryDAO();
             List<Category> categories = categoryDAO.findAll();
             request.setAttribute("categories", categories);
+            
+            // Lấy danh sách nhà cung cấp
+            SupplierDAO supplierDAO = new SupplierDAO();
+            List<Supplier> suppliers = supplierDAO.findAll();
+            request.setAttribute("suppliers", suppliers);
+            
             RequestDispatcher dispatcher = request.getRequestDispatcher("/view/admin/product-add.jsp");
             dispatcher.forward(request, response);
         } catch (Exception e) {
             e.printStackTrace();
-            setToastMessage(request, "Error loading categories: " + e.getMessage(), "error");
+            setToastMessage(request, "Error loading form data: " + e.getMessage(), "error");
             response.sendRedirect(request.getContextPath() + "/admin/manage-product");
         }
     }
@@ -339,6 +394,23 @@ public class ManageProductController extends HttpServlet {
                 
                 // Handle result
                 if (isSuccess) {
+                    // Cập nhật quan hệ với nhà cung cấp
+                    String supplierIdsStr = request.getParameter("supplierIds");
+                    ProductSupplierDAO psDAO = new ProductSupplierDAO();
+                    
+                    // Xóa tất cả quan hệ cũ
+                    psDAO.removeProductSuppliers(productId);
+                    
+                    // Thêm quan hệ mới
+                    if (supplierIdsStr != null && !supplierIdsStr.isEmpty()) {
+                        // Tách chuỗi ID thành mảng
+                        String[] supplierIdArray = supplierIdsStr.split(",");
+                        for (String supplierIdStr : supplierIdArray) {
+                            int supplierId = Integer.parseInt(supplierIdStr.trim());
+                            psDAO.addProductSupplier(productId, supplierId);
+                        }
+                    }
+                    
                     setToastMessage(request, "Product updated successfully!", "success");
                 } else {
                     setToastMessage(request, "Failed to update product!", "error");
@@ -357,7 +429,7 @@ public class ManageProductController extends HttpServlet {
         response.sendRedirect(request.getContextPath() + "/admin/manage-product");
     }
 
-    private void addProduct(HttpServletRequest request, HttpServletResponse response) 
+    private void addProduct(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         try {
             System.out.println("addProduct method called");
@@ -450,6 +522,19 @@ public class ManageProductController extends HttpServlet {
             System.out.println("Product insert result: " + productId);
             
             if (productId > 0) {
+                // Xử lý quan hệ với nhà cung cấp
+                String supplierIdsStr = request.getParameter("supplierIds");
+                if (supplierIdsStr != null && !supplierIdsStr.isEmpty()) {
+                    ProductSupplierDAO psDAO = new ProductSupplierDAO();
+                    
+                    // Tách chuỗi ID thành mảng
+                    String[] supplierIdArray = supplierIdsStr.split(",");
+                    for (String supplierIdStr : supplierIdArray) {
+                        int supplierId = Integer.parseInt(supplierIdStr.trim());
+                        psDAO.addProductSupplier(productId, supplierId);
+                    }
+                }
+                
                 // Thêm thành công
                 setToastMessage(request, "Product added successfully", "success");
                 response.sendRedirect(request.getContextPath() + "/admin/manage-product");
@@ -470,5 +555,225 @@ public class ManageProductController extends HttpServlet {
             setToastMessage(request, "Error: " + e.getMessage(), "error");
             showAddForm(request, response);
         }
+    }
+
+    /**
+     * Xử lý import sản phẩm từ file Excel
+     */
+    private void importProductsFromExcel(HttpServletRequest request, HttpServletResponse response)
+    throws ServletException, IOException {
+        List<String> successMessages = new ArrayList<>();
+        List<String> errorMessages = new ArrayList<>();
+        Map<String, Integer> newProductQuantities = new HashMap<>();
+        Map<String, Integer> updatedProductQuantities = new HashMap<>();
+        int newProductCount = 0;
+        int updatedProductCount = 0;
+        int errorCount = 0;
+        
+        try {
+            // Lấy file Excel từ request
+            Part filePart = request.getPart("excelFile");
+            if (filePart == null || filePart.getSize() == 0) {
+                setToastMessage(request, "Please select an Excel file to import", "error");
+                response.sendRedirect(request.getContextPath() + "/admin/manage-product");
+                return;
+            }
+            
+            // Đọc file Excel
+            InputStream fileContent = filePart.getInputStream();
+            Workbook workbook = null;
+            
+            // Xác định loại file
+            String fileName = filePart.getSubmittedFileName();
+            if (fileName.endsWith(".xlsx")) {
+                workbook = new XSSFWorkbook(fileContent);
+            } else if (fileName.endsWith(".xls")) {
+                workbook = new HSSFWorkbook(fileContent);
+            } else {
+                setToastMessage(request, "Only .xls and .xlsx files are supported", "error");
+                response.sendRedirect(request.getContextPath() + "/admin/manage-product");
+                return;
+            }
+            
+            // Lấy sheet đầu tiên
+            Sheet sheet = workbook.getSheetAt(0);
+            
+            // Khởi tạo DAO
+            ProductDAO productDAO = new ProductDAO();
+            ProductSupplierDAO psDAO = new ProductSupplierDAO();
+            
+            // Map để lưu trữ tên sản phẩm đã có trong DB và ID tương ứng
+            Map<String, Integer> existingProductMap = new HashMap<>();
+            for (Product product : productDAO.findAll()) {
+                existingProductMap.put(product.getProductName().toLowerCase(), product.getProductId());
+            }
+            
+            // Bỏ qua dòng tiêu đề
+            boolean isFirstRow = true;
+            
+            // Duyệt từng dòng
+            for (Row row : sheet) {
+                if (isFirstRow) {
+                    isFirstRow = false;
+                    continue;
+                }
+                
+                try {
+                    // Đọc dữ liệu từ các ô trong dòng
+                    Cell nameCell = row.getCell(0);
+                    Cell categoryIdCell = row.getCell(1);
+                    Cell descriptionCell = row.getCell(2);
+                    Cell priceCell = row.getCell(3);
+                    Cell stockCell = row.getCell(4);
+                    Cell statusCell = row.getCell(5);
+                    Cell supplierIdsCell = row.getCell(6);
+                    
+                    // Kiểm tra các trường bắt buộc
+                    if (nameCell == null || categoryIdCell == null || priceCell == null || stockCell == null || statusCell == null) {
+                        errorMessages.add("Row " + row.getRowNum() + ": Missing required fields");
+                        errorCount++;
+                        continue;
+                    }
+                    
+                    // Lấy dữ liệu từ các ô
+                    String productName = nameCell.getStringCellValue().trim();
+                    int categoryId = (int) categoryIdCell.getNumericCellValue();
+                    String description = descriptionCell != null ? descriptionCell.getStringCellValue() : "";
+                    BigDecimal price = new BigDecimal(priceCell.getNumericCellValue());
+                    int stock = (int) stockCell.getNumericCellValue();
+                    byte status = (byte) statusCell.getNumericCellValue();
+                    
+                    // Kiểm tra sản phẩm đã tồn tại chưa
+                    boolean isNewProduct = true;
+                    int productId = 0;
+                    
+                    if (existingProductMap.containsKey(productName.toLowerCase())) {
+                        // Product exists, update information
+                        isNewProduct = false;
+                        productId = existingProductMap.get(productName.toLowerCase());
+
+                        Product existingProduct = productDAO.findById(productId);
+                        existingProduct.setCategoryId(categoryId);
+                        existingProduct.setDescription(description);
+                        existingProduct.setPrice(price);
+                        existingProduct.setStock(existingProduct.getStock() + stock); // Cộng dồn số lượng
+
+                        // Không cập nhật trạng thái
+                        // existingProduct.setStatus(status);
+
+                        existingProduct.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
+
+                        boolean updated = productDAO.update(existingProduct);
+
+                        if (updated) {
+                            // Xóa các mối quan hệ nhà cung cấp cũ
+                            psDAO.removeProductSuppliers(productId);
+                            
+                            // Lưu thông tin số lượng cập nhật
+                            if (updatedProductQuantities.containsKey(productName)) {
+                                updatedProductQuantities.put(productName, updatedProductQuantities.get(productName) + stock);
+                            } else {
+                                updatedProductQuantities.put(productName, stock);
+                            }
+                            
+                            successMessages.add("Updated product: " + productName + " (+" + stock + " items)");
+                            updatedProductCount++;
+                        } else {
+                            errorMessages.add("Row " + row.getRowNum() + ": Failed to update product '" + productName + "'");
+                            errorCount++;
+                            continue;
+                        }
+                    } else {
+                        // Tạo sản phẩm mới
+                        Product product = new Product();
+                        product.setProductName(productName);
+                        product.setCategoryId(categoryId);
+                        product.setDescription(description);
+                        product.setPrice(price);
+                        product.setStock(stock);
+                        product.setStatus(status); // Chỉ đặt trạng thái cho sản phẩm mới
+
+                        // Đặt đường dẫn ảnh mặc định
+                        product.setImage("uploads/products/default_product.jpg");
+
+                        // Thiết lập thời gian tạo và cập nhật
+                        Timestamp now = new Timestamp(System.currentTimeMillis());
+                        product.setCreatedAt(now);
+                        product.setUpdatedAt(now);
+
+                        // Lưu sản phẩm vào database
+                        productId = productDAO.insert(product);
+
+                        if (productId > 0) {
+                            // Thêm vào map để tránh trùng lặp trong cùng file import
+                            existingProductMap.put(productName.toLowerCase(), productId);
+                            
+                            // Lưu thông tin số lượng mới
+                            if (newProductQuantities.containsKey(productName)) {
+                                newProductQuantities.put(productName, newProductQuantities.get(productName) + stock);
+                            } else {
+                                newProductQuantities.put(productName, stock);
+                            }
+                            
+                            successMessages.add("Added new product: " + productName + " (" + stock + " items)");
+                            newProductCount++;
+                        } else {
+                            errorMessages.add("Row " + row.getRowNum() + ": Failed to insert product '" + productName + "'");
+                            errorCount++;
+                            continue;
+                        }
+                    }
+                    
+                    // Xử lý nhà cung cấp nếu có
+                    if (supplierIdsCell != null) {
+                        String supplierIdsStr = "";
+                        if (supplierIdsCell.getCellType() == CellType.STRING) {
+                            supplierIdsStr = supplierIdsCell.getStringCellValue();
+                        } else if (supplierIdsCell.getCellType() == CellType.NUMERIC) {
+                            supplierIdsStr = String.valueOf((int) supplierIdsCell.getNumericCellValue());
+                        }
+
+                        if (!supplierIdsStr.isEmpty()) {
+                            String[] supplierIdArray = supplierIdsStr.split(",");
+                            for (String supplierIdStr : supplierIdArray) {
+                                try {
+                                    int supplierId = Integer.parseInt(supplierIdStr.trim());
+                                    psDAO.addProductSupplier(productId, supplierId);
+                                } catch (NumberFormatException e) {
+                                    // Bỏ qua nhà cung cấp không hợp lệ
+                                }
+                            }
+                        }
+                    }
+                } catch (Exception e) {
+                    errorMessages.add("Row " + row.getRowNum() + ": " + e.getMessage());
+                    errorCount++;
+                }
+            }
+            
+            // Đóng workbook
+            workbook.close();
+            
+            // Chuẩn bị thông báo kết quả
+            StringBuilder resultMessage = new StringBuilder();
+            resultMessage.append("Import completed. ");
+            resultMessage.append(newProductCount).append(" new products added. ");
+            resultMessage.append(updatedProductCount).append(" products updated. ");
+            resultMessage.append(errorCount).append(" products failed.");
+            
+            request.getSession().setAttribute("importSuccessMessages", successMessages);
+            request.getSession().setAttribute("importErrorMessages", errorMessages);
+            request.getSession().setAttribute("newProductCount", newProductCount);
+            request.getSession().setAttribute("updatedProductCount", updatedProductCount);
+            request.getSession().setAttribute("newProductQuantities", newProductQuantities);
+            request.getSession().setAttribute("updatedProductQuantities", updatedProductQuantities);
+            
+            setToastMessage(request, resultMessage.toString(), (newProductCount > 0 || updatedProductCount > 0) ? "success" : "error");
+        } catch (Exception e) {
+            e.printStackTrace();
+            setToastMessage(request, "Error importing products: " + e.getMessage(), "error");
+        }
+        
+        response.sendRedirect(request.getContextPath() + "/admin/manage-product?import_result=true");
     }
 }
