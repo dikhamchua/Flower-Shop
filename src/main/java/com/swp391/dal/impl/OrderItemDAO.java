@@ -22,6 +22,7 @@ public class OrderItemDAO extends DBContext {
                 + "WHERE oi.order_id = ?";
 
         try {
+            connection = getConnection();
             statement = connection.prepareStatement(sql);
             statement.setInt(1, orderId);
             resultSet = statement.executeQuery();
@@ -113,5 +114,47 @@ public class OrderItemDAO extends DBContext {
         } finally {
             closeResources();
         }
+    }
+
+    /**
+     * Get order item by ID
+     * @param orderItemId ID of the order item to get
+     * @return OrderItem object if found, null otherwise
+     */
+    public OrderItem getOrderItemById(int orderItemId) {
+        String sql = "SELECT oi.*, p.name as product_name, p.image as product_image "
+                + "FROM order_items oi "
+                + "JOIN products p ON oi.product_id = p.product_id "
+                + "WHERE oi.order_item_id = ?";
+        
+        try {
+            connection = getConnection();
+            statement = connection.prepareStatement(sql);
+            statement.setInt(1, orderItemId);
+            resultSet = statement.executeQuery();
+            
+            if (resultSet.next()) {
+                OrderItem item = new OrderItem();
+                item.setOrderItemId(resultSet.getInt("order_item_id"));
+                item.setOrderId(resultSet.getInt("order_id"));
+                item.setProductId(resultSet.getInt("product_id"));
+                item.setQuantity(resultSet.getInt("quantity"));
+                item.setPrice(resultSet.getBigDecimal("price"));
+                item.setCreatedAt(resultSet.getTimestamp("created_at"));
+                item.setUpdatedAt(resultSet.getTimestamp("updated_at"));
+                
+                // Thông tin sản phẩm
+                item.setProductName(resultSet.getString("product_name"));
+                item.setProductImage(resultSet.getString("product_image"));
+                
+                return item;
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error getting order item by ID: " + ex.getMessage());
+        } finally {
+            closeResources();
+        }
+        
+        return null;
     }
 }
