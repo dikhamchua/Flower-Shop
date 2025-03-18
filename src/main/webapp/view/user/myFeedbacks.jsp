@@ -14,7 +14,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>My Reviews</title>
+        <title>My Feedback</title>
         <jsp:include page="../common/dashboard/css-dashboard.jsp"></jsp:include>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
         <style>
@@ -65,7 +65,7 @@
 
         <div class="dashboard-main-body">
             <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-24">
-                <h6 class="fw-semibold mb-0">My Reviews</h6>
+                <h6 class="fw-semibold mb-0">My Feedback</h6>
                 <ul class="d-flex align-items-center gap-2">
                     <li class="fw-medium">
                         <a href="${pageContext.request.contextPath}/home" class="d-flex align-items-center gap-1 hover-text-primary">

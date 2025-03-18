@@ -71,28 +71,28 @@
                         <!-- Slider Information -->
                         <div class="col-md-12">
                             <label class="form-label">Image URL <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" name="image_url" id="imageUrl">
+                            <input type="text" class="form-control" name="image_url" id="imageUrl" value="${imageUrl}">
                             <div class="invalid-feedback"></div>
                         </div>
                         
                         <div class="col-md-12">
                             <label class="form-label">Link</label>
-                            <input type="text" class="form-control" name="link" placeholder="https://example.com">
-                            <div class="invalid-feedback"></div>
+                            <input type="text" class="form-control" name="link" id="link" placeholder="https://example.com" value="${link}">
+                            <div class="invalid-feedback">Please enter a valid URL (e.g. https://example.com)</div>
                         </div>
                         
                         <div class="col-md-12">
                             <label class="form-label">Caption</label>
-                            <textarea class="form-control" name="caption" rows="3"></textarea>
+                            <textarea class="form-control" name="caption" rows="3">${caption}</textarea>
                             <div class="invalid-feedback"></div>
                         </div>
                         
                         <div class="col-md-6">
                             <label class="form-label">Status <span class="text-danger">*</span></label>
                             <select class="form-select" name="status">
-                                <option value="" selected disabled>Select Status</option>
-                                <option value="1">Active</option>
-                                <option value="0">Inactive</option>
+                                <option value="" ${empty status ? 'selected' : ''} disabled>Select Status</option>
+                                <option value="1" ${status == '1' ? 'selected' : ''}>Active</option>
+                                <option value="0" ${status == '0' ? 'selected' : ''}>Inactive</option>
                             </select>
                             <div class="invalid-feedback"></div>
                         </div>
@@ -155,11 +155,16 @@
             // Form validation
             const form = document.getElementById('sliderForm');
             const imageUrlField = form.querySelector('input[name="image_url"]');
+            const linkField = form.querySelector('input[name="link"]');
             const statusSelect = form.querySelector('select[name="status"]');
             
             // Add input event listeners for real-time validation
             imageUrlField.addEventListener('input', function() {
                 validateRequired(this, 'Image URL is required');
+            });
+            
+            linkField.addEventListener('input', function() {
+                validateLink(this);
             });
             
             statusSelect.addEventListener('change', function() {
@@ -182,6 +187,31 @@
                 }
             }
             
+            function validateLink(input) {
+                const value = input.value.trim();
+                const feedbackElement = input.nextElementSibling;
+                
+                if (value && !isValidUrl(value)) {
+                    input.classList.add('is-invalid');
+                    feedbackElement.textContent = 'Please enter a valid URL (e.g. https://example.com)';
+                    feedbackElement.style.display = 'block';
+                    return false;
+                } else {
+                    input.classList.remove('is-invalid');
+                    feedbackElement.style.display = 'none';
+                    return true;
+                }
+            }
+            
+            function isValidUrl(url) {
+                try {
+                    new URL(url);
+                    return true;
+                } catch (e) {
+                    return false;
+                }
+            }
+            
             // Validate on form submit
             form.addEventListener('submit', function(event) {
                 // Prevent default form submission
@@ -189,22 +219,24 @@
                 
                 // Validate required fields
                 const isImageUrlValid = validateRequired(imageUrlField, 'Image URL is required');
+                const isLinkValid = validateLink(linkField);
                 const isStatusValid = validateRequired(statusSelect, 'Please select a status');
                 
                 // If all validations pass, submit the form
-                if (isImageUrlValid && isStatusValid) {
+                if (isImageUrlValid && isLinkValid && isStatusValid) {
                     this.submit();
                 } else {
                     // Show error message
                     iziToast.error({
                         title: 'Error',
-                        message: 'Please fill in all required fields',
+                        message: 'Please fill in all required fields correctly',
                         position: 'topRight',
-                        timeout: 1000
+                        timeout: 3000
                     });
                     
                     // Focus on the first invalid field
                     if (!isImageUrlValid) imageUrlField.focus();
+                    else if (!isLinkValid) linkField.focus();
                     else if (!isStatusValid) statusSelect.focus();
                 }
             });

@@ -253,15 +253,43 @@ public class ManageSliderController extends HttpServlet {
             String imageUrl = request.getParameter("image_url");
             String link = request.getParameter("link");
             String caption = request.getParameter("caption");
-            byte status = Byte.parseByte(request.getParameter("status"));
+            String statusStr = request.getParameter("status");
             
-            // Validate input data - only check if image URL is empty
+            // Validate input data
             if (imageUrl == null || imageUrl.trim().isEmpty()) {
                 setToastMessage(request, "Image URL is required", "error");
-                response.sendRedirect(request.getContextPath() + "/admin/manage-slider?action=add");
+                request.setAttribute("imageUrl", imageUrl);
+                request.setAttribute("link", link);
+                request.setAttribute("caption", caption);
+                request.setAttribute("status", statusStr);
+                request.getRequestDispatcher("/view/admin/slider-add.jsp").forward(request, response);
+                return;
+            }
+            
+            // Validate link format if provided
+            if (link != null && !link.trim().isEmpty() && !isValidUrl(link)) {
+                setToastMessage(request, "Invalid link format. Please enter a valid URL", "error");
+                request.setAttribute("imageUrl", imageUrl);
+                request.setAttribute("link", link);
+                request.setAttribute("caption", caption);
+                request.setAttribute("status", statusStr);
+                request.getRequestDispatcher("/view/admin/slider-add.jsp").forward(request, response);
                 return;
             }
 
+            // Validate status
+            if (statusStr == null || statusStr.trim().isEmpty()) {
+                setToastMessage(request, "Please select a status", "error");
+                request.setAttribute("imageUrl", imageUrl);
+                request.setAttribute("link", link);
+                request.setAttribute("caption", caption);
+                request.setAttribute("status", statusStr);
+                request.getRequestDispatcher("/view/admin/slider-add.jsp").forward(request, response);
+                return;
+            }
+
+            byte status = Byte.parseByte(statusStr);
+            
             // Create new Slider object
             java.util.Date utilDate = new java.util.Date();
             Timestamp timestamp = new Timestamp(utilDate.getTime());
@@ -284,11 +312,25 @@ public class ManageSliderController extends HttpServlet {
                 response.sendRedirect(request.getContextPath() + "/admin/manage-slider?action=list");
             } else {
                 setToastMessage(request, "Failed to add slider!", "error");
-                response.sendRedirect(request.getContextPath() + "/admin/manage-slider?action=add");
+                request.setAttribute("imageUrl", imageUrl);
+                request.setAttribute("link", link);
+                request.setAttribute("caption", caption);
+                request.setAttribute("status", statusStr);
+                request.getRequestDispatcher("/view/admin/slider-add.jsp").forward(request, response);
             }
         } catch (Exception e) {
             setToastMessage(request, "Error: " + e.getMessage(), "error");
-            response.sendRedirect(request.getContextPath() + "/admin/manage-slider?action=add");
+            request.getRequestDispatcher("/view/admin/slider-add.jsp").forward(request, response);
+        }
+    }
+
+    // Helper method to validate URL format
+    private boolean isValidUrl(String url) {
+        try {
+            new java.net.URL(url);
+            return true;
+        } catch (Exception e) {
+            return false;
         }
     }
 } 

@@ -45,8 +45,8 @@ public class AuthenController extends HttpServlet {
         String url;
         switch (action) {
             case "login":
-//                url = LOGIN_PAGE;
-                 url = fakeLogin(request, response);
+                url = LOGIN_PAGE;
+//                 url = fakeLogin(request, response);
                 break;
             case "logout":
                 url = logOut(request, response);

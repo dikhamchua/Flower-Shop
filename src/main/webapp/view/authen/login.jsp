@@ -357,6 +357,15 @@
                                             <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password">
                                             <i class="fas fa-lock form-icon"></i>
                                         </div>
+                                        
+                                        <div class="login-options">
+                                            <div class="remember-me">
+                                                <input type="checkbox" id="rememberMe" name="rememberMe">
+                                                <label for="rememberMe">Remember me</label>
+                                            </div>
+                                            <a href="${pageContext.request.contextPath}/authen?action=enter-email" class="forgot-password">Forgot password?</a>
+                                        </div>
+                                        
                                         <button type="submit" class="btn-login">Sign In</button>
                                         
                                         <div class="divider">

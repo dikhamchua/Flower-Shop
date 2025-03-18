@@ -4,217 +4,173 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>Login-Register || Plantmore</title>
+        <title>Verify OTP || Plantmore</title>
         <meta name="description" content="">
         <meta name="robots" content="noindex, follow" />
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="robots" content="noindex, follow" />
         <!-- Place favicon.ico in the root directory -->
         <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico">
+        <!-- Font Awesome CDN -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+        <!-- Google Fonts -->
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
         <!--All Css Here-->
         <jsp:include page="../common/home/common-css.jsp"></jsp:include>
-
-            <style>
-                #padding-form {
-                    padding-left:  20%;
-                    padding-right: 20%;
-                }
-
-            </style>
-
-        </head>
-        <body>
-
-            <div class="wrapper">
-                <!--Header Area Start-->
+        
+        <style>
+            .verify-otp-page {
+                min-height: 100vh;
+                display: flex;
+                align-items: center;
+                background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+                padding: 2rem;
+            }
+            
+            .verify-otp-card {
+                background: #fff;
+                border-radius: 15px;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+                max-width: 500px;
+                width: 100%;
+                margin: auto;
+                overflow: hidden;
+            }
+            
+            .verify-otp-header {
+                background: #fff;
+                padding: 2.5rem;
+                text-align: center;
+                border-bottom: 1px solid #e9ecef;
+            }
+            
+            .verify-otp-header h2 {
+                font-size: 1.8rem;
+                font-weight: 600;
+                color: #343a40;
+                margin-bottom: 0.5rem;
+            }
+            
+            .verify-otp-header p {
+                color: #6c757d;
+                font-size: 0.95rem;
+            }
+            
+            .verify-otp-body {
+                padding: 2.5rem;
+            }
+            
+            .form-group {
+                margin-bottom: 1.5rem;
+                position: relative;
+            }
+            
+            .form-group label {
+                display: block;
+                margin-bottom: 0.5rem;
+                font-weight: 500;
+                color: #495057;
+                font-size: 0.9rem;
+            }
+            
+            .form-control {
+                width: 100%;
+                padding: 0.8rem 1rem;
+                border: 1px solid #e1e5eb;
+                border-radius: 8px;
+                font-size: 0.9rem;
+                transition: all 0.3s;
+                background-color: #f8f9fa;
+            }
+            
+            .form-control:focus {
+                border-color: #28a745;
+                box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.15);
+                background-color: #fff;
+            }
+            
+            .form-icon {
+                position: absolute;
+                right: 1rem;
+                top: 2.6rem;
+                color: #adb5bd;
+                font-size: 1rem;
+            }
+            
+            .btn-verify {
+                width: 100%;
+                padding: 0.8rem;
+                background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+                border: none;
+                border-radius: 8px;
+                color: #fff;
+                font-size: 1rem;
+                font-weight: 500;
+                cursor: pointer;
+                transition: all 0.3s;
+                margin-top: 1rem;
+            }
+            
+            .btn-verify:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 5px 15px rgba(40, 167, 69, 0.2);
+            }
+            
+            .resend-otp {
+                text-align: center;
+                margin-top: 1.5rem;
+                padding-top: 1.5rem;
+                border-top: 1px solid #e9ecef;
+            }
+            
+            .resend-otp a {
+                color: #28a745;
+                text-decoration: none;
+                font-weight: 500;
+                transition: color 0.3s;
+            }
+            
+            .resend-otp a:hover {
+                color: #218838;
+                text-decoration: underline;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="wrapper">
+            <!--Header Area Start-->
             <jsp:include page="/view/common/home/header.jsp"></jsp:include>
-                <!--Header Area End-->
-                <!--Breadcrumb Tow Start-->
-                <div class="breadcrumb-tow mb-120">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="breadcrumb-title">
-                                    <h1>Login - Register</h1>
-                                </div>
-                                <div class="breadcrumb-content breadcrumb-content-tow">
-                                    <ul>
-                                        <li><a href="index.html">Home</a></li>
-                                        <li class="active">Login-Register</li>
-                                    </ul>
-                                </div>
+            <!--Header Area End-->
+            
+            <!--Verify OTP Page Start-->
+            <div class="verify-otp-page">
+                <div class="verify-otp-card">
+                    <div class="verify-otp-header">
+                        <h2>Verify OTP</h2>
+                        <p>Enter the OTP sent to your email</p>
+                    </div>
+                    <div class="verify-otp-body">
+                        <form action="${pageContext.request.contextPath}/authen?action=verify-otp" method="POST">
+                            <div class="form-group">
+                                <label for="otp">OTP Code</label>
+                                <input type="text" class="form-control" id="otp" name="otp" placeholder="Enter OTP Code">
+                                <i class="fas fa-shield-alt form-icon"></i>
                             </div>
+                            <button type="submit" class="btn-verify">Verify</button>
+                        </form>
+                        <div class="resend-otp">
+                            <p>Didn't receive the code? <a href="${pageContext.request.contextPath}/authen?action=enter-email">Resend OTP</a></p>
                         </div>
                     </div>
                 </div>
-                <!--Breadcrumb Tow End-->
-                <!--Login Register Area Strat-->
-                <div class="login-register-area mb-80">
-                    <div class="container" id="padding-form">
-                        <div class="customer-login-register register-pt-0">
-                            <div class="form-register-title">
-                                <h2>Verify OTP</h2>
-                            </div>
-                            <div class="register-form">
-                                <form action="${pageContext.request.contextPath}/authen?action=verify-otp" method="POST">
-                                    <div class="form-fild">
-                                        <p><label>OTP Code <span class="required">*</span></label></p>
-                                        <input type="text" name="otp" 
-                                            class="py-lg-4 py-2 px-lg-6 px-4 w-100 bg-n0 text-n100 radius-8 border border-n100-1 focus-secondary2"
-                                            placeholder="Enter OTP Code" required>
-                                    </div>
-                                    <div class="register-submit">
-                                        <button type="submit" class="form-button">Verify</button>
-                                    </div>
-                                </form>
-                                <div class="text-center mt-3">
-                                    <span class="text-n50">Didn't receive the code?</span>
-                                    <a href="${pageContext.request.contextPath}/authen?action=enter-email" 
-                                        class="text-secondary2 fw-medium">Resend OTP</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!--Login Register Area End-->
-                <!--Brand Area Start-->
-            <jsp:include page="/view/common/home/brand.jsp"></jsp:include>
-                <!--Brand Area End-->
-                <!--Footer Area Start-->
-            <jsp:include page="/view/common/home/footer.jsp"></jsp:include>
-                <!--Footer Area End-->
-                <!-- Modal Area Strat -->
-                <div class="modal fade" id="open-modal" tabindex="-1" role="dialog" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"><i class="fa fa-close"></i></button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="row">
-                                    <!--Modal Img-->
-                                    <div class="col-md-5">
-                                        <!--Modal Tab Content Start-->
-                                        <div class="tab-content product-details-large" id="myTabContent">
-                                            <div class="tab-pane fade show active" id="single-slide1" role="tabpanel" aria-labelledby="single-slide-tab-1">
-                                                <!--Single Product Image Start-->
-                                                <div class="single-product-img img-full">
-                                                    <img src="img/single-product/large/single-product1.jpg" alt="">
-                                                </div>
-                                                <!--Single Product Image End-->
-                                            </div>
-                                            <div class="tab-pane fade" id="single-slide2" role="tabpanel" aria-labelledby="single-slide-tab-2">
-                                                <!--Single Product Image Start-->
-                                                <div class="single-product-img img-full">
-                                                    <img src="img/single-product/large/single-product2.jpg" alt="">
-                                                </div>
-                                                <!--Single Product Image End-->
-                                            </div>
-                                            <div class="tab-pane fade" id="single-slide3" role="tabpanel" aria-labelledby="single-slide-tab-3">
-                                                <!--Single Product Image Start-->
-                                                <div class="single-product-img img-full">
-                                                    <img src="img/single-product/large/single-product3.jpg" alt="">
-                                                </div>
-                                                <!--Single Product Image End-->
-                                            </div>
-                                            <div class="tab-pane fade" id="single-slide4" role="tabpanel" aria-labelledby="single-slide-tab-4">
-                                                <!--Single Product Image Start-->
-                                                <div class="single-product-img img-full">
-                                                    <img src="img/single-product/large/single-product4.jpg" alt="">
-                                                </div>
-                                                <!--Single Product Image End-->
-                                            </div>
-                                            <div class="tab-pane fade" id="single-slide5" role="tabpanel" aria-labelledby="single-slide-tab-4">
-                                                <!--Single Product Image Start-->
-                                                <div class="single-product-img img-full">
-                                                    <img src="img/single-product/large/single-product5.jpg" alt="">
-                                                </div>
-                                                <!--Single Product Image End-->
-                                            </div>
-                                            <div class="tab-pane fade" id="single-slide6" role="tabpanel" aria-labelledby="single-slide-tab-4">
-                                                <!--Single Product Image Start-->
-                                                <div class="single-product-img img-full">
-                                                    <img src="img/single-product/large/single-product6.jpg" alt="">
-                                                </div>
-                                                <!--Single Product Image End-->
-                                            </div>
-                                        </div>
-                                        <!--Modal Content End-->
-                                        <!--Modal Tab Menu Start-->
-                                        <div class="single-product-menu">
-                                            <div class="nav single-slide-menu owl-carousel" role="tablist">
-                                                <div class="single-tab-menu img-full">
-                                                    <a class="active" data-bs-toggle="tab" id="single-slide-tab-1" href="#single-slide1"><img src="img/single-product/small/single-product1.jpg" alt=""></a>
-                                                </div>
-                                                <div class="single-tab-menu img-full">
-                                                    <a data-bs-toggle="tab" id="single-slide-tab-2" href="#single-slide2"><img src="img/single-product/small/single-product2.jpg" alt=""></a>
-                                                </div>
-                                                <div class="single-tab-menu img-full">
-                                                    <a data-bs-toggle="tab" id="single-slide-tab-3" href="#single-slide3"><img src="img/single-product/small/single-product3.jpg" alt=""></a>
-                                                </div>
-                                                <div class="single-tab-menu img-full">
-                                                    <a data-bs-toggle="tab" id="single-slide-tab-4" href="#single-slide4"><img src="img/single-product/small/single-product4.jpg" alt=""></a>
-                                                </div>
-                                                <div class="single-tab-menu img-full">
-                                                    <a data-bs-toggle="tab" id="single-slide-tab-5" href="#single-slide5"><img src="img/single-product/small/single-product5.jpg" alt=""></a>
-                                                </div>
-                                                <div class="single-tab-menu img-full">
-                                                    <a data-bs-toggle="tab" id="single-slide-tab-6" href="#single-slide6"><img src="img/single-product/small/single-product6.jpg" alt=""></a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!--Modal Tab Menu End-->
-                                    </div>
-                                    <!--Modal Img-->
-                                    <!--Modal Content-->
-                                    <div class="col-md-7">
-                                        <div class="modal-product-info">
-                                            <h1>Sit voluptatem</h1>
-                                            <div class="modal-product-price">
-                                                <span class="old-price">$74.00</span>
-                                                <span class="new-price">$69.00</span>
-                                            </div>
-                                            <a href="single-product.html" class="see-all">See all features</a>
-                                            <div class="add-to-cart quantity">
-                                                <form class="add-quantity" action="#">
-                                                    <div class="modal-quantity">
-                                                        <input type="number" value="1">
-                                                    </div>
-                                                    <div class="add-to-link">
-                                                        <button class="form-button" data-text="add to cart">add to cart</button>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                            <div class="cart-description">
-                                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco,Proin lectus ipsum, gravida et mattis vulputate, tristique ut lectus.</p>
-                                            </div>
-                                            <div class="social-share">
-                                                <h3>Share this product</h3>
-                                                <ul class="socil-icon2">
-                                                    <li><a href=""><i class="fa fa-facebook"></i></a></li>
-                                                    <li><a href=""><i class="fa fa-twitter"></i></a></li>
-                                                    <li><a href=""><i class="fa fa-pinterest"></i></a></li>
-                                                    <li><a href=""><i class="fa fa-google-plus"></i></a></li>
-                                                    <li><a href=""><i class="fa fa-linkedin"></i></a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!--Modal Content-->
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Modal Area End -->
             </div>
+            <!--Verify OTP Page End-->
+            
+            <!--Footer Area Start-->
+            <jsp:include page="/view/common/home/footer.jsp"></jsp:include>
+            <!--Footer Area End-->
+        </div>
 
-
-
-
-
-            <!--All Js Here-->
+        <!--All Js Here-->
         <jsp:include page="../common/home/common-js.jsp"></jsp:include>
-
     </body>
 </html>
