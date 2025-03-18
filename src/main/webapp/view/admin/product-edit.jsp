@@ -26,6 +26,47 @@
             border-radius: 4px;
             padding: 5px;
         }
+        .supplier-input-container {
+            position: relative;
+        }
+        .supplier-suggestions {
+            position: absolute;
+            width: 100%;
+            max-height: 200px;
+            overflow-y: auto;
+            background: white;
+            border: 1px solid #ced4da;
+            border-radius: 0.25rem;
+            z-index: 1000;
+            display: none;
+        }
+        .supplier-suggestion {
+            padding: 8px 12px;
+            cursor: pointer;
+        }
+        .supplier-suggestion:hover {
+            background-color: #f8f9fa;
+        }
+        .selected-suppliers {
+            margin-top: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        .selected-supplier {
+            background-color: #e9ecef;
+            border: 1px solid #ced4da;
+            border-radius: 0.25rem;
+            padding: 8px 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .remove-supplier {
+            cursor: pointer;
+            color: #dc3545;
+            font-size: 16px;
+        }
     </style>
 </head>
 
@@ -120,6 +161,18 @@
                         <div class="invalid-feedback"></div>
                     </div>
 
+                    <div class="col-md-6">
+                        <label class="form-label">Suppliers <span class="text-danger">*</span></label>
+                        <div class="supplier-input-container">
+                            <input type="text" class="form-control" id="supplierInput" placeholder="Type to search suppliers...">
+                            <div id="supplierSuggestions" class="supplier-suggestions"></div>
+                            <div class="selected-suppliers" id="selectedSuppliers"></div>
+                            <input type="hidden" name="supplierIds" id="supplierIdsInput">
+                            <div class="invalid-feedback"></div>
+                        </div>
+                        <small class="text-muted">Type supplier name and select from suggestions</small>
+                    </div>
+
                     <!-- Submit Button -->
                     <div class="col-md-12 mt-4">
                         <button type="submit" class="btn btn-primary">Update Product</button>
@@ -165,175 +218,311 @@
         const stockInput = form.querySelector('input[name="stock"]');
         const imageInput = form.querySelector('input[name="image"]');
         const statusSelect = form.querySelector('select[name="status"]');
-
-        // Validate on form submit
-        form.addEventListener('submit', function(event) {
-            // Prevent default form submission
-            event.preventDefault();
-            console.log("Form submit triggered");
-
-            // Validate all fields
-            const isNameValid = validateProductName(nameInput);
-            const isCategoryValid = validateCategory(categorySelect);
-            const isPriceValid = validatePrice(priceInput);
-            const isStockValid = validateStock(stockInput);
-            // Image is optional on edit
-            const isImageValid = imageInput.files.length === 0 || validateImage(imageInput);
-            const isStatusValid = validateStatus(statusSelect);
-
-            console.log("Validation results:");
-            console.log("Name valid:", isNameValid);
-            console.log("Category valid:", isCategoryValid);
-            console.log("Price valid:", isPriceValid);
-            console.log("Stock valid:", isStockValid);
-            console.log("Image valid:", isImageValid);
-            console.log("Status valid:", isStatusValid);
-            console.log("All valid:", isNameValid && isCategoryValid && isPriceValid && isStockValid && isImageValid && isStatusValid);
-
-            // If all validations pass, submit the form
-            if (isNameValid && isCategoryValid && isPriceValid && isStockValid && isImageValid && isStatusValid) {
-                console.log("All validations passed, submitting form");
-                this.submit();
-            } else {
-                console.log("Validation failed, form not submitted");
-                // Show error message
-                iziToast.error({
-                    title: 'Error',
-                    message: 'Please correct the errors before submitting the form',
-                    position: 'topRight',
-                    timeout: 1000
+        const supplierInput = document.getElementById('supplierInput');
+        const supplierSuggestions = document.getElementById('supplierSuggestions');
+        const selectedSuppliers = document.getElementById('selectedSuppliers');
+        const supplierIdsInput = document.getElementById('supplierIdsInput');
+        
+        // Danh sách suppliers từ server
+        const suppliers = [
+            <c:forEach var="supplier" items="${suppliers}" varStatus="status">
+                { id: ${supplier.supplierId}, name: "${supplier.name}" }<c:if test="${!status.last}">,</c:if>
+            </c:forEach>
+        ];
+        
+        // Mảng lưu trữ các supplier đã chọn
+        let selectedSupplierIds = [
+            <c:forEach var="supplierId" items="${selectedSupplierIds}" varStatus="status">
+                ${supplierId}<c:if test="${!status.last}">,</c:if>
+            </c:forEach>
+        ];
+        
+        // Khởi tạo các supplier đã chọn
+        initSelectedSuppliers();
+        
+        function initSelectedSuppliers() {
+            selectedSupplierIds.forEach(id => {
+                const supplier = suppliers.find(s => s.id == id);
+                if (supplier) {
+                    const supplierElement = document.createElement('div');
+                    supplierElement.className = 'selected-supplier';
+                    supplierElement.innerHTML = `
+                        <span class="supplier-name">${supplier.name}</span>
+                        <span class="remove-supplier" data-id="${supplier.id}">&times;</span>
+                    `;
+                    
+                    supplierElement.querySelector('.remove-supplier').addEventListener('click', function() {
+                        removeSupplier(supplier.id);
+                        supplierElement.remove();
+                    });
+                    
+                    selectedSuppliers.appendChild(supplierElement);
+                }
+            });
+            updateSupplierIdsInput();
+        }
+        
+        // Xử lý input để hiển thị gợi ý
+        supplierInput.addEventListener('input', function() {
+            const inputValue = this.value.trim().toLowerCase();
+            
+            // Xóa các gợi ý cũ
+            supplierSuggestions.innerHTML = '';
+            
+            if (inputValue.length < 1) {
+                supplierSuggestions.style.display = 'none';
+                return;
+            }
+            
+            // Lọc suppliers phù hợp với input và chưa được chọn
+            const matchingSuppliers = suppliers.filter(supplier => 
+                supplier.name.toLowerCase().includes(inputValue) && 
+                !selectedSupplierIds.includes(supplier.id)
+            );
+            
+            if (matchingSuppliers.length === 0) {
+                supplierSuggestions.innerHTML = '<div class="supplier-suggestion text-muted">No matching suppliers found</div>';
+                supplierSuggestions.style.display = 'block';
+                return;
+            }
+            
+            // Hiển thị các gợi ý
+            matchingSuppliers.forEach(supplier => {
+                const suggestionElement = document.createElement('div');
+                suggestionElement.className = 'supplier-suggestion';
+                suggestionElement.textContent = supplier.name;
+                suggestionElement.dataset.id = supplier.id;
+                
+                suggestionElement.addEventListener('click', function() {
+                    addSupplier(supplier.id, supplier.name);
+                    supplierInput.value = '';
+                    supplierSuggestions.style.display = 'none';
                 });
-
-                // Focus on the first invalid field
-                if (!isNameValid) nameInput.focus();
-                else if (!isCategoryValid) categorySelect.focus();
-                else if (!isPriceValid) priceInput.focus();
-                else if (!isStockValid) stockInput.focus();
-                else if (!isImageValid) imageInput.focus();
-                else if (!isStatusValid) statusSelect.focus();
+                
+                supplierSuggestions.appendChild(suggestionElement);
+            });
+            
+            supplierSuggestions.style.display = 'block';
+        });
+        
+        // Ẩn gợi ý khi click ra ngoài
+        document.addEventListener('click', function(e) {
+            if (!supplierInput.contains(e.target) && !supplierSuggestions.contains(e.target)) {
+                supplierSuggestions.style.display = 'none';
             }
         });
-
-        // Validation functions
-        function validateProductName(input) {
-            const value = input.value.trim();
-            const feedback = input.nextElementSibling;
+        
+        // Thêm supplier đã chọn
+        function addSupplier(id, name) {
+            if (selectedSupplierIds.includes(id)) return;
             
-            if (value === '') {
-                setInvalid(input, feedback, 'Product name is required');
-                return false;
-            } else if (value.length < 3) {
-                setInvalid(input, feedback, 'Product name must be at least 3 characters');
-                return false;
-            } else if (value.length > 100) {
-                setInvalid(input, feedback, 'Product name must be less than 100 characters');
+            selectedSupplierIds.push(id);
+            updateSupplierIdsInput();
+            
+            const supplierElement = document.createElement('div');
+            supplierElement.className = 'selected-supplier';
+            supplierElement.innerHTML = `
+                <span class="supplier-name">${name}</span>
+                <span class="remove-supplier" data-id="${id}">&times;</span>
+            `;
+            
+            supplierElement.querySelector('.remove-supplier').addEventListener('click', function() {
+                removeSupplier(id);
+                supplierElement.remove();
+            });
+            
+            selectedSuppliers.appendChild(supplierElement);
+            validateSuppliers();
+        }
+        
+        // Xóa supplier đã chọn
+        function removeSupplier(id) {
+            selectedSupplierIds = selectedSupplierIds.filter(supplierId => supplierId != id);
+            updateSupplierIdsInput();
+            validateSuppliers();
+        }
+        
+        // Cập nhật input hidden chứa danh sách supplier IDs
+        function updateSupplierIdsInput() {
+            supplierIdsInput.value = selectedSupplierIds.join(',');
+        }
+        
+        // Thay đổi hàm validateSuppliers
+        function validateSuppliers() {
+            const feedback = document.querySelector('.supplier-input-container .invalid-feedback');
+            
+            if (selectedSupplierIds.length === 0) {
+                setInvalid(supplierInput, feedback, 'Please select at least one supplier');
                 return false;
             } else {
-                setValid(input, feedback);
+                setValid(supplierInput, feedback);
                 return true;
             }
         }
 
-        function validateCategory(select) {
-            const value = select.value;
-            const feedback = select.nextElementSibling;
-            
-            if (value === '' || value === null) {
-                setInvalid(select, feedback, 'Please select a category');
-                return false;
-            } else {
-                setValid(select, feedback);
-                return true;
-            }
-        }
+        // Form validation
+        const isNameValid = validateProductName(nameInput);
+        const isCategoryValid = validateCategory(categorySelect);
+        const isPriceValid = validatePrice(priceInput);
+        const isStockValid = validateStock(stockInput);
+        const isImageValid = imageInput.files.length === 0 || validateImage(imageInput);
+        const isStatusValid = validateStatus(statusSelect);
+        const isSupplierValid = validateSuppliers();
 
-        function validatePrice(input) {
-            const value = input.value.trim();
-            const feedback = input.nextElementSibling;
-            
-            if (value === '') {
-                setInvalid(input, feedback, 'Price is required');
-                return false;
-            } else if (isNaN(value) || parseFloat(value) < 0) {
-                setInvalid(input, feedback, 'Price must be a positive number');
-                return false;
-            } else {
-                setValid(input, feedback);
-                return true;
-            }
-        }
+        console.log("Validation results:");
+        console.log("Name valid:", isNameValid);
+        console.log("Category valid:", isCategoryValid);
+        console.log("Price valid:", isPriceValid);
+        console.log("Stock valid:", isStockValid);
+        console.log("Image valid:", isImageValid);
+        console.log("Status valid:", isStatusValid);
+        console.log("Supplier valid:", isSupplierValid);
+        console.log("All valid:", isNameValid && isCategoryValid && isPriceValid && isStockValid && isImageValid && isStatusValid && isSupplierValid);
 
-        function validateStock(input) {
-            const value = input.value.trim();
-            const feedback = input.nextElementSibling;
-            
-            if (value === '') {
-                setInvalid(input, feedback, 'Stock is required');
-                return false;
-            } else if (isNaN(value) || parseInt(value) < 0) {
-                setInvalid(input, feedback, 'Stock must be a positive number');
-                return false;
-            } else {
-                setValid(input, feedback);
-                return true;
-            }
-        }
+        // If all validations pass, submit the form
+        if (isNameValid && isCategoryValid && isPriceValid && isStockValid && isImageValid && isStatusValid && isSupplierValid) {
+            console.log("All validations passed, submitting form");
+            this.submit();
+        } else {
+            console.log("Validation failed, form not submitted");
+            // Show error message
+            iziToast.error({
+                title: 'Error',
+                message: 'Please correct the errors before submitting the form',
+                position: 'topRight',
+                timeout: 1000
+            });
 
-        function validateImage(input) {
-            const feedback = input.nextElementSibling;
-            
-            if (input.files.length === 0) {
-                // Image is optional on edit
-                setValid(input, feedback);
-                return true;
-            } else {
-                const file = input.files[0];
-                const fileType = file.type;
-                const validImageTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
-                
-                console.log("File type:", fileType);
-                console.log("File size:", file.size);
-                
-                if (!validImageTypes.includes(fileType)) {
-                    setInvalid(input, feedback, 'Please select a valid image file (JPEG, PNG, GIF, WEBP)');
-                    return false;
-                } else if (file.size > 20 * 1024 * 1024) { // 20MB
-                    setInvalid(input, feedback, 'Image size should be less than 20MB');
-                    return false;
-                } else {
-                    setValid(input, feedback);
-                    return true;
-                }
-            }
-        }
-
-        function validateStatus(select) {
-            const value = select.value;
-            const feedback = select.nextElementSibling;
-            
-            if (value === '' || value === null) {
-                setInvalid(select, feedback, 'Please select a status');
-                return false;
-            } else {
-                setValid(select, feedback);
-                return true;
-            }
-        }
-
-        function setInvalid(input, feedback, message) {
-            input.classList.add('is-invalid');
-            input.classList.remove('is-valid');
-            feedback.textContent = message;
-            feedback.style.display = 'block';
-        }
-
-        function setValid(input, feedback) {
-            input.classList.remove('is-invalid');
-            input.classList.add('is-valid');
-            feedback.textContent = '';
-            feedback.style.display = 'none';
+            // Focus on the first invalid field
+            if (!isNameValid) nameInput.focus();
+            else if (!isCategoryValid) categorySelect.focus();
+            else if (!isPriceValid) priceInput.focus();
+            else if (!isStockValid) stockInput.focus();
+            else if (!isImageValid) imageInput.focus();
+            else if (!isStatusValid) statusSelect.focus();
+            else if (!isSupplierValid) supplierInput.focus();
         }
     });
+
+    // Validation functions
+    function validateProductName(input) {
+        const value = input.value.trim();
+        const feedback = input.nextElementSibling;
+        
+        if (value === '') {
+            setInvalid(input, feedback, 'Product name is required');
+            return false;
+        } else if (value.length < 3) {
+            setInvalid(input, feedback, 'Product name must be at least 3 characters');
+            return false;
+        } else if (value.length > 100) {
+            setInvalid(input, feedback, 'Product name must be less than 100 characters');
+            return false;
+        } else {
+            setValid(input, feedback);
+            return true;
+        }
+    }
+
+    function validateCategory(select) {
+        const value = select.value;
+        const feedback = select.nextElementSibling;
+        
+        if (value === '' || value === null) {
+            setInvalid(select, feedback, 'Please select a category');
+            return false;
+        } else {
+            setValid(select, feedback);
+            return true;
+        }
+    }
+
+    function validatePrice(input) {
+        const value = input.value.trim();
+        const feedback = input.nextElementSibling;
+        
+        if (value === '') {
+            setInvalid(input, feedback, 'Price is required');
+            return false;
+        } else if (isNaN(value) || parseFloat(value) < 0) {
+            setInvalid(input, feedback, 'Price must be a positive number');
+            return false;
+        } else {
+            setValid(input, feedback);
+            return true;
+        }
+    }
+
+    function validateStock(input) {
+        const value = input.value.trim();
+        const feedback = input.nextElementSibling;
+        
+        if (value === '') {
+            setInvalid(input, feedback, 'Stock is required');
+            return false;
+        } else if (isNaN(value) || parseInt(value) < 0) {
+            setInvalid(input, feedback, 'Stock must be a positive number');
+            return false;
+        } else {
+            setValid(input, feedback);
+            return true;
+        }
+    }
+
+    function validateImage(input) {
+        const feedback = input.nextElementSibling;
+        
+        if (input.files.length === 0) {
+            // Image is optional on edit
+            setValid(input, feedback);
+            return true;
+        } else {
+            const file = input.files[0];
+            const fileType = file.type;
+            const validImageTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+            
+            console.log("File type:", fileType);
+            console.log("File size:", file.size);
+            
+            if (!validImageTypes.includes(fileType)) {
+                setInvalid(input, feedback, 'Please select a valid image file (JPEG, PNG, GIF, WEBP)');
+                return false;
+            } else if (file.size > 20 * 1024 * 1024) { // 20MB
+                setInvalid(input, feedback, 'Image size should be less than 20MB');
+                return false;
+            } else {
+                setValid(input, feedback);
+                return true;
+            }
+        }
+    }
+
+    function validateStatus(select) {
+        const value = select.value;
+        const feedback = select.nextElementSibling;
+        
+        if (value === '' || value === null) {
+            setInvalid(select, feedback, 'Please select a status');
+            return false;
+        } else {
+            setValid(select, feedback);
+            return true;
+        }
+    }
+
+    function setInvalid(input, feedback, message) {
+        input.classList.add('is-invalid');
+        input.classList.remove('is-valid');
+        feedback.textContent = message;
+        feedback.style.display = 'block';
+    }
+
+    function setValid(input, feedback) {
+        input.classList.remove('is-invalid');
+        input.classList.add('is-valid');
+        feedback.textContent = '';
+        feedback.style.display = 'none';
+    }
 </script>
 </body>
 </html> 
