@@ -66,13 +66,13 @@
                                 <h3>Categories</h3>
                             </div>
                             <ul class="link-widget">
-                                <li><a href="#">Bedroom</a></li>
-                                <li><a href="#">Furniture</a></li>
-                                <li><a href="#">Livingroom</a></li>
-                                <li><a href="#">Mobiles & Tablets</a></li>
-                                <li><a href="#">Men</a></li>
-                                <li><a href="#">Women</a></li>
-                                <li><a href="#">Accessories</a></li>
+                                <li><a href="#">Hoa hồng</a></li>
+                                <li><a href="#">Hoa Cúc</a></li>
+                                <li><a href="#">Hoa bỉ ngạn</a></li>
+                                <li><a href="#">Hoa Ly </a></li>
+                                <li><a href="#">Hoa Lan</a></li>
+                                <li><a href="#">Hoa Sen</a></li>
+                                <li><a href="#">Hoa Mai</a></li>
                             </ul>
                         </div>
                         <!--Single Footer Widget End-->
@@ -148,11 +148,8 @@
                         <div class="footer-menu text-center">
                             <nav>
                                 <ul>
-                                    <li><a href="#">Site Map</a></li>
                                     <li><a href="#">Search Terms</a></li>
-                                    <li><a href="#">Advanced Search</a></li>
-                                    <li><a href="#">Orders and Returns</a></li>
-                                    <li><a href="#">Contact Us</a></li>
+                                    <li><a href="${pageContext.request.contextPath}/orderControll">My Order</a></li>
                                 </ul>
                             </nav>
                         </div>
