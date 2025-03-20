@@ -1,8 +1,3 @@
-<%-- 
-    Document   : header-dashboard
-    Created on : Feb 8, 2025, 6:54:35 PM
-    Author     : ADMIN
---%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <main class="dashboard-main">
