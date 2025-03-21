@@ -91,14 +91,14 @@
                     <c:forEach items="${topRatedProducts}" var="product">
                         <li>
                             <div class="rc-product-thumb img-full">
-                                <a href="${pageContext.request.contextPath}/product?id=${product.productId}">
+                                <a href="${pageContext.request.contextPath}/home?action=product-details&id=${product.productId}">
                                     <img src="${pageContext.request.contextPath}/${product.image}"
                                         alt="${product.productName}">
                                 </a>
                             </div>
                             <div class="rc-product-content">
                                 <h6><a
-                                        href="${pageContext.request.contextPath}/product?id=${product.productId}">${product.productName}</a>
+                                        href="${pageContext.request.contextPath}/home?action=product-details&id=${product.productId}">${product.productName}</a>
                                 </h6>
                                 <div class="rc-product-review">
                                     <c:forEach begin="1" end="5" var="i">
