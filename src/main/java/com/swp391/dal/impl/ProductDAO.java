@@ -336,7 +336,10 @@ public class ProductDAO extends DBContext implements I_DAO<Product> {
      */
     public List<Product> findProductsWithPagination(int page, int pageSize) {
         List<Product> products = new ArrayList<>();
-        String sql = "SELECT p.* FROM products p JOIN categories c ON p.category_id = c.category_id WHERE c.status = 1 ORDER BY p.product_id DESC LIMIT ? OFFSET ?";
+        String sql = "SELECT p.* FROM products p " +
+                     "JOIN category_product cp ON p.product_id = cp.product_id " +
+                     "JOIN categories c ON cp.category_id = c.category_id " +
+                     "WHERE c.status = 1 ORDER BY p.product_id DESC LIMIT ? OFFSET ?";
 
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, pageSize);
@@ -357,10 +360,13 @@ public class ProductDAO extends DBContext implements I_DAO<Product> {
      * Đếm tổng số sản phẩm
      */
     public int getTotalProducts() {
-        String sql = "SELECT COUNT(*) FROM products p JOIN categories c ON p.category_id = c.category_id WHERE c.status = 1";
+        String sql = "SELECT COUNT(*) FROM products p " +
+                     "JOIN category_product cp ON p.product_id = cp.product_id " +
+                     "JOIN categories c ON cp.category_id = c.category_id " +
+                     "WHERE c.status = 1";
 
         try (PreparedStatement statement = connection.prepareStatement(sql);
-                ResultSet resultSet = statement.executeQuery()) {
+             ResultSet resultSet = statement.executeQuery()) {
             if (resultSet.next()) {
                 return resultSet.getInt(1);
             }
