@@ -21,6 +21,21 @@
                 opacity: 0.5;
                 cursor: not-allowed;
             }
+            
+            /* Thêm style cho ảnh sản phẩm trong shop */
+            .single-product img {
+                width: 100%;
+                height: 200px; /* Điều chỉnh chiều cao theo nhu cầu */
+                object-fit: cover; /* Đảm bảo ảnh vừa khung mà không bị méo */
+                border-radius: 8px; /* Bo góc ảnh */
+            }
+            
+            /* Thêm style cho khung chứa ảnh */
+            .single-product {
+                width: 100%;
+                overflow: hidden; /* Ẩn phần ảnh thừa */
+                position: relative;
+            }
         </style>
     </head>
     <body>
@@ -101,8 +116,6 @@
                                                                      <div class="product-action">
                                                                         <ul>
                                                                             <li><a href="${pageContext.request.contextPath}/home?action=product-details&id=${product.productId}" title="Quick view"><i class="fa fa-eye"></i></a></li>
-                                                                            <li><a href="#" class="add-to-wishlist" data-product-id="${product.productId}" title="Wishlist"><i class="fa fa-heart-o"></i></a></li>
-                                                                            <li><a href="#" title="Compare"><i class="fa fa-refresh"></i></a></li>
                                                                         </ul>
                                                                     </div>
                                                                 </div>

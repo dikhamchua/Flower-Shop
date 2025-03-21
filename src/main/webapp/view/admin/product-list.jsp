@@ -20,9 +20,15 @@
                 }
                 .product-image {
                     width: 100px;
-                    height: 60px;
+                    height: 100px;
                     object-fit: cover;
                     border-radius: 4px;
+                }
+                .product-image-container {
+                    width: 100px;
+                    height: 100px;
+                    overflow: hidden;
+                    position: relative;
                 }
             </style>
 
@@ -138,7 +144,9 @@
                                     <tr>
                                         <td>${product.productId}</td>
                                         <td>
-                                            <img src="${pageContext.request.contextPath}/${product.image}" alt="${product.productName}" class="product-image">
+                                            <div class="product-image-container">
+                                                <img src="${pageContext.request.contextPath}/${product.image}" alt="${product.productName}" class="product-image">
+                                            </div>
                                         </td>
                                         <td>
                                             <c:choose>

@@ -30,6 +30,24 @@
             .new-price {
                 text-decoration: none !important;
             }
+            
+            /* Thêm style cho ảnh sản phẩm */
+            .product-large-thumb img,
+            .product-details-img img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover; /* Đảm bảo ảnh vừa khung mà không bị méo */
+                border-radius: 8px; /* Bo góc ảnh */
+            }
+            
+            /* Thêm style cho khung chứa ảnh */
+            .product-large-thumb,
+            .product-details-img {
+                width: 100%;
+                height: 400px; /* Điều chỉnh chiều cao theo nhu cầu */
+                overflow: hidden; /* Ẩn phần ảnh thừa */
+                position: relative;
+            }
         </style>
 
         </head>
@@ -84,13 +102,13 @@
                                     </div>
                                     <!--Product Tab Content End-->
                                     <!--Product Tab Menu Start-->
-                                    <div class="product-menu">
+<!--                                    <div class="product-menu">
                                         <div class="nav product-tab-menu">
                                             <div class="product-details-img">
                                                 <a class="active" data-bs-toggle="tab" href="#product1"><img src="${product.image}" alt="${product.productName}"></a>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div>-->
                                     <!--Product Tab Menu End-->
                                 </div>
                             </div>
@@ -110,7 +128,7 @@
                                         <i class="fa fa-star"></i>
                                         <i class="fa fa-star"></i>
                                         <i class="fa fa-star-o"></i>
-                                        <a class="review-link" href="#">(1 customer review)</a>
+                                        <a class="review-link" href="#"></a>
                                     </div>
                                     <div class="single-product-price">
                                         <span class="price">
@@ -544,56 +562,56 @@
                 </div>
                 <!--Related Product End-->
                 <!--Brand Area Start-->
-                <div class="brand-area mb-105">
+<!--                <div class="brand-area mb-105">
                     <div class="container">
                         <div class="row">
                             <div class="col-12">
                                 <div class="brand-active">
-                                    <!--Single Brand Start-->
+                                    Single Brand Start
                                     <div class="single-brand img-full">
                                         <a href="#"><img src="img/brand/brand1.png" alt=""></a>
                                     </div>
-                                    <!--Single Brand End-->
-                                    <!--Single Brand Start-->
+                                    Single Brand End
+                                    Single Brand Start
                                     <div class="single-brand img-full">
                                         <a href="#"><img src="img/brand/brand2.png" alt=""></a>
                                     </div>
-                                    <!--Single Brand End-->
-                                    <!--Single Brand Start-->
+                                    Single Brand End
+                                    Single Brand Start
                                     <div class="single-brand img-full">
                                         <a href="#"><img src="img/brand/brand3.png" alt=""></a>
                                     </div>
-                                    <!--Single Brand End-->
-                                    <!--Single Brand Start-->
+                                    Single Brand End
+                                    Single Brand Start
                                     <div class="single-brand img-full">
                                         <a href="#"><img src="img/brand/brand4.png" alt=""></a>
                                     </div>
-                                    <!--Single Brand End-->
-                                    <!--Single Brand Start-->
+                                    Single Brand End
+                                    Single Brand Start
                                     <div class="single-brand img-full">
                                         <a href="#"><img src="img/brand/brand5.png" alt=""></a>
                                     </div>
-                                    <!--Single Brand End-->
-                                    <!--Single Brand Start-->
+                                    Single Brand End
+                                    Single Brand Start
                                     <div class="single-brand img-full">
                                         <a href="#"><img src="img/brand/brand3.png" alt=""></a>
                                     </div>
-                                    <!--Single Brand End-->
-                                    <!--Single Brand Start-->
+                                    Single Brand End
+                                    Single Brand Start
                                     <div class="single-brand img-full">
                                         <a href="#"><img src="img/brand/brand4.png" alt=""></a>
                                     </div>
-                                    <!--Single Brand End-->
-                                    <!--Single Brand Start-->
+                                    Single Brand End
+                                    Single Brand Start
                                     <div class="single-brand img-full">
                                         <a href="#"><img src="img/brand/brand5.png" alt=""></a>
                                     </div>
-                                    <!--Single Brand End-->
+                                    Single Brand End
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                </div>-->
                 <!--Brand Area End-->
                 <!--Footer Area Start-->
             <jsp:include page="/view/common/home/footer.jsp"></jsp:include>
