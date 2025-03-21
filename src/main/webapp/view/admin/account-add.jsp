@@ -99,9 +99,7 @@
                             <label class="form-label">Role <span class="text-danger">*</span></label>
                             <select class="form-select ${not empty sessionScope.errors.role ? 'is-invalid' : ''}" name="role">
                                 <option value="" selected disabled>Select Role</option>
-                                <option value="user" ${sessionScope.formData.role[0] == 'user' ? 'selected' : ''}>User</option>
                                 <option value="staff" ${sessionScope.formData.role[0] == 'staff' ? 'selected' : ''}>Staff</option>
-                                <option value="admin" ${sessionScope.formData.role[0] == 'admin' ? 'selected' : ''}>Admin</option>
                             </select>
                             <c:if test="${not empty sessionScope.errors.role}">
                                 <div class="invalid-feedback">${sessionScope.errors.role}</div>

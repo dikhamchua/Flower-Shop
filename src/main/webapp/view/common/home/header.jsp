@@ -47,10 +47,7 @@
                             <div class="mini-cart-search">
                                 <div class="mini-cart">
                                     <a href="${pageContext.request.contextPath}/cart">
-                                        <c:set var="cartTotal" value="0" />
-                                        <c:forEach items="${sessionScope.cart.values()}" var="item">
-                                            <c:set var="cartTotal" value="${cartTotal + (item.product.price * item.quantity)}" />
-                                        </c:forEach>
+                                        <i class="fa fa-shopping-cart"></i>
                                         <span class="cart-title">Your cart <br></span> 
                                     </a>
                                 </div>

@@ -81,7 +81,11 @@ public class HomeController extends HttpServlet {
             int currentPage = 1;
             String pageStr = request.getParameter("page");
             if (pageStr != null && !pageStr.isEmpty()) {
-                currentPage = Integer.parseInt(pageStr);
+                try {
+                    currentPage = Integer.parseInt(pageStr);
+                } catch (NumberFormatException e) {
+                    currentPage = 1; // Reset về trang 1 nếu số trang không hợp lệ
+                }
             }
 
             // Xử lý các tham số lọc
@@ -117,20 +121,25 @@ public class HomeController extends HttpServlet {
             if (minPrice == null) minPrice = globalMinPrice;
             if (maxPrice == null) maxPrice = globalMaxPrice;
 
-            // Lấy danh sách sản phẩm với bộ lọc
+            // Tính tổng số trang và validate currentPage trước khi lấy dữ liệu
+            int totalProducts = productDAO.countProductsWithFilters(
+                searchKeyword, selectedCategoryIds, minPrice, maxPrice
+            );
+            int totalPages = (int) Math.ceil((double) totalProducts / pageSize);
+
+            // Validate currentPage
+            if (currentPage < 1) {
+                currentPage = 1;
+            } else if (currentPage > totalPages) {
+                currentPage = totalPages > 0 ? totalPages : 1;
+            }
+
+            // Lấy danh sách sản phẩm với bộ lọc sau khi đã validate currentPage
             List<Product> products = productDAO.findProductsWithFilters(
                 searchKeyword, selectedCategoryIds, minPrice, maxPrice,
                 sortParam, currentPage, pageSize
             );
             
-            // Đếm tổng số sản phẩm thỏa mãn điều kiện lọc
-            int totalProducts = productDAO.countProductsWithFilters(
-                searchKeyword, selectedCategoryIds, minPrice, maxPrice
-            );
-
-            // Tính tổng số trang
-            int totalPages = (int) Math.ceil((double) totalProducts / pageSize);
-
             // Tính toán phân trang
             int maxVisiblePages = 5;
             int halfVisible = (maxVisiblePages - 1) / 2;
