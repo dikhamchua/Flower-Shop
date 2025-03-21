@@ -280,8 +280,17 @@ public class HomeController extends HttpServlet {
                 return;
             }
             
+            // Lấy danh sách categories của sản phẩm
+            List<Category> productCategories = product.getCategories();
+            
             // Lấy danh sách sản phẩm liên quan (cùng danh mục)
-            List<Product> relatedProducts = productDAO.findRelatedProducts(product.getCategoryId(), productId, RELATED_PRODUCTS_COUNT);
+            List<Product> relatedProducts = new ArrayList<>();
+            
+            // Nếu sản phẩm có ít nhất một danh mục, lấy sản phẩm liên quan từ danh mục đầu tiên
+            if (productCategories != null && !productCategories.isEmpty()) {
+                int firstCategoryId = productCategories.get(0).getCategoryId();
+                relatedProducts = productDAO.findRelatedProducts(firstCategoryId, productId, RELATED_PRODUCTS_COUNT);
+            }
             
             // Kiểm tra trạng thái đăng nhập và lưu vào request attribute
             HttpSession session = request.getSession();
@@ -309,9 +318,15 @@ public class HomeController extends HttpServlet {
             request.setAttribute("product", product);
             request.setAttribute("relatedProducts", relatedProducts);
             
-            // Lấy tên danh mục
-            String categoryName = categoryDAO.findById(product.getCategoryId()).getName();
-            request.setAttribute("categoryName", categoryName);
+            // Lấy tên danh mục để hiển thị
+            if (productCategories != null && !productCategories.isEmpty()) {
+                // Lấy tên của danh mục đầu tiên để hiển thị
+                String categoryName = productCategories.get(0).getName();
+                request.setAttribute("categoryName", categoryName);
+                
+                // Lưu danh sách tất cả các danh mục của sản phẩm
+                request.setAttribute("productCategories", productCategories);
+            }
             
             // Kiểm tra thông báo từ session và xóa sau khi sử dụng
             String cartMessage = (String) session.getAttribute("cartMessage");

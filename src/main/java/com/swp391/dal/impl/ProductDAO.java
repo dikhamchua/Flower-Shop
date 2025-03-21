@@ -3,6 +3,7 @@ package com.swp391.dal.impl;
 import com.swp391.dal.DBContext;
 import com.swp391.dal.I_DAO;
 import com.swp391.entity.Product;
+import com.swp391.entity.CategoryProduct;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -37,20 +38,19 @@ public class ProductDAO extends DBContext implements I_DAO<Product> {
 
     @Override
     public boolean update(Product product) {
-        String sql = "UPDATE products SET category_id = ?, name = ?, description = ?, "
+        String sql = "UPDATE products SET name = ?, description = ?, " 
                 + "price = ?, stock = ?, image = ?, status = ?, updated_at = ? "
                 + "WHERE product_id = ?";
 
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setInt(1, product.getCategoryId());
-            statement.setString(2, product.getProductName());
-            statement.setString(3, product.getDescription());
-            statement.setBigDecimal(4, product.getPrice());
-            statement.setInt(5, product.getStock());
-            statement.setString(6, product.getImage());
-            statement.setByte(7, product.getStatus());
-            statement.setTimestamp(8, Timestamp.valueOf(LocalDateTime.now()));
-            statement.setInt(9, product.getProductId());
+            statement.setString(1, product.getProductName());
+            statement.setString(2, product.getDescription());
+            statement.setBigDecimal(3, product.getPrice());
+            statement.setInt(4, product.getStock());
+            statement.setString(5, product.getImage());
+            statement.setByte(6, product.getStatus());
+            statement.setTimestamp(7, Timestamp.valueOf(LocalDateTime.now()));
+            statement.setInt(8, product.getProductId());
 
             return statement.executeUpdate() > 0;
         } catch (SQLException e) {
@@ -75,22 +75,21 @@ public class ProductDAO extends DBContext implements I_DAO<Product> {
 
     @Override
     public int insert(Product product) {
-        String sql = "INSERT INTO products (category_id, name, description, price, stock, "
-                + "image, status, created_at, updated_at) "
-                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO products (name, description, price, stock, " 
+                + "image, status, created_at, updated_at) " 
+                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             System.out.println("Inserting product: " + product.getProductName());
 
-            statement.setInt(1, product.getCategoryId());
-            statement.setString(2, product.getProductName());
-            statement.setString(3, product.getDescription());
-            statement.setBigDecimal(4, product.getPrice());
-            statement.setInt(5, product.getStock());
-            statement.setString(6, product.getImage());
-            statement.setByte(7, product.getStatus());
-            statement.setTimestamp(8, product.getCreatedAt());
-            statement.setTimestamp(9, product.getUpdatedAt());
+            statement.setString(1, product.getProductName());
+            statement.setString(2, product.getDescription());
+            statement.setBigDecimal(3, product.getPrice());
+            statement.setInt(4, product.getStock());
+            statement.setString(5, product.getImage());
+            statement.setByte(6, product.getStatus());
+            statement.setTimestamp(7, product.getCreatedAt());
+            statement.setTimestamp(8, product.getUpdatedAt());
 
             int affectedRows = statement.executeUpdate();
             System.out.println("Affected rows: " + affectedRows);
@@ -116,7 +115,6 @@ public class ProductDAO extends DBContext implements I_DAO<Product> {
         Product product = new Product();
 
         product.setProductId(resultSet.getInt("product_id"));
-        product.setCategoryId(resultSet.getInt("category_id"));
         product.setProductName(resultSet.getString("name"));
         product.setDescription(resultSet.getString("description"));
         product.setPrice(resultSet.getBigDecimal("price"));
@@ -153,7 +151,6 @@ public class ProductDAO extends DBContext implements I_DAO<Product> {
         // Test insert()
         System.out.println("\n===== Testing insert() =====");
         Product newProduct = new Product();
-        newProduct.setCategoryId(1); // Thay đổi theo category_id có sẵn trong DB
         newProduct.setProductName("Test Product");
         newProduct.setDescription("This is a test product");
         newProduct.setPrice(new BigDecimal("99.99"));
@@ -232,7 +229,8 @@ public class ProductDAO extends DBContext implements I_DAO<Product> {
             int pageSize) {
         List<Product> products = new ArrayList<>();
         StringBuilder sqlBuilder = new StringBuilder(
-                "SELECT p.* FROM products p JOIN categories c ON p.category_id = c.category_id WHERE c.status = 1");
+                "SELECT p.* FROM products p JOIN category_product cp ON p.product_id = cp.product_id "
+                + "JOIN categories c ON cp.category_id = c.category_id WHERE c.status = 1");
         List<Object> parameters = new ArrayList<>();
 
         // Thêm điều kiện tìm kiếm theo tên sản phẩm
@@ -249,7 +247,7 @@ public class ProductDAO extends DBContext implements I_DAO<Product> {
 
         // Thêm điều kiện lọc theo danh mục
         if (categoryId != null) {
-            sqlBuilder.append(" AND p.category_id = ?");
+            sqlBuilder.append(" AND cp.category_id = ?");
             parameters.add(categoryId);
         }
 
@@ -287,7 +285,8 @@ public class ProductDAO extends DBContext implements I_DAO<Product> {
      */
     public int countProductsWithFilter(String searchFilter, Byte statusByte, Integer categoryId) {
         StringBuilder sqlBuilder = new StringBuilder(
-                "SELECT COUNT(*) FROM products p JOIN categories c ON p.category_id = c.category_id WHERE c.status = 1");
+                "SELECT COUNT(*) FROM products p JOIN category_product cp ON p.product_id = cp.product_id "
+                + "JOIN categories c ON cp.category_id = c.category_id WHERE c.status = 1");
         List<Object> parameters = new ArrayList<>();
 
         // Thêm điều kiện tìm kiếm theo tên sản phẩm
@@ -304,7 +303,7 @@ public class ProductDAO extends DBContext implements I_DAO<Product> {
 
         // Thêm điều kiện lọc theo danh mục
         if (categoryId != null) {
-            sqlBuilder.append(" AND p.category_id = ?");
+            sqlBuilder.append(" AND cp.category_id = ?");
             parameters.add(categoryId);
         }
 
@@ -653,7 +652,11 @@ public class ProductDAO extends DBContext implements I_DAO<Product> {
         List<Product> relatedProducts = new ArrayList<>();
         
         try {
-            String sql = "SELECT * FROM products WHERE category_id = ? AND product_id != ? AND status = 1 ORDER BY RAND() LIMIT ?";
+            String sql = "SELECT DISTINCT p.* FROM products p " +
+                         "JOIN category_product cp ON p.product_id = cp.product_id " +
+                         "WHERE cp.category_id = ? AND p.product_id != ? AND p.status = 1 " +
+                         "ORDER BY RAND() LIMIT ?";
+            
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1, categoryId);
             statement.setInt(2, currentProductId);
@@ -664,15 +667,18 @@ public class ProductDAO extends DBContext implements I_DAO<Product> {
             while (rs.next()) {
                 Product product = new Product();
                 product.setProductId(rs.getInt("product_id"));
-                product.setCategoryId(rs.getInt("category_id"));
                 product.setProductName(rs.getString("name"));
                 product.setDescription(rs.getString("description"));
                 product.setPrice(rs.getBigDecimal("price"));
                 product.setStock(rs.getInt("stock"));
                 product.setImage(rs.getString("image"));
-                product.setStatus((byte) (rs.getBoolean("status") ? 1 : 0));
+                product.setStatus(rs.getByte("status"));
                 product.setCreatedAt(rs.getTimestamp("created_at"));
                 product.setUpdatedAt(rs.getTimestamp("updated_at"));
+                
+                // Lấy danh sách categories cho product
+                CategoryProductDAO categoryProductDAO = new CategoryProductDAO();
+                product.setCategories(categoryProductDAO.getCategoriesByProductId(product.getProductId()));
                 
                 relatedProducts.add(product);
             }
@@ -702,16 +708,19 @@ public class ProductDAO extends DBContext implements I_DAO<Product> {
             if (resultSet.next()) {
                 product = new Product();
                 product.setProductId(resultSet.getInt("product_id"));
-                product.setCategoryId(resultSet.getInt("category_id"));
                 product.setProductName(resultSet.getString("name"));
                 product.setDescription(resultSet.getString("description"));
                 product.setPrice(new java.math.BigDecimal(resultSet.getDouble("price")));
                 product.setStock(resultSet.getInt("stock"));
                 product.setQuantity(resultSet.getInt("quantity"));
                 product.setImage(resultSet.getString("image"));
-                product.setStatus((byte) (resultSet.getBoolean("status") ? 1 : 0));
+                product.setStatus(resultSet.getByte("status"));
                 product.setCreatedAt(resultSet.getTimestamp("created_at"));
                 product.setUpdatedAt(resultSet.getTimestamp("updated_at"));
+                
+                // Lấy danh sách categories cho product
+                CategoryProductDAO categoryProductDAO = new CategoryProductDAO();
+                product.setCategories(categoryProductDAO.getCategoriesByProductId(product.getProductId()));
             }
         } catch (SQLException e) {
             System.out.println("Error getting product by ID: " + e.getMessage());

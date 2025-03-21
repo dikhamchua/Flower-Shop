@@ -10,7 +10,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,14 +24,12 @@ import com.swp391.dal.impl.SupplierDAO;
 import com.swp391.dal.impl.ProductSupplierDAO;
 import com.swp391.entity.Supplier;
 import java.util.Arrays;
-import java.util.stream.Collectors;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
+import com.swp391.dal.impl.CategoryProductDAO;
 
 @MultipartConfig(
     fileSizeThreshold = 1024 * 1024,  // 1 MB
@@ -273,6 +270,14 @@ public class ManageProductController extends HttpServlet {
                     CategoryDAO categoryDAO = new CategoryDAO();
                     List<Category> categories = categoryDAO.findAll();
                     
+                    // Lấy danh sách ID danh mục của sản phẩm
+                    List<Integer> selectedCategoryIds = new ArrayList<>();
+                    if (product.getCategories() != null) {
+                        for (Category category : product.getCategories()) {
+                            selectedCategoryIds.add(category.getCategoryId());
+                        }
+                    }
+                    
                     // Lấy danh sách nhà cung cấp
                     SupplierDAO supplierDAO = new SupplierDAO();
                     List<Supplier> suppliers = supplierDAO.findAll();
@@ -283,6 +288,7 @@ public class ManageProductController extends HttpServlet {
                     
                     request.setAttribute("product", product);
                     request.setAttribute("categories", categories);
+                    request.setAttribute("selectedCategoryIds", selectedCategoryIds);
                     request.setAttribute("suppliers", suppliers);
                     request.setAttribute("selectedSupplierIds", selectedSupplierIds);
             
@@ -335,7 +341,7 @@ public class ManageProductController extends HttpServlet {
         try {
             int productId = Integer.parseInt(request.getParameter("productId"));
             String name = request.getParameter("name");
-            int categoryId = Integer.parseInt(request.getParameter("categoryId"));
+            String[] categoryIds = request.getParameterValues("categoryIds"); // Thay đổi để lấy nhiều danh mục
             String description = request.getParameter("description");
             BigDecimal price = new BigDecimal(request.getParameter("price"));
             int stock = Integer.parseInt(request.getParameter("stock"));
@@ -380,7 +386,6 @@ public class ManageProductController extends HttpServlet {
                 
                 // Update fields
                 product.setProductName(name);
-                product.setCategoryId(categoryId);
                 product.setDescription(description);
                 product.setPrice(price);
                 product.setStock(stock);
@@ -394,6 +399,20 @@ public class ManageProductController extends HttpServlet {
                 
                 // Handle result
                 if (isSuccess) {
+                    // Cập nhật quan hệ với danh mục
+                    CategoryProductDAO categoryProductDAO = new CategoryProductDAO();
+                    
+                    // Xóa tất cả các liên kết danh mục cũ
+                    categoryProductDAO.removeAllCategoriesFromProduct(productId);
+                    
+                    // Thêm các liên kết danh mục mới
+                    if (categoryIds != null && categoryIds.length > 0) {
+                        for (String categoryIdStr : categoryIds) {
+                            int categoryId = Integer.parseInt(categoryIdStr);
+                            categoryProductDAO.addCategoryToProduct(categoryId, productId);
+                        }
+                    }
+                    
                     // Cập nhật quan hệ với nhà cung cấp
                     String supplierIdsStr = request.getParameter("supplierIds");
                     ProductSupplierDAO psDAO = new ProductSupplierDAO();
@@ -439,18 +458,18 @@ public class ManageProductController extends HttpServlet {
             String description = request.getParameter("description");
             String priceStr = request.getParameter("price");
             String stockStr = request.getParameter("stock");
-            String categoryIdStr = request.getParameter("categoryId");
+            String[] categoryIds = request.getParameterValues("categoryIds"); // Thay đổi để lấy nhiều danh mục
             String statusStr = request.getParameter("status");
             
             System.out.println("Form data received: name=" + name + ", price=" + priceStr + 
-                              ", stock=" + stockStr + ", categoryId=" + categoryIdStr + 
+                              ", stock=" + stockStr + ", categoryIds=" + (categoryIds != null ? Arrays.toString(categoryIds) : "null") + 
                               ", status=" + statusStr);
             
             // Kiểm tra dữ liệu đầu vào
             if (name == null || name.trim().isEmpty() || 
                 priceStr == null || priceStr.trim().isEmpty() ||
                 stockStr == null || stockStr.trim().isEmpty() ||
-                categoryIdStr == null || categoryIdStr.trim().isEmpty() ||
+                categoryIds == null || categoryIds.length == 0 ||
                 statusStr == null || statusStr.trim().isEmpty()) {
                 
                 setToastMessage(request, "All required fields must be filled", "error");
@@ -461,7 +480,6 @@ public class ManageProductController extends HttpServlet {
             // Chuyển đổi các giá trị
             BigDecimal price = new BigDecimal(priceStr);
             int stock = Integer.parseInt(stockStr);
-            int categoryId = Integer.parseInt(categoryIdStr);
             byte status = Byte.parseByte(statusStr);
             
             // Xử lý file ảnh
@@ -507,7 +525,6 @@ public class ManageProductController extends HttpServlet {
             product.setDescription(description);
             product.setPrice(price);
             product.setStock(stock);
-            product.setCategoryId(categoryId);
             product.setImage(fileName);
             product.setStatus(status);
             
@@ -522,6 +539,13 @@ public class ManageProductController extends HttpServlet {
             System.out.println("Product insert result: " + productId);
             
             if (productId > 0) {
+                // Thêm các mối quan hệ với danh mục
+                CategoryProductDAO categoryProductDAO = new CategoryProductDAO();
+                for (String categoryIdStr : categoryIds) {
+                    int categoryId = Integer.parseInt(categoryIdStr);
+                    categoryProductDAO.addCategoryToProduct(categoryId, productId);
+                }
+                
                 // Xử lý quan hệ với nhà cung cấp
                 String supplierIdsStr = request.getParameter("supplierIds");
                 if (supplierIdsStr != null && !supplierIdsStr.isEmpty()) {

@@ -6,14 +6,11 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 import com.swp391.dal.impl.SliderDAO;
 import com.swp391.entity.Slider;
 import java.util.List;
 import jakarta.servlet.RequestDispatcher;
 import java.sql.Timestamp;
-import java.util.HashMap;
-import java.util.Map;
 
 @WebServlet(name="ManageSliderController", urlPatterns={"/admin/manage-slider"})
 public class ManageSliderController extends HttpServlet {

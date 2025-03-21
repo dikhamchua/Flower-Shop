@@ -3,7 +3,7 @@ package com.swp391.dal.impl;
 import com.swp391.entity.Category;
 import com.swp391.entity.CategoryProduct;
 import com.swp391.entity.Product;
-import com.swp391.utils.DBContext;
+import com.swp391.dal.DBContext;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
