@@ -9,6 +9,7 @@ import lombok.ToString;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -17,7 +18,6 @@ import java.sql.Timestamp;
 @ToString
 public class Product {
     private int productId;
-    private int categoryId;
     private String productName;
     private String description;
     private BigDecimal price;
@@ -27,4 +27,6 @@ public class Product {
     private int quantity;
     private Timestamp createdAt;
     private Timestamp updatedAt;
+    
+    private List<Category> categories;
 }
