@@ -35,9 +35,10 @@
             .product-large-thumb img,
             .product-details-img img {
                 width: 100%;
-                height: 100%;
-                object-fit: cover; /* Đảm bảo ảnh vừa khung mà không bị méo */
-                border-radius: 8px; /* Bo góc ảnh */
+                max-height: 400px;
+                object-fit: cover;
+                border-radius: 8px;
+                overflow: hidden;
             }
             
             /* Thêm style cho khung chứa ảnh */

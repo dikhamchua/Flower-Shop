@@ -1,5 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!doctype html>
 <html lang="en">
 <head>
@@ -66,6 +67,65 @@
             margin-right: 10px;
             word-break: break-word;
         }
+        .category-input-container {
+            position: relative;
+        }
+        .category-suggestions {
+            position: absolute;
+            width: 100%;
+            max-height: 200px;
+            overflow-y: auto;
+            background: white;
+            border: 1px solid #ced4da;
+            border-radius: 0.25rem;
+            z-index: 1000;
+            display: none;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .category-suggestion {
+            padding: 8px 12px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            font-size: 14px;
+            color: #333;
+        }
+        .category-suggestion:hover {
+            background-color: #f8f9fa;
+        }
+        .selected-categories {
+            margin-top: 10px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+        .selected-category {
+            background-color: #e9ecef;
+            border: 1px solid #ced4da;
+            border-radius: 15px;
+            padding: 6px 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+        }
+        .remove-category {
+            cursor: pointer;
+            color: #dc3545;
+            font-weight: bold;
+            font-size: 16px;
+            line-height: 1;
+            margin-left: 4px;
+        }
+        .remove-category:hover {
+            color: #bb2d3b;
+        }
+        .category-name {
+            font-weight: 500;
+            color: #333;
+            flex-grow: 1;
+            margin-right: 10px;
+            word-break: break-word;
+        }
     </style>
 </head>
 
@@ -98,12 +158,15 @@
 
                     <div class="col-md-6">
                         <label class="form-label">Categories <span class="text-danger">*</span></label>
-                        <select class="form-select" name="categories" multiple>
-                            <c:forEach var="category" items="${categories}">
-                                <option value="${category.categoryId}">${category.name}</option>
-                            </c:forEach>
-                        </select>
-                        <div class="invalid-feedback"></div>
+                        <div class="category-input-container">
+                            <input type="text" class="form-control" id="categoryInput" placeholder="Type to search categories..." 
+                                   autocomplete="off" spellcheck="false">
+                            <div id="categorySuggestions" class="category-suggestions"></div>
+                            <div class="selected-categories" id="selectedCategories"></div>
+                            <input type="hidden" name="categories" id="categoryIdsInput">
+                            <div class="invalid-feedback"></div>
+                        </div>
+                        <small class="text-muted">Type category name and select from suggestions</small>
                     </div>
 
                     <div class="col-md-12">
@@ -183,6 +246,19 @@
 <jsp:include page="../common/dashboard/js-dashboard.jsp"></jsp:include>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"></script>
 <script src="${pageContext.request.contextPath}/assets/js/validate.js"></script>
+
+<script>
+    window.categories = [
+        <c:forEach var="category" items="${categories}" varStatus="status">
+            { 
+                id: ${category.categoryId}, 
+                name: "${fn:escapeXml(category.name)}" 
+            }<c:if test="${!status.last}">,</c:if>
+        </c:forEach>
+    ];
+</script>
+
+<script src="${pageContext.request.contextPath}/assets/js/categoryAdd.js"></script>
 
 </body>
 </html>

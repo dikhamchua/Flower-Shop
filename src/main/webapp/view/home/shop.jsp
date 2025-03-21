@@ -28,6 +28,7 @@
                 height: 200px; /* Điều chỉnh chiều cao theo nhu cầu */
                 object-fit: cover; /* Đảm bảo ảnh vừa khung mà không bị méo */
                 border-radius: 8px; /* Bo góc ảnh */
+                overflow: hidden; /* Thêm dòng này */
             }
             
             /* Thêm style cho khung chứa ảnh */

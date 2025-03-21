@@ -23,6 +23,7 @@
                     height: 100px;
                     object-fit: cover;
                     border-radius: 4px;
+                    overflow: hidden;
                 }
                 .product-image-container {
                     width: 100px;
