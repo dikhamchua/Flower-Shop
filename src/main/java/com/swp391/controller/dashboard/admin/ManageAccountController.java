@@ -231,12 +231,18 @@ public class ManageAccountController extends HttpServlet {
         if (accountIdStr != null && !accountIdStr.isEmpty()) {
             int accountId = Integer.parseInt(accountIdStr);
             AccountDAO accountDAO = new AccountDAO();
-            boolean deactivated = accountDAO.deactivateAccount(accountId);
             
-            if (deactivated) {
-                setToastMessage(request, "Account deactivated successfully", "success");
+            // Kiểm tra xem tài khoản cần deactivate có phải là admin không
+            Account accountToDeactivate = accountDAO.findById(accountId);
+            if (accountToDeactivate != null && "admin".equals(accountToDeactivate.getRole())) {
+                setToastMessage(request, "Cannot deactivate admin accounts", "error");
             } else {
-                setToastMessage(request, "Failed to deactivate account", "error");
+                boolean deactivated = accountDAO.deactivateAccount(accountId);
+                if (deactivated) {
+                    setToastMessage(request, "Account deactivated successfully", "success");
+                } else {
+                    setToastMessage(request, "Failed to deactivate account", "error");
+                }
             }
         } else {
             setToastMessage(request, "Invalid account ID", "error");

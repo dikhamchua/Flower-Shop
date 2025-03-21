@@ -119,22 +119,24 @@
                                                class="btn btn-sm btn-primary">
                                                 <iconify-icon icon="material-symbols:edit"></iconify-icon>
                                             </a>
-                                            <c:choose>
-                                                <c:when test="${account.status}">
-                                                    <button type="button" 
-                                                            class="btn btn-sm btn-danger fixed-width-btn"
-                                                            onclick="confirmDeactivate('${account.userId}')">
-                                                        <i class="fas fa-trash-alt"></i> Deactivate
-                                                    </button>
-                                                </c:when>
-                                                <c:otherwise>
-                                                    <button type="button" 
-                                                            class="btn btn-sm btn-success fixed-width-btn"
-                                                            onclick="confirmActivate('${account.userId}')">
-                                                        <i class="fas fa-check"></i> Activate
-                                                    </button>
-                                                </c:otherwise>
-                                            </c:choose>
+                                            <c:if test="${account.role ne 'admin'}">
+                                                <c:choose>
+                                                    <c:when test="${account.status}">
+                                                        <button type="button" 
+                                                                class="btn btn-sm btn-danger fixed-width-btn"
+                                                                onclick="confirmDeactivate('${account.userId}')">
+                                                            <i class="fas fa-trash-alt"></i> Deactivate
+                                                        </button>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <button type="button" 
+                                                                class="btn btn-sm btn-success fixed-width-btn"
+                                                                onclick="confirmActivate('${account.userId}')">
+                                                            <i class="fas fa-check"></i> Activate
+                                                        </button>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                            </c:if>
                                         </div>
                                     </td>
                                 </tr>

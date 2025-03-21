@@ -119,7 +119,7 @@
                                     </div>
                                     <div class="single-product-quantity">
                                         <c:choose>
-                                            <c:when test="${not empty sessionScope.account}">
+                                            <c:when test="${not empty sessionScope.account && sessionScope.account.role ne 'admin' && sessionScope.account.role ne 'staff'}">
                                                 <form action="${pageContext.request.contextPath}/cart" method="post" id="addToCartForm">
                                                     <input type="hidden" name="action" value="add">
                                                     <input type="hidden" name="productId" value="${product.productId}">
@@ -137,7 +137,7 @@
                                                     </div>
                                                 </form>
                                             </c:when>
-                                            <c:otherwise>
+                                            <c:when test="${empty sessionScope.account}">
                                                 <div class="product-quantity">
                                                     <div class="cart-plus-minus">
                                                         <input class="cart-plus-minus-box" type="text" value="1" disabled>
@@ -150,28 +150,19 @@
                                                 <div class="add-to-link">
                                                     <button class="product-btn login-required">Add to cart</button>
                                                 </div>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <div class="add-to-link">
+                                                    <button class="product-btn" disabled>Add to cart (Not available for staff/admin)</button>
+                                                </div>
                                             </c:otherwise>
                                         </c:choose>
-                                    </div>
-                                    <div class="wishlist-compare-btn">
-                                        <a href="#" class="wishlist-btn">Add to Wishlist</a>
-                                        <a href="#" class="add-compare">Compare</a>
                                     </div>
                                     <div class="product-meta">
                                         <span class="posted-in">
                                             Category: 
                                             <a href="${pageContext.request.contextPath}/home?categories=${product.categoryId}">${categoryName}</a>
                                         </span>
-                                    </div>
-                                    <div class="single-product-sharing">
-                                        <h3>Share this product</h3>
-                                        <ul>
-                                            <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                                            <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                                            <li><a href="#"><i class="fa fa-pinterest"></i></a></li>
-                                            <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
-                                            <li><a href="#"><i class="fa fa-instagram"></i></a></li>
-                                        </ul>
                                     </div>
                                 </div>
                                 <!--Product Details Content End-->
@@ -310,21 +301,21 @@
                 </div>
                 <!--Product Description Review Area Start-->
                 <!--Also Like Product Start-->
-                <div class="also-like-product">
+<!--                <div class="also-like-product">
                     <div class="container">
                         <div class="row">
-                            <!--Section Title Start-->
+                            Section Title Start
                             <div class="col-12">
                                 <div class="section-title text-center mb-35">
                                     <h3>You may also like…</h3>
                                 </div>
                             </div>
-                            <!--Section Title End-->
+                            Section Title End
                         </div>
                         <div class="row">
                             <div class="product-slider-active p-0">
                                 <div class="col-md-3 col-lg-3 col-sm-4 col-xs-12">
-                                    <!--Single Product Start-->
+                                    Single Product Start
                                     <div class="single-product mb-25">
                                         <div class="product-img img-full">
                                             <a href="single-product.html">
@@ -350,10 +341,10 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <!--Single Product End-->
+                                    Single Product End
                                 </div>
                                 <div class="col-md-3 col-lg-3 col-sm-4 col-xs-12">
-                                    <!--Single Product Start-->
+                                    Single Product Start
                                     <div class="single-product mb-25">
                                         <div class="product-img img-full">
                                             <a href="single-product.html">
@@ -379,10 +370,10 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <!--Single Product End-->
+                                    Single Product End
                                 </div>
                                 <div class="col-md-3 col-lg-3 col-sm-4 col-xs-12">
-                                    <!--Single Product Start-->
+                                    Single Product Start
                                     <div class="single-product mb-25">
                                         <div class="product-img img-full">
                                             <a href="single-product.html">
@@ -408,10 +399,10 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <!--Single Product End-->
+                                    Single Product End
                                 </div>
                                 <div class="col-md-3 col-lg-3 col-sm-4 col-xs-12">
-                                    <!--Single Product Start-->
+                                    Single Product Start
                                     <div class="single-product mb-25">
                                         <div class="product-img img-full">
                                             <a href="single-product.html">
@@ -437,10 +428,10 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <!--Single Product End-->
+                                    Single Product End
                                 </div>
                                 <div class="col-md-3 col-lg-3 col-sm-4 col-xs-12">
-                                    <!--Single Product Start-->
+                                    Single Product Start
                                     <div class="single-product mb-25">
                                         <div class="product-img img-full">
                                             <a href="single-product.html">
@@ -466,10 +457,10 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <!--Single Product End-->
+                                    Single Product End
                                 </div>
                                 <div class="col-md-3 col-lg-3 col-sm-4 col-xs-12">
-                                    <!--Single Product Start-->
+                                    Single Product Start
                                     <div class="single-product mb-25">
                                         <div class="product-img img-full">
                                             <a href="single-product.html">
@@ -495,12 +486,12 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <!--Single Product End-->
+                                    Single Product End
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                </div>-->
                 <!--Also Like Product End-->
                 <!--Related Product Start-->
                 <div class="Related-product mt-105 mb-100">

@@ -115,7 +115,17 @@
                                                                             </span>
                                                                         </div>
                                                                         <div class="add-to-cart">
-                                                                            <a href="#" class="add-to-cart-btn" data-product-id="${product.productId}">Add To Cart</a>
+                                                                            <c:choose>
+                                                                                <c:when test="${not empty sessionScope.account && sessionScope.account.role ne 'admin' && sessionScope.account.role ne 'staff'}">
+                                                                                    <a href="#" class="add-to-cart-btn" data-product-id="${product.productId}">Add To Cart</a>
+                                                                                </c:when>
+                                                                                <c:when test="${empty sessionScope.account}">
+                                                                                    <a href="#" class="add-to-cart-btn login-required" data-product-id="${product.productId}">Add To Cart</a>
+                                                                                </c:when>
+                                                                                <c:otherwise>
+                                                                                    <a href="#" class="add-to-cart-btn" disabled>Add To Cart (Not available for staff/admin)</a>
+                                                                                </c:otherwise>
+                                                                            </c:choose>
                                                                         </div>
                                                                     </div>
                                                                 </div>

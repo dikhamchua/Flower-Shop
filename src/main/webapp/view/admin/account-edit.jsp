@@ -78,10 +78,15 @@
                         </div>
                         <div class="col-md-6">
                             <label class="form-label">Status</label>
-                            <select class="form-select" name="status" required>
+                            <select class="form-select" name="status" required 
+                                    ${account.role eq 'admin' ? 'disabled' : ''}>
                                 <option value="true" ${account.status ? 'selected' : ''}>Active</option>
                                 <option value="false" ${!account.status ? 'selected' : ''}>Inactive</option>
                             </select>
+                            <c:if test="${account.role eq 'admin'}">
+                                <input type="hidden" name="status" value="true">
+                                <small class="text-muted">Admin accounts cannot be deactivated</small>
+                            </c:if>
                         </div>
 
                         <!-- Submit Button -->

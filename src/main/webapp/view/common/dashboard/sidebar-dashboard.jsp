@@ -7,132 +7,133 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <aside class="sidebar">
-  <button type="button" class="sidebar-close-btn">
-    <iconify-icon icon="radix-icons:cross-2"></iconify-icon>
-  </button>
-  <div>
-    <a href="${pageContext.request.contextPath}/home" class="sidebar-logo">
-      <img src="${pageContext.request.contextPath}/assets/admin/images/Logo.png" alt="site logo" class="logo">
-    </a>
-  </div>
-  <div class="sidebar-menu-area">
-    <ul class="sidebar-menu" id="sidebar-menu">
-      <li class="dropdown">
-<!--        <a href="javascript:void(0)">
-          <iconify-icon icon="solar:home-smile-angle-outline" class="menu-icon"></iconify-icon>
-          <span>Dashboard</span>
-        </a>-->
-<!--        <ul class="sidebar-submenu">
-          <li>
-            <a href="index.html"><i class="ri-circle-fill circle-icon text-primary-600 w-auto"></i> AI</a>
-          </li>
-          <li>
-            <a href="index-2.html"><i class="ri-circle-fill circle-icon text-warning-main w-auto"></i> CRM</a>
-          </li>
-          <li>
-            <a href="index-3.html"><i class="ri-circle-fill circle-icon text-info-main w-auto"></i> eCommerce</a>
-          </li>
-          <li>
-            <a href="index-4.html"><i class="ri-circle-fill circle-icon text-danger-main w-auto"></i> Cryptocurrency</a>
-          </li>
-          <li>
-            <a href="index-5.html"><i class="ri-circle-fill circle-icon text-success-main w-auto"></i> Investment</a>
-          </li>
-          <li>
-            <a href="index-6.html"><i class="ri-circle-fill circle-icon text-purple w-auto"></i> LMS</a>
-          </li>
-          <li>
-            <a href="index-7.html"><i class="ri-circle-fill circle-icon text-info-main w-auto"></i> NFT & Gaming</a>
-          </li>
-          <li>
-            <a href="index-8.html"><i class="ri-circle-fill circle-icon text-danger-main w-auto"></i> Medical</a>
-          </li>
-          <li>
-            <a href="index-9.html"><i class="ri-circle-fill circle-icon text-purple w-auto"></i> Analytics</a>
-          </li>
-          <li>
-            <a href="index-10.html"><i class="ri-circle-fill circle-icon text-warning-main w-auto"></i> POS & Inventory </a>
-          </li>
-          <li>
-            <a href="index-11.html"><i class="ri-circle-fill circle-icon text-success-main w-auto"></i> Finance & Banking </a>
-          </li>
-          <li>
-            <a href="index-12.html"><i class="ri-circle-fill circle-icon text-danger-main w-auto"></i> Booking System</a>
-          </li>
-        </ul>-->
-      </li>     
-
-      <c:if test="${sessionScope.account.role eq 'admin' || sessionScope.account.role eq 'staff'}">
-        <li>
-          <a href="${pageContext.request.contextPath}/admin/manage-account">
-            <iconify-icon icon="flowbite:users-group-outline" class="menu-icon"></iconify-icon>
-            <span>Users Management</span> 
-          </a>
-        </li>
-        <li>
-          <a href="${pageContext.request.contextPath}/admin/manage-category">
-            <iconify-icon icon="flowbite:users-group-outline" class="menu-icon"></iconify-icon>
-            <span>Category Management</span> 
-          </a>
-        </li>
-        <li>
-          <a href="${pageContext.request.contextPath}/admin/manage-slider">
-            <iconify-icon icon="flowbite:users-group-outline" class="menu-icon"></iconify-icon>
-            <span>Slider Management</span> 
-          </a>
-        </li>
-        <li>
-          <a href="${pageContext.request.contextPath}/admin/manage-product">
-            <iconify-icon icon="icon-park-outline:setting-two" class="menu-icon"></iconify-icon>
-            <span>Product Management</span>
-          </a>
-        </li>
-        <li>
-          <a href="${pageContext.request.contextPath}/admin/manage-supplier">
-            <iconify-icon icon="icon-park-outline:setting-two" class="menu-icon"></iconify-icon>
-            <span>Supplier Management</span>
-          </a>
-        </li>
-        <li>
-          <a href="${pageContext.request.contextPath}/admin/manage-order">
-            <iconify-icon icon="icon-park-outline:setting-two" class="menu-icon"></iconify-icon>
-            <span>Order Management</span>
-          </a>
-        </li>
-        <li>
-          <a href="${pageContext.request.contextPath}/admin/manage-coupon">
-            <iconify-icon icon="icon-park-outline:setting-two" class="menu-icon"></iconify-icon>
-            <span>Coupon Management</span>
-          </a>
-        </li>
-        <li>
-          <a href="${pageContext.request.contextPath}/admin/manage-blog">
-            <iconify-icon icon="icon-park-outline:setting-two" class="menu-icon"></iconify-icon>
-            <span>Blog Management</span>
-          </a>
-        </li>
-      </c:if>
-
-      <li>
-        <a href="${pageContext.request.contextPath}/change-password">
-          <iconify-icon icon="icon-park-outline:setting-two" class="menu-icon"></iconify-icon>
-          <span>Change Password</span> 
+    <button type="button" class="sidebar-close-btn">
+        <iconify-icon icon="radix-icons:cross-2"></iconify-icon>
+    </button>
+    <div>
+        <a href="${pageContext.request.contextPath}/home" class="sidebar-logo">
+            <img src="${pageContext.request.contextPath}/assets/admin/images/Logo.png" alt="site logo" class="logo">
         </a>
-      </li>
-      <li>
-        <a href="${pageContext.request.contextPath}/orderControll">
-          <iconify-icon icon="icon-park-outline:setting-two" class="menu-icon"></iconify-icon>
-          <span>My Order</span>
-        </a>
-      </li>
-      <c:if test="${sessionScope.account.role != 'admin' }">
-        <li>
-          <a href="${pageContext.request.contextPath}/feedbackControl">
-            <iconify-icon icon="icon-park-outline:setting-two" class="menu-icon"></iconify-icon>
-            <span>My Feedback</span>
-          </a>
-        </li>
-      </c:if>
-    </ul>
-  </div>
+    </div>
+    <div class="sidebar-menu-area">
+        <ul class="sidebar-menu" id="sidebar-menu">
+            <li class="dropdown">
+                <!--        <a href="javascript:void(0)">
+                          <iconify-icon icon="solar:home-smile-angle-outline" class="menu-icon"></iconify-icon>
+                          <span>Dashboard</span>
+                        </a>-->
+                <!--        <ul class="sidebar-submenu">
+                          <li>
+                            <a href="index.html"><i class="ri-circle-fill circle-icon text-primary-600 w-auto"></i> AI</a>
+                          </li>
+                          <li>
+                            <a href="index-2.html"><i class="ri-circle-fill circle-icon text-warning-main w-auto"></i> CRM</a>
+                          </li>
+                          <li>
+                            <a href="index-3.html"><i class="ri-circle-fill circle-icon text-info-main w-auto"></i> eCommerce</a>
+                          </li>
+                          <li>
+                            <a href="index-4.html"><i class="ri-circle-fill circle-icon text-danger-main w-auto"></i> Cryptocurrency</a>
+                          </li>
+                          <li>
+                            <a href="index-5.html"><i class="ri-circle-fill circle-icon text-success-main w-auto"></i> Investment</a>
+                          </li>
+                          <li>
+                            <a href="index-6.html"><i class="ri-circle-fill circle-icon text-purple w-auto"></i> LMS</a>
+                          </li>
+                          <li>
+                            <a href="index-7.html"><i class="ri-circle-fill circle-icon text-info-main w-auto"></i> NFT & Gaming</a>
+                          </li>
+                          <li>
+                            <a href="index-8.html"><i class="ri-circle-fill circle-icon text-danger-main w-auto"></i> Medical</a>
+                          </li>
+                          <li>
+                            <a href="index-9.html"><i class="ri-circle-fill circle-icon text-purple w-auto"></i> Analytics</a>
+                          </li>
+                          <li>
+                            <a href="index-10.html"><i class="ri-circle-fill circle-icon text-warning-main w-auto"></i> POS & Inventory </a>
+                          </li>
+                          <li>
+                            <a href="index-11.html"><i class="ri-circle-fill circle-icon text-success-main w-auto"></i> Finance & Banking </a>
+                          </li>
+                          <li>
+                            <a href="index-12.html"><i class="ri-circle-fill circle-icon text-danger-main w-auto"></i> Booking System</a>
+                          </li>
+                        </ul>-->
+            </li>     
+
+            <c:if test="${sessionScope.account.role eq 'admin' || sessionScope.account.role eq 'staff'}">
+                <li>
+                    <a href="${pageContext.request.contextPath}/admin/manage-account">
+                        <iconify-icon icon="flowbite:users-group-outline" class="menu-icon"></iconify-icon>
+                        <span>Users Management</span> 
+                    </a>
+                </li>
+                <li>
+                    <a href="${pageContext.request.contextPath}/admin/manage-category">
+                        <iconify-icon icon="flowbite:users-group-outline" class="menu-icon"></iconify-icon>
+                        <span>Category Management</span> 
+                    </a>
+                </li>
+                <li>
+                    <a href="${pageContext.request.contextPath}/admin/manage-slider">
+                        <iconify-icon icon="flowbite:users-group-outline" class="menu-icon"></iconify-icon>
+                        <span>Slider Management</span> 
+                    </a>
+                </li>
+                <li>
+                    <a href="${pageContext.request.contextPath}/admin/manage-product">
+                        <iconify-icon icon="icon-park-outline:setting-two" class="menu-icon"></iconify-icon>
+                        <span>Product Management</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="${pageContext.request.contextPath}/admin/manage-supplier">
+                        <iconify-icon icon="icon-park-outline:setting-two" class="menu-icon"></iconify-icon>
+                        <span>Supplier Management</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="${pageContext.request.contextPath}/admin/manage-coupon">
+                        <iconify-icon icon="icon-park-outline:setting-two" class="menu-icon"></iconify-icon>
+                        <span>Coupon Management</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="${pageContext.request.contextPath}/admin/manage-blog">
+                        <iconify-icon icon="icon-park-outline:setting-two" class="menu-icon"></iconify-icon>
+                        <span>Blog Management</span>
+                    </a>
+                </li>
+            </c:if>
+            <c:if test="${sessionScope.account.role eq 'staff' }">
+                <li>
+                    <a href="${pageContext.request.contextPath}/admin/manage-order">
+                        <iconify-icon icon="icon-park-outline:setting-two" class="menu-icon"></iconify-icon>
+                        <span>Order Management</span>
+                    </a>
+                </li>
+            </c:if>
+            <li>
+                <a href="${pageContext.request.contextPath}/change-password">
+                    <iconify-icon icon="icon-park-outline:setting-two" class="menu-icon"></iconify-icon>
+                    <span>Change Password</span> 
+                </a>
+            </li>
+            <li>
+                <a href="${pageContext.request.contextPath}/orderControll">
+                    <iconify-icon icon="icon-park-outline:setting-two" class="menu-icon"></iconify-icon>
+                    <span>My Order</span>
+                </a>
+            </li>
+            <c:if test="${sessionScope.account.role != 'admin' }">
+                <li>
+                    <a href="${pageContext.request.contextPath}/feedbackControl">
+                        <iconify-icon icon="icon-park-outline:setting-two" class="menu-icon"></iconify-icon>
+                        <span>My Feedback</span>
+                    </a>
+                </li>
+            </c:if>
+        </ul>
+    </div>
 </aside>
