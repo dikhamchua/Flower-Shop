@@ -134,35 +134,5 @@
             </div>
         </div>
         <!--Footer Middle Area End-->
-        <!--Footer Bottom Area Start-->
-        <div class="footer-bottom-area black-bg pt-50 pb-50">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12">
-                        <!--Footer Payment Start-->
-                        <div class="footer-payments-image">
-                            <img src="img/payment/payment-icon.png" alt="">
-                        </div>
-                        <!--Footer Payment End-->
-                        <!--Footer Menu Start-->
-                        <div class="footer-menu text-center">
-                            <nav>
-                                <ul>
-                                    <li><a href="#">Search Terms</a></li>
-                                    <li><a href="${pageContext.request.contextPath}/orderControll">My Order</a></li>
-                                </ul>
-                            </nav>
-                        </div>
-                        <!--Footer Menu End-->
-                        <!--Footer Copyright Start-->
-                        <div class="footer-copyright">
-                            <p class="copyright">&copy; 2021 <strong>Plantmore</strong> Made with <i class="fa fa-heart text-danger" aria-hidden="true"></i> by <a href="https://hasthemes.com/"><strong>HasThemes</strong></a>.</p>
-                        </div>
-                        <!--Footer Copyright End-->
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!--Footer Bottom Area End-->
     </div>
 </footer>
