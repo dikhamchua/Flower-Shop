@@ -97,9 +97,8 @@
                     </div>
 
                     <div class="col-md-6">
-                        <label class="form-label">Category <span class="text-danger">*</span></label>
-                        <select class="form-select" name="categoryId">
-                            <option value="" selected disabled>Select Category</option>
+                        <label class="form-label">Categories <span class="text-danger">*</span></label>
+                        <select class="form-select" name="categories" multiple>
                             <c:forEach var="category" items="${categories}">
                                 <option value="${category.categoryId}">${category.name}</option>
                             </c:forEach>

@@ -99,11 +99,11 @@
                     </div>
 
                     <div class="col-md-6">
-                        <label class="form-label">Category <span class="text-danger">*</span></label>
-                        <select class="form-select" name="categoryId">
-                            <option value="" disabled>Select Category</option>
+                        <label class="form-label">Categories <span class="text-danger">*</span></label>
+                        <select class="form-select" name="categories" multiple>
                             <c:forEach var="category" items="${categories}">
-                                <option value="${category.categoryId}" ${product.categoryId == category.categoryId ? 'selected' : ''}>
+                                <option value="${category.categoryId}" 
+                                    ${productCategories.contains(category.categoryId) ? 'selected' : ''}>
                                     ${category.name}
                                 </option>
                             </c:forEach>

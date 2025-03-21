@@ -341,7 +341,7 @@ public class ManageProductController extends HttpServlet {
         try {
             int productId = Integer.parseInt(request.getParameter("productId"));
             String name = request.getParameter("name");
-            String[] categoryIds = request.getParameterValues("categoryIds"); // Thay đổi để lấy nhiều danh mục
+            String[] categoryIds = request.getParameterValues("categoryIds");
             String description = request.getParameter("description");
             BigDecimal price = new BigDecimal(request.getParameter("price"));
             int stock = Integer.parseInt(request.getParameter("stock"));
@@ -390,22 +390,19 @@ public class ManageProductController extends HttpServlet {
                 product.setPrice(price);
                 product.setStock(stock);
                 product.setStatus(status);
-                
-                // Update timestamp
                 product.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
                 
                 // Perform update
                 boolean isSuccess = productDAO.update(product);
                 
-                // Handle result
                 if (isSuccess) {
-                    // Cập nhật quan hệ với danh mục
+                    // Update category relationships
                     CategoryProductDAO categoryProductDAO = new CategoryProductDAO();
                     
-                    // Xóa tất cả các liên kết danh mục cũ
+                    // Remove all existing category links
                     categoryProductDAO.removeAllCategoriesFromProduct(productId);
                     
-                    // Thêm các liên kết danh mục mới
+                    // Add new category links
                     if (categoryIds != null && categoryIds.length > 0) {
                         for (String categoryIdStr : categoryIds) {
                             int categoryId = Integer.parseInt(categoryIdStr);
@@ -413,14 +410,14 @@ public class ManageProductController extends HttpServlet {
                         }
                     }
                     
-                    // Cập nhật quan hệ với nhà cung cấp
+                    // Update supplier relationships
                     String supplierIdsStr = request.getParameter("supplierIds");
                     ProductSupplierDAO psDAO = new ProductSupplierDAO();
                     
-                    // Xóa tất cả quan hệ cũ
+                    // Remove all existing supplier links
                     psDAO.removeProductSuppliers(productId);
                     
-                    // Thêm quan hệ mới
+                    // Add new supplier links
                     if (supplierIdsStr != null && !supplierIdsStr.isEmpty()) {
                         // Tách chuỗi ID thành mảng
                         String[] supplierIdArray = supplierIdsStr.split(",");
@@ -444,7 +441,6 @@ public class ManageProductController extends HttpServlet {
             e.printStackTrace();
         }
         
-        // Redirect to list page
         response.sendRedirect(request.getContextPath() + "/admin/manage-product");
     }
 
@@ -458,7 +454,7 @@ public class ManageProductController extends HttpServlet {
             String description = request.getParameter("description");
             String priceStr = request.getParameter("price");
             String stockStr = request.getParameter("stock");
-            String[] categoryIds = request.getParameterValues("categoryIds"); // Thay đổi để lấy nhiều danh mục
+            String[] categoryIds = request.getParameterValues("categoryIds");
             String statusStr = request.getParameter("status");
             
             System.out.println("Form data received: name=" + name + ", price=" + priceStr + 
@@ -539,7 +535,7 @@ public class ManageProductController extends HttpServlet {
             System.out.println("Product insert result: " + productId);
             
             if (productId > 0) {
-                // Thêm các mối quan hệ với danh mục
+                // Add category relationships
                 CategoryProductDAO categoryProductDAO = new CategoryProductDAO();
                 for (String categoryIdStr : categoryIds) {
                     int categoryId = Integer.parseInt(categoryIdStr);
@@ -586,218 +582,72 @@ public class ManageProductController extends HttpServlet {
      */
     private void importProductsFromExcel(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        List<String> successMessages = new ArrayList<>();
-        List<String> errorMessages = new ArrayList<>();
-        Map<String, Integer> newProductQuantities = new HashMap<>();
-        Map<String, Integer> updatedProductQuantities = new HashMap<>();
-        int newProductCount = 0;
-        int updatedProductCount = 0;
-        int errorCount = 0;
-        
         try {
-            // Lấy file Excel từ request
-            Part filePart = request.getPart("excelFile");
-            if (filePart == null || filePart.getSize() == 0) {
-                setToastMessage(request, "Please select an Excel file to import", "error");
-                response.sendRedirect(request.getContextPath() + "/admin/manage-product");
-                return;
-            }
-            
-            // Đọc file Excel
-            InputStream fileContent = filePart.getInputStream();
-            Workbook workbook = null;
-            
-            // Xác định loại file
-            String fileName = filePart.getSubmittedFileName();
-            if (fileName.endsWith(".xlsx")) {
-                workbook = new XSSFWorkbook(fileContent);
-            } else if (fileName.endsWith(".xls")) {
-                workbook = new HSSFWorkbook(fileContent);
-            } else {
-                setToastMessage(request, "Only .xls and .xlsx files are supported", "error");
-                response.sendRedirect(request.getContextPath() + "/admin/manage-product");
-                return;
-            }
-            
-            // Lấy sheet đầu tiên
+            Part filePart = request.getPart("file");
+            InputStream inputStream = filePart.getInputStream();
+            Workbook workbook = new XSSFWorkbook(inputStream);
             Sheet sheet = workbook.getSheetAt(0);
             
-            // Khởi tạo DAO
             ProductDAO productDAO = new ProductDAO();
-            ProductSupplierDAO psDAO = new ProductSupplierDAO();
+            CategoryProductDAO categoryProductDAO = new CategoryProductDAO();
+            int successCount = 0;
+            int failCount = 0;
             
-            // Map để lưu trữ tên sản phẩm đã có trong DB và ID tương ứng
-            Map<String, Integer> existingProductMap = new HashMap<>();
-            for (Product product : productDAO.findAll()) {
-                existingProductMap.put(product.getProductName().toLowerCase(), product.getProductId());
-            }
-            
-            // Bỏ qua dòng tiêu đề
-            boolean isFirstRow = true;
-            
-            // Duyệt từng dòng
-            for (Row row : sheet) {
-                if (isFirstRow) {
-                    isFirstRow = false;
-                    continue;
-                }
-                
+            // Bỏ qua dòng đầu tiên (header)
+            for (int i = 1; i <= sheet.getLastRowNum(); i++) {
+                Row row = sheet.getRow(i);
                 try {
-                    // Đọc dữ liệu từ các ô trong dòng
-                    Cell nameCell = row.getCell(0);
-                    Cell categoryIdCell = row.getCell(1);
-                    Cell descriptionCell = row.getCell(2);
-                    Cell priceCell = row.getCell(3);
-                    Cell stockCell = row.getCell(4);
-                    Cell statusCell = row.getCell(5);
-                    Cell supplierIdsCell = row.getCell(6);
+                    // Lấy dữ liệu từ các cột trong Excel
+                    String name = row.getCell(0).getStringCellValue();
+                    String description = row.getCell(1).getStringCellValue();
+                    BigDecimal price = new BigDecimal(row.getCell(2).getNumericCellValue());
+                    int stock = (int) row.getCell(3).getNumericCellValue();
+                    String image = row.getCell(4).getStringCellValue();
+                    byte status = (byte) row.getCell(5).getNumericCellValue();
+                    String[] categoryIds = row.getCell(6).getStringCellValue().split(",");
                     
-                    // Kiểm tra các trường bắt buộc
-                    if (nameCell == null || categoryIdCell == null || priceCell == null || stockCell == null || statusCell == null) {
-                        errorMessages.add("Row " + row.getRowNum() + ": Missing required fields");
-                        errorCount++;
-                        continue;
-                    }
+                    // Tạo đối tượng Product
+                    Product product = new Product();
+                    product.setProductName(name);
+                    product.setDescription(description);
+                    product.setPrice(price);
+                    product.setStock(stock);
+                    product.setImage(image);
+                    product.setStatus(status);
+                    Timestamp now = new Timestamp(System.currentTimeMillis());
+                    product.setCreatedAt(now);
+                    product.setUpdatedAt(now);
                     
-                    // Lấy dữ liệu từ các ô
-                    String productName = nameCell.getStringCellValue().trim();
-                    int categoryId = (int) categoryIdCell.getNumericCellValue();
-                    String description = descriptionCell != null ? descriptionCell.getStringCellValue() : "";
-                    BigDecimal price = new BigDecimal(priceCell.getNumericCellValue());
-                    int stock = (int) stockCell.getNumericCellValue();
-                    byte status = (byte) statusCell.getNumericCellValue();
+                    // Thêm sản phẩm vào database
+                    int productId = productDAO.insert(product);
                     
-                    // Kiểm tra sản phẩm đã tồn tại chưa
-                    boolean isNewProduct = true;
-                    int productId = 0;
-                    
-                    if (existingProductMap.containsKey(productName.toLowerCase())) {
-                        // Product exists, update information
-                        isNewProduct = false;
-                        productId = existingProductMap.get(productName.toLowerCase());
-
-                        Product existingProduct = productDAO.findById(productId);
-                        existingProduct.setCategoryId(categoryId);
-                        existingProduct.setDescription(description);
-                        existingProduct.setPrice(price);
-                        existingProduct.setStock(existingProduct.getStock() + stock); // Cộng dồn số lượng
-
-                        // Không cập nhật trạng thái
-                        // existingProduct.setStatus(status);
-
-                        existingProduct.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
-
-                        boolean updated = productDAO.update(existingProduct);
-
-                        if (updated) {
-                            // Xóa các mối quan hệ nhà cung cấp cũ
-                            psDAO.removeProductSuppliers(productId);
-                            
-                            // Lưu thông tin số lượng cập nhật
-                            if (updatedProductQuantities.containsKey(productName)) {
-                                updatedProductQuantities.put(productName, updatedProductQuantities.get(productName) + stock);
-                            } else {
-                                updatedProductQuantities.put(productName, stock);
-                            }
-                            
-                            successMessages.add("Updated product: " + productName + " (+" + stock + " items)");
-                            updatedProductCount++;
-                        } else {
-                            errorMessages.add("Row " + row.getRowNum() + ": Failed to update product '" + productName + "'");
-                            errorCount++;
-                            continue;
+                    if (productId > 0) {
+                        // Thêm các danh mục cho sản phẩm
+                        for (String categoryIdStr : categoryIds) {
+                            int categoryId = Integer.parseInt(categoryIdStr.trim());
+                            categoryProductDAO.addCategoryToProduct(categoryId, productId);
                         }
+                        successCount++;
                     } else {
-                        // Tạo sản phẩm mới
-                        Product product = new Product();
-                        product.setProductName(productName);
-                        product.setCategoryId(categoryId);
-                        product.setDescription(description);
-                        product.setPrice(price);
-                        product.setStock(stock);
-                        product.setStatus(status); // Chỉ đặt trạng thái cho sản phẩm mới
-
-                        // Đặt đường dẫn ảnh mặc định
-                        product.setImage("uploads/products/default_product.jpg");
-
-                        // Thiết lập thời gian tạo và cập nhật
-                        Timestamp now = new Timestamp(System.currentTimeMillis());
-                        product.setCreatedAt(now);
-                        product.setUpdatedAt(now);
-
-                        // Lưu sản phẩm vào database
-                        productId = productDAO.insert(product);
-
-                        if (productId > 0) {
-                            // Thêm vào map để tránh trùng lặp trong cùng file import
-                            existingProductMap.put(productName.toLowerCase(), productId);
-                            
-                            // Lưu thông tin số lượng mới
-                            if (newProductQuantities.containsKey(productName)) {
-                                newProductQuantities.put(productName, newProductQuantities.get(productName) + stock);
-                            } else {
-                                newProductQuantities.put(productName, stock);
-                            }
-                            
-                            successMessages.add("Added new product: " + productName + " (" + stock + " items)");
-                            newProductCount++;
-                        } else {
-                            errorMessages.add("Row " + row.getRowNum() + ": Failed to insert product '" + productName + "'");
-                            errorCount++;
-                            continue;
-                        }
-                    }
-                    
-                    // Xử lý nhà cung cấp nếu có
-                    if (supplierIdsCell != null) {
-                        String supplierIdsStr = "";
-                        if (supplierIdsCell.getCellType() == CellType.STRING) {
-                            supplierIdsStr = supplierIdsCell.getStringCellValue();
-                        } else if (supplierIdsCell.getCellType() == CellType.NUMERIC) {
-                            supplierIdsStr = String.valueOf((int) supplierIdsCell.getNumericCellValue());
-                        }
-
-                        if (!supplierIdsStr.isEmpty()) {
-                            String[] supplierIdArray = supplierIdsStr.split(",");
-                            for (String supplierIdStr : supplierIdArray) {
-                                try {
-                                    int supplierId = Integer.parseInt(supplierIdStr.trim());
-                                    psDAO.addProductSupplier(productId, supplierId);
-                                } catch (NumberFormatException e) {
-                                    // Bỏ qua nhà cung cấp không hợp lệ
-                                }
-                            }
-                        }
+                        failCount++;
                     }
                 } catch (Exception e) {
-                    errorMessages.add("Row " + row.getRowNum() + ": " + e.getMessage());
-                    errorCount++;
+                    failCount++;
+                    e.printStackTrace();
                 }
             }
             
-            // Đóng workbook
             workbook.close();
+            inputStream.close();
             
-            // Chuẩn bị thông báo kết quả
-            StringBuilder resultMessage = new StringBuilder();
-            resultMessage.append("Import completed. ");
-            resultMessage.append(newProductCount).append(" new products added. ");
-            resultMessage.append(updatedProductCount).append(" products updated. ");
-            resultMessage.append(errorCount).append(" products failed.");
-            
-            request.getSession().setAttribute("importSuccessMessages", successMessages);
-            request.getSession().setAttribute("importErrorMessages", errorMessages);
-            request.getSession().setAttribute("newProductCount", newProductCount);
-            request.getSession().setAttribute("updatedProductCount", updatedProductCount);
-            request.getSession().setAttribute("newProductQuantities", newProductQuantities);
-            request.getSession().setAttribute("updatedProductQuantities", updatedProductQuantities);
-            
-            setToastMessage(request, resultMessage.toString(), (newProductCount > 0 || updatedProductCount > 0) ? "success" : "error");
+            setToastMessage(request, 
+                "Import completed: " + successCount + " successful, " + failCount + " failed", 
+                successCount > 0 ? "success" : "error");
         } catch (Exception e) {
+            setToastMessage(request, "Error during import: " + e.getMessage(), "error");
             e.printStackTrace();
-            setToastMessage(request, "Error importing products: " + e.getMessage(), "error");
         }
         
-        response.sendRedirect(request.getContextPath() + "/admin/manage-product?import_result=true");
+        response.sendRedirect(request.getContextPath() + "/admin/manage-product");
     }
 }

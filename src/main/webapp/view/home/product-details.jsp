@@ -72,7 +72,9 @@
                                     <ul>
                                         <li><a href="${pageContext.request.contextPath}/">Home</a></li>
                                         <li><a href="${pageContext.request.contextPath}/home">Shop</a></li>
-                                        <li><a href="${pageContext.request.contextPath}/home?categories=${product.categoryId}">${categoryName}</a></li>
+                                        <c:if test="${not empty productCategories}">
+                                            <li><a href="${pageContext.request.contextPath}/home?categories=${productCategories[0].categoryId}">${productCategories[0].name}</a></li>
+                                        </c:if>
                                         <li class="active">${product.productName}</li>
                                     </ul>
                                 </div>
@@ -178,8 +180,11 @@
                                     </div>
                                     <div class="product-meta">
                                         <span class="posted-in">
-                                            Category: 
-                                            <a href="${pageContext.request.contextPath}/home?categories=${product.categoryId}">${categoryName}</a>
+                                            Categories: 
+                                            <c:forEach var="category" items="${productCategories}" varStatus="loop">
+                                                <a href="${pageContext.request.contextPath}/home?categories=${category.categoryId}">${category.name}</a>
+                                                ${not loop.last ? ', ' : ''}
+                                            </c:forEach>
                                         </span>
                                     </div>
                                 </div>

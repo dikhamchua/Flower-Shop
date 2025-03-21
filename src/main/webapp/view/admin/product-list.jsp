@@ -158,7 +158,11 @@
                                                 </c:otherwise>
                                             </c:choose>
                                         </td>
-                                        <td>${categoryMap[product.categoryId].name}</td>
+                                        <td>
+                                            <c:forEach var="category" items="${productCategoriesMap[product.productId]}" varStatus="status">
+                                                ${category.name}${not status.last ? ', ' : ''}
+                                            </c:forEach>
+                                        </td>
                                         <td>
                                             <c:if test="${not empty productSuppliersMap[product.productId]}">
                                                 <c:forEach var="supplier" items="${productSuppliersMap[product.productId]}" varStatus="status">

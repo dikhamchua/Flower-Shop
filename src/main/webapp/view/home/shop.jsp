@@ -105,6 +105,16 @@
                                         <div id="grid" class="tab-pane fade show active">
                                             <div class="product-grid-view">
                                                 <div class="row">
+                                                    <div class="col-md-2">
+                                                        <select class="form-select" name="categories">
+                                                            <option value="">All Categories</option>
+                                                            <c:forEach var="category" items="${categories}">
+                                                                <option value="${category.categoryId}" ${param.categories == category.categoryId ? 'selected' : ''}>
+                                                                    ${category.name}
+                                                                </option>
+                                                            </c:forEach>
+                                                        </select>
+                                                    </div>
                                                     <c:forEach items="${products}" var="product">
                                                         <div class="col-md-4">
                                                             <!--Single Product Start-->

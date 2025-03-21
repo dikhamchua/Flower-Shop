@@ -50,11 +50,14 @@ public class CategoryProductDAO {
             ps.setInt(1, productId);
             rs = ps.executeQuery();
             while (rs.next()) {
-                list.add(new Category(
-                        rs.getInt("category_id"),
-                        rs.getString("name"),
-                        rs.getString("description")
-                ));
+                list.add(Category.builder()
+                        .categoryId(rs.getInt("category_id"))
+                        .name(rs.getString("name"))
+                        .description(rs.getString("description"))
+                        .status(rs.getByte("status"))
+                        .createdAt(rs.getDate("created_at"))
+                        .updatedAt(rs.getDate("updated_at"))
+                        .build());
             }
         } catch (SQLException e) {
             e.printStackTrace();
