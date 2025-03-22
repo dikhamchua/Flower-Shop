@@ -63,19 +63,18 @@ public class ProductSupplierDAO extends DBContext {
     public List<Integer> getSupplierIdsByProductId(int productId) {
         List<Integer> supplierIds = new ArrayList<>();
         String sql = "SELECT supplier_id FROM product_suppliers WHERE product_id = ?";
-        
-        try (PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setInt(1, productId);
-            ResultSet resultSet = statement.executeQuery();
-            
-            while (resultSet.next()) {
-                supplierIds.add(resultSet.getInt("supplier_id"));
+        try (Connection conn = getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, productId);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    supplierIds.add(rs.getInt("supplier_id"));
+                }
             }
         } catch (SQLException e) {
-            System.out.println("Error when getting supplier IDs by product ID: " + e.getMessage());
+            System.out.println("Error getting supplier IDs: " + e.getMessage());
             e.printStackTrace();
         }
-        
         return supplierIds;
     }
     
@@ -105,6 +104,7 @@ public class ProductSupplierDAO extends DBContext {
             }
         } catch (SQLException e) {
             System.out.println("Error getting suppliers: " + e.getMessage());
+            e.printStackTrace();
         }
         return suppliers;
     }

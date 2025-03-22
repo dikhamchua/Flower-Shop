@@ -605,5 +605,54 @@
         feedback.style.display = 'none';
     }
 </script>-->
+
+<!--<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialize suppliers
+        const suppliers = window.suppliers || [];
+        const selectedSupplierIds = window.selectedSupplierIds || [];
+        const selectedSuppliers = document.getElementById('selectedSuppliers');
+        const supplierIdsInput = document.getElementById('supplierIdsInput');
+        
+        console.log("Selected supplier IDs:", selectedSupplierIds);
+        
+        // Clear any existing suppliers
+        selectedSuppliers.innerHTML = '';
+        
+        // Add each selected supplier to the UI
+        selectedSupplierIds.forEach(id => {
+            const supplier = suppliers.find(s => s.id === id);
+            if (supplier) {
+                const supplierElement = document.createElement('div');
+                supplierElement.className = 'selected-supplier';
+                supplierElement.innerHTML = `
+                    <span class="supplier-name">${supplier.name}</span>
+                    <span class="remove-supplier" data-id="${supplier.id}">&times;</span>
+                `;
+                
+                supplierElement.querySelector('.remove-supplier').addEventListener('click', function() {
+                    // Remove supplier logic
+                    const supplierId = parseInt(this.dataset.id);
+                    const index = selectedSupplierIds.indexOf(supplierId);
+                    if (index !== -1) {
+                        selectedSupplierIds.splice(index, 1);
+                    }
+                    supplierElement.remove();
+                    updateSupplierIdsInput();
+                });
+                
+                selectedSuppliers.appendChild(supplierElement);
+            }
+        });
+        
+        // Update the hidden input with supplier IDs
+        function updateSupplierIdsInput() {
+            supplierIdsInput.value = selectedSupplierIds.join(',');
+        }
+        
+        // Initialize the hidden input
+        updateSupplierIdsInput();
+    });
+</script>-->
 </body>
 </html> 

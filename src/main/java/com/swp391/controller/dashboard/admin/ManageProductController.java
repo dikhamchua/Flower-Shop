@@ -267,54 +267,49 @@ public class ManageProductController extends HttpServlet {
 
     private void showEditForm(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        String productIdStr = request.getParameter("id");
-        if (productIdStr != null && !productIdStr.isEmpty()) {
-            try {
-                int productId = Integer.parseInt(productIdStr);
-                ProductDAO productDAO = new ProductDAO();
-                Product product = productDAO.findById(productId);
+        try {
+            int productId = Integer.parseInt(request.getParameter("id"));
+            ProductDAO productDAO = new ProductDAO();
+            Product product = productDAO.findById(productId);
+
+            if (product != null) {
+                // Get all categories for dropdown
+                CategoryDAO categoryDAO = new CategoryDAO();
+                List<Category> categories = categoryDAO.findAll();
+                request.setAttribute("categories", categories);
+
+                // Get selected categories for this product
+                CategoryProductDAO categoryProductDAO = new CategoryProductDAO();
+                List<Category> selectedCategories = categoryProductDAO.getCategoriesByProductId(productId);
                 
-                if (product != null) {
-                    CategoryDAO categoryDAO = new CategoryDAO();
-                    List<Category> categories = categoryDAO.findAll();
-                    
-                    // Lấy danh sách ID danh mục của sản phẩm
-                    List<Integer> selectedCategoryIds = new ArrayList<>();
-                    if (product.getCategories() != null) {
-                        for (Category category : product.getCategories()) {
-                            selectedCategoryIds.add(category.getCategoryId());
-                        }
-                    }
-                    
-                    // Lấy danh sách nhà cung cấp
-                    SupplierDAO supplierDAO = new SupplierDAO();
-                    List<Supplier> suppliers = supplierDAO.findAll();
-                    
-                    // Lấy danh sách ID nhà cung cấp của sản phẩm
-                    ProductSupplierDAO psDAO = new ProductSupplierDAO();
-                    List<Integer> selectedSupplierIds = psDAO.getSupplierIdsByProductId(productId);
-                    
-                    request.setAttribute("product", product);
-                    request.setAttribute("categories", categories);
-                    request.setAttribute("selectedCategoryIds", selectedCategoryIds);
-                    request.setAttribute("suppliers", suppliers);
-                    request.setAttribute("selectedSupplierIds", selectedSupplierIds);
-            
-                    request.getRequestDispatcher("/view/admin/product-edit.jsp").forward(request, response);
-                    return;
+                // Create a list of selected category IDs
+                List<Integer> selectedCategoryIds = new ArrayList<>();
+                for (Category category : selectedCategories) {
+                    selectedCategoryIds.add(category.getCategoryId());
                 }
-            } catch (NumberFormatException e) {
-                System.out.println("Invalid product ID format: " + e.getMessage());
-                setToastMessage(request, "Invalid product ID format", "error");
-            } catch (Exception e) {
-                System.out.println("Error when showing edit form: " + e.getMessage());
-                e.printStackTrace();
-                setToastMessage(request, "Error: " + e.getMessage(), "error");
+                request.setAttribute("selectedCategoryIds", selectedCategoryIds);
+
+                // Get all suppliers for dropdown
+                SupplierDAO supplierDAO = new SupplierDAO();
+                List<Supplier> suppliers = supplierDAO.findAll();
+                request.setAttribute("suppliers", suppliers);
+
+                // Get selected suppliers for this product
+                ProductSupplierDAO psDAO = new ProductSupplierDAO();
+                List<Integer> selectedSupplierIds = psDAO.getSupplierIdsByProductId(productId);
+                request.setAttribute("selectedSupplierIds", selectedSupplierIds);
+
+                request.setAttribute("product", product);
+                request.getRequestDispatcher("/view/admin/product-edit.jsp").forward(request, response);
+            } else {
+                setToastMessage(request, "Không tìm thấy sản phẩm!", "error");
+                response.sendRedirect(request.getContextPath() + "/admin/manage-product");
             }
+        } catch (Exception e) {
+            setToastMessage(request, "Error: " + e.getMessage(), "error");
+            e.printStackTrace();
+            response.sendRedirect(request.getContextPath() + "/admin/manage-product");
         }
-        
-        // Nếu có lỗi hoặc không tìm thấy sản phẩm, chuyển hướng về trang danh sách
-        response.sendRedirect(request.getContextPath() + "/admin/manage-product");
     }
 
     private void showAddForm(HttpServletRequest request, HttpServletResponse response) 

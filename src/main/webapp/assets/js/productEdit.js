@@ -17,6 +17,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const imageInput = form.querySelector('input[name="image"]');
     const categoryIdsInput = document.getElementById('categoryIdsInput');
 
+    // Initialize the selected suppliers when the page loads
+    initSelectedSuppliers();
+
     // Thêm hàm setValid và setInvalid
     function setInvalid(input, feedback, message) {
         input.classList.add('is-invalid');

@@ -15,488 +15,270 @@
         <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico">
         <!--All Css Here-->
         <jsp:include page="../common/home/common-css.jsp"></jsp:include>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.min.css">
+        <style>
+            .iziToast-wrapper {
+                z-index: 99999 !important;
+            }
+            .iziToast {
+                min-width: 300px;
+            }
+        </style>
+    </head>
+    <body>
+        <!--[if lt IE 8]>
+        <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
 
-        </head>
-        <body>
-            <!--[if lt IE 8]>
-            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-            <![endif]-->
-
-            <div class="wrapper">
-                <!--Header Area Start-->
+        <div class="wrapper">
+            <!--Header Area Start-->
             <jsp:include page="/view/common/home/header.jsp"></jsp:include>
-                <!--Header Area End-->
-                <!--Breadcrumb Tow Start-->
-                <div class="breadcrumb-tow mb-120">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="breadcrumb-title">
-                                    <h1>Blog</h1>
-                                </div>
-                                <div class="breadcrumb-content breadcrumb-content-tow">
-                                    <ul>
-                                        <li><a href="index.html">Home</a></li>
-                                        <li class="active">Blog</li>
-                                    </ul>
-                                </div>
+            <!--Header Area End-->
+            <!--Breadcrumb Tow Start-->
+            <div class="breadcrumb-tow mb-120">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="breadcrumb-title">
+                                <h1>Blog</h1>
+                            </div>
+                            <div class="breadcrumb-content breadcrumb-content-tow">
+                                <ul>
+                                    <li><a href="home">Home</a></li>
+                                    <li class="active">Blog</li>
+                                </ul>
                             </div>
                         </div>
                     </div>
                 </div>
-                <!--Breadcrumb Tow End-->
-                <!--Blog Area Start-->
-                <div class="blog-area white-bg pt-0 pb-0 mb-70">
-                    <div class="container">
-                        <div class="row">
-                            <!--Blog Post Start-->
-                            <div class="col-lg-9">
-                                <div class="blog_area">
-                                    <article class="blog_single">
-                                        <header class="entry-header">
-                                            <span class="post-category">
-                                                <a href="#"> Fashion</a>,<a href="#">WordPress</a>
-                                            </span>
-                                            <h2 class="entry-title">
-                                                <a href="single-blog.html">Blog image post</a>
-                                            </h2>
-                                            <span class="post-author">
-                                                <span class="post-by"> Posts by : </span> admin </span>
-                                            <span class="post-separator">|</span>
-                                            <span class="blog-post-date"><i class="fas fa-calendar-alt"></i>On March 10, 2022 </span>
-                                        </header>
-                                        <div class="post-thumbnail img-full">
-                                            <a href="single-blog.html">
-                                                <img src="img/blog/blog1.jpg" alt="">
-                                            </a>
-                                        </div>
-                                        <div class="postinfo-wrapper">
-                                            <div class="post-info">
-                                                <div class="entry-summary">
-                                                    <p>Donec vitae hendrerit arcu, sit amet faucibus nisl. Cras pretium arcu ex. Aenean posuere libero eu augue
-                                                        condimentum rhoncus. Praesent ornare tortor</p>
-                                                    <a href="single-blog.html" class="form-button">Read More</a>
-                                                    <div class="social-sharing">
-                                                        <div class="widget widget_socialsharing_widget">
-                                                            <h3 class="widget-title">Share this post</h3>
-                                                            <ul class="blog-social-icons">
-                                                                <li>
-                                                                    <a target="_blank" title="Facebook" href="#" class="facebook social-icon">
-                                                                        <i class="fa fa-facebook"></i>
-                                                                    </a>
-                                                                </li>
-                                                                <li>
-                                                                    <a target="_blank" title="twitter" href="#" class="twitter social-icon">
-                                                                        <i class="fa fa-twitter"></i>
-                                                                    </a>
-                                                                </li>
-                                                                <li>
-                                                                    <a target="_blank" title="pinterest" href="#" class="pinterest social-icon">
-                                                                        <i class="fa fa-pinterest"></i>
-                                                                    </a>
-                                                                </li>
-                                                                <li>
-                                                                    <a target="_blank" title="linkedin" href="#" class="linkedin social-icon">
-                                                                        <i class="fa fa-linkedin"></i>
-                                                                    </a>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </div>
+            </div>
+            <!--Breadcrumb Tow End-->
+            <!--Blog Area Start-->
+            <div class="blog-area white-bg pt-0 pb-0 mb-70">
+                <div class="container">
+                    <div class="row">
+                        <!--Blog Post Start-->
+                        <div class="col-lg-9">
+                            <div class="blog_area">
+                                <!-- Search form -->
+                                <div class="blog-search mb-50">
+                                    <form action="blog" method="get">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" name="search" value="${searchTitle}" placeholder="Search blogs...">
+                                            <div class="input-group-append">
+                                                <button class="btn btn-outline-secondary" type="submit">Search</button>
                                             </div>
                                         </div>
-                                        <!--start comment in post page -->
-                                        <a class="comment" href="#">3 comments</a>
-                                        <!--start comment in post page -->
-                                    </article>
-                                    <article class="blog_single">
-                                        <header class="entry-header">
-                                            <span class="post-category">
-                                                <a href="#"> Fashion</a>,<a href="#">WordPress</a>
-                                            </span>
-                                            <h2 class="entry-title">
-                                                <a href="single-blog.html">Post with Gallery</a>
-                                            </h2>
-                                            <span class="post-author">
-                                                <span class="post-by"> Posts by : </span> admin </span>
-                                            <span class="post-separator">|</span>
-                                            <span class="blog-post-date"><i class="fas fa-calendar-alt"></i>On March 10, 2022 </span>
-                                        </header>
-                                        <div class="post-thumbnail img-full">
-                                            <div class="post-gallery owl-carousel">
-                                                <a href="single-blog.html">
-                                                    <img src="img/blog/blog2.jpg" alt="">
-                                                </a>
-                                                <a href="single-blog.html">
-                                                    <img src="img/blog/blog1.jpg" alt="">
-                                                </a>
-                                                <a href="single-blog.html">
-                                                    <img src="img/blog/blog3.jpg" alt="">
-                                                </a>
-                                                <a href="single-blog.html">
-                                                    <img src="img/blog/blog4.jpg" alt="">
-                                                </a>
-                                                <a href="single-blog.html">
-                                                    <img src="img/blog/blog5.jpg" alt="">
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="postinfo-wrapper ">
-                                            <div class="post-info">
-                                                <div class="entry-summary">
-                                                    <p>Donec vitae hendrerit arcu, sit amet faucibus nisl. Cras pretium arcu ex. Aenean posuere libero eu augue
-                                                        condimentum rhoncus. Praesent ornare tortor</p>
-                                                    <a href="single-blog.html" class="form-button">Read More</a>
-                                                    <div class="social-sharing">
-                                                        <div class="widget widget_socialsharing_widget">
-                                                            <h3 class="widget-title">Share this post</h3>
-                                                            <ul class="blog-social-icons">
-                                                                <li>
-                                                                    <a target="_blank" title="Facebook" href="#" class="facebook social-icon">
-                                                                        <i class="fa fa-facebook"></i>
-                                                                    </a>
-                                                                </li>
-                                                                <li>
-                                                                    <a target="_blank" title="twitter" href="#" class="twitter social-icon">
-                                                                        <i class="fa fa-twitter"></i>
-                                                                    </a>
-                                                                </li>
-                                                                <li>
-                                                                    <a target="_blank" title="pinterest" href="#" class="pinterest social-icon">
-                                                                        <i class="fa fa-pinterest"></i>
-                                                                    </a>
-                                                                </li>
-                                                                <li>
-                                                                    <a target="_blank" title="linkedin" href="#" class="linkedin social-icon">
-                                                                        <i class="fa fa-linkedin"></i>
-                                                                    </a>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!--start comment in post page -->
-                                        <a class="comment" href="#">0 comments</a>
-                                        <!--start comment in post page -->
-                                    </article>
-                                    <article class="blog_single">
-                                        <header class="entry-header">
-                                            <span class="post-category">
-                                                <a href="single-blog.html"> Fashion</a>,<a href="#">WordPress</a>
-                                            </span>
-                                            <h2 class="entry-title">
-                                                <a href="#">Post with Audio</a>
-                                            </h2>
-                                            <span class="post-author">
-                                                <span class="post-by"> Posts by : </span> admin </span>
-                                            <span class="post-separator">|</span>
-                                            <span class="post-date"><i class="fas fa-calendar-alt"></i>On May 15, 2022 </span>
-                                        </header>
-                                        <div class="post-thumbnail">
-                                            <div class="blog-audio">
-                                                <iframe src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/347257536&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true"></iframe>
-                                            </div>
-                                        </div>
-                                        <div class="postinfo-wrapper">
-                                            <div class="post-info">
-                                                <div class="entry-summary">
-                                                    <p>Donec vitae hendrerit arcu, sit amet faucibus nisl. Cras pretium arcu ex. Aenean posuere libero eu augue
-                                                        condimentum rhoncus. Praesent ornare tortor</p>
-                                                    <a href="single-blog.html" class="form-button">Read More</a>
-                                                    <div class="social-sharing">
-                                                        <div class="widget widget_socialsharing_widget">
-                                                            <h3 class="widget-title">Share this post</h3>
-                                                            <ul class="blog-social-icons">
-                                                                <li>
-                                                                    <a target="_blank" title="Facebook" href="#" class="facebook social-icon">
-                                                                        <i class="fa fa-facebook"></i>
-                                                                    </a>
-                                                                </li>
-                                                                <li>
-                                                                    <a target="_blank" title="twitter" href="#" class="twitter social-icon">
-                                                                        <i class="fa fa-twitter"></i>
-                                                                    </a>
-                                                                </li>
-                                                                <li>
-                                                                    <a target="_blank" title="pinterest" href="#" class="pinterest social-icon">
-                                                                        <i class="fa fa-pinterest"></i>
-                                                                    </a>
-                                                                </li>
-                                                                <li>
-                                                                    <a target="_blank" title="linkedin" href="#" class="linkedin social-icon">
-                                                                        <i class="fa fa-linkedin"></i>
-                                                                    </a>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!--start comment in post page -->
-                                        <a class="comment" href="#">1 comments</a>
-                                        <!--start comment in post page -->
-                                    </article>
-                                    <article class="blog_single">
-                                        <header class="entry-header">
-                                            <span class="post-category">
-                                                <a href="single-blog.html"> Fashion</a>,<a href="#">WordPress</a>
-                                            </span>
-                                            <h2 class="entry-title">
-                                                <a href="#">Post with Video</a>
-                                            </h2>
-                                            <span class="post-author">
-                                                <span class="post-by"> Posts by : </span> admin </span>
-                                            <span class="post-separator">|</span>
-                                            <span class="post-date"><i class="fas fa-calendar-alt"></i>On May 15, 2022 </span>
-                                        </header>
-                                        <div class="post-thumbnail">
-                                            <div class="ratio ratio-16x9">
-                                                <iframe class="embed-responsive-item" src="https://player.vimeo.com/video/169507022?title=0&byline=0&portrait=0"></iframe>
-                                            </div>
-                                        </div>
-                                        <div class="postinfo-wrapper">
-                                            <div class="post-info">
-                                                <div class="entry-summary">
-                                                    <p>Donec vitae hendrerit arcu, sit amet faucibus nisl. Cras pretium arcu ex. Aenean posuere libero eu augue
-                                                        condimentum rhoncus. Praesent ornare tortor</p>
-                                                    <a href="single-blog.html" class="form-button">Read More</a>
-                                                    <div class="social-sharing">
-                                                        <div class="widget widget_socialsharing_widget">
-                                                            <h3 class="widget-title">Share this post</h3>
-                                                            <ul class="blog-social-icons">
-                                                                <li>
-                                                                    <a target="_blank" title="Facebook" href="#" class="facebook social-icon">
-                                                                        <i class="fa fa-facebook"></i>
-                                                                    </a>
-                                                                </li>
-                                                                <li>
-                                                                    <a target="_blank" title="twitter" href="#" class="twitter social-icon">
-                                                                        <i class="fa fa-twitter"></i>
-                                                                    </a>
-                                                                </li>
-                                                                <li>
-                                                                    <a target="_blank" title="pinterest" href="#" class="pinterest social-icon">
-                                                                        <i class="fa fa-pinterest"></i>
-                                                                    </a>
-                                                                </li>
-                                                                <li>
-                                                                    <a target="_blank" title="linkedin" href="#" class="linkedin social-icon">
-                                                                        <i class="fa fa-linkedin"></i>
-                                                                    </a>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!--start comment in post page -->
-                                        <a class="comment" href="#">1 comments</a>
-                                        <!--start comment in post page -->
-                                    </article>
-                                    <article class="blog_single">
-                                        <header class="entry-header">
-                                            <span class="post-category">
-                                                <a href="#"> Fashion</a>,
-                                                <a href="#">WordPress</a>
-                                            </span>
-                                            <h2 class="entry-title">
-                                                <a href="single-blog.html">Blog image post</a>
-                                            </h2>
-                                            <span class="post-author">
-                                                <span class="post-by"> Posts by : </span> admin </span>
-                                            <span class="post-separator">|</span>
-                                            <span class="blog-post-date"><i class="fas fa-calendar-alt"></i>On March 10, 2022 </span>
-                                        </header>
-                                        <div class="post-thumbnail img-full">
-                                            <a href="single-blog.html">
-                                                <img src="img/blog/blog3.jpg" alt="">
-                                            </a>
-                                        </div>
-                                        <div class="postinfo-wrapper ">
-                                            <div class="post-info">
-                                                <div class="entry-summary">
-                                                    <p>Donec vitae hendrerit arcu, sit amet faucibus nisl. Cras pretium arcu ex. Aenean posuere libero eu augue
-                                                        condimentum rhoncus. Praesent ornare tortor</p>
-                                                    <a href="single-blog.html" class="form-button">Read More</a>
-                                                    <div class="social-sharing">
-                                                        <div class="widget widget_socialsharing_widget">
-                                                            <h3 class="widget-title">Share this post</h3>
-                                                            <ul class="blog-social-icons">
-                                                                <li>
-                                                                    <a target="_blank" title="Facebook" href="#" class="facebook social-icon">
-                                                                        <i class="fa fa-facebook"></i>
-                                                                    </a>
-                                                                </li>
-                                                                <li>
-                                                                    <a target="_blank" title="twitter" href="#" class="twitter social-icon">
-                                                                        <i class="fa fa-twitter"></i>
-                                                                    </a>
-                                                                </li>
-                                                                <li>
-                                                                    <a target="_blank" title="pinterest" href="#" class="pinterest social-icon">
-                                                                        <i class="fa fa-pinterest"></i>
-                                                                    </a>
-                                                                </li>
-                                                                <li>
-                                                                    <a target="_blank" title="linkedin" href="#" class="linkedin social-icon">
-                                                                        <i class="fa fa-linkedin"></i>
-                                                                    </a>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!--start comment in post page -->
-                                        <a class="comment" href="#">3 comments</a>
-                                        <!--start comment in post page -->
-                                    </article>
+                                    </form>
                                 </div>
-                                <div class="row">
-                                    <div class="col-12">
-                                        <!--Pagination Start-->
-                                        <!--Pagination End-->
+                                
+                                <c:if test="${empty blogs}">
+                                    <div class="alert alert-info">No blogs found.</div>
+                                </c:if>
+                                
+                                <c:forEach var="blog" items="${blogs}">
+                                    <article class="blog_single">
+                                        <header class="entry-header">
+                                            <h2 class="entry-title">
+                                                <a href="blog?action=detail&id=${blog.id}">${blog.title}</a>
+                                            </h2>
+                                            <span class="post-author">
+                                                <span class="post-by"> Posted by: </span> Admin </span>
+                                            <span class="post-separator">|</span>
+                                            <span class="blog-post-date">
+                                                <i class="fas fa-calendar-alt"></i>
+                                                <fmt:formatDate value="${blog.createdAt}" pattern="MMMM dd, yyyy" />
+                                            </span>
+                                        </header>
+                                        
+                                        <div class="postinfo-wrapper">
+                                            <div class="post-info">
+                                                <div class="entry-summary">
+                                                    <p>${blog.content.length() > 200 ? blog.content.substring(0, 200).concat("...") : blog.content}</p>
+                                                    <a href="blog?action=detail&id=${blog.id}" class="form-button">Read More</a>
+                                                    <div class="social-sharing">
+                                                        <div class="widget widget_socialsharing_widget">
+                                                            <h3 class="widget-title">Share this post</h3>
+                                                            <ul class="blog-social-icons">
+                                                                <li>
+                                                                    <a target="_blank" title="Facebook" href="#" class="facebook social-icon">
+                                                                        <i class="fa fa-facebook"></i>
+                                                                    </a>
+                                                                </li>
+                                                                <li>
+                                                                    <a target="_blank" title="twitter" href="#" class="twitter social-icon">
+                                                                        <i class="fa fa-twitter"></i>
+                                                                    </a>
+                                                                </li>
+                                                                <li>
+                                                                    <a target="_blank" title="pinterest" href="#" class="pinterest social-icon">
+                                                                        <i class="fa fa-pinterest"></i>
+                                                                    </a>
+                                                                </li>
+                                                                <li>
+                                                                    <a target="_blank" title="linkedin" href="#" class="linkedin social-icon">
+                                                                        <i class="fa fa-linkedin"></i>
+                                                                    </a>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </article>
+                                </c:forEach>
+                                
+                                <!-- Pagination -->
+                                <c:if test="${totalPages > 1}">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="pagination-wrapper">
+                                                <ul class="pagination">
+                                                    <c:if test="${currentPage > 1}">
+                                                        <li class="page-item">
+                                                            <a class="page-link" href="blog?page=${currentPage - 1}${searchTitle != null ? '&search='.concat(searchTitle) : ''}">
+                                                                <i class="fa fa-angle-left"></i> Previous
+                                                            </a>
+                                                        </li>
+                                                    </c:if>
+                                                    
+                                                    <c:forEach begin="1" end="${totalPages}" var="i">
+                                                        <li class="page-item ${i == currentPage ? 'active' : ''}">
+                                                            <a class="page-link" href="blog?page=${i}${searchTitle != null ? '&search='.concat(searchTitle) : ''}">${i}</a>
+                                                        </li>
+                                                    </c:forEach>
+                                                    
+                                                    <c:if test="${currentPage < totalPages}">
+                                                        <li class="page-item">
+                                                            <a class="page-link" href="blog?page=${currentPage + 1}${searchTitle != null ? '&search='.concat(searchTitle) : ''}">
+                                                                Next <i class="fa fa-angle-right"></i>
+                                                            </a>
+                                                        </li>
+                                                    </c:if>
+                                                </ul>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
+                                </c:if>
                             </div>
-                            <!--Blog Post End-->
-                            <!--Blog Sidebar Start-->
-                            <div class="col-lg-3">
-                                <div class="blog_sidebar">
-                                    <div class="row_products_side">
-                                        <div class="product_left_sidbar">
-                                            <div class="product-filter  mb-35">
-                                                <h5>Search </h5>
-                                                <div class="search__sidbar">
-                                                    <div class="input_form">
-                                                        <input id="search_input" name="s" value="Search..." class="input_text" type="text">
+                        </div>
+                        <!--Blog Post End-->
+                        <!--Blog Sidebar Start-->
+                        <div class="col-lg-3">
+                            <div class="blog_sidebar">
+                                <div class="row_products_side">
+                                    <div class="product_left_sidbar">
+                                        <div class="product-filter mb-35">
+                                            <h5>Search </h5>
+                                            <div class="search__sidbar">
+                                                <div class="input_form">
+                                                    <form action="blog" method="get">
+                                                        <input id="search_input" name="search" value="${searchTitle}" placeholder="Search..." class="input_text" type="text">
                                                         <button id="blogsearchsubmit" type="submit" class="button">
                                                             <i class="fa fa-search"></i>
                                                         </button>
-                                                    </div>
+                                                    </form>
                                                 </div>
                                             </div>
-                                            <div class="product-filter  mb-35">
-                                                <h5>Blog Archives </h5>
-                                                <div class="blog_Archives__sidbar">
-                                                    <ul>
+                                        </div>
+                                        <div class="product-filter mb-35">
+                                            <h5>Recent Posts</h5>
+                                            <div class="blog_Archives__sidbar">
+                                                <ul>
+                                                    <c:forEach var="blog" items="${blogs}" end="4">
                                                         <li>
-                                                            <a href="#">March 2023</a>&nbsp;(1)</li>
-                                                        <li>
-                                                            <a href="#">December 2022</a>&nbsp;(3)</li>
-                                                        <li>
-                                                            <a href="#">November 2022</a>&nbsp;(4)</li>
-                                                        <li>
-                                                            <a href="#">September 2022</a>&nbsp;(1)</li>
-                                                        <li>
-                                                            <a href="#">August 2022</a>&nbsp;(1)</li>
-                                                    </ul>
+                                                            <a href="blog?action=detail&id=${blog.id}">${blog.title}</a>
+                                                        </li>
+                                                    </c:forEach>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="product-filter  mb-35">
+                                            <div class="sidebar-banner single-banner">
+                                                <div class="banner-img">
+                                                    <a href="#"><img src="img/banner/shop-sidebar.jpg" alt=""></a>
                                                 </div>
                                             </div>
-                                            <div class="product-filter  mb-35">
-                                                <h5>Recent Posts</h5>
-                                                <div class="blog_Archives__sidbar">
-                                                    <ul>
-                                                        <li> <a href="#">Blog image post</a>&nbsp;(1)</li>
-                                                        <li> <a href="#">Post with Gallery</a>&nbsp;(3)</li>
-                                                        <li><a href="#">Post with Audio</a>&nbsp;(4)</li>
-                                                        <li><a href="#">Post with Video</a>&nbsp;(1)</li>
-                                                        <li><a href="#">Post with Text</a>&nbsp;(1)</li>
+                                        </div>
 
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                            <div class="product-filter  mb-35">
-                                                <div class="sidebar-banner single-banner">
-                                                    <div class="banner-img">
-                                                        <a href="#"><img src="img/banner/shop-sidebar.jpg" alt=""></a>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="product-filter mb-35">
-                                                <h5>tags</h5>
-                                                <div class="product-tag blog-tag">
-                                                    <ul>
-                                                        <li><a href="#">brand</a></li>
-                                                        <li><a href="#">black</a></li>
-                                                        <li><a href="#">white</a></li>
-                                                        <li><a href="#">chire</a></li>
-                                                        <li><a href="#">table</a></li>
-                                                        <li><a href="#">Lorem</a></li>
-                                                        <li><a href="#">ipsum</a></li>
-                                                        <li><a href="#">dolor</a></li>
-                                                        <li><a href="#">sit</a></li>
-                                                        <li><a href="#">amet</a></li>
-                                                    </ul>
-                                                </div>
+                                        <div class="product-filter mb-35">
+                                            <h5>tags</h5>
+                                            <div class="product-tag blog-tag">
+                                                <ul>
+                                                    <li><a href="#">brand</a></li>
+                                                    <li><a href="#">black</a></li>
+                                                    <li><a href="#">white</a></li>
+                                                    <li><a href="#">chire</a></li>
+                                                    <li><a href="#">table</a></li>
+                                                    <li><a href="#">Lorem</a></li>
+                                                    <li><a href="#">ipsum</a></li>
+                                                    <li><a href="#">dolor</a></li>
+                                                    <li><a href="#">sit</a></li>
+                                                    <li><a href="#">amet</a></li>
+                                                </ul>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <!--Blog Sidebar End-->
                         </div>
+                        <!--Blog Sidebar End-->
                     </div>
                 </div>
-                <!--Blog Area End-->
-                <!--Brand Area Start-->
-                <div class="brand-area mb-105">
+            </div>
+            <!--Blog Area End-->
+            <!--Brand Area Start-->
+<!--                <div class="brand-area mb-105">
                     <div class="container">
                         <div class="row">
                             <div class="col-12">
                                 <div class="brand-active">
-                                    <!--Single Brand Start-->
+                                    Single Brand Start
                                     <div class="single-brand img-full">
                                         <a href="#"><img src="img/brand/brand1.png" alt=""></a>
                                     </div>
-                                    <!--Single Brand End-->
-                                    <!--Single Brand Start-->
+                                    Single Brand End
+                                    Single Brand Start
                                     <div class="single-brand img-full">
                                         <a href="#"><img src="img/brand/brand2.png" alt=""></a>
                                     </div>
-                                    <!--Single Brand End-->
-                                    <!--Single Brand Start-->
+                                    Single Brand End
+                                    Single Brand Start
                                     <div class="single-brand img-full">
                                         <a href="#"><img src="img/brand/brand3.png" alt=""></a>
                                     </div>
-                                    <!--Single Brand End-->
-                                    <!--Single Brand Start-->
+                                    Single Brand End
+                                    Single Brand Start
                                     <div class="single-brand img-full">
                                         <a href="#"><img src="img/brand/brand4.png" alt=""></a>
                                     </div>
-                                    <!--Single Brand End-->
-                                    <!--Single Brand Start-->
+                                    Single Brand End
+                                    Single Brand Start
                                     <div class="single-brand img-full">
                                         <a href="#"><img src="img/brand/brand5.png" alt=""></a>
                                     </div>
-                                    <!--Single Brand End-->
-                                    <!--Single Brand Start-->
+                                    Single Brand End
+                                    Single Brand Start
                                     <div class="single-brand img-full">
                                         <a href="#"><img src="img/brand/brand3.png" alt=""></a>
                                     </div>
-                                    <!--Single Brand End-->
-                                    <!--Single Brand Start-->
+                                    Single Brand End
+                                    Single Brand Start
                                     <div class="single-brand img-full">
                                         <a href="#"><img src="img/brand/brand4.png" alt=""></a>
                                     </div>
-                                    <!--Single Brand End-->
-                                    <!--Single Brand Start-->
+                                    Single Brand End
+                                    Single Brand Start
                                     <div class="single-brand img-full">
                                         <a href="#"><img src="img/brand/brand5.png" alt=""></a>
                                     </div>
-                                    <!--Single Brand End-->
+                                    Single Brand End
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                </div>-->
                 <!--Brand Area End-->
                 <!--Footer Area Start-->
             <jsp:include page="/view/common/home/footer.jsp"></jsp:include>
@@ -629,5 +411,31 @@
 
             <!--All Js Here-->
         <jsp:include page="../common/home/common-js.jsp"></jsp:include>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"></script>
+        <script>
+            // Toast message display
+            var toastMessage = "${sessionScope.toastMessage}";
+            var toastType = "${sessionScope.toastType}";
+            
+            if (toastMessage) {
+                iziToast.show({
+                    title: toastType === 'success' ? 'Success' : 'Error',
+                    message: toastMessage,
+                    position: 'topRight',
+                    color: toastType === 'success' ? 'green' : 'red',
+                    timeout: 5000
+                });
+                
+                // Remove toast attributes from session
+                fetch('${pageContext.request.contextPath}/remove-toast', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    }
+                }).catch(error => {
+                    console.error('Error:', error);
+                });
+            }
+        </script>
     </body>
 </html>
