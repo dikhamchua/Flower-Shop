@@ -31,23 +31,72 @@
                 text-decoration: none !important;
             }
             
-            /* Thêm style cho ảnh sản phẩm */
-            .product-large-thumb img,
-            .product-details-img img {
+            /* Improved styling for product images */
+            .product-large-thumb {
                 width: 100%;
-                max-height: 400px;
-                object-fit: cover;
+                height: 400px;
+                overflow: hidden; /* Prevents image overflow */
                 border-radius: 8px;
-                overflow: hidden;
+                margin-bottom: 15px;
+                box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+                display: flex; /* Added for better centering */
+                align-items: center; /* Center vertically */
+                justify-content: center; /* Center horizontally */
+                background-color: #fff;
             }
-            
-            /* Thêm style cho khung chứa ảnh */
-            .product-large-thumb,
-            .product-details-img {
+
+            .product-large-thumb img {
                 width: 100%;
-                height: 400px; /* Điều chỉnh chiều cao theo nhu cầu */
-                overflow: hidden; /* Ẩn phần ảnh thừa */
-                position: relative;
+                height: 100%;
+                object-fit: contain; /* Shows the entire image within container */
+                object-position: center; /* Centers the image */
+                max-width: 100%; /* Ensures image doesn't exceed container width */
+                max-height: 100%; /* Ensures image doesn't exceed container height */
+                transition: transform 0.3s ease;
+            }
+
+            .easyzoom:hover img {
+                transform: scale(1.02);
+            }
+
+            /* Thumbnail styling */
+            .product-menu .product-details-img {
+                width: 80px;
+                height: 80px;
+                overflow: hidden; /* Prevents thumbnail overflow */
+                border-radius: 4px;
+                margin: 0 5px;
+                border: 1px solid #eee;
+                display: flex; /* Added for better centering */
+                align-items: center;
+                justify-content: center;
+            }
+
+            .product-menu .product-details-img img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover; /* Covers the thumbnail area */
+                max-width: 100%;
+                max-height: 100%;
+            }
+
+            /* Related products styling */
+            .product-slider-active .single-product .product-img {
+                height: 220px;
+                overflow: hidden; /* Prevents related product image overflow */
+                border-radius: 8px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background-color: #fff;
+            }
+
+            .product-slider-active .single-product .product-img img {
+                width: 100%;
+                height: 100%;
+                object-fit: contain; /* Changed to contain to show full product */
+                max-width: 100%;
+                max-height: 100%;
             }
         </style>
 

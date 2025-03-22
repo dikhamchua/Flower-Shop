@@ -24,12 +24,24 @@
             }
             
             /* Thêm style cho ảnh sản phẩm trong shop */
-            .single-product img {
+            .single-product .product-img {
                 width: 100%;
-                height: 200px; /* Điều chỉnh chiều cao theo nhu cầu */
-                object-fit: cover; /* Đảm bảo ảnh vừa khung mà không bị méo */
-                border-radius: 8px; /* Bo góc ảnh */
-                overflow: hidden; /* Thêm dòng này */
+                height: 250px; /* Increased height for better display */
+                overflow: hidden;
+                position: relative;
+                border-radius: 8px;
+                margin-bottom: 10px;
+            }
+            
+            .single-product .product-img img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover; /* This ensures the image covers the area without distortion */
+                transition: transform 0.5s ease;
+            }
+            
+            .single-product:hover .product-img img {
+                transform: scale(1.05); /* Slight zoom effect on hover */
             }
             
             /* Thêm style cho khung chứa ảnh */
@@ -37,6 +49,19 @@
                 width: 100%;
                 overflow: hidden; /* Ẩn phần ảnh thừa */
                 position: relative;
+            }
+            
+            /* For list view */
+            .list-product-img {
+                height: 220px;
+                overflow: hidden;
+                border-radius: 8px;
+            }
+            
+            .list-product-img img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
             }
         </style>
     </head>

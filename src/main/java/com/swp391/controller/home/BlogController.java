@@ -5,7 +5,9 @@
 package com.swp391.controller.home;
 
 import com.swp391.dal.impl.BlogDAO;
+import com.swp391.dal.impl.SliderDAO;
 import com.swp391.entity.Blog;
+import com.swp391.entity.Slider;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -81,11 +83,16 @@ public class BlogController extends HttpServlet {
         // Calculate total pages
         int totalPages = (int) Math.ceil((double) totalBlogs / pageSize);
         
+        // Get active sliders for the carousel
+        SliderDAO sliderDAO = new SliderDAO();
+        List<Slider> activeSliders = sliderDAO.findActiveSliders();
+        
         // Set attributes for the JSP
         request.setAttribute("blogs", blogs);
         request.setAttribute("currentPage", page);
         request.setAttribute("totalPages", totalPages);
         request.setAttribute("searchTitle", searchTitle);
+        request.setAttribute("sliders", activeSliders);
         
         // Forward to the JSP
         request.getRequestDispatcher("/view/home/blog.jsp").forward(request, response);
