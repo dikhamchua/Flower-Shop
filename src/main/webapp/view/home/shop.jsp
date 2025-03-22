@@ -182,7 +182,7 @@
                                     </div>
                                     <!--Toolbar Short Area Start-->
                                     <div class="toolbar-short-area d-md-flex align-items-center">
-                                        <div class="toolbar-shorter">
+<!--                                        <div class="toolbar-shorter">
                                             <label>Sort By:</label>
                                             <select class="orderby">
                                                 <option value="default" ${param.sort == null || param.sort == 'default' ? 'selected' : ''}>Default sorting</option>
@@ -192,7 +192,7 @@
                                                 <option value="price_desc" ${param.sort == 'price_desc' ? 'selected' : ''}>Price, high to low</option>
                                                 <option value="newest" ${param.sort == 'newest' ? 'selected' : ''}>Newest first</option>
                                             </select>
-                                        </div>
+                                        </div>-->
                                         <c:set var="endResult" value="${currentPage*productsPerPage}" />
                                         <c:if test="${endResult > totalProducts}">
                                             <c:set var="endResult" value="${totalProducts}" />
@@ -208,7 +208,7 @@
                                         <div id="grid" class="tab-pane fade show active">
                                             <div class="product-grid-view">
                                                 <div class="row">
-                                                    <div class="col-md-2">
+<!--                                                    <div class="col-md-2">
                                                         <select class="form-select" name="categories">
                                                             <option value="">All Categories</option>
                                                             <c:forEach var="category" items="${categories}">
@@ -217,7 +217,7 @@
                                                                 </option>
                                                             </c:forEach>
                                                         </select>
-                                                    </div>
+                                                    </div>-->
                                                     <c:forEach items="${products}" var="product">
                                                         <div class="col-md-4">
                                                             <!--Single Product Start-->

@@ -71,14 +71,18 @@
                 <div id="slider-range"></div>
                 <div class="price-slider-amount">
                     <div class="label-input">
-                        <label>price : </label>
-                        <input type="text" id="amount" name="price" placeholder="Add Your Price" />
+                        <label>Price range: </label>
+                        <input type="text" id="amount" name="price" readonly placeholder="Price range" 
+                               style="border:0; color:#80b435; font-weight:bold; width:200%; margin-bottom:100px;" />
                         <input type="hidden" id="min-price" value="${minPrice}" />
                         <input type="hidden" id="max-price" value="${maxPrice}" />
                         <input type="hidden" id="selected-min-price" value="${selectedMinPrice}" />
                         <input type="hidden" id="selected-max-price" value="${selectedMaxPrice}" />
                     </div>
-                    <button type="button" onclick="handleFilterChange('price')">Filter</button>
+                    <button type="button" onclick="handleFilterChange('price')" 
+                            style="width:100%; margin-top:10px; background-color:#80b435; color:white; border:none; padding:8px 0; border-radius:4px;">
+                        Apply Filter
+                    </button>
                 </div>
             </div>
         </div>
@@ -249,19 +253,33 @@
                 currentFilters.page = page ? parseInt(page) : 1;
 
                 // Khởi tạo price slider
-                $(function () {
+                $(function() {
                     $("#slider-range").slider({
                         range: true,
-                        min: currentFilters.priceRange.min,
-                        max: currentFilters.priceRange.max,
-                        values: [currentFilters.priceRange.selectedMin, currentFilters.priceRange.selectedMax],
-                        slide: function (event, ui) {
-                            $("#amount").val("$" + ui.values[0] + " - $" + ui.values[1]);
+                        min: ${minPrice != null ? minPrice : 0},
+                        max: ${maxPrice != null ? maxPrice : 1000000},
+                        values: [
+                            ${selectedMinPrice != null ? selectedMinPrice : minPrice != null ? minPrice : 0}, 
+                            ${selectedMaxPrice != null ? selectedMaxPrice : maxPrice != null ? maxPrice : 1000000}
+                        ],
+                        slide: function(event, ui) {
+                            // Format as VND with thousand separators
+                            const minPrice = formatVND(ui.values[0]);
+                            const maxPrice = formatVND(ui.values[1]);
+                            $("#amount").val(minPrice + " - " + maxPrice);
                         }
                     });
-                    $("#amount").val("$" + $("#slider-range").slider("values", 0) +
-                        " - $" + $("#slider-range").slider("values", 1));
+                    
+                    // Initial formatting
+                    const minPrice = formatVND($("#slider-range").slider("values", 0));
+                    const maxPrice = formatVND($("#slider-range").slider("values", 1));
+                    $("#amount").val(minPrice + " - " + maxPrice);
                 });
+            }
+
+            // Function to format numbers as VND with thousand separators
+            function formatVND(amount) {
+                return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") + " VNĐ";
             }
 
             // Call initialization on page load
