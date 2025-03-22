@@ -118,7 +118,7 @@
                                 <div class="breadcrumb-img">
                                     <img src="${pageContext.request.contextPath}/img/page-banner/product-banner.jpg" alt="">
                                 </div>
-                                <div class="breadcrumb-content">
+<!--                                <div class="breadcrumb-content">
                                     <ul>
                                         <li><a href="${pageContext.request.contextPath}/">Home</a></li>
                                         <li><a href="${pageContext.request.contextPath}/home">Shop</a></li>
@@ -127,7 +127,7 @@
                                         </c:if>
                                         <li class="active">${product.productName}</li>
                                     </ul>
-                                </div>
+                                </div>-->
                             </div>
                         </div>
                     </div>

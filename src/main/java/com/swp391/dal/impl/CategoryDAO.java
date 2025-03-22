@@ -387,10 +387,11 @@ public class CategoryDAO extends DBContext implements I_DAO<Category> {
             connection = getConnection();
             
             // Tạo câu truy vấn SQL để đếm số lượng sản phẩm cho mỗi danh mục
-            String sql = "SELECT c.category_id, COUNT(p.product_id) as product_count " +
+            // Chỉ đếm các sản phẩm có status = 1 (đang hoạt động)
+            String sql = "SELECT c.category_id, COUNT(DISTINCT p.product_id) as product_count " +
                          "FROM categories c " +
-                         "LEFT JOIN products p ON c.category_id = p.category_id AND p.status = 1 " +
-                         "WHERE c.status = 1 " +
+                         "LEFT JOIN category_product cp ON c.category_id = cp.category_id " +
+                         "LEFT JOIN products p ON cp.product_id = p.product_id AND p.status = 1 " +
                          "GROUP BY c.category_id";
             
             // Tạo statement và thực thi truy vấn
@@ -403,8 +404,16 @@ public class CategoryDAO extends DBContext implements I_DAO<Category> {
                 int count = resultSet.getInt("product_count");
                 countMap.put(categoryId, count);
             }
+            
+            // Debug: In ra số lượng sản phẩm cho mỗi danh mục
+            System.out.println("Category product counts:");
+            for (Map.Entry<Integer, Integer> entry : countMap.entrySet()) {
+                System.out.println("Category ID: " + entry.getKey() + ", Count: " + entry.getValue());
+            }
+            
         } catch (SQLException ex) {
             System.out.println("Error getting category product counts: " + ex.getMessage());
+            ex.printStackTrace();
         } finally {
             closeResources();
         }

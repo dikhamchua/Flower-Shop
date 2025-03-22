@@ -2,6 +2,7 @@ package com.swp391.dal.impl;
 
 import com.swp391.dal.DBContext;
 import com.swp391.dal.I_DAO;
+import com.swp391.entity.Category;
 import com.swp391.entity.Product;
 import com.swp391.entity.CategoryProduct;
 
@@ -461,86 +462,115 @@ public class ProductDAO extends DBContext implements I_DAO<Product> {
      * @param pageSize            Số sản phẩm trên mỗi trang
      * @return Danh sách sản phẩm thỏa mãn điều kiện
      */
-    public List<Product> findProductsWithFilters(String searchKeyword, List<Integer> selectedCategoryIds,
-            Double minPrice, Double maxPrice, String sortParam, int currentPage, int pageSize) {
+    public List<Product> findProductsWithFilters(
+            String searchKeyword, List<Integer> categoryIds, Double minPrice, Double maxPrice,
+            String sortType, int page, int pageSize) {
+        
         List<Product> products = new ArrayList<>();
-
+        StringBuilder sqlBuilder = new StringBuilder();
+        
+        // Base query with JOIN to handle category filtering
+        sqlBuilder.append("SELECT DISTINCT p.* FROM products p ");
+        
+        // Only add the JOIN if we have category filters
+        if (categoryIds != null && !categoryIds.isEmpty()) {
+            sqlBuilder.append("JOIN category_product cp ON p.product_id = cp.product_id ");
+        }
+        
+        sqlBuilder.append("WHERE p.status = 1 ");
+        
+        // Add search condition
+        if (searchKeyword != null && !searchKeyword.isEmpty()) {
+            sqlBuilder.append("AND p.name LIKE ? ");
+        }
+        
+        // Add category filter
+        if (categoryIds != null && !categoryIds.isEmpty()) {
+            sqlBuilder.append("AND cp.category_id IN (");
+            for (int i = 0; i < categoryIds.size(); i++) {
+                if (i > 0) {
+                    sqlBuilder.append(",");
+                }
+                sqlBuilder.append("?");
+            }
+            sqlBuilder.append(") ");
+        }
+        
+        // Add price range filter
+        if (minPrice != null) {
+            sqlBuilder.append("AND p.price >= ? ");
+        }
+        if (maxPrice != null) {
+            sqlBuilder.append("AND p.price <= ? ");
+        }
+        
+        // Add sorting
+        if (sortType != null) {
+            switch (sortType) {
+                case "name_asc":
+                    sqlBuilder.append("ORDER BY p.name ASC ");
+                    break;
+                case "name_desc":
+                    sqlBuilder.append("ORDER BY p.name DESC ");
+                    break;
+                case "price_asc":
+                    sqlBuilder.append("ORDER BY p.price ASC ");
+                    break;
+                case "price_desc":
+                    sqlBuilder.append("ORDER BY p.price DESC ");
+                    break;
+                default:
+                    sqlBuilder.append("ORDER BY p.product_id DESC ");
+                    break;
+            }
+        } else {
+            sqlBuilder.append("ORDER BY p.product_id DESC ");
+        }
+        
+        // Add pagination
+        sqlBuilder.append("LIMIT ? OFFSET ?");
+        
         try {
             connection = getConnection();
-            StringBuilder sql = new StringBuilder("SELECT * FROM products WHERE status = 1");
-            List<Object> params = new ArrayList<>();
-
-            // Thêm điều kiện tìm kiếm theo từ khóa
-            if (searchKeyword != null && !searchKeyword.trim().isEmpty()) {
-                sql.append(" AND (name LIKE ? OR description LIKE ?)");
-                String searchPattern = "%" + searchKeyword.trim() + "%";
-                params.add(searchPattern);
-                params.add(searchPattern);
+            statement = connection.prepareStatement(sqlBuilder.toString());
+            
+            int paramIndex = 1;
+            
+            // Set search parameter
+            if (searchKeyword != null && !searchKeyword.isEmpty()) {
+                statement.setString(paramIndex++, "%" + searchKeyword + "%");
             }
-
-            // Thêm điều kiện lọc theo danh mục
-            if (selectedCategoryIds != null && !selectedCategoryIds.isEmpty()) {
-                sql.append(" AND category_id IN (");
-                for (int i = 0; i < selectedCategoryIds.size(); i++) {
-                    sql.append(i == 0 ? "?" : ", ?");
-                    params.add(selectedCategoryIds.get(i));
+            
+            // Set category parameters
+            if (categoryIds != null && !categoryIds.isEmpty()) {
+                for (Integer categoryId : categoryIds) {
+                    statement.setInt(paramIndex++, categoryId);
                 }
-                sql.append(")");
             }
-
-            // Thêm điều kiện lọc theo giá
+            
+            // Set price parameters
             if (minPrice != null) {
-                sql.append(" AND price >= ?");
-                params.add(minPrice);
+                statement.setDouble(paramIndex++, minPrice);
             }
-
             if (maxPrice != null) {
-                sql.append(" AND price <= ?");
-                params.add(maxPrice);
+                statement.setDouble(paramIndex++, maxPrice);
             }
-
-            // Thêm sắp xếp
-            if (sortParam != null && !sortParam.isEmpty()) {
-                switch (sortParam) {
-                    case "price_asc":
-                        sql.append(" ORDER BY price ASC");
-                        break;
-                    case "price_desc":
-                        sql.append(" ORDER BY price DESC");
-                        break;
-                    case "name_asc":
-                        sql.append(" ORDER BY name ASC");
-                        break;
-                    case "name_desc":
-                        sql.append(" ORDER BY name DESC");
-                        break;
-                    case "newest":
-                        sql.append(" ORDER BY created_at DESC");
-                        break;
-                    default:
-                        sql.append(" ORDER BY product_id DESC");
-                        break;
-                }
-            } else {
-                sql.append(" ORDER BY product_id DESC");
-            }
-
-            // Thêm phân trang
-            sql.append(" LIMIT ? OFFSET ?");
-            params.add(pageSize);
-            params.add((currentPage - 1) * pageSize);
-
-            // Chuẩn bị và thực thi truy vấn
-            statement = connection.prepareStatement(sql.toString());
-            for (int i = 0; i < params.size(); i++) {
-                statement.setObject(i + 1, params.get(i));
-            }
-
+            
+            // Set pagination parameters
+            statement.setInt(paramIndex++, pageSize);
+            statement.setInt(paramIndex++, (page - 1) * pageSize);
+            
             resultSet = statement.executeQuery();
-
-            // Xử lý kết quả
+            
+            // Process results
             while (resultSet.next()) {
                 Product product = getFromResultSet(resultSet);
+                
+                // Load categories for this product
+                CategoryProductDAO categoryProductDAO = new CategoryProductDAO();
+                List<Category> categories = categoryProductDAO.getCategoriesByProductId(product.getProductId());
+                product.setCategories(categories);
+                
                 products.add(product);
             }
         } catch (SQLException e) {
@@ -549,7 +579,7 @@ public class ProductDAO extends DBContext implements I_DAO<Product> {
         } finally {
             closeResources();
         }
-
+        
         return products;
     }
 
@@ -562,47 +592,74 @@ public class ProductDAO extends DBContext implements I_DAO<Product> {
      * @param maxPrice            Giá tối đa
      * @return Số lượng sản phẩm
      */
-    public int countProductsWithFilters(String searchKeyword, List<Integer> selectedCategoryIds, Double minPrice,
-            Double maxPrice) {
-        int count = 0;
-
+    public int countProductsWithFilters(String searchKeyword, List<Integer> categoryIds, Double minPrice, Double maxPrice) {
+        StringBuilder sqlBuilder = new StringBuilder();
+        
+        // Base query with JOIN to handle category filtering
+        sqlBuilder.append("SELECT COUNT(DISTINCT p.product_id) FROM products p ");
+        
+        // Only add the JOIN if we have category filters
+        if (categoryIds != null && !categoryIds.isEmpty()) {
+            sqlBuilder.append("JOIN category_product cp ON p.product_id = cp.product_id ");
+        }
+        
+        sqlBuilder.append("WHERE p.status = 1 ");
+        
+        // Add search condition
+        if (searchKeyword != null && !searchKeyword.isEmpty()) {
+            sqlBuilder.append("AND p.name LIKE ? ");
+        }
+        
+        // Add category filter
+        if (categoryIds != null && !categoryIds.isEmpty()) {
+            sqlBuilder.append("AND cp.category_id IN (");
+            for (int i = 0; i < categoryIds.size(); i++) {
+                if (i > 0) {
+                    sqlBuilder.append(",");
+                }
+                sqlBuilder.append("?");
+            }
+            sqlBuilder.append(") ");
+        }
+        
+        // Add price range filter
+        if (minPrice != null) {
+            sqlBuilder.append("AND p.price >= ? ");
+        }
+        if (maxPrice != null) {
+            sqlBuilder.append("AND p.price <= ? ");
+        }
+        
         try {
             connection = getConnection();
-            StringBuilder sql = new StringBuilder("SELECT COUNT(*) FROM products WHERE status = 1");
-            List<Object> params = new ArrayList<>();
-            if (searchKeyword != null && !searchKeyword.trim().isEmpty()) {
-                sql.append(" AND (name LIKE ? OR description LIKE ?)");
-                String searchPattern = "%" + searchKeyword.trim() + "%";
-                params.add(searchPattern);
-                params.add(searchPattern);
+            statement = connection.prepareStatement(sqlBuilder.toString());
+            
+            int paramIndex = 1;
+            
+            // Set search parameter
+            if (searchKeyword != null && !searchKeyword.isEmpty()) {
+                statement.setString(paramIndex++, "%" + searchKeyword + "%");
             }
-            if (selectedCategoryIds != null && !selectedCategoryIds.isEmpty()) {
-                sql.append(" AND category_id IN (");
-                for (int i = 0; i < selectedCategoryIds.size(); i++) {
-                    sql.append(i == 0 ? "?" : ", ?");
-                    params.add(selectedCategoryIds.get(i));
+            
+            // Set category parameters
+            if (categoryIds != null && !categoryIds.isEmpty()) {
+                for (Integer categoryId : categoryIds) {
+                    statement.setInt(paramIndex++, categoryId);
                 }
-                sql.append(")");
             }
-
+            
+            // Set price parameters
             if (minPrice != null) {
-                sql.append(" AND price >= ?");
-                params.add(minPrice);
+                statement.setDouble(paramIndex++, minPrice);
             }
             if (maxPrice != null) {
-                sql.append(" AND price <= ?");
-                params.add(maxPrice);
+                statement.setDouble(paramIndex++, maxPrice);
             }
-            statement = connection.prepareStatement(sql.toString());
-            for (int i = 0; i < params.size(); i++) {
-                statement.setObject(i + 1, params.get(i));
-            }
-
+            
             resultSet = statement.executeQuery();
-
-            // Lấy kết quả
+            
             if (resultSet.next()) {
-                count = resultSet.getInt(1);
+                return resultSet.getInt(1);
             }
         } catch (SQLException e) {
             System.out.println("Error counting products with filters: " + e.getMessage());
@@ -610,7 +667,8 @@ public class ProductDAO extends DBContext implements I_DAO<Product> {
         } finally {
             closeResources();
         }
-        return count;
+        
+        return 0;
     }
 
     /**

@@ -35,10 +35,9 @@
                     <c:forEach items="${allCategories}" var="category">
                         <li>
                             <div class="form-check">
-                                <input class="category-filter" type="checkbox" name="product-categori"
-                                    value="${category.categoryId}" id="cat_${category.categoryId}"
-                                    onchange="handleFilterChange('category')" <c:if
-                                    test="${selectedCategories.contains(category.categoryId)}">checked</c:if>>
+                                <input class="category-filter" type="checkbox" name="category"
+                                       value="${category.categoryId}" id="cat_${category.categoryId}"
+                                       <c:if test="${selectedCategories.contains(category.categoryId)}">checked</c:if>>
                                 <label class="form-check-label" for="cat_${category.categoryId}">
                                     ${category.name}
                                 </label>
@@ -145,6 +144,56 @@
         <!--Product Tags Widget End-->
 
         <script>
+            // Initialize category filter functionality when document is ready
+            document.addEventListener('DOMContentLoaded', function() {
+                // Add event listeners to all category checkboxes
+                document.querySelectorAll('.category-filter').forEach(function(checkbox) {
+                    checkbox.addEventListener('change', function() {
+                        applyCategoryFilter();
+                    });
+                });
+            });
+            
+            // Function to apply category filter
+            function applyCategoryFilter() {
+                // Get all checked category checkboxes
+                const selectedCategories = Array.from(document.querySelectorAll('.category-filter:checked'))
+                    .map(function(checkbox) {
+                        return checkbox.value;
+                    });
+                
+                // Get current URL parameters
+                const urlParams = new URLSearchParams(window.location.search);
+                
+                // Update categories parameter
+                if (selectedCategories.length > 0) {
+                    urlParams.set('categories', selectedCategories.join(','));
+                } else {
+                    urlParams.delete('categories');
+                }
+                
+                // Reset to page 1
+                urlParams.delete('page');
+                
+                // Redirect to updated URL
+                window.location.href = window.location.pathname + '?' + urlParams.toString();
+            }
+            
+            // Function to handle filter changes (used by price filter)
+            function handleFilterChange(filterType) {
+                if (filterType === 'price') {
+                    const minValue = $("#slider-range").slider("values", 0);
+                    const maxValue = $("#slider-range").slider("values", 1);
+                    
+                    const urlParams = new URLSearchParams(window.location.search);
+                    urlParams.set('minPrice', minValue);
+                    urlParams.set('maxPrice', maxValue);
+                    urlParams.delete('page'); // Reset to page 1
+                    
+                    window.location.href = window.location.pathname + '?' + urlParams.toString();
+                }
+            }
+
             let currentFilters = {
                 categories: [],
                 priceRange: {
@@ -155,24 +204,6 @@
         },
             page: 1
     };
-
-            function handleFilterChange(filterType) {
-                console.log('Filter changed:', filterType);
-
-                switch (filterType) {
-                    case 'category':
-                        updateCategoryFilters();
-                        break;
-                    case 'price':
-                        updatePriceFilters();
-                        break;
-                    default:
-                        console.error('Unknown filter type');
-                        return;
-                }
-
-                applyFilters(1);
-            }
 
             function updateCategoryFilters() {
                 const categoryCheckboxes = document.querySelectorAll('.category-filter:checked');

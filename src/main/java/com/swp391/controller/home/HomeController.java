@@ -101,19 +101,34 @@ public class HomeController extends HttpServlet {
             // Xử lý lọc theo danh mục
             List<Integer> selectedCategoryIds = new ArrayList<>();
             if (categoriesParam != null && !categoriesParam.isEmpty()) {
-                selectedCategoryIds = Arrays.stream(categoriesParam.split(","))
+                try {
+                    selectedCategoryIds = Arrays.stream(categoriesParam.split(","))
                         .map(Integer::parseInt)
                         .collect(Collectors.toList());
+                    
+                    // Debug selected categories
+                    System.out.println("Selected categories: " + selectedCategoryIds);
+                } catch (NumberFormatException e) {
+                    System.out.println("Error parsing category IDs: " + e.getMessage());
+                }
             }
 
             // Xử lý lọc theo giá
             Double minPrice = null;
             Double maxPrice = null;
             if (minPriceParam != null && !minPriceParam.isEmpty()) {
-                minPrice = Double.parseDouble(minPriceParam);
+                try {
+                    minPrice = Double.parseDouble(minPriceParam);
+                } catch (NumberFormatException e) {
+                    System.out.println("Error parsing minPrice: " + e.getMessage());
+                }
             }
             if (maxPriceParam != null && !maxPriceParam.isEmpty()) {
-                maxPrice = Double.parseDouble(maxPriceParam);
+                try {
+                    maxPrice = Double.parseDouble(maxPriceParam);
+                } catch (NumberFormatException e) {
+                    System.out.println("Error parsing maxPrice: " + e.getMessage());
+                }
             }
 
             // Lấy giá trị min/max của tất cả sản phẩm cho price slider
@@ -142,6 +157,9 @@ public class HomeController extends HttpServlet {
                 searchKeyword, selectedCategoryIds, minPrice, maxPrice,
                 sortParam, currentPage, pageSize
             );
+            
+            // Debug products
+            System.out.println("Found " + products.size() + " products with filters");
             
             // Tính toán phân trang
             int maxVisiblePages = 5;

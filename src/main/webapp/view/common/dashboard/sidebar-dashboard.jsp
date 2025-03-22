@@ -62,7 +62,7 @@
                         </ul>-->
             </li>     
 
-            <c:if test="${sessionScope.account.role eq 'admin' || sessionScope.account.role eq 'staff'}">
+            <c:if test="${sessionScope.account.role eq 'admin'}">
                 <li>
                     <a href="${pageContext.request.contextPath}/admin/manage-account">
                         <iconify-icon icon="flowbite:users-group-outline" class="menu-icon"></iconify-icon>
@@ -120,19 +120,20 @@
                     <span>Change Password</span> 
                 </a>
             </li>
-            <li>
-                <a href="${pageContext.request.contextPath}/orderControll">
-                    <iconify-icon icon="icon-park-outline:setting-two" class="menu-icon"></iconify-icon>
-                    <span>My Order</span>
-                </a>
-            </li>
-            <c:if test="${sessionScope.account.role != 'admin' }">
+            
+            <c:if test="${sessionScope.account.role eq 'user' }">
                 <li>
                     <a href="${pageContext.request.contextPath}/feedbackControl">
                         <iconify-icon icon="icon-park-outline:setting-two" class="menu-icon"></iconify-icon>
                         <span>My Feedback</span>
                     </a>
                 </li>
+                <li>
+                <a href="${pageContext.request.contextPath}/orderControll">
+                    <iconify-icon icon="icon-park-outline:setting-two" class="menu-icon"></iconify-icon>
+                    <span>My Order</span>
+                </a>
+            </li>
             </c:if>
         </ul>
     </div>
