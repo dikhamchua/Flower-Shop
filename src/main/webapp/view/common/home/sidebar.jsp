@@ -73,8 +73,8 @@
                     <div class="label-input">
                         <label>price : </label>
                         <input type="text" id="amount" name="price" placeholder="Add Your Price" />
-                        <input type="hidden" id="min-price" value="${1}" />
-                        <input type="hidden" id="max-price" value="${1000000}" />
+                        <input type="hidden" id="min-price" value="${minPrice}" />
+                        <input type="hidden" id="max-price" value="${maxPrice}" />
                         <input type="hidden" id="selected-min-price" value="${selectedMinPrice}" />
                         <input type="hidden" id="selected-max-price" value="${selectedMaxPrice}" />
                     </div>

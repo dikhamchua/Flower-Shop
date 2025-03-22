@@ -67,6 +67,204 @@
                 width: 20px;
                 height: 20px;
             }
+
+            /* Improved blog layout styling */
+            .blog_area {
+                padding: 0 15px;
+            }
+
+            .blog_single {
+                margin-bottom: 40px;
+                border-bottom: 1px solid #eee;
+                padding-bottom: 30px;
+                text-align: left;
+            }
+
+            .blog_single:last-child {
+                border-bottom: none;
+            }
+
+            .entry-header {
+                margin-bottom: 20px;
+                text-align: left;
+            }
+
+            .entry-title {
+                font-size: 24px;
+                margin-bottom: 15px;
+                font-weight: 600;
+                text-align: left;
+            }
+
+            .entry-title a {
+                color: #333;
+                transition: color 0.3s;
+            }
+
+            .entry-title a:hover {
+                color: #80b435;
+            }
+
+            .post-author, .blog-post-date {
+                font-size: 14px;
+                color: #777;
+            }
+
+            .post-separator {
+                margin: 0 8px;
+                color: #ccc;
+            }
+
+            .postinfo-wrapper {
+                text-align: left;
+            }
+
+            .entry-summary {
+                margin-bottom: 20px;
+                line-height: 1.6;
+            }
+
+            .form-button {
+                display: inline-block;
+                padding: 8px 20px;
+                background-color: #80b435;
+                color: white;
+                border-radius: 4px;
+                text-decoration: none;
+                transition: background-color 0.3s;
+                margin-bottom: 15px;
+            }
+
+            .form-button:hover {
+                background-color: #6a9a2d;
+                color: white;
+            }
+
+            /* Blog sidebar styling */
+            .blog_sidebar {
+                background-color: #f9f9f9;
+                padding: 20px;
+                border-radius: 8px;
+                box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            }
+
+            .product-filter h5 {
+                font-size: 18px;
+                margin-bottom: 15px;
+                padding-bottom: 10px;
+                border-bottom: 1px solid #eee;
+                text-align: left;
+            }
+
+            .blog_Archives__sidbar ul {
+                list-style: none;
+                padding-left: 0;
+                text-align: left;
+            }
+
+            .blog_Archives__sidbar ul li {
+                padding: 8px 0;
+                border-bottom: 1px dashed #eee;
+            }
+
+            .blog_Archives__sidbar ul li:last-child {
+                border-bottom: none;
+            }
+
+            .blog_Archives__sidbar ul li a {
+                color: #555;
+                transition: color 0.3s;
+            }
+
+            .blog_Archives__sidbar ul li a:hover {
+                color: #80b435;
+            }
+
+            /* Blog search styling */
+            .blog-search {
+                margin-bottom: 30px;
+            }
+
+            .blog-search .form-control {
+                border-radius: 4px 0 0 4px;
+                height: 45px;
+            }
+
+            .blog-search .btn {
+                border-radius: 0 4px 4px 0;
+                background-color: #80b435;
+                color: white;
+                border-color: #80b435;
+            }
+
+            .blog-search .btn:hover {
+                background-color: #6a9a2d;
+                border-color: #6a9a2d;
+            }
+
+            /* Pagination styling */
+            .pagination-wrapper {
+                margin-top: 30px;
+            }
+
+            .pagination .page-item.active .page-link {
+                background-color: #80b435;
+                border-color: #80b435;
+            }
+
+            .pagination .page-link {
+                color: #80b435;
+            }
+
+            .pagination .page-link:hover {
+                background-color: #f5f5f5;
+            }
+
+            /* Social sharing styling */
+            .social-sharing {
+                margin-top: 20px;
+                text-align: left;
+            }
+
+            .widget-title {
+                font-size: 16px;
+                margin-bottom: 10px;
+            }
+
+            .blog-social-icons {
+                list-style: none;
+                padding-left: 0;
+                display: flex;
+                gap: 10px;
+            }
+
+            .blog-social-icons li a {
+                display: inline-block;
+                width: 36px;
+                height: 36px;
+                line-height: 36px;
+                text-align: center;
+                background-color: #f5f5f5;
+                border-radius: 50%;
+                color: #555;
+                transition: all 0.3s;
+            }
+
+            .blog-social-icons li a:hover {
+                background-color: #80b435;
+                color: white;
+            }
+
+            /* Responsive adjustments */
+            @media (max-width: 768px) {
+                .entry-title {
+                    font-size: 20px;
+                }
+                
+                .blog_sidebar {
+                    margin-top: 40px;
+                }
+            }
         </style>
     </head>
     <body>
@@ -251,7 +449,7 @@
                             <div class="blog_sidebar">
                                 <div class="row_products_side">
                                     <div class="product_left_sidbar">
-                                        <div class="product-filter mb-35">
+<!--                                        <div class="product-filter mb-35">
                                             <h5>Search </h5>
                                             <div class="search__sidbar">
                                                 <div class="input_form">
@@ -263,7 +461,7 @@
                                                     </form>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div>-->
                                         <div class="product-filter mb-35">
                                             <h5>Recent Posts</h5>
                                             <div class="blog_Archives__sidbar">
