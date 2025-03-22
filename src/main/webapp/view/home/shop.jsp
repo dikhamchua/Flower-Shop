@@ -1,6 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!doctype html>
 <html class="no-js" lang="en">
     <head>
@@ -56,7 +57,42 @@
                                 <!--Breadcrumb One Start-->
                                 <div class="breadcrumb-one mb-120">
                                     <div class="breadcrumb-img">
-                                        <img src="${pageContext.request.contextPath}/assets/img/page-banner/shop-banner-1.jpg" alt="">
+                                        <!-- Slider implementation -->
+                                        <div id="slider-carousel" class="carousel slide" data-bs-ride="carousel">
+                                            <div class="carousel-inner">
+                                                <c:set var="count" value="0" />
+                                                <c:forEach var="slider" items="${sliders}">
+                                                    <div class="carousel-item ${count == 0 ? 'active' : ''}">
+                                                        <a href="${slider.link}">
+                                                            <img src="${slider.imageUrl}" alt="${slider.caption}" class="d-block w-100">
+                                                            <div class="carousel-caption d-none d-md-block">
+                                                                <h5>${slider.caption}</h5>
+                                                            </div>
+                                                        </a>
+                                                    </div>
+                                                    <c:set var="count" value="${count + 1}" />
+                                                </c:forEach>
+                                                
+                                                <!-- If no sliders are available, show default image -->
+                                                <c:if test="${empty sliders}">
+                                                    <div class="carousel-item active">
+                                                        <img src="${pageContext.request.contextPath}/assets/img/page-banner/shop-banner-1.jpg" alt="Shop Banner" class="d-block w-100">
+                                                    </div>
+                                                </c:if>
+                                            </div>
+                                            
+                                            <!-- Only show controls if there are multiple sliders -->
+                                            <c:if test="${fn:length(sliders) > 1}">
+                                                <button class="carousel-control-prev" type="button" data-bs-target="#slider-carousel" data-bs-slide="prev">
+                                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                    <span class="visually-hidden">Previous</span>
+                                                </button>
+                                                <button class="carousel-control-next" type="button" data-bs-target="#slider-carousel" data-bs-slide="next">
+                                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                    <span class="visually-hidden">Next</span>
+                                                </button>
+                                            </c:if>
+                                        </div>
                                     </div>
                                     <div class="breadcrumb-content">
                                         <ul>

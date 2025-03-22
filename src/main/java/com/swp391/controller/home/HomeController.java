@@ -27,11 +27,13 @@ import com.swp391.dal.impl.CategoryDAO;
 import com.swp391.dal.impl.ProductDAO;
 import com.swp391.dal.impl.FeedbacksDAO;
 import com.swp391.dal.impl.OrderDAO;
+import com.swp391.dal.impl.SliderDAO;
 import com.swp391.entity.Category;
 import com.swp391.entity.Product;
 import com.swp391.entity.CartItem;
 import com.swp391.entity.Account;
 import com.swp391.entity.Feedbacks;
+import com.swp391.entity.Slider;
 
 
 @WebServlet(name = "HomeController", urlPatterns = {"/home"})
@@ -75,6 +77,7 @@ public class HomeController extends HttpServlet {
             // Khởi tạo các DAO cần thiết
             CategoryDAO categoryDAO = new CategoryDAO();
             ProductDAO productDAO = new ProductDAO();
+            SliderDAO sliderDAO = new SliderDAO();
 
             // Xử lý phân trang
             int pageSize = 9; // Số sản phẩm trên mỗi trang
@@ -179,6 +182,10 @@ public class HomeController extends HttpServlet {
 
             // Lưu tham số sort vào request để hiển thị selected option
             request.setAttribute("currentSort", sortType);
+
+            // Lấy danh sách sliders đang hoạt động
+            List<Slider> activeSliders = sliderDAO.findActiveSliders();
+            request.setAttribute("sliders", activeSliders);
 
             // Đặt các thuộc tính cho request
             request.setAttribute("products", products);
