@@ -26,7 +26,6 @@ import com.swp391.entity.Supplier;
 import java.util.Arrays;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import java.io.InputStream;
 import java.util.ArrayList;
 import com.swp391.dal.impl.CategoryProductDAO;
@@ -309,23 +308,29 @@ public class ManageProductController extends HttpServlet {
         response.sendRedirect(request.getContextPath() + "/admin/manage-product");
     }
 
-    private void showAddForm(HttpServletRequest request, HttpServletResponse response) 
+    private void showAddForm(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         try {
+            // Lấy danh sách categories
             CategoryDAO categoryDAO = new CategoryDAO();
             List<Category> categories = categoryDAO.findAll();
             request.setAttribute("categories", categories);
             
-            // Lấy danh sách nhà cung cấp
+            // Lấy danh sách suppliers
             SupplierDAO supplierDAO = new SupplierDAO();
             List<Supplier> suppliers = supplierDAO.findAll();
             request.setAttribute("suppliers", suppliers);
+            
+            // Log để kiểm tra
+            System.out.println("Categories sent to JSP: " + categories.size());
+            for (Category category : categories) {
+                System.out.println("Category: " + category.getCategoryId() + " - " + category.getName());
+            }
             
             RequestDispatcher dispatcher = request.getRequestDispatcher("/view/admin/product-add.jsp");
             dispatcher.forward(request, response);
         } catch (Exception e) {
             e.printStackTrace();
-            setToastMessage(request, "Error loading form data: " + e.getMessage(), "error");
             response.sendRedirect(request.getContextPath() + "/admin/manage-product");
         }
     }
@@ -341,7 +346,7 @@ public class ManageProductController extends HttpServlet {
         try {
             int productId = Integer.parseInt(request.getParameter("productId"));
             String name = request.getParameter("name");
-            String[] categoryIds = request.getParameterValues("categoryIds");
+            String categoryIdsStr = request.getParameter("categoryIds");
             String description = request.getParameter("description");
             BigDecimal price = new BigDecimal(request.getParameter("price"));
             int stock = Integer.parseInt(request.getParameter("stock"));
@@ -353,7 +358,7 @@ public class ManageProductController extends HttpServlet {
             if (product != null) {
                 // Validate input data
                 if (name == null || name.trim().isEmpty()) {
-                    setToastMessage(request, "Product name is required", "error");
+                    setToastMessage(request, "Tên sản phẩm không được để trống", "error");
                     response.sendRedirect(request.getContextPath() + "/admin/manage-product?action=edit&id=" + productId);
                     return;
                 }
@@ -402,10 +407,11 @@ public class ManageProductController extends HttpServlet {
                     // Remove all existing category links
                     categoryProductDAO.removeAllCategoriesFromProduct(productId);
                     
-                    // Add new category links
-                    if (categoryIds != null && categoryIds.length > 0) {
-                        for (String categoryIdStr : categoryIds) {
-                            int categoryId = Integer.parseInt(categoryIdStr);
+                    // Add new category links from the comma-separated string
+                    if (categoryIdsStr != null && !categoryIdsStr.isEmpty()) {
+                        String[] categoryIdArray = categoryIdsStr.split(",");
+                        for (String categoryIdStr : categoryIdArray) {
+                            int categoryId = Integer.parseInt(categoryIdStr.trim());
                             categoryProductDAO.addCategoryToProduct(categoryId, productId);
                         }
                     }
@@ -427,15 +433,13 @@ public class ManageProductController extends HttpServlet {
                         }
                     }
                     
-                    setToastMessage(request, "Product updated successfully!", "success");
+                    setToastMessage(request, "Cập nhật sản phẩm thành công!", "success");
                 } else {
-                    setToastMessage(request, "Failed to update product!", "error");
+                    setToastMessage(request, "Cập nhật sản phẩm thất bại!", "error");
                 }
             } else {
-                setToastMessage(request, "Product not found!", "error");
+                setToastMessage(request, "Không tìm thấy sản phẩm!", "error");
             }
-        } catch (NumberFormatException e) {
-            setToastMessage(request, "Invalid number format: " + e.getMessage(), "error");
         } catch (Exception e) {
             setToastMessage(request, "Error: " + e.getMessage(), "error");
             e.printStackTrace();
@@ -448,64 +452,65 @@ public class ManageProductController extends HttpServlet {
     throws ServletException, IOException {
         try {
             System.out.println("addProduct method called");
-            
+
             // Lấy dữ liệu từ form
             String name = request.getParameter("name");
             String description = request.getParameter("description");
             String priceStr = request.getParameter("price");
             String stockStr = request.getParameter("stock");
-            String[] categoryIds = request.getParameterValues("categoryIds");
+            // Lấy category IDs từ input hidden
+            String categoryIdsStr = request.getParameter("categoryIds");
             String statusStr = request.getParameter("status");
-            
-            System.out.println("Form data received: name=" + name + ", price=" + priceStr + 
-                              ", stock=" + stockStr + ", categoryIds=" + (categoryIds != null ? Arrays.toString(categoryIds) : "null") + 
-                              ", status=" + statusStr);
-            
+
+            System.out.println("Form data received: name=" + name + ", price=" + priceStr +
+                               ", stock=" + stockStr + ", categoryIds=" + categoryIdsStr +
+                               ", status=" + statusStr);
+
             // Kiểm tra dữ liệu đầu vào
-            if (name == null || name.trim().isEmpty() || 
+            if (name == null || name.trim().isEmpty() ||
                 priceStr == null || priceStr.trim().isEmpty() ||
                 stockStr == null || stockStr.trim().isEmpty() ||
-                categoryIds == null || categoryIds.length == 0 ||
+                categoryIdsStr == null || categoryIdsStr.trim().isEmpty() ||
                 statusStr == null || statusStr.trim().isEmpty()) {
-                
-                setToastMessage(request, "All required fields must be filled", "error");
+
+                setToastMessage(request, "Vui lòng điền đầy đủ thông tin bắt buộc", "error");
                 showAddForm(request, response);
                 return;
             }
-            
+
             // Chuyển đổi các giá trị
             BigDecimal price = new BigDecimal(priceStr);
             int stock = Integer.parseInt(stockStr);
             byte status = Byte.parseByte(statusStr);
-            
+
             // Xử lý file ảnh
             Part filePart = request.getPart("image");
             String fileName = null;
-            
+
             if (filePart != null && filePart.getSize() > 0) {
                 System.out.println("File received: " + filePart.getSubmittedFileName() + ", size: " + filePart.getSize());
-                
+
                 // Lấy tên file gốc
                 String originalFileName = filePart.getSubmittedFileName();
                 // Tạo tên file duy nhất
                 fileName = System.currentTimeMillis() + "_" + originalFileName;
-                
+
                 // Đường dẫn lưu file
                 String uploadPath = request.getServletContext().getRealPath("/uploads/products/");
                 System.out.println("Upload path: " + uploadPath);
-                
+
                 // Tạo thư mục nếu chưa tồn tại
                 File uploadDir = new File(uploadPath);
                 if (!uploadDir.exists()) {
                     boolean created = uploadDir.mkdirs();
                     System.out.println("Directory created: " + created);
                 }
-                
+
                 // Lưu file
                 String fullPath = uploadPath + File.separator + fileName;
                 System.out.println("Saving file to: " + fullPath);
                 filePart.write(fullPath);
-                
+
                 // Đường dẫn tương đối để lưu vào database
                 fileName = "uploads/products/" + fileName;
             } else {
@@ -514,7 +519,7 @@ public class ManageProductController extends HttpServlet {
                 showAddForm(request, response);
                 return;
             }
-            
+
             // Tạo đối tượng Product mới
             Product product = new Product();
             product.setProductName(name);
@@ -523,38 +528,37 @@ public class ManageProductController extends HttpServlet {
             product.setStock(stock);
             product.setImage(fileName);
             product.setStatus(status);
-            
+
             // Thiết lập thời gian tạo và cập nhật
             Timestamp now = new Timestamp(System.currentTimeMillis());
             product.setCreatedAt(now);
             product.setUpdatedAt(now);
-            
+
             // Lưu sản phẩm vào database
             ProductDAO productDAO = new ProductDAO();
             int productId = productDAO.insert(product);
             System.out.println("Product insert result: " + productId);
-            
+
             if (productId > 0) {
-                // Add category relationships
+                // Xử lý quan hệ với danh mục (category) theo cách tương tự như supplier
                 CategoryProductDAO categoryProductDAO = new CategoryProductDAO();
-                for (String categoryIdStr : categoryIds) {
-                    int categoryId = Integer.parseInt(categoryIdStr);
+                String[] categoryIdsArray = categoryIdsStr.split(",");
+                for (String categoryIdStr : categoryIdsArray) {
+                    int categoryId = Integer.parseInt(categoryIdStr.trim());
                     categoryProductDAO.addCategoryToProduct(categoryId, productId);
                 }
-                
-                // Xử lý quan hệ với nhà cung cấp
+
+                // Xử lý quan hệ với nhà cung cấp (supplier)
                 String supplierIdsStr = request.getParameter("supplierIds");
                 if (supplierIdsStr != null && !supplierIdsStr.isEmpty()) {
                     ProductSupplierDAO psDAO = new ProductSupplierDAO();
-                    
-                    // Tách chuỗi ID thành mảng
                     String[] supplierIdArray = supplierIdsStr.split(",");
                     for (String supplierIdStr : supplierIdArray) {
                         int supplierId = Integer.parseInt(supplierIdStr.trim());
                         psDAO.addProductSupplier(productId, supplierId);
                     }
                 }
-                
+
                 // Thêm thành công
                 setToastMessage(request, "Product added successfully", "success");
                 response.sendRedirect(request.getContextPath() + "/admin/manage-product");
@@ -563,7 +567,6 @@ public class ManageProductController extends HttpServlet {
                 setToastMessage(request, "Failed to add product", "error");
                 showAddForm(request, response);
             }
-            
         } catch (NumberFormatException e) {
             System.out.println("NumberFormatException: " + e.getMessage());
             e.printStackTrace();

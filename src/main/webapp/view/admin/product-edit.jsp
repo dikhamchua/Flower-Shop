@@ -156,14 +156,15 @@
                     <div class="col-md-6">
                         <label class="form-label">Categories <span class="text-danger">*</span></label>
                         <div class="category-input-container">
-                            <input type="text" class="form-control" id="categoryInput" placeholder="Type to search categories..." 
-                                   autocomplete="off" spellcheck="false">
-                            <div id="categorySuggestions" class="category-suggestions"></div>
-                            <div class="selected-categories" id="selectedCategories"></div>
-                            <input type="hidden" name="categories" id="categoryIdsInput">
-                            <div class="invalid-feedback"></div>
+                            <button type="button" id="categoryDropdownBtn" class="btn btn-outline-secondary w-100 text-start d-flex justify-content-between align-items-center">
+                                <span>Chọn danh mục</span>
+                                <i class="fas fa-chevron-down"></i>
+                            </button>
+                            <div id="categorySuggestions" class="category-suggestions" style="display: none;"></div>
+                            <div id="selectedCategories" class="selected-categories"></div>
+                            <input type="hidden" name="categoryIds" id="categoryIds">
+                            <div class="invalid-feedback">Vui lòng chọn ít nhất một danh mục</div>
                         </div>
-                        <small class="text-muted">Type category name and select from suggestions</small>
                     </div>
 
                     <div class="col-md-12">
@@ -260,7 +261,7 @@
         </c:forEach>
     ];
     window.selectedCategoryIds = [
-        <c:forEach var="categoryId" items="${productCategories}" varStatus="status">
+        <c:forEach var="categoryId" items="${selectedCategoryIds}" varStatus="status">
             ${categoryId}<c:if test="${!status.last}">,</c:if>
         </c:forEach>
     ];

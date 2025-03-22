@@ -21,7 +21,8 @@ document.addEventListener('DOMContentLoaded', function() {
     // Form validation
     const form = document.getElementById('productForm');
     const nameInput = form.querySelector('input[name="name"]');
-    const categorySelect = form.querySelector('select[name="categoryId"]');
+    const categoryIdsInput = document.getElementById('categoryIds');
+    console.log(categoryIdsInput);
     const priceInput = form.querySelector('input[name="price"]');
     const stockInput = form.querySelector('input[name="stock"]');
     const imageInput = form.querySelector('input[name="image"]');
@@ -143,7 +144,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Validate all fields
         const isNameValid = validateProductName(nameInput);
-        const isCategoryValid = validateCategory(categorySelect);
+        const isCategoryValid = validateCategory(categoryIdsInput);
         const isPriceValid = validatePrice(priceInput);
         const isStockValid = validateStock(stockInput);
         const isImageValid = validateImage(imageInput);
@@ -176,7 +177,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             // Focus on the first invalid field
             if (!isNameValid) nameInput.focus();
-            else if (!isCategoryValid) categorySelect.focus();
+            else if (categoryIdsInput && !isCategoryValid) categoryIdsInput.focus();
             else if (!isPriceValid) priceInput.focus();
             else if (!isStockValid) stockInput.focus();
             else if (!isImageValid) imageInput.focus();
@@ -205,15 +206,22 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    function validateCategory(select) {
-        const value = select.value;
-        const feedback = select.nextElementSibling;
+    function validateCategory(input) {
+        const value = input.value.trim();
+        console.log("Validating category, value:", value);
+        const feedback = document.querySelector('.category-input-container .invalid-feedback');
+        const categoryDropdownBtn = document.getElementById('categoryDropdownBtn');
         
-        if (value === '' || value === null) {
-            setInvalid(select, feedback, 'Please select a category');
+        if (value === '') {
+            console.error("Validation error: Category field is empty.");
+            categoryDropdownBtn.classList.add('is-invalid');
+            feedback.textContent = 'Vui lòng chọn ít nhất một danh mục';
+            feedback.style.display = 'block';
             return false;
         } else {
-            setValid(select, feedback);
+            console.log("Validation passed: Category field is valid.");
+            categoryDropdownBtn.classList.remove('is-invalid');
+            feedback.style.display = 'none';
             return true;
         }
     }

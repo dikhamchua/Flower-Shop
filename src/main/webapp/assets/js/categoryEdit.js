@@ -1,14 +1,29 @@
 document.addEventListener('DOMContentLoaded', function() {
+    console.log("DOM loaded - initializing category dropdown for edit");
+    
+    // Lấy dữ liệu categories từ window
     const categories = window.categories || [];
+    console.log("Categories data:", categories);
+    
+    // Lấy danh sách category đã chọn từ window
     let selectedCategoryIds = window.selectedCategoryIds || [];
+    console.log("Selected category IDs:", selectedCategoryIds);
+    
+    // Kiểm tra xem có dữ liệu categories không
+    if (!categories || categories.length === 0) {
+        console.error("No categories data available!");
+    }
 
-    const categoryInput = document.getElementById('categoryInput');
+    // Lấy các phần tử DOM
+    const categoryDropdownBtn = document.getElementById('categoryDropdownBtn');
     const categorySuggestions = document.getElementById('categorySuggestions');
     const selectedCategories = document.getElementById('selectedCategories');
-    const categoryIdsInput = document.getElementById('categoryIdsInput');
+    const categoryIds = document.getElementById('categoryIds');
     const form = document.getElementById('productForm');
 
+    // Hiển thị danh mục đã chọn khi tải trang
     function initSelectedCategories() {
+        selectedCategories.innerHTML = '';
         selectedCategoryIds.forEach(id => {
             const category = categories.find(c => c.id == id);
             if (category) {
@@ -18,6 +33,7 @@ document.addEventListener('DOMContentLoaded', function() {
         updateCategoryIdsInput();
     }
 
+    // Hiển thị danh mục đã chọn
     function addCategoryToDisplay(id, name) {
         const categoryElement = document.createElement('div');
         categoryElement.className = 'selected-category';
@@ -27,131 +43,114 @@ document.addEventListener('DOMContentLoaded', function() {
         `;
         
         categoryElement.querySelector('.remove-category').addEventListener('click', function() {
-            categoryElement.style.transform = 'scale(0.9)';
-            categoryElement.style.opacity = '0';
-            setTimeout(() => {
-                removeCategory(id);
-                categoryElement.remove();
-            }, 300);
+            removeCategory(id);
+            categoryElement.remove();
         });
         
-        categoryElement.style.transform = 'scale(0.9)';
-        categoryElement.style.opacity = '0';
         selectedCategories.appendChild(categoryElement);
-        setTimeout(() => {
-            categoryElement.style.transform = 'scale(1)';
-            categoryElement.style.opacity = '1';
-        }, 50);
     }
 
-    function createSuggestionElement(category) {
-        const suggestionElement = document.createElement('div');
-        suggestionElement.className = 'category-suggestion';
-        suggestionElement.textContent = category.name;
-        suggestionElement.dataset.id = category.id;
-        
-        suggestionElement.addEventListener('mouseenter', () => {
-            suggestionElement.style.backgroundColor = '#f8f9fa';
-        });
-        
-        suggestionElement.addEventListener('mouseleave', () => {
-            suggestionElement.style.backgroundColor = '';
-        });
-        
-        suggestionElement.addEventListener('mousedown', () => {
-            suggestionElement.style.transform = 'scale(0.98)';
-        });
-        
-        suggestionElement.addEventListener('mouseup', () => {
-            suggestionElement.style.transform = '';
-        });
-        
-        suggestionElement.addEventListener('click', function() {
-            addCategory(category.id, category.name);
-            categoryInput.value = '';
+    // Hiển thị dropdown khi click vào button
+    categoryDropdownBtn.addEventListener('click', function() {
+        if (categorySuggestions.style.display === 'none') {
+            // Hiển thị tất cả danh mục chưa được chọn
+            showCategorySuggestions();
+        } else {
             categorySuggestions.style.display = 'none';
-        });
-        
-        return suggestionElement;
-    }
+        }
+    });
 
-    categoryInput.addEventListener('input', function() {
-        const inputValue = this.value.trim().toLowerCase();
+    // Hiển thị danh sách gợi ý danh mục
+    function showCategorySuggestions() {
         categorySuggestions.innerHTML = '';
         
-        if (inputValue.length < 1) {
-            categorySuggestions.style.display = 'none';
-            return;
-        }
-        
-        const matchingCategories = categories.filter(category => 
-            category.name.toLowerCase().includes(inputValue) && 
+        // Lọc ra các danh mục chưa được chọn
+        const availableCategories = categories.filter(category => 
             !selectedCategoryIds.includes(category.id)
         );
         
-        if (matchingCategories.length === 0) {
-            categorySuggestions.innerHTML = '<div class="category-suggestion text-muted">No matching categories found</div>';
-            categorySuggestions.style.display = 'block';
-            return;
+        if (availableCategories.length === 0) {
+            categorySuggestions.innerHTML = '<div class="category-suggestion text-muted">Không có danh mục nào khả dụng</div>';
+        } else {
+            availableCategories.forEach(category => {
+                const suggestionElement = document.createElement('div');
+                suggestionElement.className = 'category-suggestion';
+                suggestionElement.textContent = category.name;
+                
+                suggestionElement.addEventListener('click', function() {
+                    addCategory(category.id, category.name);
+                    categorySuggestions.style.display = 'none';
+                });
+                
+                categorySuggestions.appendChild(suggestionElement);
+            });
         }
         
-        matchingCategories.forEach(category => {
-            const suggestionElement = createSuggestionElement(category);
-            categorySuggestions.appendChild(suggestionElement);
-        });
-        
         categorySuggestions.style.display = 'block';
-    });
+    }
 
+    // Thêm danh mục vào danh sách đã chọn
     function addCategory(id, name) {
         if (selectedCategoryIds.includes(id)) return;
+        
         selectedCategoryIds.push(id);
         addCategoryToDisplay(id, name);
         updateCategoryIdsInput();
         validateCategories();
     }
 
+    // Xóa danh mục khỏi danh sách đã chọn
     function removeCategory(id) {
         selectedCategoryIds = selectedCategoryIds.filter(categoryId => categoryId != id);
         updateCategoryIdsInput();
         validateCategories();
     }
 
+    // Cập nhật input hidden chứa danh sách ID danh mục
     function updateCategoryIdsInput() {
-        categoryIdsInput.value = selectedCategoryIds.join(',');
+        categoryIds.value = selectedCategoryIds.join(',');
+        console.log("Updated category IDs:", categoryIds.value);
     }
 
+    // Kiểm tra xem đã chọn ít nhất một danh mục chưa
     function validateCategories() {
-        const feedback = document.querySelector('.category-input-container .invalid-feedback');
         if (selectedCategoryIds.length === 0) {
-            categoryInput.classList.add('is-invalid');
-            feedback.textContent = 'Please select at least one category';
-            feedback.style.display = 'block';
+            categoryDropdownBtn.classList.add('is-invalid');
+            document.querySelector('.category-input-container .invalid-feedback').style.display = 'block';
             return false;
         } else {
-            categoryInput.classList.remove('is-invalid');
-            feedback.style.display = 'none';
+            categoryDropdownBtn.classList.remove('is-invalid');
+            document.querySelector('.category-input-container .invalid-feedback').style.display = 'none';
             return true;
         }
     }
 
-    initSelectedCategories();
-    
+    // Ẩn dropdown khi click ra ngoài
     document.addEventListener('click', function(e) {
-        if (!categoryInput.contains(e.target) && !categorySuggestions.contains(e.target)) {
+        if (!categoryDropdownBtn.contains(e.target) && !categorySuggestions.contains(e.target)) {
             categorySuggestions.style.display = 'none';
         }
     });
 
+    // Kiểm tra khi submit form
     form.addEventListener('submit', function(event) {
-        const isCategoryValid = validateCategories();
-        if (!isCategoryValid) {
+        if (selectedCategoryIds.length === 0) {
             event.preventDefault();
+            categoryDropdownBtn.classList.add('is-invalid');
+            document.querySelector('.category-input-container .invalid-feedback').style.display = 'block';
+            
             iziToast.error({
-                title: 'Error',
-                message: 'Please select at least one category',
+                title: 'Lỗi',
+                message: 'Vui lòng chọn ít nhất một danh mục',
                 position: 'topRight'
             });
+        } else {
+            categoryDropdownBtn.classList.remove('is-invalid');
+            document.querySelector('.category-input-container .invalid-feedback').style.display = 'none';
         }
     });
+
+    // Khởi tạo danh sách danh mục đã chọn
+    initSelectedCategories();
+    validateCategories();
 }); 

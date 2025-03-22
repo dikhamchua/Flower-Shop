@@ -1,0 +1,1128 @@
+Uri: https://cdn.linearicons.com/free/1.0.0/Linearicons-Free.eot
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\free\1.0.0\Linearicons-Free.eot
+Content Type: application/vnd.ms-fontobject
+
+Uri: https://cdn.linearicons.com/free/1.0.0/Linearicons-Free.eot?
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\free\1.0.0\Linearicons-Free-1.eot
+Content Type: application/vnd.ms-fontobject
+
+Uri: https://cdn.linearicons.com/free/1.0.0/Linearicons-Free.svg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\free\1.0.0\Linearicons-Free.svg
+Content Type: image/svg+xml
+
+Uri: https://cdn.linearicons.com/free/1.0.0/Linearicons-Free.ttf
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\free\1.0.0\Linearicons-Free.ttf
+Content Type: application/x-font-ttf
+
+Uri: https://cdn.linearicons.com/free/1.0.0/Linearicons-Free.woff
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\free\1.0.0\Linearicons-Free.woff
+Content Type: binary/octet-stream
+
+Uri: https://cdn.linearicons.com/free/1.0.0/Linearicons-Free.woff2
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\free\1.0.0\Linearicons-Free.woff2
+Content Type: application/font-woff2
+
+Uri: https://fonts.googleapis.com/css?family=Anton&display=swap
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\css-1
+Content Type: text/css
+
+Uri: https://fonts.googleapis.com/css?family=Open+Sans|Poppins:300,400,500,600,700|Yesteryear
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\css
+Content Type: text/css
+
+Uri: https://fonts.gstatic.com/s/anton/v25/1Ptgg87LROyAm3Kz-Co.ttf
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\s\anton\v25\1Ptgg87LROyAm3Kz-Co.ttf
+Content Type: font/ttf
+
+Uri: https://fonts.gstatic.com/s/opensans/v40/memSYaGs126MiZpBA-UvWbX2vVnXBbObj2OVZyOOSr4dVJWUgsjZ0B4gaVc.ttf
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\s\opensans\v40\memSYaGs126MiZpBA-UvWbX2vVnXBbObj2OVZyOOSr4dVJWUgsjZ0B4gaVc.ttf
+Content Type: font/ttf
+
+Uri: https://fonts.gstatic.com/s/poppins/v22/pxiByp8kv8JHgFVrLCz7Z1xlEA.ttf
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\s\poppins\v22\pxiByp8kv8JHgFVrLCz7Z1xlEA.ttf
+Content Type: font/ttf
+
+Uri: https://fonts.gstatic.com/s/poppins/v22/pxiByp8kv8JHgFVrLDz8Z1xlEA.ttf
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\s\poppins\v22\pxiByp8kv8JHgFVrLDz8Z1xlEA.ttf
+Content Type: font/ttf
+
+Uri: https://fonts.gstatic.com/s/poppins/v22/pxiByp8kv8JHgFVrLEj6Z1xlEA.ttf
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\s\poppins\v22\pxiByp8kv8JHgFVrLEj6Z1xlEA.ttf
+Content Type: font/ttf
+
+Uri: https://fonts.gstatic.com/s/poppins/v22/pxiByp8kv8JHgFVrLGT9Z1xlEA.ttf
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\s\poppins\v22\pxiByp8kv8JHgFVrLGT9Z1xlEA.ttf
+Content Type: font/ttf
+
+Uri: https://fonts.gstatic.com/s/poppins/v22/pxiEyp8kv8JHgFVrJJfedw.ttf
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\s\poppins\v22\pxiEyp8kv8JHgFVrJJfedw.ttf
+Content Type: font/ttf
+
+Uri: https://fonts.gstatic.com/s/yesteryear/v19/dg4g_p78rroaKl8kRKo1n7sNSw.ttf
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\s\yesteryear\v19\dg4g_p78rroaKl8kRKo1n7sNSw.ttf
+Content Type: font/ttf
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/404.html
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\404.html
+Content Type: text/html
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/about-2.html
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\about-2.html
+Content Type: text/html
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/about.html
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\about.html
+Content Type: text/html
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/blog-left-sidebar.html
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\blog-left-sidebar.html
+Content Type: text/html
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/blog-nosidebar.html
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\blog-nosidebar.html
+Content Type: text/html
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/blog.html
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\blog.html
+Content Type: text/html
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/cart.html
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\cart.html
+Content Type: text/html
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/checkout.html
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\checkout.html
+Content Type: text/html
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/compare.html
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\compare.html
+Content Type: text/html
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/contact-2.html
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\contact-2.html
+Content Type: text/html
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/contact.html
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\contact.html
+Content Type: text/html
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/css/animate.css
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\css\animate.css
+Content Type: text/css
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/css/bootstrap.min.css
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\css\bootstrap.min.css
+Content Type: text/css
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/css/easyzoom.css
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\css\easyzoom.css
+Content Type: text/css
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/css/font-awesome.min.css
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\css\font-awesome.min.css
+Content Type: text/css
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/css/jquery-ui.css
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\css\jquery-ui.css
+Content Type: text/css
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/css/linearicons.min.css
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\css\linearicons.min.css
+Content Type: text/css
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/css/meanmenu.min.css
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\css\meanmenu.min.css
+Content Type: text/css
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/css/nice-select.css
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\css\nice-select.css
+Content Type: text/css
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/css/owl.carousel.min.css
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\css\owl.carousel.min.css
+Content Type: text/css
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/css/responsive.css
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\css\responsive.css
+Content Type: text/css
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/css/slick.css
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\css\slick.css
+Content Type: text/css
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/css/venobox.css
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\css\venobox.css
+Content Type: text/css
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/faq.html
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\faq.html
+Content Type: text/html
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/fonts/fontawesome-webfont.eot?
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\fonts\fontawesome-webfont-1.eot
+Content Type: application/vnd.ms-fontobject
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/fonts/fontawesome-webfont.eot?v=4.7.0
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\fonts\fontawesome-webfont.eot
+Content Type: application/vnd.ms-fontobject
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/fonts/fontawesome-webfont.svg?v=4.7.0
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\fonts\fontawesome-webfont.svg
+Content Type: image/svg+xml
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/fonts/fontawesome-webfont.ttf?v=4.7.0
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\fonts\fontawesome-webfont.ttf
+Content Type: application/octet-stream
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/fonts/fontawesome-webfont.woff2?v=4.7.0
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\fonts\fontawesome-webfont.woff2
+Content Type: font/woff2
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/fonts/fontawesome-webfont.woff?v=4.7.0
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\fonts\fontawesome-webfont.woff
+Content Type: font/woff
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/about/about1.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\about\about1.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/about/about2.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\about\about2.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/about/about3.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\about\about3.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/about/about4.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\about\about4.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/banner/banner1.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\banner\banner1.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/banner/banner2.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\banner\banner2.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/banner/banner3.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\banner\banner3.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/banner/banner4.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\banner\banner4.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/banner/banner5.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\banner\banner5.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/banner/banner6.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\banner\banner6.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/banner/banner7.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\banner\banner7.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/banner/banner8.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\banner\banner8.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/banner/banner9.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\banner\banner9.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/banner/shop-sidebar.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\banner\shop-sidebar.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/bg/bg1.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\bg\bg1.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/bg/bg2.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\bg\bg2.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/bg/contact2-social.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\bg\contact2-social.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/bg/service-bg1.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\bg\service-bg1.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/bg/service-bg2.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\bg\service-bg2.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/bg/service-bg3.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\bg\service-bg3.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/bg/service-bg4.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\bg\service-bg4.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/blog/blog1.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\blog\blog1.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/blog/blog2.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\blog\blog2.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/blog/blog3.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\blog\blog3.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/blog/blog4.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\blog\blog4.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/blog/blog5.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\blog\blog5.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/brand/brand1.png
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\brand\brand1.png
+Content Type: image/png
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/brand/brand2.png
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\brand\brand2.png
+Content Type: image/png
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/brand/brand3.png
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\brand\brand3.png
+Content Type: image/png
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/brand/brand4.png
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\brand\brand4.png
+Content Type: image/png
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/brand/brand5.png
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\brand\brand5.png
+Content Type: image/png
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/cart/cart1.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\cart\cart1.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/cart/cart2.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\cart\cart2.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/category/home1-category-1.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\category\home1-category-1.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/category/home1-category-2.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\category\home1-category-2.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/category/home1-category-3.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\category\home1-category-3.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/category/home1-category-4.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\category\home1-category-4.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/category/home1-category-5.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\category\home1-category-5.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/category/home2-category-1.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\category\home2-category-1.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/category/home2-category-2.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\category\home2-category-2.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/category/home2-category-3.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\category\home2-category-3.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/category/home2-category-4.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\category\home2-category-4.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/category/home2-category-5.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\category\home2-category-5.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/christmas/01.png
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\christmas\01.png
+Content Type: image/webp
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/christmas/02.png
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\christmas\02.png
+Content Type: image/webp
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/christmas/03.png
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\christmas\03.png
+Content Type: image/webp
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/christmas/04.png
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\christmas\04.png
+Content Type: image/webp
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/christmas/05.png
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\christmas\05.png
+Content Type: image/webp
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/christmas/banner_03.png
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\christmas\banner_03.png
+Content Type: image/png
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/christmas/banner_04.png
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\christmas\banner_04.png
+Content Type: image/png
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/christmas/banner_05.png
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\christmas\banner_05.png
+Content Type: image/png
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/christmas/best_deal.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\christmas\best_deal.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/christmas/collections1.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\christmas\collections1.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/christmas/collections2.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\christmas\collections2.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/christmas/footer_bg.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\christmas\footer_bg.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/christmas/landing-page.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\christmas\landing-page.jpg
+Content Type: image/webp
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/christmas/limited_time.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\christmas\limited_time.jpg
+Content Type: image/webp
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/christmas/payment-icon.png
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\christmas\payment-icon.png
+Content Type: image/webp
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/christmas/product_01.png
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\christmas\product_01.png
+Content Type: image/png
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/christmas/product_02.png
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\christmas\product_02.png
+Content Type: image/png
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/christmas/product_03.png
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\christmas\product_03.png
+Content Type: image/png
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/christmas/product_04.png
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\christmas\product_04.png
+Content Type: image/png
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/christmas/product_05.png
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\christmas\product_05.png
+Content Type: image/png
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/christmas/product_06.png
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\christmas\product_06.png
+Content Type: image/png
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/christmas/product_07.png
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\christmas\product_07.png
+Content Type: image/png
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/christmas/product_08.png
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\christmas\product_08.png
+Content Type: image/png
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/christmas/product_09.png
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\christmas\product_09.png
+Content Type: image/png
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/christmas/product_10.png
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\christmas\product_10.png
+Content Type: image/png
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/christmas/product_11.png
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\christmas\product_11.png
+Content Type: image/png
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/christmas/product_12.png
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\christmas\product_12.png
+Content Type: image/png
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/christmas/product_13.png
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\christmas\product_13.png
+Content Type: image/png
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/christmas/product_14.png
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\christmas\product_14.png
+Content Type: image/png
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/christmas/product_15.png
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\christmas\product_15.png
+Content Type: image/png
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/christmas/product_16.png
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\christmas\product_16.png
+Content Type: image/png
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/christmas/product_banner.png
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\christmas\product_banner.png
+Content Type: image/webp
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/christmas/product_bannner_bg.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\christmas\product_bannner_bg.jpg
+Content Type: image/webp
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/christmas/slider_01.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\christmas\slider_01.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/christmas/slider_02.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\christmas\slider_02.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/christmas/testi_1.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\christmas\testi_1.jpg
+Content Type: image/webp
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/christmas/testi_2.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\christmas\testi_2.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/christmas/testi_3.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\christmas\testi_3.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/christmas/testi_bg.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\christmas\testi_bg.jpg
+Content Type: image/webp
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/christmas/testi_icon.png
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\christmas\testi_icon.png
+Content Type: image/png
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/christmas/video_banner.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\christmas\video_banner.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/collections/collections1.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\collections\collections1.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/collections/collections2.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\collections\collections2.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/compare/compare-1.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\compare\compare-1.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/compare/compare-2.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\compare\compare-2.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/compare/compare-3.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\compare\compare-3.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/favicon.ico
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\favicon.ico
+Content Type: image/x-icon
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/icon/admin.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\icon\admin.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/icon/author.png
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\icon\author.png
+Content Type: image/png
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/icon/fun-fact1.png
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\icon\fun-fact1.png
+Content Type: image/png
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/icon/fun-fact2.png
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\icon\fun-fact2.png
+Content Type: image/png
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/icon/fun-fact3.png
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\icon\fun-fact3.png
+Content Type: image/png
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/icon/fun-fact4.png
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\icon\fun-fact4.png
+Content Type: image/png
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/icon/ice01.png
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\icon\ice01.png
+Content Type: image/webp
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/icon/ice02.png
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\icon\ice02.png
+Content Type: image/webp
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/icon/play-btn-2.png
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\icon\play-btn-2.png
+Content Type: image/webp
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/icon/slider-left-hover.png
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\icon\slider-left-hover.png
+Content Type: image/png
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/icon/slider-left.png
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\icon\slider-left.png
+Content Type: image/png
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/icon/slider-right-hover.png
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\icon\slider-right-hover.png
+Content Type: image/png
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/icon/slider-right.png
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\icon\slider-right.png
+Content Type: image/png
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/icon/testimonial-icon.png
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\icon\testimonial-icon.png
+Content Type: image/png
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/logo/logo-footer.png
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\logo\logo-footer.png
+Content Type: image/png
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/logo/logo.png
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\logo\logo.png
+Content Type: image/png
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/page-banner/product-banner.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\page-banner\product-banner.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/page-banner/shop-banner-1.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\page-banner\shop-banner-1.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/payment/payment-icon.png
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\payment\payment-icon.png
+Content Type: image/png
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/portfolio/portfolio1.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\portfolio\portfolio1.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/portfolio/portfolio10.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\portfolio\portfolio10.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/portfolio/portfolio11.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\portfolio\portfolio11.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/portfolio/portfolio12.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\portfolio\portfolio12.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/portfolio/portfolio13.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\portfolio\portfolio13.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/portfolio/portfolio14.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\portfolio\portfolio14.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/portfolio/portfolio15.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\portfolio\portfolio15.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/portfolio/portfolio16.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\portfolio\portfolio16.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/portfolio/portfolio2.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\portfolio\portfolio2.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/portfolio/portfolio3.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\portfolio\portfolio3.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/portfolio/portfolio4.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\portfolio\portfolio4.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/portfolio/portfolio5.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\portfolio\portfolio5.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/portfolio/portfolio6.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\portfolio\portfolio6.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/portfolio/portfolio7.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\portfolio\portfolio7.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/portfolio/portfolio8.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\portfolio\portfolio8.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/portfolio/portfolio9.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\portfolio\portfolio9.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/product-thumb/product1.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\product-thumb\product1.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/product-thumb/product2.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\product-thumb\product2.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/product-thumb/product3.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\product-thumb\product3.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/product/product1.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\product\product1.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/product/product10.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\product\product10.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/product/product11.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\product\product11.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/product/product12.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\product\product12.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/product/product13.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\product\product13.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/product/product14.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\product\product14.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/product/product15.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\product\product15.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/product/product16.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\product\product16.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/product/product17.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\product\product17.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/product/product18.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\product\product18.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/product/product19.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\product\product19.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/product/product2.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\product\product2.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/product/product20.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\product\product20.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/product/product21.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\product\product21.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/product/product22.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\product\product22.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/product/product23.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\product\product23.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/product/product24.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\product\product24.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/product/product3.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\product\product3.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/product/product4.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\product\product4.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/product/product5.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\product\product5.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/product/product6.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\product\product6.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/product/product7.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\product\product7.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/product/product8.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\product\product8.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/product/product9.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\product\product9.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/service/service-section1.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\service\service-section1.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/service/service-section2.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\service\service-section2.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/service/service1.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\service\service1.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/service/service2.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\service\service2.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/service/service3.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\service\service3.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/service/service4.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\service\service4.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/service/service5.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\service\service5.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/service/service6.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\service\service6.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/service/service7.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\service\service7.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/service/service8.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\service\service8.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/service/service9.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\service\service9.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/single-product/large/single-product1.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\single-product\large\single-product1.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/single-product/large/single-product2.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\single-product\large\single-product2.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/single-product/large/single-product3.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\single-product\large\single-product3.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/single-product/large/single-product4.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\single-product\large\single-product4.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/single-product/large/single-product5.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\single-product\large\single-product5.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/single-product/large/single-product6.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\single-product\large\single-product6.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/single-product/small/single-product1.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\single-product\small\single-product1.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/single-product/small/single-product2.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\single-product\small\single-product2.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/single-product/small/single-product3.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\single-product\small\single-product3.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/single-product/small/single-product4.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\single-product\small\single-product4.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/single-product/small/single-product5.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\single-product\small\single-product5.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/single-product/small/single-product6.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\single-product\small\single-product6.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/slider/home1-slider1.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\slider\home1-slider1.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/slider/home1-slider2.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\slider\home1-slider2.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/slider/home2-slider1.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\slider\home2-slider1.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/slider/home2-slider2-text.png
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\slider\home2-slider2-text.png
+Content Type: image/png
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/slider/home2-slider2.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\slider\home2-slider2.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/slider/home3-slider1.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\slider\home3-slider1.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/slider/home3-slider2-text.png
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\slider\home3-slider2-text.png
+Content Type: image/png
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/slider/home3-slider2.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\slider\home3-slider2.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/slider/home5-slider1-icon.png
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\slider\home5-slider1-icon.png
+Content Type: image/png
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/slider/home5-slider1-text1.png
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\slider\home5-slider1-text1.png
+Content Type: image/png
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/slider/home5-slider1.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\slider\home5-slider1.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/slider/home5-slider2-icon.png
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\slider\home5-slider2-icon.png
+Content Type: image/png
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/slider/home5-slider2-text.png
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\slider\home5-slider2-text.png
+Content Type: image/png
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/slider/home5-slider2.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\slider\home5-slider2.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/testimonial/testimonial1.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\testimonial\testimonial1.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/testimonial/testimonial2.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\testimonial\testimonial2.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/img/testimonial/testimonial3.jpg
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\img\testimonial\testimonial3.jpg
+Content Type: image/jpeg
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/index-2.html
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\index-2.html
+Content Type: text/html
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/index-3.html
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\index-3.html
+Content Type: text/html
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/index-4.html
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\index-4.html
+Content Type: text/html
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/index-5.html
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\index-5.html
+Content Type: text/html
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/index-6.html
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\index-6.html
+Content Type: text/html
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/index-7.html
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\index-7.html
+Content Type: text/html
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/index.html
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\index.html
+Content Type: text/html
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/js/bootstrap.min.js
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\js\bootstrap.min.js
+Content Type: application/javascript
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/js/easyzoom.min.js
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\js\easyzoom.min.js
+Content Type: application/javascript
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/js/imagesloaded.pkgd.min.js
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\js\imagesloaded.pkgd.min.js
+Content Type: application/javascript
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/js/isotope.pkgd.min.js
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\js\isotope.pkgd.min.js
+Content Type: application/javascript
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/js/jquery-ui.js
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\js\jquery-ui.js
+Content Type: application/javascript
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/js/jquery.countdown.min.js
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\js\jquery.countdown.min.js
+Content Type: application/javascript
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/js/jquery.counterup.min.js
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\js\jquery.counterup.min.js
+Content Type: application/javascript
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/js/jquery.meanmenu.min.js
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\js\jquery.meanmenu.min.js
+Content Type: application/javascript
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/js/jquery.nice-select.min.js
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\js\jquery.nice-select.min.js
+Content Type: application/javascript
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/js/jquery.scrollUp.min.js
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\js\jquery.scrollUp.min.js
+Content Type: application/javascript
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/js/main.js
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\js\main.js
+Content Type: application/javascript
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/js/owl.carousel.min.js
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\js\owl.carousel.min.js
+Content Type: application/javascript
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/js/plugins.js
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\js\plugins.js
+Content Type: application/javascript
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/js/popper.min.js
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\js\popper.min.js
+Content Type: application/javascript
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/js/slick.min.js
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\js\slick.min.js
+Content Type: application/javascript
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/js/vendor/jquery-3.6.0.min.js
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\js\vendor\jquery-3.6.0.min.js
+Content Type: application/javascript
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/js/vendor/jquery-migrate-3.3.2.min.js
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\js\vendor\jquery-migrate-3.3.2.min.js
+Content Type: application/javascript
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/js/vendor/modernizr-3.6.0.min.js
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\js\vendor\modernizr-3.6.0.min.js
+Content Type: application/javascript
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/js/venobox.min.js
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\js\venobox.min.js
+Content Type: application/javascript
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/js/waypoints.min.js
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\js\waypoints.min.js
+Content Type: application/javascript
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/js/wow.min.js
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\js\wow.min.js
+Content Type: application/javascript
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/login-register.html
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\login-register.html
+Content Type: text/html
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/my-account.html
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\my-account.html
+Content Type: text/html
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/portfolio-details.html
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\portfolio-details.html
+Content Type: text/html
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/portfolio.html
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\portfolio.html
+Content Type: text/html
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/service-2.html
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\service-2.html
+Content Type: text/html
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/service.html
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\service.html
+Content Type: text/html
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/shop-full-width.html
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\shop-full-width.html
+Content Type: text/html
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/shop-list.html
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\shop-list.html
+Content Type: text/html
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/shop-right-sidebar.html
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\shop-right-sidebar.html
+Content Type: text/html
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/shop.html
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\shop.html
+Content Type: text/html
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/single-blog.html
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\single-blog.html
+Content Type: text/html
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/single-product-affiliate.html
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\single-product-affiliate.html
+Content Type: text/html
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/single-product-variable.html
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\single-product-variable.html
+Content Type: text/html
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/single-product.html
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\single-product.html
+Content Type: text/html
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/style.css
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\style.css
+Content Type: text/css
+
+Uri: https://htmldemo.net/plantmore/plantmore-v5/wishlist.html
+File Name: C:\Users\ADMIN\OneDrive - vinhdeptrai\Code Thue\SWP391\SP25\SWP391 - OnlineShop - Phuc Khang\com.os_SWP391-FlowerShop-PhucKhang\htmldemo.net\plantmore\plantmore-v5\wishlist.html
+Content Type: text/html
+

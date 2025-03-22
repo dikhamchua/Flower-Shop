@@ -25,7 +25,7 @@
                                     <li><a href="${pageContext.request.contextPath}/home">home</a>
                                     </li>
                                     <li><a href="${pageContext.request.contextPath}/home">Shop</a></li>
-                                    <li><a href="${pageContext.request.contextPath}/admin/manage-order">Blog</a></li>
+                                    <li><a href="${pageContext.request.contextPath}/home">Blog</a></li>
                                     
                                     <!-- Hiển thị nút đăng nhập/đăng ký chỉ khi chưa đăng nhập -->
                                     <c:if test="${sessionScope.SESSION_ACCOUNT == null && sessionScope.account == null}">
