@@ -63,6 +63,47 @@
                 height: 100%;
                 object-fit: cover;
             }
+
+            /* Slider image styling */
+            #slider-carousel {
+                border-radius: 8px;
+                overflow: hidden; /* Prevents slider image overflow */
+                box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+                margin-bottom: 30px;
+            }
+
+            #slider-carousel .carousel-inner {
+                height: 300px; /* Fixed height for slider */
+            }
+
+            #slider-carousel .carousel-item {
+                height: 100%;
+            }
+
+            #slider-carousel .carousel-item img {
+                width: 100%;
+                height: 100%;
+                object-fit: contain; /* Changed from cover to contain to show the entire image */
+                object-position: center; /* Centers the image */
+            }
+
+            /* Improve slider controls visibility */
+            #slider-carousel .carousel-control-prev,
+            #slider-carousel .carousel-control-next {
+                width: 40px;
+                height: 40px;
+                background-color: rgba(0,0,0,0.3);
+                border-radius: 50%;
+                top: 50%;
+                transform: translateY(-50%);
+                margin: 0 15px;
+            }
+
+            #slider-carousel .carousel-control-prev-icon,
+            #slider-carousel .carousel-control-next-icon {
+                width: 20px;
+                height: 20px;
+            }
         </style>
     </head>
     <body>
@@ -90,9 +131,9 @@
                                                     <div class="carousel-item ${count == 0 ? 'active' : ''}">
                                                         <a href="${slider.link}">
                                                             <img src="${slider.imageUrl}" alt="${slider.caption}" class="d-block w-100">
-                                                            <div class="carousel-caption d-none d-md-block">
+<!--                                                            <div class="carousel-caption d-none d-md-block">
                                                                 <h5>${slider.caption}</h5>
-                                                            </div>
+                                                            </div>-->
                                                         </a>
                                                     </div>
                                                     <c:set var="count" value="${count + 1}" />
@@ -119,12 +160,12 @@
                                             </c:if>
                                         </div>
                                     </div>
-                                    <div class="breadcrumb-content">
+<!--                                    <div class="breadcrumb-content">
                                         <ul>
                                             <li><a href="${pageContext.request.contextPath}/">Home</a></li>
                                             <li class="active">Shop</li>
                                         </ul>
-                                    </div>
+                                    </div>-->
                                 </div>
                                 <!--Breadcrumb One End-->
                                 <!--Grid & List View Start-->

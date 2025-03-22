@@ -101,7 +101,8 @@
                                 <div class="icon">
                                     <i class="fa fa-home"></i>
                                 </div>
-                                <p>Address : No 40 Baria Sreet 15/2 NewYork City, NY, United States.</p>
+                                <p>Address : Flower Shop
+                                    600 Nguyen Van Cu Street, An Binh Ward Ninh Kieu District, Can Tho City, Vietnam.</p>
                             </div>
                         </div>
                         <!--Single Footer Widget End-->
@@ -113,7 +114,7 @@
                                 <div class="icon">
                                     <i class="fa fa-envelope-open-o"></i>
                                 </div>
-                                <p>Email: <br>info@yourmail.com</p>
+                                <p>Email: <br>service.flowershop@gmail.com</p>
                             </div>
                         </div>
                         <!--Single Footer Widget End-->
@@ -125,7 +126,7 @@
                                 <div class="icon">
                                     <i class="fa fa-mobile"></i>
                                 </div>
-                                <p>Phone: <br>(+68) 123 456 7890</p>
+                                <p>Phone: <br>0849324423</p>
                             </div>
                         </div>
                         <!--Single Footer Widget End-->

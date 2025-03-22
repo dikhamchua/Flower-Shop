@@ -24,6 +24,49 @@
             .iziToast {
                 min-width: 300px;
             }
+            /* Slider styling for blog page */
+            .slider-carousel {
+                margin-bottom: 30px;
+            }
+
+            #blogSliderCarousel {
+                border-radius: 8px;
+                overflow: hidden; /* Prevents slider image overflow */
+                box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            }
+
+            #blogSliderCarousel .carousel-inner {
+                height: 300px; /* Fixed height for slider */
+            }
+
+            #blogSliderCarousel .carousel-item {
+                height: 100%;
+            }
+
+            #blogSliderCarousel .carousel-item img {
+                width: 100%;
+                height: 100%;
+                object-fit: contain; /* Shows the entire image without cropping */
+                object-position: center; /* Centers the image */
+            }
+
+            /* Improve slider controls visibility */
+            #blogSliderCarousel .carousel-control-prev,
+            #blogSliderCarousel .carousel-control-next {
+                width: 40px;
+                height: 40px;
+                background-color: rgba(0,0,0,0.3);
+                border-radius: 50%;
+                top: 50%;
+                transform: translateY(-50%);
+                margin: 0 15px;
+            }
+
+            #blogSliderCarousel .carousel-control-prev-icon,
+            #blogSliderCarousel .carousel-control-next-icon {
+                width: 20px;
+                height: 20px;
+            }
         </style>
     </head>
     <body>
@@ -58,9 +101,9 @@
                                             <div class="carousel-item ${count == 0 ? 'active' : ''}">
                                                 <a href="${slider.link}">
                                                     <img src="${slider.imageUrl}" alt="${slider.caption}" class="d-block w-100">
-                                                    <div class="carousel-caption d-none d-md-block">
+<!--                                                    <div class="carousel-caption d-none d-md-block">
                                                         <h5>${slider.caption}</h5>
-                                                    </div>
+                                                    </div>-->
                                                 </a>
                                             </div>
                                             <c:set var="count" value="${count + 1}" />
@@ -133,7 +176,7 @@
                                         <div class="postinfo-wrapper">
                                             <div class="post-info">
                                                 <div class="entry-summary">
-                                                    <p>${blog.content.length() > 200 ? blog.content.substring(0, 200).concat("...") : blog.content}</p>
+<!--                                                    <p>${blog.content.length() > 200 ? blog.content.substring(0, 200).concat("...") : blog.content}</p>-->
                                                     <a href="blog?action=detail&id=${blog.id}" class="form-button">Read More</a>
                                                     <div class="social-sharing">
                                                         <div class="widget widget_socialsharing_widget">
@@ -241,7 +284,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="product-filter mb-35">
+<!--                                        <div class="product-filter mb-35">
                                             <h5>tags</h5>
                                             <div class="product-tag blog-tag">
                                                 <ul>
@@ -257,7 +300,7 @@
                                                     <li><a href="#">amet</a></li>
                                                 </ul>
                                             </div>
-                                        </div>
+                                        </div>-->
                                     </div>
                                 </div>
                             </div>
