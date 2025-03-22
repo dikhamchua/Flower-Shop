@@ -48,11 +48,11 @@
             .product-large-thumb img {
                 width: 100%;
                 height: 100%;
-                object-fit: contain; /* Shows the entire image within container */
-                object-position: center; /* Centers the image */
-                max-width: 100%; /* Ensures image doesn't exceed container width */
-                max-height: 100%; /* Ensures image doesn't exceed container height */
-                transition: transform 0.3s ease;
+                object-fit: contain; /* Giữ nguyên contain */
+                max-width: 100%;
+                max-height: 100%;
+                padding: 15px; /* Thêm padding */
+                background: #fff; /* Đảm bảo nền trắng */
             }
 
             .easyzoom:hover img {
@@ -83,18 +83,19 @@
             /* Related products styling */
             .product-slider-active .single-product .product-img {
                 height: 220px;
-                overflow: hidden; /* Prevents related product image overflow */
+                overflow: hidden;
                 border-radius: 8px;
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                background-color: #fff;
+                background: #fff;
+                padding: 10px;
             }
 
             .product-slider-active .single-product .product-img img {
                 width: 100%;
                 height: 100%;
-                object-fit: contain; /* Changed to contain to show full product */
+                object-fit: contain; /* Thay đổi từ contain sang scale-down */
                 max-width: 100%;
                 max-height: 100%;
             }
@@ -228,7 +229,7 @@
                                             </c:otherwise>
                                         </c:choose>
                                     </div>
-                                    <div class="product-meta">
+<!--                                    <div class="product-meta">
                                         <span class="posted-in">
                                             Categories: 
                                             <c:forEach var="category" items="${productCategories}" varStatus="loop">
@@ -236,7 +237,7 @@
                                                 ${not loop.last ? ', ' : ''}
                                             </c:forEach>
                                         </span>
-                                    </div>
+                                    </div>-->
                                 </div>
                                 <!--Product Details Content End-->
                             </div>

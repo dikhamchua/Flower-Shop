@@ -26,18 +26,24 @@
             /* Thêm style cho ảnh sản phẩm trong shop */
             .single-product .product-img {
                 width: 100%;
-                height: 250px; /* Increased height for better display */
+                height: 250px;
                 overflow: hidden;
                 position: relative;
                 border-radius: 8px;
                 margin-bottom: 10px;
+                background: #fff;
+                display: flex;
+                align-items: center;
+                padding: 10px;
             }
             
             .single-product .product-img img {
                 width: 100%;
                 height: 100%;
-                object-fit: cover; /* This ensures the image covers the area without distortion */
+                object-fit: contain;
                 transition: transform 0.5s ease;
+                max-width: 100%;
+                max-height: 100%;
             }
             
             .single-product:hover .product-img img {
@@ -56,12 +62,18 @@
                 height: 220px;
                 overflow: hidden;
                 border-radius: 8px;
+                background: #fff;
+                display: flex;
+                align-items: center;
+                padding: 5px;
             }
             
             .list-product-img img {
                 width: 100%;
                 height: 100%;
-                object-fit: cover;
+                object-fit: contain;
+                max-width: 100%;
+                max-height: 100%;
             }
 
             /* Slider image styling */
