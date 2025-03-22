@@ -46,14 +46,17 @@ public class AdminFilter implements Filter {
         
         // Kiểm tra xem người dùng có quyền admin không
         boolean isAdmin = false;
+        boolean isUser = false;
+        
         Account account = (Account) session.getAttribute(GlobalConfig.SESSION_ACCOUNT);
         if (session != null &&  account!= null) {
             String role = account.getRole();
             isAdmin = GlobalConfig.ROLE_ADMIN.equals(role);
+            isUser = GlobalConfig.ROLE_USER.equals(role);
         }
         
         // Nếu không phải admin, chuyển hướng đến trang access denied
-        if (!isAdmin) {
+        if (isUser) {
             httpRequest.getRequestDispatcher("/view/access-denied.jsp").forward(request, response);
             return;
         }
