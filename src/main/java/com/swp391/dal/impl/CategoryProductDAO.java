@@ -40,31 +40,44 @@ public class CategoryProductDAO {
     }
 
     public List<Category> getCategoriesByProductId(int productId) {
-        List<Category> list = new ArrayList<>();
-        String query = "SELECT c.* FROM categories c " +
-                "JOIN category_product cp ON c.category_id = cp.category_id " +
-                "WHERE cp.product_id = ?";
+        List<Category> categories = new ArrayList<>();
         try {
+            String sql = "SELECT c.* FROM categories c " +
+                         "JOIN category_product cp ON c.category_id = cp.category_id " +
+                         "WHERE cp.product_id = ?";
+            
             conn = new DBContext().getConnection();
-            ps = conn.prepareStatement(query);
+            ps = conn.prepareStatement(sql);
             ps.setInt(1, productId);
             rs = ps.executeQuery();
+            
             while (rs.next()) {
-                list.add(Category.builder()
-                        .categoryId(rs.getInt("category_id"))
-                        .name(rs.getString("name"))
-                        .description(rs.getString("description"))
-                        .status(rs.getByte("status"))
-                        .createdAt(rs.getDate("created_at"))
-                        .updatedAt(rs.getDate("updated_at"))
-                        .build());
+                Category category = new Category();
+                category.setCategoryId(rs.getInt("category_id"));
+                category.setName(rs.getString("name"));
+                category.setDescription(rs.getString("description"));
+                category.setStatus(rs.getByte("status"));
+                
+                // Sử dụng java.sql.Date thay vì java.util.Date
+                java.sql.Timestamp createdTimestamp = rs.getTimestamp("created_at");
+                java.sql.Timestamp updatedTimestamp = rs.getTimestamp("updated_at");
+                
+                if (createdTimestamp != null) {
+                    category.setCreatedAt(new java.sql.Date(createdTimestamp.getTime()));
+                }
+                
+                if (updatedTimestamp != null) {
+                    category.setUpdatedAt(new java.sql.Date(updatedTimestamp.getTime()));
+                }
+                
+                categories.add(category);
             }
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         } finally {
             closeResources();
         }
-        return list;
+        return categories;
     }
 
     public List<Product> getProductsByCategoryId(int categoryId) {

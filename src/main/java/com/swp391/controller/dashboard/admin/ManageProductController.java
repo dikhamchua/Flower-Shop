@@ -182,6 +182,14 @@ public class ManageProductController extends HttpServlet {
                 productSuppliersMap.put(product.getProductId(), productSuppliers);
             }
             
+            // Get categories for each product
+            CategoryProductDAO categoryProductDAO = new CategoryProductDAO();
+            Map<Integer, List<Category>> productCategoriesMap = new HashMap<>();
+            for (Product product : products) {
+                List<Category> productCategories = categoryProductDAO.getCategoriesByProductId(product.getProductId());
+                productCategoriesMap.put(product.getProductId(), productCategories);
+            }
+            
             // Set attributes for JSP
             request.setAttribute("products", products);
             request.setAttribute("categories", categories);
@@ -189,6 +197,7 @@ public class ManageProductController extends HttpServlet {
             request.setAttribute("categoryMap", categoryMap);
             request.setAttribute("supplierMap", supplierMap);
             request.setAttribute("productSuppliersMap", productSuppliersMap);
+            request.setAttribute("productCategoriesMap", productCategoriesMap);
             request.setAttribute("currentPage", page);
             request.setAttribute("totalPages", totalPages);
             request.setAttribute("totalProducts", totalProducts);
@@ -308,29 +317,23 @@ public class ManageProductController extends HttpServlet {
         response.sendRedirect(request.getContextPath() + "/admin/manage-product");
     }
 
-    private void showAddForm(HttpServletRequest request, HttpServletResponse response)
+    private void showAddForm(HttpServletRequest request, HttpServletResponse response) 
     throws ServletException, IOException {
         try {
-            // Lấy danh sách categories
             CategoryDAO categoryDAO = new CategoryDAO();
             List<Category> categories = categoryDAO.findAll();
             request.setAttribute("categories", categories);
             
-            // Lấy danh sách suppliers
+            // Lấy danh sách nhà cung cấp
             SupplierDAO supplierDAO = new SupplierDAO();
             List<Supplier> suppliers = supplierDAO.findAll();
             request.setAttribute("suppliers", suppliers);
-            
-            // Log để kiểm tra
-            System.out.println("Categories sent to JSP: " + categories.size());
-            for (Category category : categories) {
-                System.out.println("Category: " + category.getCategoryId() + " - " + category.getName());
-            }
             
             RequestDispatcher dispatcher = request.getRequestDispatcher("/view/admin/product-add.jsp");
             dispatcher.forward(request, response);
         } catch (Exception e) {
             e.printStackTrace();
+            setToastMessage(request, "Error loading form data: " + e.getMessage(), "error");
             response.sendRedirect(request.getContextPath() + "/admin/manage-product");
         }
     }
