@@ -44,9 +44,9 @@
                         <div class="header-option">
                             <div class="mini-cart-search">
                                 <div class="mini-cart">
-                                    <a href="${pageContext.request.contextPath}/cart">
+                                    <a href="${pageContext.request.contextPath}/cart" class="cart-link">
                                         <i class="fa fa-shopping-cart"></i>
-                                        <span class="cart-title">Your cart <br></span> 
+                                        <span class="cart-title">Your cart</span>
                                     </a>
                                 </div>
                                 <div class="header-search">
@@ -108,3 +108,36 @@
         ${attr.key}: ${attr.value}<br>
     </c:forEach>
 </div>
+
+<style>
+    /* Cart styling */
+    .mini-cart {
+        position: relative;
+        margin-right: 20px;
+    }
+
+    .mini-cart .cart-link {
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+        color: #333;
+        transition: color 0.3s ease;
+        padding: 5px 10px;
+        border-radius: 4px;
+    }
+
+    .mini-cart .cart-link:hover {
+        color: #80b435;
+        background-color: rgba(128, 180, 53, 0.1);
+    }
+
+    .mini-cart i {
+        font-size: 20px;
+        margin-right: 8px;
+    }
+
+    .cart-title {
+        font-size: 14px;
+        font-weight: 600;
+    }
+</style>

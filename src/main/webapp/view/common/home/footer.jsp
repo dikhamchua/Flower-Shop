@@ -12,13 +12,13 @@
                                 <h3>My Account</h3>
                             </div>
                             <ul class="link-widget">
-                                <li><a href="about.html">About Us</a></li>
+                                <li><a href="#">About Us</a></li>
                                 <li><a href="#">Team Member</a></li>
                                 <li><a href="#">Career</a></li>
                                 <li><a href="#">Specials</a></li>
-                                <li><a href="shop.html">Best sellers</a></li>
+                                <li><a href="#">Best sellers</a></li>
                                 <li><a href="#">Our stores</a></li>
-                                <li><a href="contact.html">Contact us</a></li>
+                                <li><a href="#">Contact us</a></li>
                             </ul>
                         </div>
                         <!--Single Footer Widget End-->
@@ -30,8 +30,8 @@
                                 <h3>Information</h3>
                             </div>
                             <ul class="link-widget">
-                                <li><a href="about.html">About Us</a></li>
-                                <li><a href="contact.html">Contact Us</a></li>
+                                <li><a href="#">About Us</a></li>
+                                <li><a href="#">Contact Us</a></li>
                                 <li><a href="#">My orders</a></li>
                                 <li><a href="#">Terms & Conditions</a></li>
                                 <li><a href="#">Returns & Exchanges</a></li>
@@ -54,7 +54,7 @@
                                 <li><a href="#">Privacy Policy</a></li>
                                 <li><a href="#">Help</a></li>
                                 <li><a href="#">Products Return</a></li>
-                                <li><a href="faq.html">FAQS</a></li>
+                                <li><a href="#">FAQS</a></li>
                             </ul>
                         </div>
                         <!--Single Footer Widget End-->

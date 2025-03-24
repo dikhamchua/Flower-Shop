@@ -82,7 +82,7 @@
                                             <div class="entry-summary blog-post-description">
                                                 <p>${blog.content}</p>
                                                 
-                                                <div class="social-sharing mt-30">
+<!--                                                <div class="social-sharing mt-30">
                                                     <div class="widget widget_socialsharing_widget">
                                                         <h3 class="widget-title">Share this post</h3>
                                                         <ul class="blog-social-icons">
@@ -108,7 +108,7 @@
                                                             </li>
                                                         </ul>
                                                     </div>
-                                                </div>
+                                                </div>-->
                                             </div>
                                         </div>
                                     </div>

@@ -376,7 +376,7 @@
                                                 <div class="entry-summary">
 <!--                                                    <p>${blog.content.length() > 200 ? blog.content.substring(0, 200).concat("...") : blog.content}</p>-->
                                                     <a href="blog?action=detail&id=${blog.id}" class="form-button">Read More</a>
-                                                    <div class="social-sharing">
+<!--                                                    <div class="social-sharing">
                                                         <div class="widget widget_socialsharing_widget">
                                                             <h3 class="widget-title">Share this post</h3>
                                                             <ul class="blog-social-icons">
@@ -402,7 +402,7 @@
                                                                 </li>
                                                             </ul>
                                                         </div>
-                                                    </div>
+                                                    </div>-->
                                                 </div>
                                             </div>
                                         </div>

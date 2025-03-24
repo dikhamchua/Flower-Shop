@@ -69,7 +69,7 @@
             <!--Header Area End-->
             
             <!--Breadcrumb One Start-->
-            <div class="breadcrumb-one mb-120">
+<!--            <div class="breadcrumb-one mb-120">
                 <div class="container">
                     <div class="row">
                         <div class="col-12">
@@ -85,7 +85,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>-->
             <!--Breadcrumb One End-->
             
             <!--Shopping Cart Area Start-->
