@@ -20,7 +20,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Select Product to Review</title>
+        <title>Select Product to Feedback</title>
         <jsp:include page="../common/dashboard/css-dashboard.jsp"></jsp:include>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
         <style>
@@ -30,6 +30,8 @@
                 object-fit: contain;
                 border-radius: 8px;
                 box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+                background-color: #f8f9fa;
+                padding: 5px;
             }
             
             .product-card {
@@ -62,14 +64,14 @@
 
         <div class="dashboard-main-body">
             <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-24">
-                <h6 class="fw-semibold mb-0">Select Product to Review</h6>
+                <h6 class="fw-semibold mb-0">Select Product to Feedback</h6>
                 
             </div>
 
             <!-- Product List Card -->
             <div class="card mb-24">
                 <div class="card-header bg-white py-3">
-                    <h5 class="mb-0">Choose a Product to Review</h5>
+                    <h5 class="mb-0">Choose a Product to Feedback</h5>
                     <p class="text-muted mb-0">Order #${orderId}</p>
                 </div>
                 <div class="card-body p-0">
@@ -89,7 +91,7 @@
                                     <tr>
                                         <td>
                                             <div class="d-flex align-items-center">
-                                                <img src="${pageContext.request.contextPath}/uploads/products/${item.productImage}" 
+                                                <img src="${pageContext.request.contextPath}/${item.productImage}" 
                                                      class="product-image me-3" alt="${item.productName}">
                                                 <div>
                                                     <h6 class="mb-0">${item.productName}</h6>
@@ -110,7 +112,7 @@
                                                 <c:otherwise>
                                                     <a href="${pageContext.request.contextPath}/feedbackControl?action=write-review&orderItemId=${item.orderItemId}" 
                                                        class="btn btn-sm btn-primary">
-                                                        <i class="fas fa-star me-1"></i> Write Review
+                                                        <i class="fas fa-star me-1"></i> Write Feedback
                                                     </a>
                                                 </c:otherwise>
                                             </c:choose>

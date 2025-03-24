@@ -1,4 +1,3 @@
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
@@ -21,8 +20,11 @@
             .product-image {
                 width: 60px;
                 height: 60px;
-                object-fit: cover;
+                object-fit: contain;
                 border-radius: 8px;
+                box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+                background-color: #f8f9fa;
+                padding: 5px;
             }
             
             .star-rating {
@@ -88,7 +90,7 @@
                             <div class="card-body p-4">
                                 <div class="d-flex">
                                     <div class="me-3">
-                                        <img src="${pageContext.request.contextPath}/uploads/products/${feedback.productImage}" 
+                                        <img src="${pageContext.request.contextPath}/${feedback.productImage}" 
                                              alt="${feedback.productName}" class="product-image">
                                     </div>
                                     <div class="flex-grow-1">

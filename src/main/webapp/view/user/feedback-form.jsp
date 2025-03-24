@@ -20,8 +20,12 @@
         <style>
             .product-image {
                 max-width: 120px;
+                max-height: 120px;
                 border-radius: 10px;
                 box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+                object-fit: contain;
+                background-color: #f8f9fa;
+                padding: 5px;
             }
             
             .star-rating {
@@ -75,7 +79,7 @@
 
         <div class="dashboard-main-body">
             <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-24">
-                <h6 class="fw-semibold mb-0">Write Review</h6>
+                <h6 class="fw-semibold mb-0">Write Feedback</h6>
                 
             </div>
 
@@ -84,7 +88,7 @@
                 <div class="card-body p-24">
                     <div class="row mb-4">
                         <div class="col-md-3 text-center">
-                            <img src="${pageContext.request.contextPath}/uploads/products/${orderItem.productImage}" 
+                            <img src="${pageContext.request.contextPath}/${orderItem.productImage}" 
                                  alt="${orderItem.productName}" class="product-image mb-3">
                             <h5 class="mb-1">${orderItem.productName}</h5>
                             <p class="text-muted small">
@@ -92,7 +96,7 @@
                             </p>
                         </div>
                         <div class="col-md-9">
-                            <h4 class="mb-4">Your Review</h4>
+                            <h4 class="mb-4">Your Feedback</h4>
                             <form action="${pageContext.request.contextPath}/feedbackControl" method="POST">
                                 <input type="hidden" name="action" value="submit">
                                 <input type="hidden" name="orderItemId" value="${orderItem.orderItemId}">
