@@ -297,11 +297,8 @@
                                         <c:set var="count" value="0" />
                                         <c:forEach var="slider" items="${sliders}">
                                             <div class="carousel-item ${count == 0 ? 'active' : ''}">
-                                                <a href="${slider.link}">
+                                                <a href="#">
                                                     <img src="${slider.imageUrl}" alt="${slider.caption}" class="d-block w-100">
-<!--                                                    <div class="carousel-caption d-none d-md-block">
-                                                        <h5>${slider.caption}</h5>
-                                                    </div>-->
                                                 </a>
                                             </div>
                                             <c:set var="count" value="${count + 1}" />
