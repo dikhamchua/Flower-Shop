@@ -109,8 +109,8 @@
                                     </c:forEach>
                                 </div>
 
-                                <div class="rc-product-price">
-                                    <span class="price">$${product.price}</span>
+                                <div class="rc-product-price" style="text-decoration: none;">
+                                    <span style="text-decoration: none;">${product.price.toString().replaceAll("\\B(?=(\\d{3})+(?!\\d))", ".")} VNĐ</span>
                                 </div>
                             </div>
                         </li>

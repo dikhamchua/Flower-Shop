@@ -22,8 +22,6 @@
                         <div class="header-menu">
                             <nav>
                                 <ul class="main-menu">
-                                    <li><a href="${pageContext.request.contextPath}/home">home</a>
-                                    </li>
                                     <li><a href="${pageContext.request.contextPath}/home">Shop</a></li>
                                     <li><a href="${pageContext.request.contextPath}/blog">Blog</a></li>
                                     
@@ -62,15 +60,14 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="currency">
+<!--                                <div class="currency">
                                     <div class="currency-box">
                                         <a href="#"><i class="fa fa-th"></i></a>
                                         <div class="currency-dropdown">
                                             <ul class="menu-top-menu">
-                                                <!-- Điều chỉnh menu dropdown dựa trên trạng thái đăng nhập -->
+                                                 Điều chỉnh menu dropdown dựa trên trạng thái đăng nhập 
                                                 <c:if test="${sessionScope.SESSION_ACCOUNT != null || sessionScope.account != null}">
-                                                    <li><a href="${pageContext.request.contextPath}/user/profile">My Account</a></li>
-                                                    <li><a href="wishlist.html">Wishlist</a></li>
+                                                    <li><a href="${pageContext.request.contextPath}/profile">My Account</a></li>
                                                     <li><a href="${pageContext.request.contextPath}/cart">Shopping cart</a></li>
                                                     <li><a href="${pageContext.request.contextPath}/cart?action=checkout">Checkout</a></li>
                                                     <li><a href="${pageContext.request.contextPath}/authen?action=logout">Logout</a></li>
@@ -83,7 +80,7 @@
                                             </ul>
                                         </div>
                                     </div>
-                                </div>
+                                </div>-->
                             </div>
                         </div>
                         <!--Header Option End--> 

@@ -169,10 +169,10 @@
                                 <!--Product Details Content Start-->
                                 <div class="product-details-content">
                                     <!--Product Nav Start-->
-                                    <div class="product-nav">
+<!--                                    <div class="product-nav">
                                         <a href="#"><i class="fa fa-angle-left"></i></a>
                                         <a href="#"><i class="fa fa-angle-right"></i></a>
-                                    </div>
+                                    </div>-->
                                     <!--Product Nav End-->
                                     <h2>${product.productName}</h2>
                                     <div class="single-product-reviews">
