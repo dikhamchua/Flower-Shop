@@ -290,7 +290,7 @@
                     $('#cartToast .toast-body').text(message);
                     
                     // Thay đổi màu header của toast dựa vào loại thông báo
-                    if (message.includes("exceed available stock")) {
+                    if (message.includes("chỉ còn") || message.includes("exceed available stock")) {
                         $('#cartToast .toast-header').addClass('bg-danger text-white');
                     } else {
                         $('#cartToast .toast-header').addClass('bg-success text-white');
@@ -301,7 +301,7 @@
                     // Auto hide toast after 5 seconds for stock error messages, 3 seconds for others
                     setTimeout(function() {
                         toast.hide();
-                    }, message.includes("exceed available stock") ? 5000 : 3000);
+                    }, message.includes("chỉ còn") || message.includes("exceed available stock") ? 5000 : 3000);
                     
                     <% session.removeAttribute("cartMessage"); %>
                 </c:if>

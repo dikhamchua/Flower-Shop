@@ -18,13 +18,18 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
         <style>
             .product-image {
-                width: 60px;
-                height: 60px;
+                width: 100px;
+                height: 100px;
                 object-fit: contain;
-                border-radius: 8px;
+                border-radius: 10px;
                 box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
                 background-color: #f8f9fa;
-                padding: 5px;
+                padding: 8px;
+                transition: transform 0.3s ease;
+            }
+            
+            .product-image:hover {
+                transform: scale(1.05);
             }
             
             .star-rating {

@@ -77,8 +77,10 @@ public class CartController extends HttpServlet {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            request.setAttribute("errorMessage", "Đã xảy ra lỗi: " + e.getMessage());
-            request.getRequestDispatcher("/view/error.jsp").forward(request, response);
+            // Thay vì chuyển hướng đến trang lỗi, đặt thông báo lỗi vào session và quay lại trang giỏ hàng
+            HttpSession session = request.getSession();
+            session.setAttribute("cartMessage", "Đã xảy ra lỗi: " + e.getMessage());
+            response.sendRedirect(request.getContextPath() + "/cart");
         }
     }
 
@@ -128,8 +130,10 @@ public class CartController extends HttpServlet {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            request.setAttribute("errorMessage", "Đã xảy ra lỗi: " + e.getMessage());
-            request.getRequestDispatcher("/view/error.jsp").forward(request, response);
+            // Thay vì chuyển hướng đến trang lỗi, đặt thông báo lỗi vào session và quay lại trang giỏ hàng
+            HttpSession session = request.getSession();
+            session.setAttribute("cartMessage", "Đã xảy ra lỗi: " + e.getMessage());
+            response.sendRedirect(request.getContextPath() + "/cart");
         }
     }
 
@@ -295,23 +299,43 @@ public class CartController extends HttpServlet {
             
             if (cartId > 0) {
                 CartItemDAO cartItemDAO = new CartItemDAO();
+                ProductDAO productDAO = new ProductDAO();
+                StringBuilder errorMessage = new StringBuilder();
+                boolean hasStockError = false;
                 
                 for (int i = 0; i < productIds.length; i++) {
                     int productId = Integer.parseInt(productIds[i]);
                     int quantity = Integer.parseInt(quantities[i]);
                     
-                    // Lấy thông tin mục trong giỏ hàng
-                    CartItem cartItem = cartItemDAO.findCartItem(cartId, productId);
-                    
-                    if (cartItem != null) {
-                        if (quantity > 0) {
-                            // Cập nhật số lượng
-                            cartItemDAO.updateCartItemQuantity(cartItem.getCartItemId(), quantity);
-                        } else {
-                            // Nếu số lượng <= 0, xóa sản phẩm khỏi giỏ hàng
-                            cartItemDAO.deleteCartItem(cartId, productId);
+                    // Kiểm tra số lượng tồn kho
+                    Product product = productDAO.findById(productId);
+                    if (product != null && quantity > product.getStock()) {
+                        hasStockError = true;
+                        errorMessage.append("- ").append(product.getProductName())
+                                   .append(": Chúng tôi chỉ còn ").append(product.getStock())
+                                   .append(" sản phẩm (bạn yêu cầu ").append(quantity)
+                                   .append(" sản phẩm)\n");
+                        
+                        // Cập nhật số lượng về giới hạn tồn kho
+                        CartItem cartItem = cartItemDAO.findCartItem(cartId, productId);
+                        if (cartItem != null) {
+                            cartItemDAO.updateCartItemQuantity(cartItem.getCartItemId(), product.getStock());
                         }
+                    } else if (quantity > 0) {
+                        // Cập nhật số lượng nếu hợp lệ
+                        CartItem cartItem = cartItemDAO.findCartItem(cartId, productId);
+                        if (cartItem != null) {
+                            cartItemDAO.updateCartItemQuantity(cartItem.getCartItemId(), quantity);
+                        }
+                    } else {
+                        // Nếu số lượng <= 0, xóa sản phẩm khỏi giỏ hàng
+                        cartItemDAO.deleteCartItem(cartId, productId);
                     }
+                }
+                
+                if (hasStockError) {
+                    session.setAttribute("cartMessage", "Một số sản phẩm trong giỏ hàng vượt quá số lượng tồn kho:\n" 
+                            + errorMessage.toString() + "\nXin lỗi quý khách vì sự bất tiện này.");
                 }
             }
         }
