@@ -12,7 +12,7 @@
     </button>
     <div>
         <a href="${pageContext.request.contextPath}/home" class="sidebar-logo">
-            <img src="${pageContext.request.contextPath}/assets/admin/images/Logo.png" alt="site logo" class="logo">
+            <img src="${pageContext.request.contextPath}/assets/admin/images/logo.png" alt="site logo" class="logo">
         </a>
     </div>
     <div class="sidebar-menu-area">

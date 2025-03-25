@@ -60,6 +60,7 @@
                         <div class="col-md-2">
                             <select class="form-select" name="role">
                                 <option value="">All Roles</option>
+                                <option value="admin" ${param.role == 'admin' ? 'selected' : ''}>Admin</option>
                                 <option value="staff" ${param.role == 'staff' ? 'selected' : ''}>Staff</option>
                                 <option value="user" ${param.role == 'user' ? 'selected' : ''}>User</option>
                             </select>
