@@ -163,8 +163,8 @@ public class CartController extends HttpServlet {
         BigDecimal couponDiscount = (BigDecimal) session.getAttribute("couponDiscount");
         double finalTotal = cartTotal;
         if (couponDiscount != null) {
-            finalTotal = cartTotal - couponDiscount.doubleValue();
-            if (finalTotal < 0) finalTotal = 0;
+            // Đảm bảo finalTotal không âm
+            finalTotal = Math.max(0, cartTotal - couponDiscount.doubleValue());
         }
         
         // Đặt thuộc tính cho request
@@ -472,8 +472,8 @@ public class CartController extends HttpServlet {
         double finalTotal = cartTotal;
         BigDecimal couponDiscount = (BigDecimal) session.getAttribute("couponDiscount");
         if (couponDiscount != null) {
-            finalTotal = cartTotal - couponDiscount.doubleValue();
-            if (finalTotal < 0) finalTotal = 0;
+            // Đảm bảo finalTotal không âm
+            finalTotal = Math.max(0, cartTotal - couponDiscount.doubleValue());
         }
         
         request.setAttribute("cartItems", cartItems);
@@ -521,8 +521,8 @@ public class CartController extends HttpServlet {
         Coupon appliedCoupon = (Coupon) session.getAttribute("appliedCoupon");
         double finalTotal = cartTotal;
         if (couponDiscount != null) {
-            finalTotal = cartTotal - couponDiscount.doubleValue();
-            if (finalTotal < 0) finalTotal = 0;
+            // Đảm bảo finalTotal không âm
+            finalTotal = Math.max(0, cartTotal - couponDiscount.doubleValue());
         }
         
         // Tạo đơn hàng trong database với finalTotal thay vì cartTotal
@@ -688,11 +688,11 @@ public class CartController extends HttpServlet {
         } else {
             // Giảm giá cố định
             discount = coupon.getDiscountValue();
-            
-            // Đảm bảo giảm giá không vượt quá tổng giá trị đơn hàng
-            if (discount.compareTo(new BigDecimal(cartTotal)) > 0) {
-                discount = new BigDecimal(cartTotal);
-            }
+        }
+        
+        // Đảm bảo giảm giá không vượt quá tổng giá trị đơn hàng
+        if (discount.compareTo(new BigDecimal(cartTotal)) > 0) {
+            discount = new BigDecimal(cartTotal);
         }
         
         // Lưu coupon và giá trị giảm giá vào session

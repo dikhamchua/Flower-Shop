@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/png" href="assets/images/favicon.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="${pageContext.request.contextPath}/assets/images/favicon.png" sizes="16x16">
 
     <title>Blog Management || Clothing</title>
     <jsp:include page="../common/dashboard/css-dashboard.jsp"></jsp:include>
@@ -22,6 +22,12 @@
             display: -webkit-box;
             -webkit-line-clamp: 3;
             -webkit-box-orient: vertical;
+        }
+        .pagination .current-page {
+            background-color: #000000;
+            border-color: #000000;
+            color: #ffffff !important;
+            font-weight: bold;
         }
     </style>
     
@@ -169,22 +175,31 @@
                     <ul class="pagination justify-content-center">
                         <c:if test="${currentPage > 1}">
                             <li class="page-item">
-                                <a class="page-link" href="${paginationUrl}&page=${currentPage - 1}" aria-label="Previous">
-                                    <span aria-hidden="true">&laquo;</span>
+                                <a class="page-link text-success" href="${paginationUrl}&page=${currentPage - 1}" aria-label="Previous">
+                                    &lt; Previous
                                 </a>
                             </li>
                         </c:if>
 
                         <c:forEach begin="1" end="${totalPages}" var="i">
-                            <li class="page-item ${currentPage == i ? 'active' : ''}">
-                                <a class="page-link" href="${paginationUrl}&page=${i}">${i}</a>
-                            </li>
+                            <c:choose>
+                                <c:when test="${currentPage == i}">
+                                    <li class="page-item">
+                                        <span class="page-link current-page">${i}</span>
+                                    </li>
+                                </c:when>
+                                <c:otherwise>
+                                    <li class="page-item">
+                                        <a class="page-link" href="${paginationUrl}&page=${i}">${i}</a>
+                                    </li>
+                                </c:otherwise>
+                            </c:choose>
                         </c:forEach>
 
                         <c:if test="${currentPage < totalPages}">
                             <li class="page-item">
-                                <a class="page-link" href="${paginationUrl}&page=${currentPage + 1}" aria-label="Next">
-                                    <span aria-hidden="true">&raquo;</span>
+                                <a class="page-link text-success" href="${paginationUrl}&page=${currentPage + 1}" aria-label="Next">
+                                    Next &gt;
                                 </a>
                             </li>
                         </c:if>
