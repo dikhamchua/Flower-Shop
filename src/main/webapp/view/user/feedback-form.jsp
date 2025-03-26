@@ -102,9 +102,9 @@
                                 <input type="hidden" name="orderItemId" value="${orderItem.orderItemId}">
                                 
                                 <div class="mb-4">
-                                    <label class="form-label">Rating</label>
+                                    <label class="form-label">Rating <span class="text-danger">*</span></label>
                                     <div class="star-rating">
-                                        <input type="radio" id="star5" name="rating" value="5" required />
+                                        <input type="radio" id="star5" name="rating" value="5" />
                                         <label for="star5" title="5 stars"><i class="fas fa-star"></i></label>
                                         
                                         <input type="radio" id="star4" name="rating" value="4" />
@@ -119,6 +119,7 @@
                                         <input type="radio" id="star1" name="rating" value="1" />
                                         <label for="star1" title="1 star"><i class="fas fa-star"></i></label>
                                     </div>
+                                    <div id="ratingError" class="text-danger mt-1" style="display: none;">You haven't selected a rating</div>
                                 </div>
                                 
                                 <div class="mb-4">
@@ -200,6 +201,54 @@
                     <% session.removeAttribute("errorMessage"); %>
                 });
             </c:if>
+            
+            // Form validation
+            document.addEventListener('DOMContentLoaded', function() {
+                document.querySelector('form').addEventListener('submit', function(e) {
+                    const ratingSelected = document.querySelector('input[name="rating"]:checked');
+                    const ratingError = document.getElementById('ratingError');
+                    
+                    if (!ratingSelected) {
+                        e.preventDefault();
+                        ratingError.style.display = 'block';
+                        
+                        // Show toast notification
+                        showToast("You haven't selected a rating", "error");
+                        
+                        // Highlight the rating section with animation
+                        const ratingSection = document.querySelector('.star-rating').parentElement;
+                        ratingSection.style.transition = 'background-color 0.3s';
+                        ratingSection.style.backgroundColor = 'rgba(255, 0, 0, 0.05)';
+                        ratingSection.style.padding = '10px';
+                        ratingSection.style.borderRadius = '5px';
+                        ratingSection.style.border = '1px solid #dc3545';
+                        
+                        // Scroll to the rating section
+                        ratingSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        
+                        // Reset the highlight after a delay
+                        setTimeout(function() {
+                            ratingSection.style.backgroundColor = '';
+                            ratingSection.style.border = '1px solid #dc3545';
+                        }, 1500);
+                    } else {
+                        ratingError.style.display = 'none';
+                    }
+                });
+                
+                // Hide error styling when a star is selected
+                document.querySelectorAll('input[name="rating"]').forEach(function(radio) {
+                    radio.addEventListener('change', function() {
+                        const ratingError = document.getElementById('ratingError');
+                        const ratingSection = document.querySelector('.star-rating').parentElement;
+                        
+                        ratingError.style.display = 'none';
+                        ratingSection.style.backgroundColor = '';
+                        ratingSection.style.border = '';
+                        ratingSection.style.padding = '';
+                    });
+                });
+            });
         </script>
     </body>
 </html> 

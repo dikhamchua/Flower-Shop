@@ -243,10 +243,19 @@ public class FeedbacksController extends HttpServlet {
             throws ServletException, IOException {
         int orderItemId = Integer.parseInt(request.getParameter("orderItemId"));
         String content = request.getParameter("content");
-        int rating = Integer.parseInt(request.getParameter("rating"));
+        String ratingParam = request.getParameter("rating");
         
         // Lấy đối tượng HttpSession từ request
         HttpSession session = request.getSession();
+        
+        // Kiểm tra xem người dùng đã chọn rating chưa
+        if (ratingParam == null || ratingParam.isEmpty()) {
+            session.setAttribute("errorMessage", "Vui lòng chọn số sao đánh giá");
+            response.sendRedirect(request.getContextPath() + "/feedbackControl?action=write-review&orderItemId=" + orderItemId);
+            return;
+        }
+        
+        int rating = Integer.parseInt(ratingParam);
         
         OrderItem orderItem = orderItemDAO.getOrderItemById(orderItemId);
         
@@ -302,7 +311,16 @@ public class FeedbacksController extends HttpServlet {
         
         int feedbackId = Integer.parseInt(request.getParameter("feedbackId"));
         String content = request.getParameter("content");
-        int rating = Integer.parseInt(request.getParameter("rating"));
+        String ratingParam = request.getParameter("rating");
+        
+        // Kiểm tra xem người dùng đã chọn rating chưa
+        if (ratingParam == null || ratingParam.isEmpty()) {
+            session.setAttribute("errorMessage", "Vui lòng chọn số sao đánh giá");
+            response.sendRedirect(request.getContextPath() + "/feedbackControl?action=edit&id=" + feedbackId);
+            return;
+        }
+        
+        int rating = Integer.parseInt(ratingParam);
         
         Feedbacks feedback = feedbacksDAO.getFeedbackById(feedbackId);
         

@@ -48,8 +48,11 @@
                         </div>
                         <div class="col-md-6">
                             <label class="form-label">Phone Number</label>
-                            <input type="tel" class="form-control" name="phone" 
-                                   value="${account.phone}" required>
+                            <input type="tel" class="form-control ${not empty sessionScope.errors.phone ? 'is-invalid' : ''}" 
+                                   name="phone" value="${account.phone}" required>
+                            <c:if test="${not empty sessionScope.errors.phone}">
+                                <div class="invalid-feedback">${sessionScope.errors.phone}</div>
+                            </c:if>
                         </div>
                         <div class="col-md-12">
                             <label class="form-label">Address</label>

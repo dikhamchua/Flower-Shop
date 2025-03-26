@@ -382,10 +382,10 @@ public class ManageAccountController extends HttpServlet {
         
         // Validate phone
         if (phone != null && !phone.isEmpty()) {
-            if (!Pattern.matches("^[0-9]{10,15}$", phone)) {
-                errors.put("phone", "Phone number must be between 10 and 15 digits");
+            if (!Pattern.matches("^0[0-9]{9}$", phone)) {
+                errors.put("phone", "Số điện thoại phải bắt đầu bằng số 0 và có đúng 10 số");
             } else if (accountDAO.isPhoneExists(phone, accountId)) {
-                errors.put("phone", "Phone number already exists");
+                errors.put("phone", "Số điện thoại này đã được sử dụng");
             }
         }
         

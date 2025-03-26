@@ -155,7 +155,7 @@
                                 <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email">
                                 <i class="fas fa-envelope form-icon"></i>
                             </div>
-                            <button type="submit" class="btn-reset">Send Reset Link</button>
+                            <button type="submit" class="btn-reset">Send OTP</button>
                         </form>
                         <div class="back-to-login">
                             <p>Remember your password? <a href="${pageContext.request.contextPath}/authen?action=login">Sign In</a></p>
