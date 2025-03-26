@@ -8,10 +8,12 @@ import com.swp391.config.GlobalConfig;
 import com.swp391.dal.impl.OrderDAO;
 import com.swp391.dal.impl.OrderApprovalDAO;
 import com.swp391.dal.impl.OrderItemDAO;
+import com.swp391.dal.impl.ProductDAO;
 import com.swp391.entity.Account;
 import com.swp391.entity.Order;
 import com.swp391.entity.OrderApproval;
 import com.swp391.entity.OrderItem;
+import com.swp391.entity.Product;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -222,9 +224,30 @@ public class ManageOrderController extends HttpServlet {
             // Get current status for message
             String oldStatus = order.getStatus();
             
+            // Log gỡ lỗi
+            System.out.println("DEBUG: update order #" + orderId + " from '" + oldStatus + "' to '" + newStatus + "'");
+            
             boolean updated = orderDAO.updateOrderStatus(orderId, newStatus, account.getUserId(), note);
             
             if (updated) {
+                // If order is being accepted, reduce product stock
+                if ("accepted".equals(newStatus) && !"accepted".equals(oldStatus)) {
+                    // Log gỡ lỗi
+                    System.out.println("DEBUG: trying to reduce stock for order #" + orderId);
+                    
+                    boolean stockUpdated = reduceProductStock(orderId);
+                    
+                    // Log gỡ lỗi
+                    System.out.println("DEBUG: result: " + (stockUpdated ? "THÀNH CÔNG" : "THẤT BẠI"));
+                    
+                    if (!stockUpdated) {
+                        session.setAttribute("warningMessage", "status updated but stock not updated.");
+                    }
+                } else {
+                    // Log gỡ lỗi
+                    System.out.println("DEBUG: no need to reduce stock. newStatus=" + newStatus + ", oldStatus=" + oldStatus);
+                }
+                
                 // Create success message with status details
                 String statusText = "";
                 switch (newStatus) {
@@ -252,6 +275,57 @@ public class ManageOrderController extends HttpServlet {
         } catch (NumberFormatException e) {
             request.getSession().setAttribute("errorMessage", "Invalid order ID format");
             response.sendRedirect(request.getContextPath() + "/admin/manage-order");
+        }
+    }
+
+    /**
+     * Reduces product stock for all items in an order
+     * @param orderId The ID of the order
+     * @return true if all stock updates were successful, false otherwise
+     */
+    private boolean reduceProductStock(int orderId) {
+        try {
+            // Get all items in the order
+            OrderItemDAO orderItemDAO = new OrderItemDAO();
+            List<OrderItem> orderItems = orderItemDAO.getOrderItemsByOrderId(orderId);
+            
+            if (orderItems == null || orderItems.isEmpty()) {
+                return false;
+            }
+            
+            ProductDAO productDAO = new ProductDAO();
+            boolean allUpdatesSuccessful = true;
+            
+            // Update stock for each product
+            for (OrderItem item : orderItems) {
+                int productId = item.getProductId();
+                int quantity = item.getQuantity();
+                
+                // Get current product
+                Product product = productDAO.getProductById(productId);
+                if (product == null) {
+                    allUpdatesSuccessful = false;
+                    continue;
+                }
+                
+                // Calculate new stock level
+                int currentStock = product.getStock();
+                int newStock = Math.max(0, currentStock - quantity); // Ensure stock doesn't go below 0
+                
+                // Update product stock
+                product.setStock(newStock);
+                boolean updated = productDAO.update(product);
+                
+                if (!updated) {
+                    allUpdatesSuccessful = false;
+                }
+            }
+            
+            return allUpdatesSuccessful;
+        } catch (SQLException e) {
+            System.out.println("Error reducing product stock: " + e.getMessage());
+            e.printStackTrace();
+            return false;
         }
     }
 }

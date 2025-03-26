@@ -24,14 +24,18 @@ public class ProductDAO extends DBContext implements I_DAO<Product> {
         List<Product> products = new ArrayList<>();
         String sql = "SELECT * FROM products";
 
-        try (PreparedStatement statement = connection.prepareStatement(sql);
-                ResultSet resultSet = statement.executeQuery()) {
+        try {
+            connection = getConnection();
+            PreparedStatement statement = connection.prepareStatement(sql);
+            ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
                 products.add(getFromResultSet(resultSet));
             }
         } catch (SQLException e) {
             System.out.println("Error when finding all products: " + e.getMessage());
+        } finally {
+            closeResources();
         }
 
         return products;
@@ -39,11 +43,13 @@ public class ProductDAO extends DBContext implements I_DAO<Product> {
 
     @Override
     public boolean update(Product product) {
-        String sql = "UPDATE products SET name = ?, description = ?, " 
+        String sql = "UPDATE products SET name = ?, description = ?, "
                 + "price = ?, stock = ?, image = ?, status = ?, updated_at = ? "
                 + "WHERE product_id = ?";
 
-        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+        try {
+            connection = getConnection();
+            PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, product.getProductName());
             statement.setString(2, product.getDescription());
             statement.setBigDecimal(3, product.getPrice());
@@ -56,7 +62,10 @@ public class ProductDAO extends DBContext implements I_DAO<Product> {
             return statement.executeUpdate() > 0;
         } catch (SQLException e) {
             System.out.println("Error when updating product: " + e.getMessage());
+            e.printStackTrace();
             return false;
+        } finally {
+            closeResources();
         }
     }
 
@@ -64,23 +73,29 @@ public class ProductDAO extends DBContext implements I_DAO<Product> {
     public boolean delete(Product product) {
         String sql = "DELETE FROM products WHERE product_id = ?";
 
-        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+        try {
+            connection = getConnection();
+            PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1, product.getProductId());
 
             return statement.executeUpdate() > 0;
         } catch (SQLException e) {
             System.out.println("Error when deleting product: " + e.getMessage());
             return false;
+        } finally {
+            closeResources();
         }
     }
 
     @Override
     public int insert(Product product) {
-        String sql = "INSERT INTO products (name, description, price, stock, " 
-                + "image, status, created_at, updated_at) " 
+        String sql = "INSERT INTO products (name, description, price, stock, "
+                + "image, status, created_at, updated_at) "
                 + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
-        try (PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+        try {
+            connection = getConnection();
+            PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             System.out.println("Inserting product: " + product.getProductName());
 
             statement.setString(1, product.getProductName());
@@ -106,6 +121,8 @@ public class ProductDAO extends DBContext implements I_DAO<Product> {
         } catch (SQLException e) {
             System.out.println("SQL Error when inserting product: " + e.getMessage());
             e.printStackTrace();
+        } finally {
+            closeResources();
         }
 
         return 0;
@@ -126,7 +143,6 @@ public class ProductDAO extends DBContext implements I_DAO<Product> {
         Timestamp createdAt = resultSet.getTimestamp("created_at");
         if (createdAt != null) {
             product.setCreatedAt((createdAt));
-            ;
         }
 
         Timestamp updatedAt = resultSet.getTimestamp("updated_at");
@@ -257,7 +273,9 @@ public class ProductDAO extends DBContext implements I_DAO<Product> {
         parameters.add(pageSize);
         parameters.add((page - 1) * pageSize);
 
-        try (PreparedStatement statement = connection.prepareStatement(sqlBuilder.toString())) {
+        try {
+            connection = getConnection();
+            PreparedStatement statement = connection.prepareStatement(sqlBuilder.toString());
             // Thiết lập các tham số
             for (int i = 0; i < parameters.size(); i++) {
                 Object param = parameters.get(i);
@@ -276,6 +294,8 @@ public class ProductDAO extends DBContext implements I_DAO<Product> {
             }
         } catch (SQLException e) {
             System.out.println("Error when finding products with filter: " + e.getMessage());
+        } finally {
+            closeResources();
         }
 
         return products;
@@ -308,7 +328,9 @@ public class ProductDAO extends DBContext implements I_DAO<Product> {
             parameters.add(categoryId);
         }
 
-        try (PreparedStatement statement = connection.prepareStatement(sqlBuilder.toString())) {
+        try {
+            connection = getConnection();
+            PreparedStatement statement = connection.prepareStatement(sqlBuilder.toString());
             // Thiết lập các tham số
             for (int i = 0; i < parameters.size(); i++) {
                 Object param = parameters.get(i);
@@ -327,6 +349,8 @@ public class ProductDAO extends DBContext implements I_DAO<Product> {
             }
         } catch (SQLException e) {
             System.out.println("Error when counting products with filter: " + e.getMessage());
+        } finally {
+            closeResources();
         }
 
         return 0;
@@ -337,12 +361,14 @@ public class ProductDAO extends DBContext implements I_DAO<Product> {
      */
     public List<Product> findProductsWithPagination(int page, int pageSize) {
         List<Product> products = new ArrayList<>();
-        String sql = "SELECT p.* FROM products p " +
-                     "JOIN category_product cp ON p.product_id = cp.product_id " +
-                     "JOIN categories c ON cp.category_id = c.category_id " +
-                     "WHERE c.status = 1 ORDER BY p.product_id DESC LIMIT ? OFFSET ?";
+        String sql = "SELECT p.* FROM products p "
+                + "JOIN category_product cp ON p.product_id = cp.product_id "
+                + "JOIN categories c ON cp.category_id = c.category_id "
+                + "WHERE c.status = 1 ORDER BY p.product_id DESC LIMIT ? OFFSET ?";
 
-        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+        try {
+            connection = getConnection();
+            PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1, pageSize);
             statement.setInt(2, (page - 1) * pageSize);
 
@@ -352,6 +378,8 @@ public class ProductDAO extends DBContext implements I_DAO<Product> {
             }
         } catch (SQLException e) {
             System.out.println("Error when finding products with pagination: " + e.getMessage());
+        } finally {
+            closeResources();
         }
 
         return products;
@@ -361,18 +389,22 @@ public class ProductDAO extends DBContext implements I_DAO<Product> {
      * Đếm tổng số sản phẩm
      */
     public int getTotalProducts() {
-        String sql = "SELECT COUNT(*) FROM products p " +
-                     "JOIN category_product cp ON p.product_id = cp.product_id " +
-                     "JOIN categories c ON cp.category_id = c.category_id " +
-                     "WHERE c.status = 1";
+        String sql = "SELECT COUNT(*) FROM products p "
+                + "JOIN category_product cp ON p.product_id = cp.product_id "
+                + "JOIN categories c ON cp.category_id = c.category_id "
+                + "WHERE c.status = 1";
 
-        try (PreparedStatement statement = connection.prepareStatement(sql);
-             ResultSet resultSet = statement.executeQuery()) {
+        try {
+            connection = getConnection();
+            PreparedStatement statement = connection.prepareStatement(sql);
+            ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 return resultSet.getInt(1);
             }
         } catch (SQLException e) {
             System.out.println("Error when getting total products: " + e.getMessage());
+        } finally {
+            closeResources();
         }
 
         return 0;
@@ -384,25 +416,31 @@ public class ProductDAO extends DBContext implements I_DAO<Product> {
     public Product findById(int productId) {
         String sql = "SELECT * FROM products WHERE product_id = ?";
 
-        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+        try {
+            connection = getConnection();
+            PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1, productId);
 
-            try (ResultSet resultSet = statement.executeQuery()) {
-                if (resultSet.next()) {
-                    return getFromResultSet(resultSet);
-                }
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                return getFromResultSet(resultSet);
             }
         } catch (SQLException e) {
             System.out.println("Error when finding product by ID: " + e.getMessage());
             e.printStackTrace();
+        } finally {
+            closeResources();
         }
 
         return null;
     }
+
     public boolean updateStatus(int productId, byte status) {
         String sql = "UPDATE products SET status = ?, updated_at = ? WHERE product_id = ?";
 
-        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+        try {
+            connection = getConnection();
+            PreparedStatement statement = connection.prepareStatement(sql);
             statement.setByte(1, status);
             statement.setTimestamp(2, new Timestamp(System.currentTimeMillis()));
             statement.setInt(3, productId);
@@ -413,8 +451,11 @@ public class ProductDAO extends DBContext implements I_DAO<Product> {
             System.out.println("Error when updating product status: " + e.getMessage());
             e.printStackTrace();
             return false;
+        } finally {
+            closeResources();
         }
     }
+
     public double getMinPrice() {
         double minPrice = 0;
         try {
@@ -450,40 +491,41 @@ public class ProductDAO extends DBContext implements I_DAO<Product> {
         }
         return maxPrice;
     }
+
     /**
      * Tìm kiếm sản phẩm với các bộ lọc
-     * 
-     * @param searchKeyword       Từ khóa tìm kiếm
+     *
+     * @param searchKeyword Từ khóa tìm kiếm
      * @param selectedCategoryIds Danh sách ID danh mục được chọn
-     * @param minPrice            Giá tối thiểu
-     * @param maxPrice            Giá tối đa
-     * @param sortParam           Tham số sắp xếp
-     * @param currentPage         Trang hiện tại
-     * @param pageSize            Số sản phẩm trên mỗi trang
+     * @param minPrice Giá tối thiểu
+     * @param maxPrice Giá tối đa
+     * @param sortParam Tham số sắp xếp
+     * @param currentPage Trang hiện tại
+     * @param pageSize Số sản phẩm trên mỗi trang
      * @return Danh sách sản phẩm thỏa mãn điều kiện
      */
     public List<Product> findProductsWithFilters(
             String searchKeyword, List<Integer> categoryIds, Double minPrice, Double maxPrice,
             String sortType, int page, int pageSize) {
-        
+
         List<Product> products = new ArrayList<>();
         StringBuilder sqlBuilder = new StringBuilder();
-        
+
         // Base query with JOIN to handle category filtering
         sqlBuilder.append("SELECT DISTINCT p.* FROM products p ");
-        
+
         // Only add the JOIN if we have category filters
         if (categoryIds != null && !categoryIds.isEmpty()) {
             sqlBuilder.append("JOIN category_product cp ON p.product_id = cp.product_id ");
         }
-        
+
         sqlBuilder.append("WHERE p.status = 1 ");
-        
+
         // Add search condition
         if (searchKeyword != null && !searchKeyword.isEmpty()) {
             sqlBuilder.append("AND p.name LIKE ? ");
         }
-        
+
         // Add category filter
         if (categoryIds != null && !categoryIds.isEmpty()) {
             sqlBuilder.append("AND cp.category_id IN (");
@@ -495,7 +537,7 @@ public class ProductDAO extends DBContext implements I_DAO<Product> {
             }
             sqlBuilder.append(") ");
         }
-        
+
         // Add price range filter
         if (minPrice != null) {
             sqlBuilder.append("AND p.price >= ? ");
@@ -503,7 +545,7 @@ public class ProductDAO extends DBContext implements I_DAO<Product> {
         if (maxPrice != null) {
             sqlBuilder.append("AND p.price <= ? ");
         }
-        
+
         // Add sorting
         if (sortType != null) {
             switch (sortType) {
@@ -526,28 +568,28 @@ public class ProductDAO extends DBContext implements I_DAO<Product> {
         } else {
             sqlBuilder.append("ORDER BY p.product_id DESC ");
         }
-        
+
         // Add pagination
         sqlBuilder.append("LIMIT ? OFFSET ?");
-        
+
         try {
             connection = getConnection();
             statement = connection.prepareStatement(sqlBuilder.toString());
-            
+
             int paramIndex = 1;
-            
+
             // Set search parameter
             if (searchKeyword != null && !searchKeyword.isEmpty()) {
                 statement.setString(paramIndex++, "%" + searchKeyword + "%");
             }
-            
+
             // Set category parameters
             if (categoryIds != null && !categoryIds.isEmpty()) {
                 for (Integer categoryId : categoryIds) {
                     statement.setInt(paramIndex++, categoryId);
                 }
             }
-            
+
             // Set price parameters
             if (minPrice != null) {
                 statement.setDouble(paramIndex++, minPrice);
@@ -555,22 +597,22 @@ public class ProductDAO extends DBContext implements I_DAO<Product> {
             if (maxPrice != null) {
                 statement.setDouble(paramIndex++, maxPrice);
             }
-            
+
             // Set pagination parameters
             statement.setInt(paramIndex++, pageSize);
             statement.setInt(paramIndex++, (page - 1) * pageSize);
-            
+
             resultSet = statement.executeQuery();
-            
+
             // Process results
             while (resultSet.next()) {
                 Product product = getFromResultSet(resultSet);
-                
+
                 // Load categories for this product
                 CategoryProductDAO categoryProductDAO = new CategoryProductDAO();
                 List<Category> categories = categoryProductDAO.getCategoriesByProductId(product.getProductId());
                 product.setCategories(categories);
-                
+
                 products.add(product);
             }
         } catch (SQLException e) {
@@ -579,37 +621,37 @@ public class ProductDAO extends DBContext implements I_DAO<Product> {
         } finally {
             closeResources();
         }
-        
+
         return products;
     }
 
     /**
      * Đếm số lượng sản phẩm thỏa mãn điều kiện lọc
-     * 
-     * @param searchKeyword       Từ khóa tìm kiếm
+     *
+     * @param searchKeyword Từ khóa tìm kiếm
      * @param selectedCategoryIds Danh sách ID danh mục được chọn
-     * @param minPrice            Giá tối thiểu
-     * @param maxPrice            Giá tối đa
+     * @param minPrice Giá tối thiểu
+     * @param maxPrice Giá tối đa
      * @return Số lượng sản phẩm
      */
     public int countProductsWithFilters(String searchKeyword, List<Integer> categoryIds, Double minPrice, Double maxPrice) {
         StringBuilder sqlBuilder = new StringBuilder();
-        
+
         // Base query with JOIN to handle category filtering
         sqlBuilder.append("SELECT COUNT(DISTINCT p.product_id) FROM products p ");
-        
+
         // Only add the JOIN if we have category filters
         if (categoryIds != null && !categoryIds.isEmpty()) {
             sqlBuilder.append("JOIN category_product cp ON p.product_id = cp.product_id ");
         }
-        
+
         sqlBuilder.append("WHERE p.status = 1 ");
-        
+
         // Add search condition
         if (searchKeyword != null && !searchKeyword.isEmpty()) {
             sqlBuilder.append("AND p.name LIKE ? ");
         }
-        
+
         // Add category filter
         if (categoryIds != null && !categoryIds.isEmpty()) {
             sqlBuilder.append("AND cp.category_id IN (");
@@ -621,7 +663,7 @@ public class ProductDAO extends DBContext implements I_DAO<Product> {
             }
             sqlBuilder.append(") ");
         }
-        
+
         // Add price range filter
         if (minPrice != null) {
             sqlBuilder.append("AND p.price >= ? ");
@@ -629,25 +671,25 @@ public class ProductDAO extends DBContext implements I_DAO<Product> {
         if (maxPrice != null) {
             sqlBuilder.append("AND p.price <= ? ");
         }
-        
+
         try {
             connection = getConnection();
             statement = connection.prepareStatement(sqlBuilder.toString());
-            
+
             int paramIndex = 1;
-            
+
             // Set search parameter
             if (searchKeyword != null && !searchKeyword.isEmpty()) {
                 statement.setString(paramIndex++, "%" + searchKeyword + "%");
             }
-            
+
             // Set category parameters
             if (categoryIds != null && !categoryIds.isEmpty()) {
                 for (Integer categoryId : categoryIds) {
                     statement.setInt(paramIndex++, categoryId);
                 }
             }
-            
+
             // Set price parameters
             if (minPrice != null) {
                 statement.setDouble(paramIndex++, minPrice);
@@ -655,9 +697,9 @@ public class ProductDAO extends DBContext implements I_DAO<Product> {
             if (maxPrice != null) {
                 statement.setDouble(paramIndex++, maxPrice);
             }
-            
+
             resultSet = statement.executeQuery();
-            
+
             if (resultSet.next()) {
                 return resultSet.getInt(1);
             }
@@ -667,32 +709,33 @@ public class ProductDAO extends DBContext implements I_DAO<Product> {
         } finally {
             closeResources();
         }
-        
+
         return 0;
     }
 
     /**
      * Tìm kiếm các sản phẩm có đánh giá cao nhất
+     *
      * @param limit Số lượng sản phẩm cần lấy
      * @return Danh sách sản phẩm có đánh giá cao
      */
     public List<Product> findTopRatedProducts(int limit) {
         List<Product> products = new ArrayList<>();
-        
+
         try {
             connection = getConnection();
-            
+
             // Thay vì sử dụng bảng feedbacks, chúng ta sẽ lấy các sản phẩm mới nhất
             String sql = "SELECT * FROM products WHERE status = 1 ORDER BY created_at DESC LIMIT ?";
-            
+
             statement = connection.prepareStatement(sql);
             statement.setInt(1, limit);
-            
+
             resultSet = statement.executeQuery();
-            
+
             while (resultSet.next()) {
                 Product product = getFromResultSet(resultSet);
-        
+
                 products.add(product);
             }
         } catch (SQLException e) {
@@ -701,12 +744,13 @@ public class ProductDAO extends DBContext implements I_DAO<Product> {
         } finally {
             closeResources();
         }
-        
+
         return products;
     }
 
     /**
      * Tìm các sản phẩm liên quan (cùng danh mục) với sản phẩm hiện tại
+     *
      * @param categoryId ID danh mục
      * @param currentProductId ID sản phẩm hiện tại (để loại trừ)
      * @param limit Số lượng sản phẩm muốn lấy
@@ -714,20 +758,20 @@ public class ProductDAO extends DBContext implements I_DAO<Product> {
      */
     public List<Product> findRelatedProducts(int categoryId, int currentProductId, int limit) {
         List<Product> relatedProducts = new ArrayList<>();
-        
+
         try {
-            String sql = "SELECT DISTINCT p.* FROM products p " +
-                         "JOIN category_product cp ON p.product_id = cp.product_id " +
-                         "WHERE cp.category_id = ? AND p.product_id != ? AND p.status = 1 " +
-                         "ORDER BY RAND() LIMIT ?";
-            
+            String sql = "SELECT DISTINCT p.* FROM products p "
+                    + "JOIN category_product cp ON p.product_id = cp.product_id "
+                    + "WHERE cp.category_id = ? AND p.product_id != ? AND p.status = 1 "
+                    + "ORDER BY RAND() LIMIT ?";
+
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1, categoryId);
             statement.setInt(2, currentProductId);
             statement.setInt(3, limit);
-            
+
             ResultSet rs = statement.executeQuery();
-            
+
             while (rs.next()) {
                 Product product = new Product();
                 product.setProductId(rs.getInt("product_id"));
@@ -739,36 +783,37 @@ public class ProductDAO extends DBContext implements I_DAO<Product> {
                 product.setStatus(rs.getByte("status"));
                 product.setCreatedAt(rs.getTimestamp("created_at"));
                 product.setUpdatedAt(rs.getTimestamp("updated_at"));
-                
+
                 // Lấy danh sách categories cho product
                 CategoryProductDAO categoryProductDAO = new CategoryProductDAO();
                 product.setCategories(categoryProductDAO.getCategoriesByProductId(product.getProductId()));
-                
+
                 relatedProducts.add(product);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        
+
         return relatedProducts;
     }
 
     /**
      * Lấy thông tin sản phẩm theo ID
+     *
      * @param productId ID của sản phẩm cần lấy
      * @return Đối tượng Product nếu tìm thấy, null nếu không tìm thấy
      */
     public Product getProductById(int productId) {
         Product product = null;
-        
+
         try {
             connection = getConnection();
             String sql = "SELECT * FROM products WHERE product_id = ?";
             statement = connection.prepareStatement(sql);
             statement.setInt(1, productId);
-            
+
             resultSet = statement.executeQuery();
-            
+
             if (resultSet.next()) {
                 product = new Product();
                 product.setProductId(resultSet.getInt("product_id"));
@@ -776,12 +821,11 @@ public class ProductDAO extends DBContext implements I_DAO<Product> {
                 product.setDescription(resultSet.getString("description"));
                 product.setPrice(new java.math.BigDecimal(resultSet.getDouble("price")));
                 product.setStock(resultSet.getInt("stock"));
-                product.setQuantity(resultSet.getInt("quantity"));
                 product.setImage(resultSet.getString("image"));
                 product.setStatus(resultSet.getByte("status"));
                 product.setCreatedAt(resultSet.getTimestamp("created_at"));
                 product.setUpdatedAt(resultSet.getTimestamp("updated_at"));
-                
+
                 // Lấy danh sách categories cho product
                 CategoryProductDAO categoryProductDAO = new CategoryProductDAO();
                 product.setCategories(categoryProductDAO.getCategoriesByProductId(product.getProductId()));
@@ -792,25 +836,27 @@ public class ProductDAO extends DBContext implements I_DAO<Product> {
         } finally {
             closeResources();
         }
-        
+
         return product;
     }
 
     /**
      * Tìm sản phẩm theo tên
+     *
      * @param productName Tên sản phẩm cần tìm
      * @return Đối tượng Product nếu tìm thấy, null nếu không tìm thấy
      */
     public Product findByName(String productName) {
         Product product = null;
-        
+
         try {
+            connection = getConnection();
             String sql = "SELECT * FROM products WHERE name = ?";
             statement = connection.prepareStatement(sql);
             statement.setString(1, productName);
-            
+
             resultSet = statement.executeQuery();
-            
+
             if (resultSet.next()) {
                 product = new Product();
                 product.setProductId(resultSet.getInt("product_id"));
@@ -822,7 +868,7 @@ public class ProductDAO extends DBContext implements I_DAO<Product> {
                 product.setStatus(resultSet.getByte("status"));
                 product.setCreatedAt(resultSet.getTimestamp("created_at"));
                 product.setUpdatedAt(resultSet.getTimestamp("updated_at"));
-                
+
                 // Lấy danh sách categories cho product
                 CategoryProductDAO categoryProductDAO = new CategoryProductDAO();
                 product.setCategories(categoryProductDAO.getCategoriesByProductId(product.getProductId()));
@@ -830,11 +876,10 @@ public class ProductDAO extends DBContext implements I_DAO<Product> {
         } catch (SQLException e) {
             System.out.println("Error finding product by name: " + e.getMessage());
             e.printStackTrace();
+        } finally {
+            closeResources();
         }
-//        } finally {
-//            closeResources();
-//        }
-        
+
         return product;
     }
 }
