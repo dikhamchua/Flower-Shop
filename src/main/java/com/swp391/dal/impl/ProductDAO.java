@@ -795,4 +795,46 @@ public class ProductDAO extends DBContext implements I_DAO<Product> {
         
         return product;
     }
+
+    /**
+     * Tìm sản phẩm theo tên
+     * @param productName Tên sản phẩm cần tìm
+     * @return Đối tượng Product nếu tìm thấy, null nếu không tìm thấy
+     */
+    public Product findByName(String productName) {
+        Product product = null;
+        
+        try {
+            String sql = "SELECT * FROM products WHERE name = ?";
+            statement = connection.prepareStatement(sql);
+            statement.setString(1, productName);
+            
+            resultSet = statement.executeQuery();
+            
+            if (resultSet.next()) {
+                product = new Product();
+                product.setProductId(resultSet.getInt("product_id"));
+                product.setProductName(resultSet.getString("name"));
+                product.setDescription(resultSet.getString("description"));
+                product.setPrice(new java.math.BigDecimal(resultSet.getDouble("price")));
+                product.setStock(resultSet.getInt("stock"));
+                product.setImage(resultSet.getString("image"));
+                product.setStatus(resultSet.getByte("status"));
+                product.setCreatedAt(resultSet.getTimestamp("created_at"));
+                product.setUpdatedAt(resultSet.getTimestamp("updated_at"));
+                
+                // Lấy danh sách categories cho product
+                CategoryProductDAO categoryProductDAO = new CategoryProductDAO();
+                product.setCategories(categoryProductDAO.getCategoriesByProductId(product.getProductId()));
+            }
+        } catch (SQLException e) {
+            System.out.println("Error finding product by name: " + e.getMessage());
+            e.printStackTrace();
+        }
+//        } finally {
+//            closeResources();
+//        }
+        
+        return product;
+    }
 }

@@ -584,56 +584,152 @@ public class ManageProductController extends HttpServlet {
     private void importProductsFromExcel(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         try {
+            // Kiểm tra xem có file được gửi lên không
             Part filePart = request.getPart("file");
+            if (filePart == null || filePart.getSize() == 0) {
+                setToastMessage(request, "Vui lòng chọn file Excel để nhập", "error");
+                response.sendRedirect(request.getContextPath() + "/admin/manage-product");
+                return;
+            }
+            
             InputStream inputStream = filePart.getInputStream();
             Workbook workbook = new XSSFWorkbook(inputStream);
             Sheet sheet = workbook.getSheetAt(0);
             
             ProductDAO productDAO = new ProductDAO();
             CategoryProductDAO categoryProductDAO = new CategoryProductDAO();
+            ProductSupplierDAO productSupplierDAO = new ProductSupplierDAO();
             int successCount = 0;
             int failCount = 0;
+            List<String> errorMessages = new ArrayList<>();
+            
+            // Map để lưu thông tin sản phẩm đã cập nhật và số lượng thêm vào
+            Map<String, Integer> updatedProductQuantities = new HashMap<>();
             
             // Bỏ qua dòng đầu tiên (header)
             for (int i = 1; i <= sheet.getLastRowNum(); i++) {
                 Row row = sheet.getRow(i);
+                if (row == null) continue;
+                
                 try {
-                    // Lấy dữ liệu từ các cột trong Excel
-                    String name = row.getCell(0).getStringCellValue();
-                    String description = row.getCell(1).getStringCellValue();
-                    BigDecimal price = new BigDecimal(row.getCell(2).getNumericCellValue());
-                    int stock = (int) row.getCell(3).getNumericCellValue();
-                    String image = row.getCell(4).getStringCellValue();
-                    byte status = (byte) row.getCell(5).getNumericCellValue();
-                    String[] categoryIds = row.getCell(6).getStringCellValue().split(",");
+                    // Lấy dữ liệu từ các cột trong Excel theo định dạng mới
+                    String name = getCellStringValue(row.getCell(0));
+                    int categoryId = (int) getCellNumericValue(row.getCell(1));
+                    String description = getCellStringValue(row.getCell(2));
+                    BigDecimal price = new BigDecimal(getCellNumericValue(row.getCell(3)));
+                    int stock = (int) getCellNumericValue(row.getCell(4));
+                    byte status = (byte) getCellNumericValue(row.getCell(5));
+                    String supplierIdsStr = getCellStringValue(row.getCell(6));
                     
-                    // Tạo đối tượng Product
-                    Product product = new Product();
-                    product.setProductName(name);
-                    product.setDescription(description);
-                    product.setPrice(price);
-                    product.setStock(stock);
-                    product.setImage(image);
-                    product.setStatus(status);
-                    Timestamp now = new Timestamp(System.currentTimeMillis());
-                    product.setCreatedAt(now);
-                    product.setUpdatedAt(now);
+                    // Validate data
+                    if (name == null || name.trim().isEmpty()) {
+                        throw new Exception("Tên sản phẩm không được để trống ở dòng " + (i+1));
+                    }
                     
-                    // Thêm sản phẩm vào database
-                    int productId = productDAO.insert(product);
+                    // Kiểm tra xem sản phẩm đã tồn tại chưa (dựa vào tên)
+                    Product existingProduct = productDAO.findByName(name);
                     
-                    if (productId > 0) {
-                        // Thêm các danh mục cho sản phẩm
-                        for (String categoryIdStr : categoryIds) {
-                            int categoryId = Integer.parseInt(categoryIdStr.trim());
-                            categoryProductDAO.addCategoryToProduct(categoryId, productId);
+                    if (existingProduct != null) {
+                        // Sản phẩm đã tồn tại, cập nhật số lượng
+                        int newStock = existingProduct.getStock() + stock;
+                        existingProduct.setStock(newStock);
+                        
+                        // Cập nhật thông tin sản phẩm nhưng giữ nguyên status
+                        existingProduct.setDescription(description);
+                        existingProduct.setPrice(price);
+                        existingProduct.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
+                        
+                        // Không cập nhật status, giữ nguyên status hiện tại
+                        
+                        // Cập nhật sản phẩm trong database
+                        boolean updated = productDAO.update(existingProduct);
+                        
+                        if (updated) {
+                            // Thêm danh mục mới cho sản phẩm (nếu chưa có)
+                            List<Category> existingCategories = categoryProductDAO.getCategoriesByProductId(existingProduct.getProductId());
+                            boolean categoryExists = false;
+                            
+                            for (Category cat : existingCategories) {
+                                if (cat.getCategoryId() == categoryId) {
+                                    categoryExists = true;
+                                    break;
+                                }
+                            }
+                            
+                            if (!categoryExists) {
+                                categoryProductDAO.addCategoryToProduct(categoryId, existingProduct.getProductId());
+                            }
+                            
+                            // Thêm nhà cung cấp mới cho sản phẩm (nếu có và chưa có)
+                            if (supplierIdsStr != null && !supplierIdsStr.trim().isEmpty()) {
+                                String[] supplierIds = supplierIdsStr.split(",");
+                                List<Integer> existingSupplierIds = productSupplierDAO.getSupplierIdsByProductId(existingProduct.getProductId());
+                                
+                                for (String supplierId : supplierIds) {
+                                    try {
+                                        int id = Integer.parseInt(supplierId.trim());
+                                        if (!existingSupplierIds.contains(id)) {
+                                            productSupplierDAO.addProductSupplier(existingProduct.getProductId(), id);
+                                        }
+                                    } catch (NumberFormatException e) {
+                                        System.out.println("Định dạng ID nhà cung cấp không hợp lệ: " + supplierId);
+                                    }
+                                }
+                            }
+                            
+                            // Lưu thông tin sản phẩm đã cập nhật và số lượng thêm vào
+                            updatedProductQuantities.put(existingProduct.getProductName(), stock);
+                            
+                            successCount++;
+                        } else {
+                            failCount++;
+                            errorMessages.add("Không thể cập nhật sản phẩm '" + name + "' ở dòng " + (i+1));
                         }
-                        successCount++;
                     } else {
-                        failCount++;
+                        // Sản phẩm chưa tồn tại, thêm mới
+                        Product product = new Product();
+                        product.setProductName(name);
+                        product.setDescription(description);
+                        product.setPrice(price);
+                        product.setStock(stock);
+                        // Sử dụng đường dẫn ảnh mặc định nếu không có
+                        product.setImage("uploads/products/default.jpg");
+                        product.setStatus(status);
+                        Timestamp now = new Timestamp(System.currentTimeMillis());
+                        product.setCreatedAt(now);
+                        product.setUpdatedAt(now);
+                        
+                        // Thêm sản phẩm vào database
+                        int productId = productDAO.insert(product);
+                        
+                        if (productId > 0) {
+                            // Thêm danh mục cho sản phẩm
+                            categoryProductDAO.addCategoryToProduct(categoryId, productId);
+                            
+                            // Thêm nhà cung cấp cho sản phẩm nếu có
+                            if (supplierIdsStr != null && !supplierIdsStr.trim().isEmpty()) {
+                                String[] supplierIds = supplierIdsStr.split(",");
+                                for (String supplierId : supplierIds) {
+                                    try {
+                                        int id = Integer.parseInt(supplierId.trim());
+                                        productSupplierDAO.addProductSupplier(productId, id);
+                                    } catch (NumberFormatException e) {
+                                        System.out.println("Định dạng ID nhà cung cấp không hợp lệ: " + supplierId);
+                                    }
+                                }
+                            }
+                            
+                            successCount++;
+                        } else {
+                            failCount++;
+                            errorMessages.add("Không thể thêm sản phẩm '" + name + "' ở dòng " + (i+1));
+                        }
                     }
                 } catch (Exception e) {
                     failCount++;
+                    String errorMsg = "Lỗi ở dòng " + (i+1) + ": " + e.getMessage();
+                    errorMessages.add(errorMsg);
+                    System.out.println(errorMsg);
                     e.printStackTrace();
                 }
             }
@@ -641,14 +737,62 @@ public class ManageProductController extends HttpServlet {
             workbook.close();
             inputStream.close();
             
+            // Lưu danh sách lỗi vào session để hiển thị trong modal
+            if (!errorMessages.isEmpty()) {
+                request.getSession().setAttribute("importErrorMessages", errorMessages);
+            }
+            
+            // Lưu thông tin sản phẩm đã cập nhật vào session
+            if (!updatedProductQuantities.isEmpty()) {
+                request.getSession().setAttribute("updatedProductQuantities", updatedProductQuantities);
+            }
+            
             setToastMessage(request, 
-                "Import completed: " + successCount + " successful, " + failCount + " failed", 
+                "Nhập hoàn tất: " + successCount + " thành công, " + failCount + " thất bại", 
                 successCount > 0 ? "success" : "error");
         } catch (Exception e) {
-            setToastMessage(request, "Error during import: " + e.getMessage(), "error");
+            setToastMessage(request, "Lỗi trong quá trình nhập: " + e.getMessage(), "error");
             e.printStackTrace();
         }
         
         response.sendRedirect(request.getContextPath() + "/admin/manage-product");
+    }
+
+    /**
+     * Phương thức hỗ trợ để lấy giá trị chuỗi an toàn từ một ô
+     */
+    private String getCellStringValue(Cell cell) {
+        if (cell == null) return "";
+        
+        switch (cell.getCellType()) {
+            case STRING:
+                return cell.getStringCellValue();
+            case NUMERIC:
+                return String.valueOf((int)cell.getNumericCellValue());
+            case BOOLEAN:
+                return String.valueOf(cell.getBooleanCellValue());
+            default:
+                return "";
+        }
+    }
+
+    /**
+     * Phương thức hỗ trợ để lấy giá trị số an toàn từ một ô
+     */
+    private double getCellNumericValue(Cell cell) {
+        if (cell == null) return 0;
+        
+        switch (cell.getCellType()) {
+            case NUMERIC:
+                return cell.getNumericCellValue();
+            case STRING:
+                try {
+                    return Double.parseDouble(cell.getStringCellValue());
+                } catch (NumberFormatException e) {
+                    return 0;
+                }
+            default:
+                return 0;
+        }
     }
 }

@@ -254,16 +254,16 @@
                     <div class="modal-body">
                         <form action="${pageContext.request.contextPath}/admin/manage-product?action=import" method="post" enctype="multipart/form-data">
                             <div class="mb-3">
-                                <label for="excelFile" class="form-label">Select Excel File</label>
-                                <input type="file" class="form-control" id="excelFile" name="excelFile" accept=".xls,.xlsx" required>
-                                <div class="form-text">File must be .xls or .xlsx format</div>
+                                <label for="file" class="form-label">Chọn tệp Excel</label>
+                                <input type="file" class="form-control" id="file" name="file" accept=".xls,.xlsx" required>
+                                <div class="form-text">Tệp phải có định dạng .xls hoặc .xlsx</div>
                             </div>
                             <div class="mb-3">
                                 <a href="${pageContext.request.contextPath}/assets/templates/product_import_template.xlsx" download class="text-primary">
-                                    <i class="fas fa-download"></i> Download template
+                                    <i class="fas fa-download"></i> Tải xuống mẫu
                                 </a>
                             </div>
-                            <button type="submit" class="btn btn-primary">Import</button>
+                            <button type="submit" class="btn btn-primary">Nhập</button>
                         </form>
                     </div>
                 </div>
@@ -271,47 +271,37 @@
         </div>
 
         <!-- Import Result Modal -->
-        <c:if test="${param.import_result == 'true'}">
+        <c:if test="${param.import_result == 'true' || not empty updatedProductQuantities || not empty importErrorMessages}">
             <div class="modal fade" id="importResultModal" tabindex="-1" aria-labelledby="importResultModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="importResultModalLabel">Import Results</h5>
+                            <h5 class="modal-title" id="importResultModalLabel">Kết quả nhập Excel</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             <div class="import-summary mb-3">
                                 <div class="card">
                                     <div class="card-body">
-                                        <h6 class="card-title">Summary</h6>
+                                        <h6 class="card-title">Tóm tắt</h6>
                                         <div class="row">
-                                            <div class="col-md-4">
+                                            <div class="col-md-6">
                                                 <div class="d-flex align-items-center">
                                                     <div class="me-2">
-                                                        <span class="badge bg-success">New</span>
+                                                        <span class="badge bg-info">Cập nhật</span>
                                                     </div>
                                                     <div>
-                                                        <span class="h5 mb-0">${newProductCount}</span> products added
+                                                        <span class="h5 mb-0">${not empty updatedProductQuantities ? updatedProductQuantities.size() : 0}</span> sản phẩm đã cập nhật
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-md-4">
+                                            <div class="col-md-6">
                                                 <div class="d-flex align-items-center">
                                                     <div class="me-2">
-                                                        <span class="badge bg-info">Updated</span>
+                                                        <span class="badge bg-danger">Lỗi</span>
                                                     </div>
                                                     <div>
-                                                        <span class="h5 mb-0">${updatedProductCount}</span> products updated
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <div class="d-flex align-items-center">
-                                                    <div class="me-2">
-                                                        <span class="badge bg-danger">Failed</span>
-                                                    </div>
-                                                    <div>
-                                                        <span class="h5 mb-0">${fn:length(importErrorMessages)}</span> products failed
+                                                        <span class="h5 mb-0">${not empty importErrorMessages ? importErrorMessages.size() : 0}</span> sản phẩm lỗi
                                                     </div>
                                                 </div>
                                             </div>
@@ -320,39 +310,15 @@
                                 </div>
                             </div>
                             
-                            <c:if test="${not empty newProductQuantities}">
-                                <div class="mb-3">
-                                    <h6>New Products Added</h6>
-                                    <div class="table-responsive">
-                                        <table class="table table-sm table-bordered table-striped">
-                                            <thead class="table-success">
-                                                <tr>
-                                                    <th>Product Name</th>
-                                                    <th>Quantity</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <c:forEach var="entry" items="${newProductQuantities}">
-                                                    <tr>
-                                                        <td>${entry.key}</td>
-                                                        <td>${entry.value}</td>
-                                                    </tr>
-                                                </c:forEach>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </c:if>
-                            
                             <c:if test="${not empty updatedProductQuantities}">
                                 <div class="mb-3">
-                                    <h6>Updated Products</h6>
+                                    <h6>Sản phẩm đã cập nhật</h6>
                                     <div class="table-responsive">
                                         <table class="table table-sm table-bordered table-striped">
                                             <thead class="table-info">
                                                 <tr>
-                                                    <th>Product Name</th>
-                                                    <th>Added Quantity</th>
+                                                    <th>Tên sản phẩm</th>
+                                                    <th>Số lượng đã thêm</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -370,7 +336,7 @@
                             
                             <c:if test="${not empty importErrorMessages}">
                                 <div>
-                                    <h6>Failed Products</h6>
+                                    <h6>Sản phẩm lỗi</h6>
                                     <div class="list-group">
                                         <c:set var="displayCount" value="0" />
                                         <c:forEach var="message" items="${importErrorMessages}">
@@ -382,16 +348,16 @@
                                             </c:if>
                                         </c:forEach>
                                         
-                                <c:if test="${importErrorMessages.size() > 10}">
+                                <c:if test="${fn:length(importErrorMessages) > 10}">
                                     <div class="list-group-item text-center">
-                                        And ${importErrorMessages.size() - 10} more errors...
+                                        Và ${fn:length(importErrorMessages) - 10} lỗi khác...
                                     </div>
                                 </c:if>
                             </div>
                         </div>
                             </c:if>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
                         </div>
                     </div>
                 </div>
@@ -403,7 +369,8 @@
                     importResultModal.show();
                     
                     // Xóa các thông báo import sau khi đã hiển thị
-                    window.history.replaceState({}, document.title, window.location.pathname);
+                    <% session.removeAttribute("updatedProductQuantities"); %>
+                    <% session.removeAttribute("importErrorMessages"); %>
                 });
             </script>
         </c:if>

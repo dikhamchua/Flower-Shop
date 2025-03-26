@@ -77,7 +77,7 @@
                     <div class="tab-content" id="pills-tabContent">   
                         <div class="tab-pane fade show active" id="pills-edit-profile" role="tabpanel" aria-labelledby="pills-edit-profile-tab" tabindex="0">
 
-                            <form action="${pageContext.request.contextPath}/profile" method="POST">
+                            <form id="profileForm" action="${pageContext.request.contextPath}/profile" method="POST">
                                 <input type="hidden" name="id" value="${account.userId}">
                                 <div class="row">
                                     <div class="col-sm-6">
@@ -101,7 +101,10 @@
                                     <div class="col-sm-6">
                                         <div class="mb-20">
                                             <label for="phone" class="form-label fw-semibold text-primary-light text-sm mb-8">Phone</label>
-                                            <input type="text" class="form-control radius-8" id="phone" name="phone" value="${account.phone}">
+                                            <input type="text" class="form-control radius-8" id="phone" name="phone" value="${account.phone}" 
+                                                   pattern="^0\d{9}$" 
+                                                   title="Số điện thoại phải bắt đầu bằng số 0 và có đủ 10 số">
+                                            <!-- <small class="text-muted">Định dạng: 0xxxxxxxxx (10 số)</small> -->
                                         </div>
                                     </div>
                                     <div class="col-sm-12">
@@ -113,7 +116,7 @@
                                 </div>
                                 <div class="d-flex align-items-center justify-content-center gap-3">
                                     <button type="button" class="border border-danger-600 bg-hover-danger-200 text-danger-600 text-md px-56 py-11 radius-8"
-                                            onclick="window.location.href = '${pageContext.request.contextPath}/manage-users'"> 
+                                            onclick="document.getElementById('profileForm').reset()"> 
                                         Cancel
                                     </button>
                                     <button type="submit" class="btn btn-primary border border-primary-600 text-md px-56 py-12 radius-8"> 
