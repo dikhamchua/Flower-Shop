@@ -58,6 +58,17 @@
                             <div class="mb-3">
                                 <strong>Total Amount:</strong> <fmt:formatNumber value="${order.total}" type="currency" currencySymbol="" maxFractionDigits="0"/> VNĐ
                             </div>
+                            <c:if test="${not empty order.couponCode}">
+                                <div class="mb-3">
+                                    <strong>Coupon Applied:</strong> ${order.couponCode}
+                                </div>
+                                <div class="mb-3">
+                                    <strong>Discount Amount:</strong> <fmt:formatNumber value="${order.discountAmount}" type="currency" currencySymbol="" maxFractionDigits="0"/> VNĐ
+                                </div>
+                                <div class="mb-3">
+                                    <strong>Original Amount:</strong> <fmt:formatNumber value="${order.total.add(order.discountAmount)}" type="currency" currencySymbol="" maxFractionDigits="0"/> VNĐ
+                                </div>
+                            </c:if>
                         </div>
                     </div>
                 </div>

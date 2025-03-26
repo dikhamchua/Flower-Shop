@@ -38,8 +38,8 @@ public class OrderDAO extends DBContext implements I_DAO<Order> {
 
     @Override
     public int insert(Order order) {
-        String sql = "INSERT INTO orders (user_id, status, total, shipping_address, payment_method) "
-                + "VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO orders (user_id, status, total, shipping_address, payment_method, coupon_code, discount_amount) "
+                + "VALUES (?, ?, ?, ?, ?, ?, ?)";
         try {
             connection = getConnection();
             statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -48,6 +48,8 @@ public class OrderDAO extends DBContext implements I_DAO<Order> {
             statement.setBigDecimal(3, order.getTotal());
             statement.setString(4, order.getShippingAddress());
             statement.setString(5, order.getPaymentMethod());
+            statement.setString(6, order.getCouponCode());
+            statement.setBigDecimal(7, order.getDiscountAmount());
 
             int affectedRows = statement.executeUpdate();
             if (affectedRows == 0) {
@@ -107,6 +109,10 @@ public class OrderDAO extends DBContext implements I_DAO<Order> {
         order.setPaymentMethod(rs.getString("payment_method"));
         order.setCreatedAt(rs.getTimestamp("created_at"));
         order.setUpdatedAt(rs.getTimestamp("updated_at"));
+        
+        // Add coupon information
+        order.setCouponCode(rs.getString("coupon_code"));
+        order.setDiscountAmount(rs.getBigDecimal("discount_amount"));
 
         // Customer info from JOIN
         order.setUsername(rs.getString("username"));

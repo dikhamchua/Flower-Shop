@@ -160,7 +160,38 @@ public class CartController extends HttpServlet {
         double cartTotal = calculateCartTotal(cartItems);
         
         // Áp dụng giảm giá nếu có
-        BigDecimal couponDiscount = (BigDecimal) session.getAttribute("couponDiscount");
+        Coupon appliedCoupon = (Coupon) session.getAttribute("appliedCoupon");
+        BigDecimal couponDiscount = null;
+        
+        // Nếu có coupon đã áp dụng, tính lại giá trị giảm giá dựa trên giỏ hàng hiện tại
+        if (appliedCoupon != null) {
+            // Tính lại giá trị giảm giá dựa trên loại coupon
+            if ("percentage".equals(appliedCoupon.getDiscountType())) {
+                // Giảm giá theo phần trăm
+                couponDiscount = new BigDecimal(cartTotal).multiply(
+                    appliedCoupon.getDiscountValue().divide(new BigDecimal(100), 2, BigDecimal.ROUND_HALF_UP)
+                );
+                
+                // Kiểm tra giới hạn giảm giá tối đa
+                if (appliedCoupon.getMaxDiscount() != null && couponDiscount.compareTo(appliedCoupon.getMaxDiscount()) > 0) {
+                    couponDiscount = appliedCoupon.getMaxDiscount();
+                }
+            } else {
+                // Giảm giá cố định
+                couponDiscount = appliedCoupon.getDiscountValue();
+            }
+            
+            // Đảm bảo giảm giá không vượt quá tổng giá trị đơn hàng
+            if (couponDiscount.compareTo(new BigDecimal(cartTotal)) > 0) {
+                couponDiscount = new BigDecimal(cartTotal);
+            }
+            
+            // Cập nhật lại giá trị giảm giá trong session
+            session.setAttribute("couponDiscount", couponDiscount);
+        } else {
+            couponDiscount = (BigDecimal) session.getAttribute("couponDiscount");
+        }
+        
         double finalTotal = cartTotal;
         if (couponDiscount != null) {
             // Đảm bảo finalTotal không âm
@@ -301,21 +332,57 @@ public class CartController extends HttpServlet {
                     success = cartItemDAO.addCartItem(cartId, productId, quantity);
                 }
                 
-                // Nếu là AJAX request, trả về số lượng sản phẩm trong giỏ hàng
-                if ("XMLHttpRequest".equals(request.getHeader("X-Requested-With"))) {
-                    response.setContentType("text/plain");
-                    if (success) {
-                        int cartCount = cartDAO.getCartItemCount(account.getUserId());
-                        response.getWriter().write(String.valueOf(cartCount));
-                    } else {
-                        response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-                        response.getWriter().write("Failed to add product to cart");
+                // Sau khi thêm sản phẩm vào giỏ hàng thành công
+                if (success) {
+                    // Cập nhật lại giá trị giảm giá nếu có coupon
+                    Coupon appliedCoupon = (Coupon) session.getAttribute("appliedCoupon");
+                    if (appliedCoupon != null) {
+                        // Lấy danh sách sản phẩm mới trong giỏ hàng
+                        List<CartItem> updatedCartItems = cartItemDAO.getCartItemsByCartId(cartId);
+                        double updatedCartTotal = calculateCartTotal(updatedCartItems);
+                        
+                        // Tính lại giá trị giảm giá
+                        BigDecimal updatedDiscount;
+                        if ("percentage".equals(appliedCoupon.getDiscountType())) {
+                            // Giảm giá theo phần trăm
+                            updatedDiscount = new BigDecimal(updatedCartTotal).multiply(
+                                appliedCoupon.getDiscountValue().divide(new BigDecimal(100), 2, BigDecimal.ROUND_HALF_UP)
+                            );
+                            
+                            // Kiểm tra giới hạn giảm giá tối đa
+                            if (appliedCoupon.getMaxDiscount() != null && updatedDiscount.compareTo(appliedCoupon.getMaxDiscount()) > 0) {
+                                updatedDiscount = appliedCoupon.getMaxDiscount();
+                            }
+                        } else {
+                            // Giảm giá cố định
+                            updatedDiscount = appliedCoupon.getDiscountValue();
+                        }
+                        
+                        // Đảm bảo giảm giá không vượt quá tổng giá trị đơn hàng
+                        if (updatedDiscount.compareTo(new BigDecimal(updatedCartTotal)) > 0) {
+                            updatedDiscount = new BigDecimal(updatedCartTotal);
+                        }
+                        
+                        // Cập nhật lại giá trị giảm giá trong session
+                        session.setAttribute("couponDiscount", updatedDiscount);
                     }
-                    return;
+                    
+                    // Nếu là AJAX request, trả về số lượng sản phẩm trong giỏ hàng
+                    if ("XMLHttpRequest".equals(request.getHeader("X-Requested-With"))) {
+                        response.setContentType("text/plain");
+                        if (success) {
+                            int cartCount = cartDAO.getCartItemCount(account.getUserId());
+                            response.getWriter().write(String.valueOf(cartCount));
+                        } else {
+                            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                            response.getWriter().write("Failed to add product to cart");
+                        }
+                        return;
+                    }
+                    
+                    // Nếu không phải AJAX, chuyển hướng về trang giỏ hàng
+                    response.sendRedirect(request.getContextPath() + "/cart");
                 }
-                
-                // Nếu không phải AJAX, chuyển hướng về trang giỏ hàng
-                response.sendRedirect(request.getContextPath() + "/cart");
             } else {
                 // Xử lý khi không thể tạo giỏ hàng
                 session.setAttribute("cartMessage", "Unable to create cart. Please try again later.");
@@ -401,6 +468,39 @@ public class CartController extends HttpServlet {
                             cartItemDAO.deleteCartItem(cartId, productId);
                         }
                     }
+                }
+                
+                // Sau khi cập nhật giỏ hàng, cập nhật lại giá trị giảm giá nếu có coupon
+                Coupon appliedCoupon = (Coupon) session.getAttribute("appliedCoupon");
+                if (appliedCoupon != null) {
+                    // Lấy danh sách sản phẩm mới trong giỏ hàng
+                    List<CartItem> updatedCartItems = cartItemDAO.getCartItemsByCartId(cartId);
+                    double updatedCartTotal = calculateCartTotal(updatedCartItems);
+                    
+                    // Tính lại giá trị giảm giá
+                    BigDecimal updatedDiscount;
+                    if ("percentage".equals(appliedCoupon.getDiscountType())) {
+                        // Giảm giá theo phần trăm
+                        updatedDiscount = new BigDecimal(updatedCartTotal).multiply(
+                            appliedCoupon.getDiscountValue().divide(new BigDecimal(100), 2, BigDecimal.ROUND_HALF_UP)
+                        );
+                        
+                        // Kiểm tra giới hạn giảm giá tối đa
+                        if (appliedCoupon.getMaxDiscount() != null && updatedDiscount.compareTo(appliedCoupon.getMaxDiscount()) > 0) {
+                            updatedDiscount = appliedCoupon.getMaxDiscount();
+                        }
+                    } else {
+                        // Giảm giá cố định
+                        updatedDiscount = appliedCoupon.getDiscountValue();
+                    }
+                    
+                    // Đảm bảo giảm giá không vượt quá tổng giá trị đơn hàng
+                    if (updatedDiscount.compareTo(new BigDecimal(updatedCartTotal)) > 0) {
+                        updatedDiscount = new BigDecimal(updatedCartTotal);
+                    }
+                    
+                    // Cập nhật lại giá trị giảm giá trong session
+                    session.setAttribute("couponDiscount", updatedDiscount);
                 }
                 
                 if (hasInputError && !hasStockError) {
@@ -533,7 +633,13 @@ public class CartController extends HttpServlet {
         order.setTotal(new BigDecimal(finalTotal)); // Sử dụng finalTotal thay vì total
         order.setShippingAddress(address);
         order.setPaymentMethod(paymentMethod);
-        
+
+        // Add coupon information if a coupon was applied
+        if (appliedCoupon != null && couponDiscount != null) {
+            order.setCouponCode(appliedCoupon.getCode());
+            order.setDiscountAmount(couponDiscount);
+        }
+
         int orderId = orderDAO.insert(order);
         
         if (orderId > 0) {

@@ -23,6 +23,10 @@ public class Order {
     // Danh sách các items trong order
     private List<OrderItem> orderItems;
 
+    // Add these fields to your Order class
+    private String couponCode;
+    private BigDecimal discountAmount;
+
     // Constructors, getters, setters
     public Order() {
     }
@@ -122,5 +126,21 @@ public class Order {
 
     public void setOrderItems(List<OrderItem> orderItems) {
         this.orderItems = orderItems;
+    }
+
+    public String getCouponCode() {
+        return couponCode;
+    }
+
+    public void setCouponCode(String couponCode) {
+        this.couponCode = couponCode;
+    }
+
+    public BigDecimal getDiscountAmount() {
+        return discountAmount;
+    }
+
+    public void setDiscountAmount(BigDecimal discountAmount) {
+        this.discountAmount = discountAmount;
     }
 }
