@@ -208,16 +208,15 @@
             }
 
             .pagination .page-item.active .page-link {
-                background-color: #80b435;
-                border-color: #80b435;
+                background-color: #007bff; /* Blue color instead of green */
+                border-color: #007bff;
+                color: white;
             }
 
-            .pagination .page-link {
-                color: #80b435;
-            }
-
-            .pagination .page-link:hover {
-                background-color: #f5f5f5;
+            .pagination .page-item .page-link:hover {
+                background-color: #0056b3;
+                border-color: #0056b3;
+                color: white;
             }
 
             /* Social sharing styling */
