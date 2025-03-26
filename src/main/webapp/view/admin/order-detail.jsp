@@ -319,12 +319,12 @@
                             return;
                         }
                         
-                        // Get status text for confirmation message
-                        const statusText = statusSelect.options[statusSelect.selectedIndex].text;
+                        // Get status text for confirmation message - make sure to get the visible text
+                        const selectedOption = statusSelect.options[statusSelect.selectedIndex];
                         
-                        // Update confirmation message
+                        // Update confirmation message with the proper status text
                         document.getElementById('confirm-message').textContent = 
-                            `Are you sure you want to change the order status to "${statusText}"?`;
+                            "Are you sure you want to change the order status to \"" + selectedOption.textContent + "\"?";
                         
                         // Show confirmation toast
                         const confirmToast = new bootstrap.Toast(document.getElementById('confirmToast'));
