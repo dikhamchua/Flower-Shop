@@ -324,6 +324,12 @@ public class ManageProductController extends HttpServlet {
             List<Supplier> suppliers = supplierDAO.findAll();
             request.setAttribute("suppliers", suppliers);
             
+            // Preserve form data if available
+            if (request.getAttribute("formData") == null && request.getParameter("name") != null) {
+                Map<String, String[]> formData = request.getParameterMap();
+                request.setAttribute("formData", formData);
+            }
+            
             RequestDispatcher dispatcher = request.getRequestDispatcher("/view/admin/product-add.jsp");
             dispatcher.forward(request, response);
         } catch (Exception e) {
@@ -459,19 +465,80 @@ public class ManageProductController extends HttpServlet {
             // Lấy category IDs từ input hidden
             String categoryIdsStr = request.getParameter("categoryIds");
             String statusStr = request.getParameter("status");
+            String supplierIdsStr = request.getParameter("supplierIds");
 
             System.out.println("Form data received: name=" + name + ", price=" + priceStr +
                                ", stock=" + stockStr + ", categoryIds=" + categoryIdsStr +
                                ", status=" + statusStr);
 
-            // Kiểm tra dữ liệu đầu vào
-            if (name == null || name.trim().isEmpty() ||
-                priceStr == null || priceStr.trim().isEmpty() ||
-                stockStr == null || stockStr.trim().isEmpty() ||
-                categoryIdsStr == null || categoryIdsStr.trim().isEmpty() ||
-                statusStr == null || statusStr.trim().isEmpty()) {
+            // Validate required fields
+            Map<String, String> errors = new HashMap<>();
+            
+            // Validate product name
+            if (name == null || name.trim().isEmpty()) {
+                errors.put("name", "Product name is required");
+            } else {
+                // Check if product name already exists
+                ProductDAO productDAO = new ProductDAO();
+                Product existingProduct = productDAO.findByName(name.trim());
+                if (existingProduct != null) {
+                    errors.put("name", "Product with this name already exists");
+                }
+            }
+            
+            // Validate price
+            if (priceStr == null || priceStr.trim().isEmpty()) {
+                errors.put("price", "Price is required");
+            } else {
+                try {
+                    BigDecimal price = new BigDecimal(priceStr);
+                    if (price.compareTo(BigDecimal.ZERO) < 0) {
+                        errors.put("price", "Price cannot be negative");
+                    }
+                } catch (NumberFormatException e) {
+                    errors.put("price", "Invalid price format");
+                }
+            }
+            
+            // Validate stock
+            if (stockStr == null || stockStr.trim().isEmpty()) {
+                errors.put("stock", "Stock is required");
+            } else {
+                try {
+                    int stock = Integer.parseInt(stockStr);
+                    if (stock < 0) {
+                        errors.put("stock", "Stock cannot be negative");
+                    }
+                } catch (NumberFormatException e) {
+                    errors.put("stock", "Invalid stock format");
+                }
+            }
+            
+            // Validate categories
+            if (categoryIdsStr == null || categoryIdsStr.trim().isEmpty()) {
+                errors.put("categoryIds", "At least one category is required");
+            }
+            
+            // Validate status
+            if (statusStr == null || statusStr.trim().isEmpty()) {
+                errors.put("status", "Status is required");
+            }
+            
+            // Validate suppliers
+            if (supplierIdsStr == null || supplierIdsStr.trim().isEmpty()) {
+                errors.put("supplierIds", "At least one supplier is required");
+            }
+            
+            // Validate image
+            Part filePart = request.getPart("image");
+            if (filePart == null || filePart.getSize() == 0) {
+                errors.put("image", "Product image is required");
+            }
 
-                setToastMessage(request, "Vui lòng điền đầy đủ thông tin bắt buộc", "error");
+            // If there are validation errors, return to the form with error messages
+            if (!errors.isEmpty()) {
+                request.setAttribute("errors", errors);
+                request.setAttribute("formData", request.getParameterMap());
                 showAddForm(request, response);
                 return;
             }
@@ -482,7 +549,6 @@ public class ManageProductController extends HttpServlet {
             byte status = Byte.parseByte(statusStr);
 
             // Xử lý file ảnh
-            Part filePart = request.getPart("image");
             String fileName = null;
 
             if (filePart != null && filePart.getSize() > 0) {
@@ -511,11 +577,6 @@ public class ManageProductController extends HttpServlet {
 
                 // Đường dẫn tương đối để lưu vào database
                 fileName = "uploads/products/" + fileName;
-            } else {
-                System.out.println("No file received or file is empty");
-                setToastMessage(request, "Product image is required", "error");
-                showAddForm(request, response);
-                return;
             }
 
             // Tạo đối tượng Product mới
@@ -547,7 +608,6 @@ public class ManageProductController extends HttpServlet {
                 }
 
                 // Xử lý quan hệ với nhà cung cấp (supplier)
-                String supplierIdsStr = request.getParameter("supplierIds");
                 if (supplierIdsStr != null && !supplierIdsStr.isEmpty()) {
                     ProductSupplierDAO psDAO = new ProductSupplierDAO();
                     String[] supplierIdArray = supplierIdsStr.split(",");

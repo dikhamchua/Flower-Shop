@@ -145,66 +145,72 @@
                             <!-- Product Information -->
                             <div class="col-md-6">
                                 <label class="form-label">Product Name <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" name="name">
-                                <div class="invalid-feedback"></div>
+                                <input type="text" class="form-control ${errors.name != null ? 'is-invalid' : ''}" 
+                                       name="name" value="${formData.name[0]}">
+                                <div class="invalid-feedback">${errors.name}</div>
                             </div>
 
                             <div class="col-md-6">
                                 <label class="form-label">Danh mục <span class="text-danger">*</span></label>
                                 <div class="category-input-container">
-                                    <button type="button" id="categoryDropdownBtn" class="btn btn-outline-secondary w-100 text-start d-flex justify-content-between align-items-center">
+                                    <button type="button" id="categoryDropdownBtn" 
+                                            class="btn btn-outline-secondary w-100 text-start d-flex justify-content-between align-items-center ${errors.categoryIds != null ? 'is-invalid' : ''}">
                                         <span>Chọn danh mục</span>
                                         <i class="fas fa-chevron-down"></i>
                                     </button>
                                     <div id="categorySuggestions" class="category-suggestions" style="display: none;"></div>
                                     <div id="selectedCategories" class="selected-categories"></div>
-                                    <input type="hidden" name="categoryIds" id="categoryIds">
-                                    <div class="invalid-feedback">Vui lòng chọn ít nhất một danh mục</div>
+                                    <input type="hidden" name="categoryIds" id="categoryIds" value="${formData.categoryIds[0]}">
+                                    <div class="invalid-feedback">${errors.categoryIds != null ? errors.categoryIds : 'Vui lòng chọn ít nhất một danh mục'}</div>
                                 </div>
                             </div>
 
                             <div class="col-md-12">
                                 <label class="form-label">Description</label>
-                                <textarea class="form-control" name="description" rows="4"></textarea>
+                                <textarea class="form-control" name="description" rows="4">${formData.description[0]}</textarea>
                                 <div class="invalid-feedback"></div>
                             </div>
 
                             <div class="col-md-6">
                                 <label class="form-label">Price <span class="text-danger">*</span></label>
-                                <input type="number" class="form-control" name="price" step="0.01" min="0">
-                                <div class="invalid-feedback"></div>
+                                <input type="number" class="form-control ${errors.price != null ? 'is-invalid' : ''}" 
+                                       name="price" step="0.01" min="0" value="${formData.price[0]}">
+                                <div class="invalid-feedback">${errors.price}</div>
                             </div>
 
                             <div class="col-md-6">
                                 <label class="form-label">Stock <span class="text-danger">*</span></label>
-                                <input type="number" class="form-control" name="stock" min="0">
-                                <div class="invalid-feedback"></div>
+                                <input type="number" class="form-control ${errors.stock != null ? 'is-invalid' : ''}" 
+                                       name="stock" min="0" value="${formData.stock[0]}">
+                                <div class="invalid-feedback">${errors.stock}</div>
                             </div>
 
                             <div class="col-md-6">
                                 <label class="form-label">Product Image <span class="text-danger">*</span></label>
-                                <input type="file" class="form-control" name="image" accept="image/*">
-                                <div class="invalid-feedback"></div>
+                                <input type="file" class="form-control ${errors.image != null ? 'is-invalid' : ''}" 
+                                       name="image" accept="image/*">
+                                <div class="invalid-feedback">${errors.image}</div>
                             </div>
 
                             <div class="col-md-6">
                                 <label class="form-label">Status <span class="text-danger">*</span></label>
-                                <select class="form-select" name="status">
+                                <select class="form-select ${errors.status != null ? 'is-invalid' : ''}" name="status">
                                     <option value="" selected disabled>Select Status</option>
-                                    <option value="1">Active</option>
-                                    <option value="0">Inactive</option>
+                                    <option value="1" ${formData.status != null && formData.status[0] == '1' ? 'selected' : ''}>Active</option>
+                                    <option value="0" ${formData.status != null && formData.status[0] == '0' ? 'selected' : ''}>Inactive</option>
                                 </select>
-                                <div class="invalid-feedback"></div>
+                                <div class="invalid-feedback">${errors.status}</div>
                             </div>
 
                             <div class="col-md-6">
                                 <label class="form-label">Suppliers <span class="text-danger">*</span></label>
                                 <div class="supplier-input-container">
-                                    <input type="text" class="form-control" id="supplierInput" placeholder="Type to search suppliers...">
+                                    <input type="text" class="form-control ${errors.supplierIds != null ? 'is-invalid' : ''}" 
+                                           id="supplierInput" placeholder="Type to search suppliers...">
                                     <div id="supplierSuggestions" class="supplier-suggestions"></div>
                                     <div class="selected-suppliers" id="selectedSuppliers"></div>
-                                    <input type="hidden" name="supplierIds" id="supplierIdsInput">
-                                    <div class="invalid-feedback"></div>
+                                    <input type="hidden" name="supplierIds" id="supplierIdsInput" value="${formData.supplierIds[0]}">
+                                    <div class="invalid-feedback">${errors.supplierIds}</div>
                                 </div>
                                 <small class="text-muted">Type supplier name and select from suggestions</small>
                             </div>
@@ -254,6 +260,104 @@
             <script src="${pageContext.request.contextPath}/assets/js/validate.js"></script>
 
         <script src="${pageContext.request.contextPath}/assets/js/categoryAdd.js"></script>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                // Restore selected categories if form validation failed
+                const categoryIdsValue = document.getElementById('categoryIds').value;
+                if (categoryIdsValue) {
+                    const categoryIds = categoryIdsValue.split(',');
+                    categoryIds.forEach(id => {
+                        const categoryId = parseInt(id.trim());
+                        const category = window.categories.find(c => c.id === categoryId);
+                        if (category) {
+                            addSelectedCategory(category.id, category.name);
+                        }
+                    });
+                }
+                
+                // Restore selected suppliers if form validation failed
+                const supplierIdsValue = document.getElementById('supplierIdsInput').value;
+                if (supplierIdsValue) {
+                    const supplierIds = supplierIdsValue.split(',');
+                    supplierIds.forEach(id => {
+                        const supplierId = parseInt(id.trim());
+                        const supplier = window.suppliers.find(s => s.id == supplierId);
+                        if (supplier) {
+                            addSelectedSupplier(supplier.id, supplier.name);
+                        }
+                    });
+                }
+                
+                // Helper function to add a selected category to the UI
+                function addSelectedCategory(id, name) {
+                    const selectedCategoriesDiv = document.getElementById('selectedCategories');
+                    
+                    // Check if category is already selected
+                    if (document.querySelector(`.selected-category[data-id="${id}"]`)) {
+                        return;
+                    }
+                    
+                    const categoryElement = document.createElement('div');
+                    categoryElement.className = 'selected-category';
+                    categoryElement.setAttribute('data-id', id);
+                    categoryElement.innerHTML = `
+                        <span class="category-name">${name}</span>
+                        <span class="remove-category">&times;</span>
+                    `;
+                    
+                    // Add event listener to remove button
+                    categoryElement.querySelector('.remove-category').addEventListener('click', function() {
+                        categoryElement.remove();
+                        updateCategoryIds();
+                    });
+                    
+                    selectedCategoriesDiv.appendChild(categoryElement);
+                    updateCategoryIds();
+                }
+                
+                // Helper function to add a selected supplier to the UI
+                function addSelectedSupplier(id, name) {
+                    const selectedSuppliersDiv = document.getElementById('selectedSuppliers');
+                    
+                    // Check if supplier is already selected
+                    if (document.querySelector(`.selected-supplier[data-id="${id}"]`)) {
+                        return;
+                    }
+                    
+                    const supplierElement = document.createElement('div');
+                    supplierElement.className = 'selected-supplier';
+                    supplierElement.setAttribute('data-id', id);
+                    supplierElement.innerHTML = `
+                        <span class="supplier-name">${name}</span>
+                        <span class="remove-supplier">&times;</span>
+                    `;
+                    
+                    // Add event listener to remove button
+                    supplierElement.querySelector('.remove-supplier').addEventListener('click', function() {
+                        supplierElement.remove();
+                        updateSupplierIds();
+                    });
+                    
+                    selectedSuppliersDiv.appendChild(supplierElement);
+                    updateSupplierIds();
+                }
+                
+                // Helper function to update category IDs hidden input
+                function updateCategoryIds() {
+                    const selectedCategories = document.querySelectorAll('.selected-category');
+                    const categoryIds = Array.from(selectedCategories).map(el => el.getAttribute('data-id'));
+                    document.getElementById('categoryIds').value = categoryIds.join(',');
+                }
+                
+                // Helper function to update supplier IDs hidden input
+                function updateSupplierIds() {
+                    const selectedSuppliers = document.querySelectorAll('.selected-supplier');
+                    const supplierIds = Array.from(selectedSuppliers).map(el => el.getAttribute('data-id'));
+                    document.getElementById('supplierIdsInput').value = supplierIds.join(',');
+                }
+            });
+        </script>
 
     </body>
 </html>
