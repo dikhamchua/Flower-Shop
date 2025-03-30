@@ -282,6 +282,64 @@ public class SupplierDAO extends DBContext implements I_DAO<Supplier> {
         return success;
     }
     
+    /**
+     * Checks if a supplier with the given name already exists
+     * @param name The supplier name to check
+     * @return true if the name exists, false otherwise
+     */
+    public boolean isSupplierNameExists(String name) {
+        String sql = "SELECT COUNT(*) FROM suppliers WHERE name = ?";
+        boolean exists = false;
+        
+        try {
+            connection = getConnection(); // Đảm bảo kết nối được mở
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, name);
+            
+            ResultSet rs = statement.executeQuery();
+            if (rs.next()) {
+                exists = rs.getInt(1) > 0;
+            }
+            
+            rs.close();
+            statement.close();
+        } catch (SQLException e) {
+            System.out.println("Error checking supplier name existence: " + e.getMessage());
+        }
+        
+        return exists;
+    }
+    
+    /**
+     * Checks if a supplier with the given name already exists, excluding a specific supplier
+     * @param name The supplier name to check
+     * @param supplierId The supplier ID to exclude from the check
+     * @return true if the name exists for another supplier, false otherwise
+     */
+    public boolean isSupplierNameExistsExcept(String name, int supplierId) {
+        String sql = "SELECT COUNT(*) FROM suppliers WHERE name = ? AND supplier_id != ?";
+        boolean exists = false;
+        
+        try {
+            connection = getConnection(); // Đảm bảo kết nối được mở
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, name);
+            statement.setInt(2, supplierId);
+            
+            ResultSet rs = statement.executeQuery();
+            if (rs.next()) {
+                exists = rs.getInt(1) > 0;
+            }
+            
+            rs.close();
+            statement.close();
+        } catch (SQLException e) {
+            System.out.println("Error checking supplier name existence: " + e.getMessage());
+        }
+        
+        return exists;
+    }
+    
     public static void main(String[] args) {
         SupplierDAO supplierDAO = new SupplierDAO();
         

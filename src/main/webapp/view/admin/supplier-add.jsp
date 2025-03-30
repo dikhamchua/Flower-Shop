@@ -25,45 +25,58 @@
 
             <div class="card mb-24">
                 <div class="card-body p-24">
+                    <!-- Display error message if any -->
+                    <c:if test="${not empty errorMessage}">
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            ${errorMessage}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    </c:if>
+                    
                     <form action="${pageContext.request.contextPath}/admin/manage-supplier" method="POST">
                         <input type="hidden" name="action" value="add">
 
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <label for="name" class="form-label">Supplier Name <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" id="name" name="name" required>
+                                <input type="text" class="form-control" id="name" name="name" value="${supplier.name}" required>
+                                <div class="invalid-feedback">Please enter a supplier name.</div>
                             </div>
                             <div class="col-md-6">
                                 <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
-                                <input type="email" class="form-control" id="email" name="email" required>
+                                <input type="email" class="form-control" id="email" name="email" value="${supplier.email}" required
+                                       pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                                       title="Please enter a valid email address">
+                                <div class="invalid-feedback">Please enter a valid email address.</div>
                             </div>
                         </div>
 
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <label for="phone" class="form-label">Phone <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" id="phone" name="phone" required
-                                       pattern="[0-9]{10}" 
-                                       title="Phone number must be 10 digits">
-                                <div class="invalid-feedback">Please enter a valid 10-digit phone number.</div>
+                                <input type="text" class="form-control" id="phone" name="phone" value="${supplier.phone}" required
+                                       pattern="0[0-9]{9}" 
+                                       title="Phone number must be 10 digits starting with 0">
+                                <div class="invalid-feedback">Please enter a valid 10-digit phone number starting with 0.</div>
                             </div>
                             <div class="col-md-6">
                                 <label for="status" class="form-label">Status</label>
                                 <select class="form-select" id="status" name="status">
-                                    <option value="1" selected>Active</option>
-                                    <option value="0">Inactive</option>
+                                    <option value="1" ${supplier.status == 1 || empty supplier.status ? 'selected' : ''}>Active</option>
+                                    <option value="0" ${supplier.status == 0 ? 'selected' : ''}>Inactive</option>
                                 </select>
                             </div>
                         </div>
 
                         <div class="mb-3">
-                            <label for="address" class="form-label">Address</label>
-                            <input type="text" class="form-control" id="address" name="address">
+                            <label for="address" class="form-label">Address <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="address" name="address" value="${supplier.address}" required>
+                            <div class="invalid-feedback">Please enter an address.</div>
                         </div>
 
                         <div class="mb-3">
                             <label for="description" class="form-label">Description</label>
-                            <textarea class="form-control" id="description" name="description" rows="3"></textarea>
+                            <textarea class="form-control" id="description" name="description" rows="3">${supplier.description}</textarea>
                         </div>
 
                         <div class="d-flex justify-content-end gap-2">

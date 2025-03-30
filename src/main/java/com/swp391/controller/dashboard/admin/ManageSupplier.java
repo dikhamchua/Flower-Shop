@@ -182,14 +182,7 @@ public class ManageSupplier extends HttpServlet {
         String description = request.getParameter("description");
         int status = Integer.parseInt(request.getParameter("status"));
         
-        // Validate phone number
-        if (!phone.matches("\\d{10}")) {
-            setToastMessage(request, "Invalid phone number. Must be 10 digits.", "error");
-            response.sendRedirect(request.getContextPath() + "/admin/manage-supplier?action=add");
-            return;
-        }
-        
-        // Create supplier object
+        // Create supplier object to store form data
         Supplier supplier = new Supplier();
         supplier.setName(name);
         supplier.setEmail(email);
@@ -197,6 +190,41 @@ public class ManageSupplier extends HttpServlet {
         supplier.setAddress(address);
         supplier.setDescription(description);
         supplier.setStatus(status);
+        
+        // Validate required fields
+        if (name == null || name.trim().isEmpty() || 
+            email == null || email.trim().isEmpty() || 
+            phone == null || phone.trim().isEmpty() ||
+            address == null || address.trim().isEmpty()) {
+            request.setAttribute("supplier", supplier);
+            request.setAttribute("errorMessage", "All required fields must be filled");
+            request.getRequestDispatcher("/view/admin/supplier-add.jsp").forward(request, response);
+            return;
+        }
+        
+        // Validate email format
+        if (!email.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) {
+            request.setAttribute("supplier", supplier);
+            request.setAttribute("errorMessage", "Invalid email format");
+            request.getRequestDispatcher("/view/admin/supplier-add.jsp").forward(request, response);
+            return;
+        }
+        
+        // Validate phone number (10 digits starting with 0)
+        if (!phone.matches("0\\d{9}")) {
+            request.setAttribute("supplier", supplier);
+            request.setAttribute("errorMessage", "Invalid phone number. Must be 10 digits starting with 0.");
+            request.getRequestDispatcher("/view/admin/supplier-add.jsp").forward(request, response);
+            return;
+        }
+        
+        // Check for duplicate supplier name
+        if (supplierDAO.isSupplierNameExists(name)) {
+            request.setAttribute("supplier", supplier);
+            request.setAttribute("errorMessage", "Supplier name already exists. Please use a different name.");
+            request.getRequestDispatcher("/view/admin/supplier-add.jsp").forward(request, response);
+            return;
+        }
         
         // Add supplier to database
         int newSupplierId = supplierDAO.insert(supplier);
@@ -221,7 +249,7 @@ public class ManageSupplier extends HttpServlet {
         String description = request.getParameter("description");
         int status = Integer.parseInt(request.getParameter("status"));
         
-        // Create supplier object
+        // Create supplier object to store form data
         Supplier supplier = new Supplier();
         supplier.setSupplierId(supplierId);
         supplier.setName(name);
@@ -231,7 +259,42 @@ public class ManageSupplier extends HttpServlet {
         supplier.setDescription(description);
         supplier.setStatus(status);
         
-        // Update supplier in database - gọi trực tiếp update() thay vì updateSupplier()
+        // Validate required fields
+        if (name == null || name.trim().isEmpty() || 
+            email == null || email.trim().isEmpty() || 
+            phone == null || phone.trim().isEmpty() ||
+            address == null || address.trim().isEmpty()) {
+            request.setAttribute("supplier", supplier);
+            request.setAttribute("errorMessage", "All required fields must be filled");
+            request.getRequestDispatcher("/view/admin/supplier-edit.jsp").forward(request, response);
+            return;
+        }
+        
+        // Validate email format
+        if (!email.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) {
+            request.setAttribute("supplier", supplier);
+            request.setAttribute("errorMessage", "Invalid email format");
+            request.getRequestDispatcher("/view/admin/supplier-edit.jsp").forward(request, response);
+            return;
+        }
+        
+        // Validate phone number (10 digits starting with 0)
+        if (!phone.matches("0\\d{9}")) {
+            request.setAttribute("supplier", supplier);
+            request.setAttribute("errorMessage", "Invalid phone number. Must be 10 digits starting with 0.");
+            request.getRequestDispatcher("/view/admin/supplier-edit.jsp").forward(request, response);
+            return;
+        }
+        
+        // Check for duplicate supplier name (excluding current supplier)
+        if (supplierDAO.isSupplierNameExistsExcept(name, supplierId)) {
+            request.setAttribute("supplier", supplier);
+            request.setAttribute("errorMessage", "Supplier name already exists. Please use a different name.");
+            request.getRequestDispatcher("/view/admin/supplier-edit.jsp").forward(request, response);
+            return;
+        }
+        
+        // Update supplier in database
         boolean success = supplierDAO.update(supplier);
         
         if (success) {

@@ -25,6 +25,14 @@
 
             <div class="card mb-24">
                 <div class="card-body p-24">
+                    <!-- Display error message if any -->
+                    <c:if test="${not empty errorMessage}">
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            ${errorMessage}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    </c:if>
+                    
                     <form action="${pageContext.request.contextPath}/admin/manage-supplier" method="POST">
                         <input type="hidden" name="action" value="update">
                         <input type="hidden" name="supplierId" value="${supplier.supplierId}">
@@ -33,17 +41,24 @@
                             <div class="col-md-6">
                                 <label for="name" class="form-label">Supplier Name <span class="text-danger">*</span></label>
                                 <input type="text" class="form-control" id="name" name="name" value="${supplier.name}" required>
+                                <div class="invalid-feedback">Please enter a supplier name.</div>
                             </div>
                             <div class="col-md-6">
                                 <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
-                                <input type="email" class="form-control" id="email" name="email" value="${supplier.email}" required>
+                                <input type="email" class="form-control" id="email" name="email" value="${supplier.email}" required
+                                       pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                                       title="Please enter a valid email address">
+                                <div class="invalid-feedback">Please enter a valid email address.</div>
                             </div>
                         </div>
 
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <label for="phone" class="form-label">Phone <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" id="phone" name="phone" value="${supplier.phone}" required>
+                                <input type="text" class="form-control" id="phone" name="phone" value="${supplier.phone}" required
+                                       pattern="0[0-9]{9}" 
+                                       title="Phone number must be 10 digits starting with 0">
+                                <div class="invalid-feedback">Please enter a valid 10-digit phone number starting with 0.</div>
                             </div>
                             <div class="col-md-6">
                                 <label for="status" class="form-label">Status</label>
@@ -55,8 +70,9 @@
                         </div>
 
                         <div class="mb-3">
-                            <label for="address" class="form-label">Address</label>
-                            <input type="text" class="form-control" id="address" name="address" value="${supplier.address}">
+                            <label for="address" class="form-label">Address <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="address" name="address" value="${supplier.address}" required>
+                            <div class="invalid-feedback">Please enter an address.</div>
                         </div>
 
                         <div class="mb-3">
@@ -75,5 +91,24 @@
 
         <!-- JS here -->
         <jsp:include page="../common/dashboard/js-dashboard.jsp"></jsp:include>
+
+        <script>
+            // Add form validation
+            (function () {
+                'use strict'
+                
+                // Fetch the form we want to apply custom Bootstrap validation styles to
+                const form = document.querySelector('form')
+                
+                form.addEventListener('submit', function (event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+                    
+                    form.classList.add('was-validated')
+                }, false)
+            })()
+        </script>
     </body>
 </html>
