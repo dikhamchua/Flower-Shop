@@ -11,7 +11,7 @@
                     <div class="col-lg-3 col-md-3">
                         <div class="logo-area">
                             <a href="${pageContext.request.contextPath}/home">
-                                <img src="${pageContext.request.contextPath}/img/logo/logo.png" alt="">
+                                <img src="${pageContext.request.contextPath}/assets/admin/images/logo.png" alt="site logo" class="logo" style="max-height: 60px;">
                             </a>
                         </div>
                     </div>
@@ -139,5 +139,11 @@
     .cart-title {
         font-size: 14px;
         font-weight: 600;
+    }
+    
+    /* Logo styling */
+    .logo-area img.logo {
+        max-height: 60px;
+        width: auto;
     }
 </style>

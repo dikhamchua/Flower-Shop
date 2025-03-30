@@ -89,7 +89,9 @@
                         <!--Single Footer Widget Start-->
                         <div class="single-footer-widget mb-30">
                             <div class="footer-logo">
-                                <a href="index.html"><img src="img/logo/logo-footer.png" alt=""></a>
+                                <a href="${pageContext.request.contextPath}/home">
+                                    <img src="${pageContext.request.contextPath}/assets/admin/images/logo.png" alt="site logo" class="logo" style="max-height: 60px; filter: brightness(0) invert(1);">
+                                </a>
                             </div>
                         </div>
                         <!--Single Footer Widget End-->

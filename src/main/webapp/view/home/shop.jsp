@@ -281,11 +281,18 @@
                                                 <option value="newest" ${param.sort == 'newest' ? 'selected' : ''}>Newest first</option>
                                             </select>
                                         </div>-->
-                                        <c:set var="endResult" value="${currentPage*productsPerPage}" />
-                                        <c:if test="${endResult > totalProducts}">
-                                            <c:set var="endResult" value="${totalProducts}" />
-                                        </c:if>
-                                        <p class="show-product">Showing ${(currentPage-1)*productsPerPage + 1} to ${endResult} of ${totalProducts} results</p>
+                                        <c:choose>
+                                            <c:when test="${empty products || products.size() == 0}">
+                                                <p class="show-product">No products found</p>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <c:set var="endResult" value="${currentPage*productsPerPage}" />
+                                                <c:if test="${endResult > totalProducts}">
+                                                    <c:set var="endResult" value="${totalProducts}" />
+                                                </c:if>
+                                                <p class="show-product">Showing ${(currentPage-1)*productsPerPage + 1} to ${endResult} of ${totalProducts} results</p>
+                                            </c:otherwise>
+                                        </c:choose>
                                     </div>
                                     <!--Toolbar Short Area End-->
                                 </div>
@@ -296,99 +303,113 @@
                                         <div id="grid" class="tab-pane fade show active">
                                             <div class="product-grid-view">
                                                 <div class="row">
-<!--                                                    <div class="col-md-2">
-                                                        <select class="form-select" name="categories">
-                                                            <option value="">All Categories</option>
-                                                            <c:forEach var="category" items="${categories}">
-                                                                <option value="${category.categoryId}" ${param.categories == category.categoryId ? 'selected' : ''}>
-                                                                    ${category.name}
-                                                                </option>
-                                                            </c:forEach>
-                                                        </select>
-                                                    </div>-->
-                                                    <c:forEach items="${products}" var="product">
-                                                        <div class="col-md-4">
-                                                            <!--Single Product Start-->
-                                                            <div class="single-product mb-25">
-                                                                <div class="product-img img-full">
-                                                                    <a href="${pageContext.request.contextPath}/home?action=product-details&id=${product.productId}">
-                                                                        <img src="${product.image}" alt="${product.productName}">
-                                                                    </a>
-                                                                     <div class="product-action">
-                                                                        <ul>
-                                                                            <li><a href="${pageContext.request.contextPath}/home?action=product-details&id=${product.productId}" title="Quick view"><i class="fa fa-eye"></i></a></li>
-                                                                        </ul>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="product-content">
-                                                                    <h2><a href="${pageContext.request.contextPath}/home?action=product-details&id=${product.productId}">${product.productName}</a></h2>
-                                                                    <div class="product-price">
-                                                                        <div class="price-box">
-                                                                            <span class="regular-price">
-                                                                                <fmt:formatNumber value="${product.price}" pattern="#,##0"/> VND
-                                                                            </span>
-                                                                        </div>
-                                                                        <div class="add-to-cart">
-                                                                            <c:choose>
-                                                                                <c:when test="${not empty sessionScope.account && sessionScope.account.role ne 'admin' && sessionScope.account.role ne 'staff'}">
-                                                                                    <a href="#" class="add-to-cart-btn" data-product-id="${product.productId}">Add To Cart</a>
-                                                                                </c:when>
-                                                                                <c:when test="${empty sessionScope.account}">
-                                                                                    <a href="#" class="add-to-cart-btn login-required" data-product-id="${product.productId}">Add To Cart</a>
-                                                                                </c:when>
-                                                                                <c:otherwise>
-                                                                                    <a href="#" class="add-to-cart-btn disabled" style="background-color: #aaa; cursor: not-allowed;">Not available for staff/admin</a>
-                                                                                </c:otherwise>
-                                                                            </c:choose>
-                                                                        </div>
-                                                                    </div>
+                                                    <c:choose>
+                                                        <c:when test="${empty products || products.size() == 0}">
+                                                            <div class="col-12 text-center py-5">
+                                                                <div class="alert alert-info">
+                                                                    <h4>No products found</h4>
+                                                                    <p>Try adjusting your search or filter criteria</p>
                                                                 </div>
                                                             </div>
-                                                            <!--Single Product End-->
-                                                        </div>
-                                                    </c:forEach>
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <c:forEach items="${products}" var="product">
+                                                                <div class="col-md-4">
+                                                                    <!--Single Product Start-->
+                                                                    <div class="single-product mb-25">
+                                                                        <div class="product-img img-full">
+                                                                            <a href="${pageContext.request.contextPath}/home?action=product-details&id=${product.productId}">
+                                                                                <img src="${product.image}" alt="${product.productName}">
+                                                                            </a>
+                                                                             <div class="product-action">
+                                                                                <ul>
+                                                                                    <li><a href="${pageContext.request.contextPath}/home?action=product-details&id=${product.productId}" title="Quick view"><i class="fa fa-eye"></i></a></li>
+                                                                                </ul>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="product-content">
+                                                                            <h2><a href="${pageContext.request.contextPath}/home?action=product-details&id=${product.productId}">${product.productName}</a></h2>
+                                                                            <div class="product-price">
+                                                                                <div class="price-box">
+                                                                                    <span class="regular-price">
+                                                                                        <fmt:formatNumber value="${product.price}" pattern="#,##0"/> VND
+                                                                                    </span>
+                                                                                </div>
+                                                                                <div class="add-to-cart">
+                                                                                    <c:choose>
+                                                                                        <c:when test="${not empty sessionScope.account && sessionScope.account.role ne 'admin' && sessionScope.account.role ne 'staff'}">
+                                                                                            <a href="#" class="add-to-cart-btn" data-product-id="${product.productId}">Add To Cart</a>
+                                                                                        </c:when>
+                                                                                        <c:when test="${empty sessionScope.account}">
+                                                                                            <a href="#" class="add-to-cart-btn login-required" data-product-id="${product.productId}">Add To Cart</a>
+                                                                                        </c:when>
+                                                                                        <c:otherwise>
+                                                                                            <a href="#" class="add-to-cart-btn disabled" style="background-color: #aaa; cursor: not-allowed;">Not available for staff/admin</a>
+                                                                                        </c:otherwise>
+                                                                                    </c:choose>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <!--Single Product End-->
+                                                                </div>
+                                                            </c:forEach>
+                                                        </c:otherwise>
+                                                    </c:choose>
                                                 </div>
                                             </div>
                                         </div>
                                         <div id="list" class="tab-pane fade">
                                             <div class="product-list-view">
-                                                <c:forEach items="${products}" var="product">
-                                                    <!--Single List Product Start-->
-                                                    <div class="product-list-item mb-40">
-                                                        <div class="row">
-                                                            <div class="col-md-4">
-                                                                <div class="list-product-img img-full">
-                                                                    <a href="${pageContext.request.contextPath}/home?action=product-details&id=${product.productId}">
-                                                                        <img src="${product.image}" alt="${product.productName}">
-                                                                    </a>
-                                                                </div>
+                                                <c:choose>
+                                                    <c:when test="${empty products || products.size() == 0}">
+                                                        <div class="col-12 text-center py-5">
+                                                            <div class="alert alert-info">
+                                                                <h4>No products found</h4>
+                                                                <p>Try adjusting your search or filter criteria</p>
                                                             </div>
-                                                            <div class="col-md-8">
-                                                                <div class="product-content shop-list">
-                                                                    <h2><a href="${pageContext.request.contextPath}/home?action=product-details&id=${product.productId}">${product.productName}</a></h2>
-                                                                    <div class="product-price">
-                                                                        <div class="price-box">
-                                                                            <span class="regular-price">
-                                                                                <fmt:formatNumber value="${product.price}" pattern="#,##0"/> VND
-                                                                            </span>
+                                                        </div>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <c:forEach items="${products}" var="product">
+                                                            <!--Single List Product Start-->
+                                                            <div class="product-list-item mb-40">
+                                                                <div class="row">
+                                                                    <div class="col-md-4">
+                                                                        <div class="list-product-img img-full">
+                                                                            <a href="${pageContext.request.contextPath}/home?action=product-details&id=${product.productId}">
+                                                                                <img src="${product.image}" alt="${product.productName}">
+                                                                            </a>
                                                                         </div>
                                                                     </div>
-                                                                    <div class="product-desc">
-                                                                        <p>${product.description}</p>
-                                                                    </div>
-                                                                    <div class="product-action-shop">
-                                                                        <a class="add-to-cart-btn" href="#" data-product-id="${product.productId}">Add to cart</a>
+                                                                    <div class="col-md-8">
+                                                                        <div class="product-content shop-list">
+                                                                            <h2><a href="${pageContext.request.contextPath}/home?action=product-details&id=${product.productId}">${product.productName}</a></h2>
+                                                                            <div class="product-price">
+                                                                                <div class="price-box">
+                                                                                    <span class="regular-price">
+                                                                                        <fmt:formatNumber value="${product.price}" pattern="#,##0"/> VND
+                                                                                    </span>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="product-desc">
+                                                                                <p>${product.description}</p>
+                                                                            </div>
+                                                                            <div class="product-action-shop">
+                                                                                <a class="add-to-cart-btn" href="#" data-product-id="${product.productId}">Add to cart</a>
 <!--                                                                        <ul>
                                                                             <li><a href="#" class="add-to-wishlist" data-product-id="${product.productId}" title="Wishlist"><i class="fa fa-heart-o"></i></a></li>
                                                                             <li><a href="#" title="Compare"><i class="fa fa-refresh"></i></a></li>
                                                                         </ul>-->
                                                                     </div>
+                                                                        </div>
+                                                                    </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
-                                                    </div>
-                                                    <!--Single List Product End-->
-                                                </c:forEach>
+                                                            <!--Single List Product End-->
+                                                        </c:forEach>
+                                                    </c:otherwise>
+                                                </c:choose>
                                             </div>
                                         </div>
                                     </div>
