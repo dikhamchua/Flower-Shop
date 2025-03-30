@@ -102,6 +102,14 @@
                 text-decoration: none;
                 transition: background-color 0.3s ease;
                 margin-top: 10px;
+                font-size: 14px;
+                white-space: normal;
+                line-height: 1.2;
+                min-height: 40px;
+                width: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
             }
             
             .single-product .add-to-cart-btn:hover {
@@ -329,7 +337,7 @@
                                                                                     <a href="#" class="add-to-cart-btn login-required" data-product-id="${product.productId}">Add To Cart</a>
                                                                                 </c:when>
                                                                                 <c:otherwise>
-                                                                                    <a href="#" class="add-to-cart-btn" disabled>Add To Cart (Not available for staff/admin)</a>
+                                                                                    <a href="#" class="add-to-cart-btn disabled" style="background-color: #aaa; cursor: not-allowed;">Not available for staff/admin</a>
                                                                                 </c:otherwise>
                                                                             </c:choose>
                                                                         </div>
@@ -370,10 +378,10 @@
                                                                     </div>
                                                                     <div class="product-action-shop">
                                                                         <a class="add-to-cart-btn" href="#" data-product-id="${product.productId}">Add to cart</a>
-                                                                        <ul>
+<!--                                                                        <ul>
                                                                             <li><a href="#" class="add-to-wishlist" data-product-id="${product.productId}" title="Wishlist"><i class="fa fa-heart-o"></i></a></li>
                                                                             <li><a href="#" title="Compare"><i class="fa fa-refresh"></i></a></li>
-                                                                        </ul>
+                                                                        </ul>-->
                                                                     </div>
                                                                 </div>
                                                             </div>

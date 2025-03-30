@@ -22,7 +22,7 @@
                         <div class="header-menu">
                             <nav>
                                 <ul class="main-menu">
-                                    <li><a href="${pageContext.request.contextPath}/home">Shop</a></li>
+                                    <li><a href="${pageContext.request.contextPath}/home">Home</a></li>
                                     <li><a href="${pageContext.request.contextPath}/blog">Blog</a></li>
                                     
                                     <!-- Hiển thị nút đăng nhập/đăng ký chỉ khi chưa đăng nhập -->
