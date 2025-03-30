@@ -60,6 +60,26 @@ public class ProfileController extends HttpServlet {
             String phone = request.getParameter("phone");
             String address = request.getParameter("address");
 
+            // Server-side validation
+            if (firstName == null || firstName.trim().isEmpty() ||
+                lastName == null || lastName.trim().isEmpty() ||
+                phone == null || phone.trim().isEmpty() ||
+                address == null || address.trim().isEmpty()) {
+                
+                request.getSession().setAttribute("toastMessage", "All fields are required!");
+                request.getSession().setAttribute("toastType", "error");
+                doGet(request, response);
+                return;
+            }
+            
+            // Validate phone number format
+            if (!phone.matches("^0\\d{9}$")) {
+                request.getSession().setAttribute("toastMessage", "Phone number must start with 0 and have 10 digits!");
+                request.getSession().setAttribute("toastType", "error");
+                doGet(request, response);
+                return;
+            }
+
             // Lấy account từ session
             Account currentAccount = (Account) request.getSession().getAttribute(GlobalConfig.SESSION_ACCOUNT);
 
@@ -100,10 +120,12 @@ public class ProfileController extends HttpServlet {
                     request.getSession().setAttribute("toastType", "error");
                 }
             } else {
-                request.setAttribute("err", "Unauthorized access!");
+                request.getSession().setAttribute("toastMessage", "Unauthorized access!");
+                request.getSession().setAttribute("toastType", "error");
             }
         } catch (Exception e) {
-            request.setAttribute("err", "An error occurred: " + e.getMessage());
+            request.getSession().setAttribute("toastMessage", "An error occurred: " + e.getMessage());
+            request.getSession().setAttribute("toastType", "error");
         }
 
         // Chuyển hướng trở lại trang profile

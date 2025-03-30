@@ -77,40 +77,43 @@
                     <div class="tab-content" id="pills-tabContent">   
                         <div class="tab-pane fade show active" id="pills-edit-profile" role="tabpanel" aria-labelledby="pills-edit-profile-tab" tabindex="0">
 
-                            <form id="profileForm" action="${pageContext.request.contextPath}/profile" method="POST">
+                            <form id="profileForm" action="${pageContext.request.contextPath}/profile" method="POST" onsubmit="return validateForm()">
                                 <input type="hidden" name="id" value="${account.userId}">
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <div class="mb-20">
-                                            <label for="firstName" class="form-label fw-semibold text-primary-light text-sm mb-8">First Name</label>
-                                            <input type="text" class="form-control radius-8" id="firstName" name="firstName" value="${account.firstName}">
+                                            <label for="firstName" class="form-label fw-semibold text-primary-light text-sm mb-8">First Name <span class="text-danger">*</span></label>
+                                            <input type="text" class="form-control radius-8" id="firstName" name="firstName" value="${account.firstName}" required>
+                                            <div class="invalid-feedback">First name is required</div>
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
                                         <div class="mb-20">
-                                            <label for="lastName" class="form-label fw-semibold text-primary-light text-sm mb-8">Last Name</label>
-                                            <input type="text" class="form-control radius-8" id="lastName" name="lastName" value="${account.lastName}">
+                                            <label for="lastName" class="form-label fw-semibold text-primary-light text-sm mb-8">Last Name <span class="text-danger">*</span></label>
+                                            <input type="text" class="form-control radius-8" id="lastName" name="lastName" value="${account.lastName}" required>
+                                            <div class="invalid-feedback">Last name is required</div>
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
                                         <div class="mb-20">
-                                            <label for="email" class="form-label fw-semibold text-primary-light text-sm mb-8">Email</label>
+                                            <label for="email" class="form-label fw-semibold text-primary-light text-sm mb-8">Email <span class="text-danger">*</span></label>
                                             <input type="email" class="form-control radius-8" id="email" name="email" value="${account.email}" readonly>
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
                                         <div class="mb-20">
-                                            <label for="phone" class="form-label fw-semibold text-primary-light text-sm mb-8">Phone</label>
+                                            <label for="phone" class="form-label fw-semibold text-primary-light text-sm mb-8">Phone <span class="text-danger">*</span></label>
                                             <input type="text" class="form-control radius-8" id="phone" name="phone" value="${account.phone}" 
                                                    pattern="^0\d{9}$" 
-                                                   title="Số điện thoại phải bắt đầu bằng số 0 và có đủ 10 số">
-                                            <!-- <small class="text-muted">Định dạng: 0xxxxxxxxx (10 số)</small> -->
+                                                   title="Phone number must start with 0 and have 10 digits" required>
+                                            <div class="invalid-feedback">Valid phone number is required (format: 0XXXXXXXXX)</div>
                                         </div>
                                     </div>
                                     <div class="col-sm-12">
                                         <div class="mb-20">
-                                            <label for="address" class="form-label fw-semibold text-primary-light text-sm mb-8">Address</label>
-                                            <input type="text" class="form-control radius-8" id="address" name="address" value="${account.address}">
+                                            <label for="address" class="form-label fw-semibold text-primary-light text-sm mb-8">Address <span class="text-danger">*</span></label>
+                                            <input type="text" class="form-control radius-8" id="address" name="address" value="${account.address}" required>
+                                            <div class="invalid-feedback">Address is required</div>
                                         </div>
                                     </div>
                                 </div>
@@ -144,6 +147,45 @@
 <jsp:include page="../common/dashboard/js-dashboard.jsp"></jsp:include>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"></script>
         <script>
+            function validateForm() {
+                let isValid = true;
+                const firstName = document.getElementById('firstName');
+                const lastName = document.getElementById('lastName');
+                const phone = document.getElementById('phone');
+                const address = document.getElementById('address');
+                
+                // Reset previous validation
+                [firstName, lastName, phone, address].forEach(field => {
+                    field.classList.remove('is-invalid');
+                });
+                
+                // Check each field
+                if (!firstName.value.trim()) {
+                    firstName.classList.add('is-invalid');
+                    isValid = false;
+                }
+                
+                if (!lastName.value.trim()) {
+                    lastName.classList.add('is-invalid');
+                    isValid = false;
+                }
+                
+                if (!phone.value.trim()) {
+                    phone.classList.add('is-invalid');
+                    isValid = false;
+                } else if (!phone.value.match(/^0\d{9}$/)) {
+                    phone.classList.add('is-invalid');
+                    isValid = false;
+                }
+                
+                if (!address.value.trim()) {
+                    address.classList.add('is-invalid');
+                    isValid = false;
+                }
+                
+                return isValid;
+            }
+
             document.addEventListener('DOMContentLoaded', function() {
                 var toastMessage = "${sessionScope.toastMessage}";
                 var toastType = "${sessionScope.toastType}";
