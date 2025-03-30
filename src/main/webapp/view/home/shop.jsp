@@ -548,7 +548,7 @@
                     // Hiển thị thông báo yêu cầu đăng nhập
                     const toast = new bootstrap.Toast(document.getElementById('cartToast'));
                     $('#cartToast').removeClass('bg-success').addClass('bg-warning');
-                    $('#cartToast .toast-body').text('Vui lòng đăng nhập để thêm sản phẩm vào giỏ hàng');
+                    $('#cartToast .toast-body').text('Please login to add products to your cart');
                     toast.show();
                     
                     // Chuyển hướng đến trang đăng nhập sau 2 giây
@@ -558,7 +558,22 @@
                     return;
                 </c:if>
                 
-                // Nếu đã đăng nhập, tiếp tục thêm vào giỏ hàng
+                // Kiểm tra nếu người dùng là admin hoặc staff
+                <c:if test="${not empty sessionScope.account && (sessionScope.account.role eq 'admin' || sessionScope.account.role eq 'staff')}">
+                    // Hiển thị thông báo lỗi
+                    const toast = new bootstrap.Toast(document.getElementById('cartToast'));
+                    $('#cartToast').removeClass('bg-success').addClass('bg-danger');
+                    $('#cartToast .toast-body').text('Admin and staff cannot add products to cart');
+                    toast.show();
+                    
+                    // Auto hide toast after 3 seconds
+                    setTimeout(function() {
+                        toast.hide();
+                    }, 3000);
+                    return;
+                </c:if>
+                
+                // Nếu đã đăng nhập và không phải admin/staff, tiếp tục thêm vào giỏ hàng
                 $.ajax({
                     url: '${pageContext.request.contextPath}/cart',
                     type: 'POST',
@@ -570,7 +585,7 @@
                         // Show toast message
                         const toast = new bootstrap.Toast(document.getElementById('cartToast'));
                         $('#cartToast').removeClass('bg-danger').addClass('bg-success');
-                        $('#cartToast .toast-body').text('Sản phẩm đã được thêm vào giỏ hàng');
+                        $('#cartToast .toast-body').text('Product has been added to your cart');
                         toast.show();
                         
                         // Auto hide toast after 3 seconds
@@ -581,7 +596,7 @@
                     error: function(xhr) {
                         // Show error toast
                         $('#cartToast').removeClass('bg-success').addClass('bg-danger');
-                        $('#cartToast .toast-body').text('Có lỗi xảy ra khi thêm sản phẩm vào giỏ hàng');
+                        $('#cartToast .toast-body').text('An error occurred while adding the product to cart');
                         const toast = new bootstrap.Toast(document.getElementById('cartToast'));
                         toast.show();
                         
