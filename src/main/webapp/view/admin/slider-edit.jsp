@@ -59,6 +59,7 @@
             <div class="card-body p-24">
                 <form id="sliderForm" action="${pageContext.request.contextPath}/admin/manage-slider?action=update" method="POST">
                     <input type="hidden" name="id" value="${slider.sliderId}">
+                    <input type="hidden" name="currentPage" value="${param.page}">
                     <div class="row g-3">
                         <!-- Slider Information -->
                         <div class="col-md-12">

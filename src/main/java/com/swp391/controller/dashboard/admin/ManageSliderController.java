@@ -100,7 +100,20 @@ public class ManageSliderController extends HttpServlet {
             } catch (NumberFormatException e) {
                 page = 1;
             }
+        } else {
+            // Try to get from session as fallback
+            Object sessionPage = request.getSession().getAttribute("currentSliderPage");
+            if (sessionPage != null) {
+                try {
+                    page = Integer.parseInt(sessionPage.toString());
+                } catch (NumberFormatException e) {
+                    page = 1;
+                }
+            }
         }
+        
+        // Store current page in session
+        request.getSession().setAttribute("currentSliderPage", String.valueOf(page));
 
         SliderDAO sliderDAO = new SliderDAO();
         List<Slider> sliders;
@@ -143,6 +156,12 @@ public class ManageSliderController extends HttpServlet {
     private void updateSlider(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         try {
+            // Get current page from request
+            String currentPage = request.getParameter("currentPage");
+            if (currentPage == null || currentPage.isEmpty()) {
+                currentPage = "1";
+            }
+            
             // Get information from request
             int sliderId = Integer.parseInt(request.getParameter("id"));
             String imageUrl = request.getParameter("image_url");
@@ -158,7 +177,7 @@ public class ManageSliderController extends HttpServlet {
                 // Validate input data - only check if image URL is empty
                 if (imageUrl == null || imageUrl.trim().isEmpty()) {
                     setToastMessage(request, "Image URL is required", "error");
-                    response.sendRedirect(request.getContextPath() + "/admin/manage-slider?action=edit&id=" + sliderId);
+                    response.sendRedirect(request.getContextPath() + "/admin/manage-slider?action=edit&id=" + sliderId + "&page=" + currentPage);
                     return;
                 }
                 
@@ -184,16 +203,28 @@ public class ManageSliderController extends HttpServlet {
             } else {
                 setToastMessage(request, "Slider not found!", "error");
             }
+            
+            // Store the current page in session to ensure it's available after redirect
+            request.getSession().setAttribute("currentSliderPage", currentPage);
+            
+            // Redirect back to slider list with the page parameter
+            response.sendRedirect(request.getContextPath() + "/admin/manage-slider?page=" + currentPage);
         } catch (Exception e) {
             setToastMessage(request, "Error: " + e.getMessage(), "error");
+            response.sendRedirect(request.getContextPath() + "/admin/manage-slider");
         }
-        
-        // Redirect to list page
-        response.sendRedirect(request.getContextPath() + "/admin/manage-slider?action=list");
     }
 
     private void deactivateSlider(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
+        // Get current page from request
+        String currentPage = request.getParameter("page");
+        if (currentPage == null || currentPage.isEmpty()) {
+            // Try to get from session as fallback
+            Object sessionPage = request.getSession().getAttribute("currentSliderPage");
+            currentPage = sessionPage != null ? sessionPage.toString() : "1";
+        }
+        
         String sliderIdStr = request.getParameter("id");
         if (sliderIdStr != null && !sliderIdStr.isEmpty()) {
             int sliderId = Integer.parseInt(sliderIdStr);
@@ -209,11 +240,23 @@ public class ManageSliderController extends HttpServlet {
             setToastMessage(request, "Invalid slider ID", "error");
         }
         
-        response.sendRedirect(request.getContextPath() + "/admin/manage-slider");
+        // Store the current page in session
+        request.getSession().setAttribute("currentSliderPage", currentPage);
+        
+        // Redirect back to slider list with the page parameter
+        response.sendRedirect(request.getContextPath() + "/admin/manage-slider?page=" + currentPage);
     }
 
     private void activateSlider(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
+        // Get current page from request
+        String currentPage = request.getParameter("page");
+        if (currentPage == null || currentPage.isEmpty()) {
+            // Try to get from session as fallback
+            Object sessionPage = request.getSession().getAttribute("currentSliderPage");
+            currentPage = sessionPage != null ? sessionPage.toString() : "1";
+        }
+        
         String sliderIdStr = request.getParameter("id");
         if (sliderIdStr != null && !sliderIdStr.isEmpty()) {
             int sliderId = Integer.parseInt(sliderIdStr);
@@ -229,7 +272,11 @@ public class ManageSliderController extends HttpServlet {
             setToastMessage(request, "Invalid slider ID", "error");
         }
         
-        response.sendRedirect(request.getContextPath() + "/admin/manage-slider");
+        // Store the current page in session
+        request.getSession().setAttribute("currentSliderPage", currentPage);
+        
+        // Redirect back to slider list with the page parameter
+        response.sendRedirect(request.getContextPath() + "/admin/manage-slider?page=" + currentPage);
     }
 
     private void setToastMessage(HttpServletRequest request, String message, String type) {

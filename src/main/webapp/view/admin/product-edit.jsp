@@ -144,6 +144,7 @@
             <form id="productForm" action="${pageContext.request.contextPath}/admin/manage-product" method="POST" enctype="multipart/form-data">
                 <input type="hidden" name="action" value="update">
                 <input type="hidden" name="productId" value="${product.productId}">
+                <input type="hidden" name="page" value="${param.page}">
 
                 <div class="row g-3">
                     <!-- Product Information -->

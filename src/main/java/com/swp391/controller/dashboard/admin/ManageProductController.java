@@ -213,53 +213,78 @@ public class ManageProductController extends HttpServlet {
 
     private void activateProduct(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        int productId = Integer.parseInt(request.getParameter("id"));
-        String currentPage = request.getParameter("page"); // Get current page
-        ProductDAO productDAO = new ProductDAO();
-        Product product = productDAO.findById(productId);
-        
-        if (product != null) {
-            product.setStatus((byte) 1);
-            boolean updated = productDAO.update(product);
+        try {
+            int productId = Integer.parseInt(request.getParameter("id"));
+            ProductDAO productDAO = new ProductDAO();
+            Product product = productDAO.findById(productId);
             
-            if (updated) {
-                setToastMessage(request, "Product activated successfully", "success");
-            } else {
-                setToastMessage(request, "Failed to activate product", "error");
+            // Get current page for redirect
+            String currentPage = request.getParameter("page");
+            if (currentPage == null || currentPage.isEmpty()) {
+                currentPage = "1";
             }
-        } else {
-            setToastMessage(request, "Product not found", "error");
+            
+            if (product != null) {
+                product.setStatus((byte) 1);
+                boolean isSuccess = productDAO.update(product);
+                
+                if (isSuccess) {
+                    setToastMessage(request, "Kích hoạt sản phẩm thành công!", "success");
+                } else {
+                    setToastMessage(request, "Kích hoạt sản phẩm thất bại!", "error");
+                }
+            } else {
+                setToastMessage(request, "Không tìm thấy sản phẩm!", "error");
+            }
+        } catch (Exception e) {
+            setToastMessage(request, "Error: " + e.getMessage(), "error");
+            e.printStackTrace();
         }
         
-        // Redirect with current page
-        response.sendRedirect(request.getContextPath() + "/admin/manage-product?page=" + (currentPage != null ? currentPage : "1"));
+        // Redirect back to the same page
+        String currentPage = request.getParameter("page");
+        if (currentPage == null || currentPage.isEmpty()) {
+            currentPage = "1";
+        }
+        response.sendRedirect(request.getContextPath() + "/admin/manage-product?page=" + currentPage);
     }
 
     private void deactivateProduct(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        String productIdStr = request.getParameter("id");
-        if (productIdStr != null && !productIdStr.isEmpty()) {
-            try {
-                int productId = Integer.parseInt(productIdStr);
-                ProductDAO productDAO = new ProductDAO();
-                boolean deactivated = productDAO.updateStatus(productId, (byte) 0);
-                
-                if (deactivated) {
-                    setToastMessage(request, "Product deactivated successfully", "success");
-                } else {
-                    setToastMessage(request, "Failed to deactivate product", "error");
-                }
-            } catch (NumberFormatException e) {
-                setToastMessage(request, "Invalid product ID format", "error");
-            } catch (Exception e) {
-                setToastMessage(request, "Error: " + e.getMessage(), "error");
-                e.printStackTrace();
+        try {
+            int productId = Integer.parseInt(request.getParameter("id"));
+            ProductDAO productDAO = new ProductDAO();
+            Product product = productDAO.findById(productId);
+            
+            // Get current page for redirect
+            String currentPage = request.getParameter("page");
+            if (currentPage == null || currentPage.isEmpty()) {
+                currentPage = "1";
             }
-        } else {
-            setToastMessage(request, "Invalid product ID", "error");
+            
+            if (product != null) {
+                product.setStatus((byte) 0);
+                boolean isSuccess = productDAO.update(product);
+                
+                if (isSuccess) {
+                    setToastMessage(request, "Vô hiệu hóa sản phẩm thành công!", "success");
+                } else {
+                    setToastMessage(request, "Vô hiệu hóa sản phẩm thất bại!", "error");
+                }
+            } else {
+                setToastMessage(request, "Không tìm thấy sản phẩm!", "error");
+            }
+        } catch (Exception e) {
+            setToastMessage(request, "Error: " + e.getMessage(), "error");
+            e.printStackTrace();
         }
         
-        response.sendRedirect(request.getContextPath() + "/admin/manage-product");
+        // Redirect back to the same page
+        String currentPage = request.getParameter("page");
+        if (currentPage == null || currentPage.isEmpty()) {
+            currentPage = "1";
+        }
+        response.sendRedirect(request.getContextPath() + "/admin/manage-product?page=" + currentPage);
     }
 
     private void showEditForm(HttpServletRequest request, HttpServletResponse response)
@@ -352,6 +377,12 @@ public class ManageProductController extends HttpServlet {
             BigDecimal price = new BigDecimal(request.getParameter("price"));
             int stock = Integer.parseInt(request.getParameter("stock"));
             byte status = Byte.parseByte(request.getParameter("status"));
+            
+            // Get current page for redirect
+            String currentPage = request.getParameter("page");
+            if (currentPage == null || currentPage.isEmpty()) {
+                currentPage = "1";
+            }
 
             ProductDAO productDAO = new ProductDAO();
             Product product = productDAO.findById(productId);
@@ -446,7 +477,12 @@ public class ManageProductController extends HttpServlet {
             e.printStackTrace();
         }
         
-        response.sendRedirect(request.getContextPath() + "/admin/manage-product");
+        // Redirect back to the same page
+        String currentPage = request.getParameter("page");
+        if (currentPage == null || currentPage.isEmpty()) {
+            currentPage = "1";
+        }
+        response.sendRedirect(request.getContextPath() + "/admin/manage-product?page=" + currentPage);
     }
 
     private void addProduct(HttpServletRequest request, HttpServletResponse response)

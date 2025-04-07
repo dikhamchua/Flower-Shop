@@ -185,23 +185,23 @@
                                         </td>
                                         <td>
                                             <div class="d-flex gap-2">
-                                                <a href="${pageContext.request.contextPath}/admin/manage-product?action=edit&id=${product.productId}"
+                                                <a href="${pageContext.request.contextPath}/admin/manage-product?action=edit&id=${product.productId}&page=${currentPage}" 
                                                    class="btn btn-sm btn-primary">
-                                                    <iconify-icon icon="material-symbols:edit"></iconify-icon>
+                                                    Edit
                                                 </a>
                                                 <c:choose>
                                                     <c:when test="${product.status == 1}">
                                                         <button type="button"
-                                                                class="btn btn-sm btn-danger fixed-width-btn"
+                                                                class="btn btn-sm btn-warning fixed-width-btn"
                                                                 onclick="confirmDeactivate('${product.productId}')">
-                                                            <i class="fas fa-trash-alt"></i> Deactivate
+                                                            Deactivate
                                                         </button>
                                                     </c:when>
                                                     <c:otherwise>
                                                         <button type="button"
                                                                 class="btn btn-sm btn-success fixed-width-btn"
                                                                 onclick="confirmActivate('${product.productId}')">
-                                                            <i class="fas fa-check"></i> Activate
+                                                            Activate
                                                         </button>
                                                     </c:otherwise>
                                                 </c:choose>
@@ -407,13 +407,14 @@
                 });
 
                 function confirmDeactivate(productId) {
+                    var currentPage = ${currentPage};
                     if (confirm('Are you sure you want to deactivate this product?')) {
-                        window.location.href = '${pageContext.request.contextPath}/admin/manage-product?action=deactivate&id=' + productId;
+                        window.location.href = '${pageContext.request.contextPath}/admin/manage-product?action=deactivate&id=' + productId + '&page=' + currentPage;
                     }
                 }
 
                 function confirmActivate(productId) {
-                    var currentPage = <%= request.getParameter("page") != null ? request.getParameter("page") : "1" %>;
+                    var currentPage = ${currentPage};
                     if (confirm('Are you sure you want to activate this product?')) {
                         window.location.href = '${pageContext.request.contextPath}/admin/manage-product?action=activate&id=' + productId + '&page=' + currentPage;
                     }

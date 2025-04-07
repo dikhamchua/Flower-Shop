@@ -135,24 +135,22 @@
                                     <td>${slider.updatedAt}</td>
                                     <td>
                                         <div class="d-flex gap-2">
-                                            <a href="${pageContext.request.contextPath}/admin/manage-slider?action=edit&id=${slider.sliderId}" 
+                                            <a href="${pageContext.request.contextPath}/admin/manage-slider?action=edit&id=${slider.sliderId}&page=${currentPage}" 
                                                class="btn btn-sm btn-primary">
-                                                <iconify-icon icon="material-symbols:edit"></iconify-icon>
+                                                Edit
                                             </a>
                                             <c:choose>
                                                 <c:when test="${slider.status == 1}">
-                                                    <button type="button" 
-                                                            class="btn btn-sm btn-danger fixed-width-btn"
-                                                            onclick="confirmDeactivate('${slider.sliderId}')">
-                                                        <i class="fas fa-trash-alt"></i> Deactivate
-                                                    </button>
+                                                    <a href="${pageContext.request.contextPath}/admin/manage-slider?action=deactivate&id=${slider.sliderId}&page=${currentPage}" 
+                                                       class="btn btn-sm btn-warning fixed-width-btn">
+                                                        Deactivate
+                                                    </a>
                                                 </c:when>
                                                 <c:otherwise>
-                                                    <button type="button" 
-                                                            class="btn btn-sm btn-success fixed-width-btn"
-                                                            onclick="confirmActivate('${slider.sliderId}')">
-                                                        <i class="fas fa-check"></i> Activate
-                                                    </button>
+                                                    <a href="${pageContext.request.contextPath}/admin/manage-slider?action=activate&id=${slider.sliderId}&page=${currentPage}" 
+                                                       class="btn btn-sm btn-success fixed-width-btn">
+                                                        Activate
+                                                    </a>
                                                 </c:otherwise>
                                             </c:choose>
                                         </div>
