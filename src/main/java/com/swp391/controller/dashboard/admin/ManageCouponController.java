@@ -257,6 +257,12 @@ public class ManageCouponController extends HttpServlet {
         String discountType = request.getParameter("discountType");
         BigDecimal discountValue = new BigDecimal(request.getParameter("discountValue"));
         
+        // Lấy trang hiện tại từ request
+        String currentPage = request.getParameter("page");
+        if (currentPage == null || currentPage.isEmpty()) {
+            currentPage = "1";
+        }
+        
         String minPurchaseStr = request.getParameter("minPurchase");
         BigDecimal minPurchase = (minPurchaseStr != null && !minPurchaseStr.isEmpty()) 
                 ? new BigDecimal(minPurchaseStr) : null;
@@ -312,7 +318,7 @@ public class ManageCouponController extends HttpServlet {
             // Lưu vào database
             if (couponDAO.updateCoupon(coupon)) {
                 request.getSession().setAttribute("successMessage", "Coupon updated successfully");
-                response.sendRedirect(request.getContextPath() + "/admin/manage-coupon");
+                response.sendRedirect(request.getContextPath() + "/admin/manage-coupon?action=list&page=" + currentPage);
             } else {
                 request.setAttribute("errorMessage", "Failed to update coupon");
                 request.setAttribute("coupon", coupon);
@@ -329,12 +335,18 @@ public class ManageCouponController extends HttpServlet {
         int couponId = Integer.parseInt(request.getParameter("id"));
         CouponDAO couponDAO = new CouponDAO();
         
+        // Lấy trang hiện tại từ request
+        String currentPage = request.getParameter("page");
+        if (currentPage == null || currentPage.isEmpty()) {
+            currentPage = "1";
+        }
+        
         if (couponDAO.deleteCoupon(couponId)) {
             request.getSession().setAttribute("successMessage", "Coupon deleted successfully");
-            response.sendRedirect(request.getContextPath() + "/admin/manage-coupon");
+            response.sendRedirect(request.getContextPath() + "/admin/manage-coupon?action=list&page=" + currentPage);
         } else {
             request.getSession().setAttribute("errorMessage", "Failed to delete coupon");
-            response.sendRedirect(request.getContextPath() + "/admin/manage-coupon");
+            response.sendRedirect(request.getContextPath() + "/admin/manage-coupon?action=list&page=" + currentPage);
         }
     }
     

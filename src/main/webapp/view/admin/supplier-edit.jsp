@@ -36,6 +36,7 @@
                     <form action="${pageContext.request.contextPath}/admin/manage-supplier" method="POST">
                         <input type="hidden" name="action" value="update">
                         <input type="hidden" name="supplierId" value="${supplier.supplierId}">
+                        <input type="hidden" name="page" value="${param.page}">
 
                         <div class="row mb-3">
                             <div class="col-md-6">
@@ -52,6 +53,7 @@
                             </div>
                         </div>
 
+                        
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <label for="phone" class="form-label">Phone <span class="text-danger">*</span></label>
@@ -81,7 +83,7 @@
                         </div>
 
                         <div class="d-flex justify-content-end gap-2">
-                            <a href="${pageContext.request.contextPath}/admin/manage-supplier" class="btn btn-secondary">Cancel</a>
+                            <a href="${pageContext.request.contextPath}/admin/manage-supplier?page=${param.page}" class="btn btn-secondary">Cancel</a>
                             <button type="submit" class="btn btn-primary">Update Supplier</button>
                         </div>
                     </form>

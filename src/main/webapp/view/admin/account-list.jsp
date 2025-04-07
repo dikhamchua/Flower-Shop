@@ -116,7 +116,7 @@
                                     </td>
                                     <td>
                                         <div class="d-flex gap-2">
-                                            <a href="${pageContext.request.contextPath}/admin/manage-account?action=edit&id=${account.userId}" 
+                                            <a href="${pageContext.request.contextPath}/admin/manage-account?action=edit&id=${account.userId}&page=${currentPage}" 
                                                class="btn btn-sm btn-primary">
                                                 <iconify-icon icon="material-symbols:edit"></iconify-icon>
                                             </a>
@@ -125,14 +125,14 @@
                                                     <c:when test="${account.status}">
                                                         <button type="button" 
                                                                 class="btn btn-sm btn-danger fixed-width-btn"
-                                                                onclick="confirmDeactivate('${account.userId}')">
+                                                                onclick="confirmDeactivate('${account.userId}', '${currentPage}')">
                                                             <i class="fas fa-trash-alt"></i> Deactivate
                                                         </button>
                                                     </c:when>
                                                     <c:otherwise>
                                                         <button type="button" 
                                                                 class="btn btn-sm btn-success fixed-width-btn"
-                                                                onclick="confirmActivate('${account.userId}')">
+                                                                onclick="confirmActivate('${account.userId}', '${currentPage}')">
                                                             <i class="fas fa-check"></i> Activate
                                                         </button>
                                                     </c:otherwise>
@@ -217,15 +217,15 @@
 </html>
 
 <script>
-function confirmDeactivate(userId) {
+function confirmDeactivate(userId, currentPage) {
     if (confirm('Are you sure you want to deactivate this account?')) {
-        window.location.href = '${pageContext.request.contextPath}/admin/manage-account?action=deactivate&id=' + userId;
+        window.location.href = '${pageContext.request.contextPath}/admin/manage-account?action=deactivate&id=' + userId + '&page=' + currentPage;
     }
 }
 
-function confirmActivate(userId) {
+function confirmActivate(userId, currentPage) {
     if (confirm('Are you sure you want to activate this account?')) {
-        window.location.href = '${pageContext.request.contextPath}/admin/manage-account?action=activate&id=' + userId;
+        window.location.href = '${pageContext.request.contextPath}/admin/manage-account?action=activate&id=' + userId + '&page=' + currentPage;
     }
 }
 </script>

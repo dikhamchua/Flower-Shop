@@ -29,6 +29,7 @@
             <div class="card-body p-24">
                 <form action="${pageContext.request.contextPath}/admin/manage-account?action=update" method="POST">
                     <input type="hidden" name="id" value="${account.userId}">
+                    <input type="hidden" name="page" value="${param.page}">
                     <div class="row g-3">
                         <!-- Basic Information -->
                         <div class="col-md-6">
@@ -95,7 +96,7 @@
                         <!-- Submit Button -->
                         <div class="col-md-12 mt-4">
                             <button type="submit" class="btn btn-primary">Update Account</button>
-                            <a href="${pageContext.request.contextPath}/admin/manage-account" 
+                            <a href="${pageContext.request.contextPath}/admin/manage-account?page=${param.page}" 
                                class="btn btn-secondary">Back</a>
                         </div>
                     </div>

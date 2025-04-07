@@ -166,6 +166,12 @@ public class ManageAccountController extends HttpServlet {
             String phone = request.getParameter("phone");
             String address = request.getParameter("address");
             boolean status = Boolean.parseBoolean(request.getParameter("status"));
+            
+            // Lấy trang hiện tại từ request
+            String currentPage = request.getParameter("page");
+            if (currentPage == null || currentPage.isEmpty()) {
+                currentPage = "1";
+            }
 
             // Lấy account từ database
             AccountDAO accountDAO = new AccountDAO();
@@ -221,13 +227,26 @@ public class ManageAccountController extends HttpServlet {
             request.getSession().setAttribute("toastType", "error");
         }
         
-        // Chuyển hướng về trang list
-        response.sendRedirect(request.getContextPath() + "/admin/manage-account?action=list");
+        // Lấy trang hiện tại từ request
+        String currentPage = request.getParameter("page");
+        if (currentPage == null || currentPage.isEmpty()) {
+            currentPage = "1";
+        }
+        
+        // Chuyển hướng về trang list với tham số page
+        response.sendRedirect(request.getContextPath() + "/admin/manage-account?action=list&page=" + currentPage);
     }
 
     private void deactivateAccount(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         String accountIdStr = request.getParameter("id");
+        
+        // Lấy trang hiện tại từ request
+        String currentPage = request.getParameter("page");
+        if (currentPage == null || currentPage.isEmpty()) {
+            currentPage = "1";
+        }
+        
         if (accountIdStr != null && !accountIdStr.isEmpty()) {
             int accountId = Integer.parseInt(accountIdStr);
             AccountDAO accountDAO = new AccountDAO();
@@ -248,12 +267,20 @@ public class ManageAccountController extends HttpServlet {
             setToastMessage(request, "Invalid account ID", "error");
         }
         
-        response.sendRedirect(request.getContextPath() + "/admin/manage-account");
+        // Chuyển hướng về trang list với tham số page
+        response.sendRedirect(request.getContextPath() + "/admin/manage-account?action=list&page=" + currentPage);
     }
 
     private void activateAccount(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         String accountIdStr = request.getParameter("id");
+        
+        // Lấy trang hiện tại từ request
+        String currentPage = request.getParameter("page");
+        if (currentPage == null || currentPage.isEmpty()) {
+            currentPage = "1";
+        }
+        
         if (accountIdStr != null && !accountIdStr.isEmpty()) {
             int accountId = Integer.parseInt(accountIdStr);
             AccountDAO accountDAO = new AccountDAO();
@@ -268,7 +295,8 @@ public class ManageAccountController extends HttpServlet {
             setToastMessage(request, "Invalid account ID", "error");
         }
         
-        response.sendRedirect(request.getContextPath() + "/admin/manage-account");
+        // Chuyển hướng về trang list với tham số page
+        response.sendRedirect(request.getContextPath() + "/admin/manage-account?action=list&page=" + currentPage);
     }
 
     private void setToastMessage(HttpServletRequest request, String message, String type) {

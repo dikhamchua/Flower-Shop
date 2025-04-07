@@ -111,15 +111,15 @@
                                         <td><fmt:formatDate value="${supplier.createdAt}" pattern="dd/MM/yyyy HH:mm" /></td>
                                         <td>
                                             <div class="d-flex gap-2">
-                                                <a href="${pageContext.request.contextPath}/admin/manage-supplier?action=edit&id=${supplier.supplierId}" 
+                                                <a href="${pageContext.request.contextPath}/admin/manage-supplier?action=edit&id=${supplier.supplierId}&page=${currentPage}" 
                                                    class="btn btn-sm btn-primary fixed-width-btn">Edit</a>
                                                 
                                                 <c:if test="${supplier.status == 1}">
-                                                    <button onclick="confirmDeactivate(${supplier.supplierId})" 
+                                                    <button onclick="confirmDeactivate(${supplier.supplierId}, ${currentPage})" 
                                                             class="btn btn-sm btn-danger fixed-width-btn">Deactivate</button>
                                                 </c:if>
                                                 <c:if test="${supplier.status == 0}">
-                                                    <button onclick="confirmActivate(${supplier.supplierId})" 
+                                                    <button onclick="confirmActivate(${supplier.supplierId}, ${currentPage})" 
                                                             class="btn btn-sm btn-success fixed-width-btn">Activate</button>
                                                 </c:if>
                                             </div>
@@ -191,14 +191,13 @@
                 }
             });
 
-            function confirmDeactivate(supplierId) {
+            function confirmDeactivate(supplierId, currentPage) {
                 if (confirm('Are you sure you want to deactivate this supplier?')) {
-                    window.location.href = '${pageContext.request.contextPath}/admin/manage-supplier?action=deactivate&id=' + supplierId;
+                    window.location.href = '${pageContext.request.contextPath}/admin/manage-supplier?action=deactivate&id=' + supplierId + '&page=' + currentPage;
                 }
             }
 
-            function confirmActivate(supplierId) {
-                var currentPage = <%= request.getParameter("page") != null ? request.getParameter("page") : "1" %>;
+            function confirmActivate(supplierId, currentPage) {
                 if (confirm('Are you sure you want to activate this supplier?')) {
                     window.location.href = '${pageContext.request.contextPath}/admin/manage-supplier?action=activate&id=' + supplierId + '&page=' + currentPage;
                 }

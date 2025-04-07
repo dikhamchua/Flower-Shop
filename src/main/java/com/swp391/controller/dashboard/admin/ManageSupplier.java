@@ -163,12 +163,18 @@ public class ManageSupplier extends HttpServlet {
         int supplierId = Integer.parseInt(request.getParameter("id"));
         Supplier supplier = supplierDAO.getSupplierById(supplierId);
         
+        // Lấy trang hiện tại từ request
+        String currentPage = request.getParameter("page");
+        if (currentPage == null || currentPage.isEmpty()) {
+            currentPage = "1";
+        }
+        
         if (supplier != null) {
             request.setAttribute("supplier", supplier);
             request.getRequestDispatcher("/view/admin/supplier-edit.jsp").forward(request, response);
         } else {
             setToastMessage(request, "Supplier not found", "error");
-            response.sendRedirect(request.getContextPath() + "/admin/manage-supplier");
+            response.sendRedirect(request.getContextPath() + "/admin/manage-supplier?page=" + currentPage);
         }
     }
 
@@ -229,13 +235,20 @@ public class ManageSupplier extends HttpServlet {
         // Add supplier to database
         int newSupplierId = supplierDAO.insert(supplier);
         
+        // Lấy trang hiện tại từ request
+        String currentPage = request.getParameter("page");
+        if (currentPage == null || currentPage.isEmpty()) {
+            currentPage = "1";
+        }
+        
         if (newSupplierId > 0) {
             setToastMessage(request, "Supplier added successfully", "success");
         } else {
             setToastMessage(request, "Failed to add supplier", "error");
         }
         
-        response.sendRedirect(request.getContextPath() + "/admin/manage-supplier");
+        // Redirect with current page
+        response.sendRedirect(request.getContextPath() + "/admin/manage-supplier?page=" + currentPage);
     }
 
     private void updateSupplier(HttpServletRequest request, HttpServletResponse response)
@@ -248,6 +261,12 @@ public class ManageSupplier extends HttpServlet {
         String address = request.getParameter("address");
         String description = request.getParameter("description");
         int status = Integer.parseInt(request.getParameter("status"));
+        
+        // Lấy trang hiện tại từ request
+        String currentPage = request.getParameter("page");
+        if (currentPage == null || currentPage.isEmpty()) {
+            currentPage = "1";
+        }
         
         // Create supplier object to store form data
         Supplier supplier = new Supplier();
@@ -303,7 +322,8 @@ public class ManageSupplier extends HttpServlet {
             setToastMessage(request, "Failed to update supplier", "error");
         }
         
-        response.sendRedirect(request.getContextPath() + "/admin/manage-supplier");
+        // Redirect with current page
+        response.sendRedirect(request.getContextPath() + "/admin/manage-supplier?page=" + currentPage);
     }
 
     private void activateSupplier(HttpServletRequest request, HttpServletResponse response)

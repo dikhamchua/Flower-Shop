@@ -269,15 +269,15 @@
                                             </span>
                                         </td>
                                         <td class="action-buttons">
-                                            <a href="${pageContext.request.contextPath}/admin/manage-coupon?action=edit&id=${coupon.couponId}" 
+                                            <a href="${pageContext.request.contextPath}/admin/manage-coupon?action=edit&id=${coupon.couponId}&page=${currentPage}" 
                                                class="action-btn edit" title="Edit">
                                                 <iconify-icon icon="heroicons:pencil-square" width="16" height="16"></iconify-icon>
                                             </a>
-                                            <a href="${pageContext.request.contextPath}/admin/manage-coupon?action=usage&id=${coupon.couponId}" 
+                                            <a href="${pageContext.request.contextPath}/admin/manage-coupon?action=usage&id=${coupon.couponId}&page=${currentPage}" 
                                                class="action-btn history" title="View usage history">
                                                 <iconify-icon icon="heroicons:clock" width="16" height="16"></iconify-icon>
                                             </a>
-                                            <a href="#" onclick="confirmDelete(${coupon.couponId})" 
+                                            <a href="#" onclick="confirmDelete(${coupon.couponId}, ${currentPage})" 
                                                class="action-btn delete" title="Delete">
                                                 <iconify-icon icon="heroicons:trash" width="16" height="16"></iconify-icon>
                                             </a>
@@ -353,8 +353,8 @@
         
         <script>
             // Function to confirm delete
-            function confirmDelete(couponId) {
-                document.getElementById('confirmDeleteBtn').href = '${pageContext.request.contextPath}/admin/manage-coupon?action=delete&id=' + couponId;
+            function confirmDelete(couponId, currentPage) {
+                document.getElementById('confirmDeleteBtn').href = '${pageContext.request.contextPath}/admin/manage-coupon?action=delete&id=' + couponId + '&page=' + currentPage;
                 var deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'));
                 deleteModal.show();
             }

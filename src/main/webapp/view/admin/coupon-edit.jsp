@@ -81,6 +81,7 @@
                     
                     <form action="${pageContext.request.contextPath}/admin/manage-coupon?action=update" method="post">
                         <input type="hidden" name="couponId" value="${coupon.couponId}">
+                        <input type="hidden" name="page" value="${param.page}">
 
                         <div class="row mb-3">
                             <label for="code" class="col-sm-3 col-form-label required-field">Coupon Code</label>
@@ -214,10 +215,10 @@
                                 <button type="submit" class="btn btn-primary">
                                     <i class="fas fa-save me-1"></i>Save Changes
                                 </button>
-                                <a href="${pageContext.request.contextPath}/admin/manage-coupon" class="btn btn-cancel">
+                                <a href="${pageContext.request.contextPath}/admin/manage-coupon?action=list&page=${param.page}" class="btn btn-cancel">
                                     <i class="fas fa-arrow-left me-1"></i>Go Back
                                 </a>
-                                <a href="${pageContext.request.contextPath}/admin/manage-coupon?action=usage&id=${coupon.couponId}" 
+                                <a href="${pageContext.request.contextPath}/admin/manage-coupon?action=usage&id=${coupon.couponId}&page=${param.page}" 
                                    class="btn btn-info ms-2">
                                     <i class="fas fa-history me-1"></i>View Usage History
                                 </a>
