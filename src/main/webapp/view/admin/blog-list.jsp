@@ -123,7 +123,7 @@
                                     <td>${blog.updatedAt}</td>
                                     <td>
                                         <div class="d-flex gap-2">
-                                            <a href="${pageContext.request.contextPath}/admin/manage-blog?action=edit&id=${blog.id}" 
+                                            <a href="${pageContext.request.contextPath}/admin/manage-blog?action=edit&id=${blog.id}&page=${param.page != null ? param.page : 1}" 
                                                class="btn btn-sm btn-primary">
                                                 <iconify-icon icon="material-symbols:edit"></iconify-icon>
                                             </a>
@@ -236,20 +236,23 @@
         });
         
         function confirmPublish(blogId) {
+            var currentPage = ${param.page != null ? param.page : 1};
             if (confirm('Are you sure you want to publish this blog?')) {
-                window.location.href = '${pageContext.request.contextPath}/admin/manage-blog?action=publish&id=' + blogId;
+                window.location.href = '${pageContext.request.contextPath}/admin/manage-blog?action=publish&id=' + blogId + '&page=' + currentPage;
             }
         }
         
         function confirmHide(blogId) {
+            var currentPage = ${param.page != null ? param.page : 1};
             if (confirm('Are you sure you want to hide this blog?')) {
-                window.location.href = '${pageContext.request.contextPath}/admin/manage-blog?action=hide&id=' + blogId;
+                window.location.href = '${pageContext.request.contextPath}/admin/manage-blog?action=hide&id=' + blogId + '&page=' + currentPage;
             }
         }
         
         function confirmDelete(blogId) {
+            var currentPage = ${param.page != null ? param.page : 1};
             if (confirm('Are you sure you want to delete this blog? This action cannot be undone.')) {
-                window.location.href = '${pageContext.request.contextPath}/admin/manage-blog?action=delete&id=' + blogId;
+                window.location.href = '${pageContext.request.contextPath}/admin/manage-blog?action=delete&id=' + blogId + '&page=' + currentPage;
             }
         }
     </script>

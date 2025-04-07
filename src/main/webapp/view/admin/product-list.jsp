@@ -413,8 +413,9 @@
                 }
 
                 function confirmActivate(productId) {
+                    var currentPage = <%= request.getParameter("page") != null ? request.getParameter("page") : "1" %>;
                     if (confirm('Are you sure you want to activate this product?')) {
-                        window.location.href = '${pageContext.request.contextPath}/admin/manage-product?action=activate&id=' + productId;
+                        window.location.href = '${pageContext.request.contextPath}/admin/manage-product?action=activate&id=' + productId + '&page=' + currentPage;
                     }
                 }
         </script>

@@ -198,8 +198,9 @@
             }
 
             function confirmActivate(supplierId) {
+                var currentPage = <%= request.getParameter("page") != null ? request.getParameter("page") : "1" %>;
                 if (confirm('Are you sure you want to activate this supplier?')) {
-                    window.location.href = '${pageContext.request.contextPath}/admin/manage-supplier?action=activate&id=' + supplierId;
+                    window.location.href = '${pageContext.request.contextPath}/admin/manage-supplier?action=activate&id=' + supplierId + '&page=' + currentPage;
                 }
             }
         </script>

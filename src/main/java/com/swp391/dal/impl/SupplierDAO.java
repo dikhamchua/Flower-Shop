@@ -340,6 +340,29 @@ public class SupplierDAO extends DBContext implements I_DAO<Supplier> {
         return exists;
     }
     
+    public Supplier findById(int supplierId) {
+        String sql = "SELECT * FROM suppliers WHERE supplier_id = ?";
+        Supplier supplier = null;
+        
+        try {
+            connection = getConnection(); // Đảm bảo kết nối được mở
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, supplierId);
+            
+            ResultSet rs = statement.executeQuery();
+            if (rs.next()) {
+                supplier = getFromResultSet(rs);
+            }
+            
+            rs.close();
+            statement.close();
+        } catch (SQLException e) {
+            System.out.println("Error when finding supplier by ID: " + e.getMessage());
+        }
+        
+        return supplier;
+    }
+    
     public static void main(String[] args) {
         SupplierDAO supplierDAO = new SupplierDAO();
         

@@ -45,6 +45,7 @@
             <div class="card-body p-24">
                 <form id="blogForm" action="${pageContext.request.contextPath}/admin/manage-blog?action=update" method="POST">
                     <input type="hidden" name="id" value="${blog.id}">
+                    <input type="hidden" name="currentPage" value="${param.page}">
                     <div class="row g-3">
                         <!-- Blog Information -->
                         <div class="col-md-12">

@@ -309,29 +309,49 @@ public class ManageSupplier extends HttpServlet {
     private void activateSupplier(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         int supplierId = Integer.parseInt(request.getParameter("id"));
-        boolean success = supplierDAO.changeSupplierStatus(supplierId, 1);
+        String currentPage = request.getParameter("page"); // Get current page
+        SupplierDAO supplierDAO = new SupplierDAO();
+        Supplier supplier = supplierDAO.findById(supplierId);
         
-        if (success) {
-            setToastMessage(request, "Supplier activated successfully", "success");
+        if (supplier != null) {
+            supplier.setStatus(1);
+            boolean success = supplierDAO.update(supplier);
+            
+            if (success) {
+                setToastMessage(request, "Supplier activated successfully", "success");
+            } else {
+                setToastMessage(request, "Failed to activate supplier", "error");
+            }
         } else {
-            setToastMessage(request, "Failed to activate supplier", "error");
+            setToastMessage(request, "Supplier not found", "error");
         }
         
-        response.sendRedirect(request.getContextPath() + "/admin/manage-supplier");
+        // Redirect with current page
+        response.sendRedirect(request.getContextPath() + "/admin/manage-supplier?page=" + (currentPage != null ? currentPage : "1"));
     }
 
     private void deactivateSupplier(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         int supplierId = Integer.parseInt(request.getParameter("id"));
-        boolean success = supplierDAO.changeSupplierStatus(supplierId, 0);
+        String currentPage = request.getParameter("page"); // Get current page
+        SupplierDAO supplierDAO = new SupplierDAO();
+        Supplier supplier = supplierDAO.findById(supplierId);
         
-        if (success) {
-            setToastMessage(request, "Supplier deactivated successfully", "success");
+        if (supplier != null) {
+            supplier.setStatus(0);
+            boolean success = supplierDAO.update(supplier);
+            
+            if (success) {
+                setToastMessage(request, "Supplier deactivated successfully", "success");
+            } else {
+                setToastMessage(request, "Failed to deactivate supplier", "error");
+            }
         } else {
-            setToastMessage(request, "Failed to deactivate supplier", "error");
+            setToastMessage(request, "Supplier not found", "error");
         }
         
-        response.sendRedirect(request.getContextPath() + "/admin/manage-supplier");
+        // Redirect with current page
+        response.sendRedirect(request.getContextPath() + "/admin/manage-supplier?page=" + (currentPage != null ? currentPage : "1"));
     }
 
     private void setToastMessage(HttpServletRequest request, String message, String type) {

@@ -213,29 +213,26 @@ public class ManageProductController extends HttpServlet {
 
     private void activateProduct(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        String productIdStr = request.getParameter("id");
-        if (productIdStr != null && !productIdStr.isEmpty()) {
-            try {
-                int productId = Integer.parseInt(productIdStr);
-                ProductDAO productDAO = new ProductDAO();
-                boolean activated = productDAO.updateStatus(productId, (byte) 1);
-                
-                if (activated) {
-                    setToastMessage(request, "Product activated successfully", "success");
-                } else {
-                    setToastMessage(request, "Failed to activate product", "error");
-                }
-            } catch (NumberFormatException e) {
-                setToastMessage(request, "Invalid product ID format", "error");
-            } catch (Exception e) {
-                setToastMessage(request, "Error: " + e.getMessage(), "error");
-                e.printStackTrace();
+        int productId = Integer.parseInt(request.getParameter("id"));
+        String currentPage = request.getParameter("page"); // Get current page
+        ProductDAO productDAO = new ProductDAO();
+        Product product = productDAO.findById(productId);
+        
+        if (product != null) {
+            product.setStatus((byte) 1);
+            boolean updated = productDAO.update(product);
+            
+            if (updated) {
+                setToastMessage(request, "Product activated successfully", "success");
+            } else {
+                setToastMessage(request, "Failed to activate product", "error");
             }
         } else {
-            setToastMessage(request, "Invalid product ID", "error");
+            setToastMessage(request, "Product not found", "error");
         }
         
-        response.sendRedirect(request.getContextPath() + "/admin/manage-product");
+        // Redirect with current page
+        response.sendRedirect(request.getContextPath() + "/admin/manage-product?page=" + (currentPage != null ? currentPage : "1"));
     }
 
     private void deactivateProduct(HttpServletRequest request, HttpServletResponse response)

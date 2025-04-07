@@ -124,11 +124,13 @@ public class ManageBlogController extends HttpServlet {
     private void showEditForm(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         int id = Integer.parseInt(request.getParameter("id"));
+        String currentPage = request.getParameter("page"); // Get current page
         BlogDAO blogDAO = new BlogDAO();
         Blog blog = blogDAO.findById(id);
         
         if (blog != null) {
             request.setAttribute("blog", blog);
+            request.setAttribute("currentPage", currentPage); // Add current page to request
             RequestDispatcher dispatcher = request.getRequestDispatcher("/view/admin/blog-edit.jsp");
             dispatcher.forward(request, response);
         } else {
@@ -192,6 +194,7 @@ public class ManageBlogController extends HttpServlet {
     throws ServletException, IOException {
         // Get form data
         int id = Integer.parseInt(request.getParameter("id"));
+        String currentPage = request.getParameter("currentPage"); // Get current page
         String title = request.getParameter("title");
         String content = request.getParameter("content");
         String status = request.getParameter("status");
@@ -239,8 +242,9 @@ public class ManageBlogController extends HttpServlet {
             request.getSession().setAttribute("toastType", "error");
         }
         
-        // Redirect to list page
-        response.sendRedirect(request.getContextPath() + "/admin/manage-blog");
+        // Redirect with current page
+        String redirectUrl = request.getContextPath() + "/admin/manage-blog?page=" + (currentPage != null ? currentPage : "1");
+        response.sendRedirect(redirectUrl);
     }
     
     private void deleteBlog(HttpServletRequest request, HttpServletResponse response)
@@ -271,6 +275,7 @@ public class ManageBlogController extends HttpServlet {
     private void publishBlog(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         int id = Integer.parseInt(request.getParameter("id"));
+        String currentPage = request.getParameter("page"); // Get current page
         BlogDAO blogDAO = new BlogDAO();
         Blog blog = blogDAO.findById(id);
         
@@ -290,13 +295,14 @@ public class ManageBlogController extends HttpServlet {
             request.getSession().setAttribute("toastType", "error");
         }
         
-        // Redirect to list page
-        response.sendRedirect(request.getContextPath() + "/admin/manage-blog");
+        // Redirect with current page
+        response.sendRedirect(request.getContextPath() + "/admin/manage-blog?page=" + (currentPage != null ? currentPage : "1"));
     }
     
     private void hideBlog(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         int id = Integer.parseInt(request.getParameter("id"));
+        String currentPage = request.getParameter("page"); // Get current page
         BlogDAO blogDAO = new BlogDAO();
         Blog blog = blogDAO.findById(id);
         
@@ -316,8 +322,8 @@ public class ManageBlogController extends HttpServlet {
             request.getSession().setAttribute("toastType", "error");
         }
         
-        // Redirect to list page
-        response.sendRedirect(request.getContextPath() + "/admin/manage-blog");
+        // Redirect with current page
+        response.sendRedirect(request.getContextPath() + "/admin/manage-blog?page=" + (currentPage != null ? currentPage : "1"));
     }
     
     /**
