@@ -73,6 +73,38 @@
                             <input type="text" class="form-control" value="${category.updatedAt}" disabled>
                         </div>
 
+                        <div class="col-md-6">
+                            <label class="form-label">Loại danh mục</label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="is_parent" 
+                                       id="parentCategory" value="true" ${category.isParent ? 'checked' : ''}>
+                                <label class="form-check-label" for="parentCategory">
+                                    Danh mục cha
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="is_parent" 
+                                       id="childCategory" value="false" ${!category.isParent ? 'checked' : ''}>
+                                <label class="form-check-label" for="childCategory">
+                                    Danh mục con
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6" id="parentCategorySelect" style="display:${!category.isParent ? 'block' : 'none'};">
+                            <label class="form-label">Danh mục cha</label>
+                            <select class="form-select" name="parent_id">
+                                <option value="">Chọn danh mục cha</option>
+                                <c:forEach items="${parentCategories}" var="parentCategory">
+                                    <option value="${parentCategory.categoryId}" 
+                                        ${category.parentId == parentCategory.categoryId ? 'selected' : ''}>
+                                        ${parentCategory.name}
+                                    </option>
+                                </c:forEach>
+                            </select>
+                            <div class="invalid-feedback"></div>
+                        </div>
+
                         <!-- Submit Button -->
                         <div class="col-md-12 mt-4">
                             <button type="submit" class="btn btn-primary">Update Category</button>
@@ -109,6 +141,19 @@
                 });
             }
             
+            // Xử lý hiển thị dropdown khi chọn loại danh mục
+            document.querySelectorAll('input[name="is_parent"]').forEach(radio => {
+                radio.addEventListener('change', function() {
+                    const parentSelect = document.getElementById('parentCategorySelect');
+                    parentSelect.style.display = this.value === 'false' ? 'block' : 'none';
+                    
+                    // Reset parent_id khi chọn danh mục cha
+                    if (this.value === 'true') {
+                        parentSelect.querySelector('select').value = '';
+                    }
+                });
+            });
+            
             // Form validation
             const form = document.getElementById('categoryForm');
             const nameInput = form.querySelector('input[name="name"]');
@@ -134,7 +179,15 @@
                 
                 // If all validations pass, submit the form
                 if (isNameValid && isStatusValid) {
-                    this.submit();
+                    const isChildCategory = document.querySelector('input[name="is_parent"]:checked').value === 'false';
+                    const parentId = document.querySelector('select[name="parent_id"]').value;
+                    
+                    if (isChildCategory && !parentId) {
+                        event.preventDefault();
+                        alert('Vui lòng chọn danh mục cha khi tạo danh mục con');
+                    } else {
+                        this.submit();
+                    }
                 } else {
                     // Show error message
                     iziToast.error({

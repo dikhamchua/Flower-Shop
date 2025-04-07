@@ -42,7 +42,7 @@
                         <!-- Category Information -->
                         <div class="col-md-12">
                             <label class="form-label">Category Name <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" name="name">
+                            <input type="text" class="form-control" name="name" required>
                             <div class="invalid-feedback"></div>
                         </div>
                         
@@ -54,10 +54,41 @@
                         
                         <div class="col-md-6">
                             <label class="form-label">Status <span class="text-danger">*</span></label>
-                            <select class="form-select" name="status">
+                            <select class="form-select" name="status" required>
                                 <option value="" selected disabled>Select Status</option>
                                 <option value="1">Active</option>
                                 <option value="0">Inactive</option>
+                            </select>
+                            <div class="invalid-feedback"></div>
+                        </div>
+
+                        <!-- Category Type -->
+                        <div class="col-md-6">
+                            <label class="form-label">Loại danh mục</label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="is_parent" 
+                                       id="parentCategory" value="true" checked>
+                                <label class="form-check-label" for="parentCategory">
+                                    Danh mục cha
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="is_parent" 
+                                       id="childCategory" value="false">
+                                <label class="form-check-label" for="childCategory">
+                                    Danh mục con
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Parent Category Selection -->
+                        <div class="col-md-6" id="parentCategorySelect" style="display:none;">
+                            <label class="form-label">Danh mục cha</label>
+                            <select class="form-select" name="parent_id">
+                                <option value="">Chọn danh mục cha</option>
+                                <c:forEach items="${parentCategories}" var="category">
+                                    <option value="${category.categoryId}">${category.name}</option>
+                                </c:forEach>
                             </select>
                             <div class="invalid-feedback"></div>
                         </div>
@@ -98,44 +129,28 @@
                 });
             }
             
+            // Xử lý hiển thị dropdown khi chọn loại danh mục
+            document.querySelectorAll('input[name="is_parent"]').forEach(radio => {
+                radio.addEventListener('change', function() {
+                    const parentSelect = document.getElementById('parentCategorySelect');
+                    parentSelect.style.display = this.value === 'false' ? 'block' : 'none';
+                    
+                    // Reset parent_id khi chọn danh mục cha
+                    if (this.value === 'true') {
+                        parentSelect.querySelector('select').value = '';
+                    }
+                });
+            });
+
             // Form validation
             const form = document.getElementById('categoryForm');
-            const nameInput = form.querySelector('input[name="name"]');
-            const statusSelect = form.querySelector('select[name="status"]');
-            
-            // Add input event listeners for real-time validation
-            nameInput.addEventListener('input', function() {
-                validateCategoryName(this);
-            });
-            
-            statusSelect.addEventListener('change', function() {
-                validateCategoryStatus(this);
-            });
-            
-            // Validate on form submit
             form.addEventListener('submit', function(event) {
-                // Prevent default form submission
-                event.preventDefault();
+                const isChildCategory = document.querySelector('input[name="is_parent"]:checked').value === 'false';
+                const parentId = document.querySelector('select[name="parent_id"]').value;
                 
-                // Validate all fields
-                const isNameValid = validateCategoryName(nameInput);
-                const isStatusValid = validateCategoryStatus(statusSelect);
-                
-                // If all validations pass, submit the form
-                if (isNameValid && isStatusValid) {
-                    this.submit();
-                } else {
-                    // Show error message
-                    iziToast.error({
-                        title: 'Error',
-                        message: 'Please correct the errors before submitting the form',
-                        position: 'topRight',
-                        timeout: 1000
-                    });
-                    
-                    // Focus on the first invalid field
-                    if (!isNameValid) nameInput.focus();
-                    else if (!isStatusValid) statusSelect.focus();
+                if (isChildCategory && !parentId) {
+                    event.preventDefault();
+                    alert('Vui lòng chọn danh mục cha khi tạo danh mục con');
                 }
             });
         });

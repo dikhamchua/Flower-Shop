@@ -95,7 +95,6 @@
                             <tr>
                                 <th>#</th>
                                 <th>Title</th>
-                                <th>Content</th>
                                 <th>Status</th>
                                 <th>Created At</th>
                                 <th>Updated At</th>
@@ -107,11 +106,6 @@
                                 <tr>
                                     <td>${loop.index + 1}</td>
                                     <td>${blog.title}</td>
-                                    <td>
-                                        <div class="blog-content-preview">
-                                            ${blog.content}
-                                        </div>
-                                    </td>
                                     <td>
                                         <c:choose>
                                             <c:when test="${blog.status == 'published'}">

@@ -11,7 +11,7 @@ import com.swp391.dal.impl.CategoryDAO;
 import com.swp391.entity.Category;
 import java.util.List;
 import jakarta.servlet.RequestDispatcher;
-import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -92,6 +92,9 @@ public class ManageCategoryController extends HttpServlet {
             CategoryDAO categoryDAO = new CategoryDAO();
             Category category = categoryDAO.findById(categoryId);
             if (category != null) {
+                // Lấy danh sách danh mục cha
+                List<Category> parentCategories = categoryDAO.findAllParentCategories();
+                request.setAttribute("parentCategories", parentCategories);
                 request.setAttribute("category", category);
                 request.getRequestDispatcher("/view/admin/category-edit.jsp").forward(request, response);
                 return;
@@ -220,8 +223,17 @@ public class ManageCategoryController extends HttpServlet {
             Category category = categoryDAO.findById(categoryId);
 
             if (category != null) {
-                // Validate input data
+                // Xử lý logic phân cấp
+                boolean isParent = Boolean.parseBoolean(request.getParameter("is_parent"));
+                String parentIdStr = request.getParameter("parent_id");
+                Integer parentId = (parentIdStr != null && !parentIdStr.isEmpty()) ? 
+                                  Integer.parseInt(parentIdStr) : null;
+
+                // Validate logic phân cấp
                 Map<String, String> errors = validateCategoryData(name, categoryId);
+                if (isParent && parentId != null) {
+                    errors.put("parent_id", "Danh mục cha không thể có danh mục cha");
+                }
                 
                 if (!errors.isEmpty()) {
                     // If there are errors, save error information and entered data to session
@@ -237,10 +249,12 @@ public class ManageCategoryController extends HttpServlet {
                 category.setName(name);
                 category.setDescription(description);
                 category.setStatus(status);
+                category.setIsParent(isParent);
+                category.setParentId(parentId);
                 
                 // Update timestamp
                 java.util.Date utilDate = new java.util.Date();
-                category.setUpdatedAt(new Date(utilDate.getTime()));
+                category.setUpdatedAt(new Timestamp(utilDate.getTime()));
                 
                 // Perform update
                 boolean isSuccess = categoryDAO.update(category);
@@ -313,6 +327,10 @@ public class ManageCategoryController extends HttpServlet {
 
     private void showAddForm(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
+        CategoryDAO categoryDAO = new CategoryDAO();
+        List<Category> parentCategories = categoryDAO.findAllParentCategories();
+        request.setAttribute("parentCategories", parentCategories);
+        
         RequestDispatcher dispatcher = request.getRequestDispatcher("/view/admin/category-add.jsp");
         dispatcher.forward(request, response);
     }
@@ -320,54 +338,51 @@ public class ManageCategoryController extends HttpServlet {
     private void addCategory(HttpServletRequest request, HttpServletResponse response) 
         throws ServletException, IOException {
         try {
-            // Get information from request
+            // Lấy thông tin từ form
             String name = request.getParameter("name");
             String description = request.getParameter("description");
             byte status = Byte.parseByte(request.getParameter("status"));
             
-            // Validate input data
-            Map<String, String> errors = validateCategoryData(name, null);
+            // Xử lý logic phân cấp
+            boolean isParent = Boolean.parseBoolean(request.getParameter("is_parent"));
+            String parentIdStr = request.getParameter("parent_id");
+            Integer parentId = (parentIdStr != null && !parentIdStr.isEmpty()) ? 
+                              Integer.parseInt(parentIdStr) : null;
+
+            // Validate logic phân cấp
+            Map<String, String> errors = new HashMap<>();
+            if (isParent && parentId != null) {
+                errors.put("parent_id", "Danh mục cha không thể có danh mục cha");
+            }
             
             if (!errors.isEmpty()) {
-                // If there are errors, save error information and entered data to session
                 request.getSession().setAttribute("errors", errors);
-                request.getSession().setAttribute("formData", request.getParameterMap());
-                
-                // Redirect back to add form
                 response.sendRedirect(request.getContextPath() + "/admin/manage-category?action=add");
                 return;
             }
 
-            // Create new Category object
-            java.util.Date utilDate = new java.util.Date();
-            Date sqlDate = new Date(utilDate.getTime());
-            
-            Category newCategory = new Category();
-            newCategory.setName(name);
-            newCategory.setDescription(description);
-            newCategory.setStatus(status);
-            newCategory.setCreatedAt(sqlDate);
-            newCategory.setUpdatedAt(sqlDate);
+            // Tạo category mới
+            Category newCategory = Category.builder()
+                .name(name)
+                .description(description)
+                .status(status)
+                .isParent(isParent)
+                .parentId(parentId)
+                .build();
 
-            // Add category to database
             CategoryDAO categoryDAO = new CategoryDAO();
             int newId = categoryDAO.insert(newCategory);
 
-            // Handle result
             if (newId > 0) {
-                request.getSession().setAttribute("toastMessage", "Category added successfully!");
+                // Thành công
+                request.getSession().setAttribute("toastMessage", "Thêm danh mục thành công!");
                 request.getSession().setAttribute("toastType", "success");
-            } else {
-                request.getSession().setAttribute("toastMessage", "Failed to add category!");
-                request.getSession().setAttribute("toastType", "error");
             }
+            response.sendRedirect(request.getContextPath() + "/admin/manage-category");
         } catch (Exception e) {
-            request.getSession().setAttribute("toastMessage", "Error: " + e.getMessage());
-            request.getSession().setAttribute("toastType", "error");
+            e.printStackTrace();
+            // Xử lý lỗi
         }
-        
-        // Redirect to list page
-        response.sendRedirect(request.getContextPath() + "/admin/manage-category?action=list");
     }
     
     /**
@@ -393,6 +408,14 @@ public class ManageCategoryController extends HttpServlet {
             
             if (nameExists) {
                 errors.put("name", "Category name already exists");
+            }
+        }
+        
+        // Validate parent category
+        if (categoryId != null) {
+            Category category = categoryDAO.findById(categoryId);
+            if (category.getIsParent() && category.getParentId() != null) {
+                errors.put("parent_id", "Parent category cannot have a parent");
             }
         }
         

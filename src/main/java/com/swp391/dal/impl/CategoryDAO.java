@@ -36,7 +36,7 @@ public class CategoryDAO extends DBContext implements I_DAO<Category> {
 
     @Override
     public boolean update(Category category) {
-        String sql = "UPDATE categories SET name = ?, description = ?, status = ? WHERE category_id = ?";
+        String sql = "UPDATE categories SET name = ?, description = ?, status = ?, is_parent = ?, parent_id = ? WHERE category_id = ?";
 
         try {
             connection = getConnection();
@@ -44,7 +44,16 @@ public class CategoryDAO extends DBContext implements I_DAO<Category> {
             statement.setString(1, category.getName());
             statement.setString(2, category.getDescription());
             statement.setByte(3, category.getStatus());
-            statement.setInt(4, category.getCategoryId());
+            statement.setBoolean(4, category.getIsParent());
+            
+            // Xử lý parent_id null
+            if (category.getParentId() != null) {
+                statement.setInt(5, category.getParentId());
+            } else {
+                statement.setNull(5, java.sql.Types.INTEGER);
+            }
+            
+            statement.setInt(6, category.getCategoryId());
 
             int affectedRows = statement.executeUpdate();
             return affectedRows > 0;
@@ -75,7 +84,7 @@ public class CategoryDAO extends DBContext implements I_DAO<Category> {
 
     @Override
     public int insert(Category category) {
-        String sql = "INSERT INTO categories (name, description, status) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO categories (name, description, status, is_parent, parent_id) VALUES (?, ?, ?, ?, ?)";
 
         try {
             connection = getConnection();
@@ -83,6 +92,16 @@ public class CategoryDAO extends DBContext implements I_DAO<Category> {
             statement.setString(1, category.getName());
             statement.setString(2, category.getDescription());
             statement.setByte(3, category.getStatus());
+            statement.setBoolean(4, category.getIsParent());
+            
+            // Xử lý parent_id
+            if (category.getIsParent()) {
+                // Tạm thời set parent_id là null
+                statement.setNull(5, java.sql.Types.INTEGER);
+            } else {
+                // Set parent_id cho danh mục con
+                statement.setInt(5, category.getParentId());
+            }
 
             int affectedRows = statement.executeUpdate();
 
@@ -90,9 +109,22 @@ public class CategoryDAO extends DBContext implements I_DAO<Category> {
                 throw new SQLException("Creating category failed, no rows affected.");
             }
 
+            // Lấy ID mới được tạo
             resultSet = statement.getGeneratedKeys();
             if (resultSet.next()) {
-                return resultSet.getInt(1);
+                int newId = resultSet.getInt(1);
+                
+                // Nếu là danh mục cha, cập nhật parent_id bằng ID mới
+                if (category.getIsParent()) {
+                    String updateSql = "UPDATE categories SET parent_id = ? WHERE category_id = ?";
+                    PreparedStatement updateStatement = connection.prepareStatement(updateSql);
+                    updateStatement.setInt(1, newId);
+                    updateStatement.setInt(2, newId);
+                    updateStatement.executeUpdate();
+                    updateStatement.close();
+                }
+                
+                return newId;
             } else {
                 throw new SQLException("Creating category failed, no ID obtained.");
             }
@@ -111,8 +143,10 @@ public class CategoryDAO extends DBContext implements I_DAO<Category> {
         category.setName(rs.getString("name"));
         category.setDescription(rs.getString("description"));
         category.setStatus(rs.getByte("status"));
-        category.setCreatedAt(rs.getDate("created_at"));
-        category.setUpdatedAt(rs.getDate("updated_at"));
+        category.setCreatedAt(rs.getTimestamp("created_at"));
+        category.setUpdatedAt(rs.getTimestamp("updated_at"));
+        category.setIsParent(rs.getBoolean("is_parent"));
+        category.setParentId(rs.getInt("parent_id"));
         return category;
     }
 
@@ -455,6 +489,24 @@ public class CategoryDAO extends DBContext implements I_DAO<Category> {
             closeResources();
         }
         
+        return categories;
+    }
+
+    public List<Category> findAllParentCategories() {
+        List<Category> categories = new ArrayList<>();
+        String sql = "SELECT * FROM categories WHERE is_parent = 1 AND status = 1";
+        try {
+            connection = getConnection();
+            statement = connection.prepareStatement(sql);
+            resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                categories.add(getFromResultSet(resultSet));
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error finding parent categories: " + ex.getMessage());
+        } finally {
+            closeResources();
+        }
         return categories;
     }
 }

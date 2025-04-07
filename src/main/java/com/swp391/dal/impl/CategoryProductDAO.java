@@ -4,13 +4,13 @@ import com.swp391.entity.Category;
 import com.swp391.entity.CategoryProduct;
 import com.swp391.entity.Product;
 import com.swp391.dal.DBContext;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.sql.Timestamp;
 
 public class CategoryProductDAO {
     private Connection conn = null;
@@ -63,11 +63,11 @@ public class CategoryProductDAO {
                 java.sql.Timestamp updatedTimestamp = rs.getTimestamp("updated_at");
                 
                 if (createdTimestamp != null) {
-                    category.setCreatedAt(new java.sql.Date(createdTimestamp.getTime()));
+                    category.setCreatedAt(new Timestamp(createdTimestamp.getTime()));
                 }
                 
                 if (updatedTimestamp != null) {
-                    category.setUpdatedAt(new java.sql.Date(updatedTimestamp.getTime()));
+                    category.setUpdatedAt(new Timestamp(updatedTimestamp.getTime()));
                 }
                 
                 categories.add(category);
