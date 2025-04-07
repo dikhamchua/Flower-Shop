@@ -39,6 +39,7 @@
             <div class="card-body p-24">
                 <form id="categoryForm" action="${pageContext.request.contextPath}/admin/manage-category?action=update" method="POST">
                     <input type="hidden" name="id" value="${category.categoryId}">
+                    <input type="hidden" name="page" value="${param.page}">
                     <div class="row g-3">
                         <!-- Category Information -->
                         <div class="col-md-12">
@@ -91,26 +92,24 @@
                             </div>
                         </div>
 
-                        <div class="col-md-6" id="parentCategorySelect" style="display:${!category.isParent ? 'block' : 'none'};">
-                            <label class="form-label">Danh mục cha</label>
+                        <!-- Parent Category Select (only show if category is child) -->
+                        <div class="col-md-6" id="parentCategorySelect" style="display: ${category.isParent ? 'none' : 'block'};">
+                            <label class="form-label">Danh mục cha <span class="text-danger">*</span></label>
                             <select class="form-select" name="parent_id">
                                 <option value="">Chọn danh mục cha</option>
-                                <c:forEach items="${parentCategories}" var="parentCategory">
-                                    <option value="${parentCategory.categoryId}" 
-                                        ${category.parentId == parentCategory.categoryId ? 'selected' : ''}>
+                                <c:forEach var="parentCategory" items="${parentCategories}">
+                                    <option value="${parentCategory.categoryId}" ${category.parentId == parentCategory.categoryId ? 'selected' : ''}>
                                         ${parentCategory.name}
                                     </option>
                                 </c:forEach>
                             </select>
                             <div class="invalid-feedback"></div>
                         </div>
-
-                        <!-- Submit Button -->
-                        <div class="col-md-12 mt-4">
-                            <button type="submit" class="btn btn-primary">Update Category</button>
-                            <a href="${pageContext.request.contextPath}/admin/manage-category" 
-                               class="btn btn-secondary">Cancel</a>
-                        </div>
+                    </div>
+                    
+                    <div class="mt-3">
+                        <button type="submit" class="btn btn-primary">Cập nhật</button>
+                        <a href="${pageContext.request.contextPath}/admin/manage-category?action=list" class="btn btn-secondary">Hủy</a>
                     </div>
                 </form>
             </div>
@@ -141,23 +140,24 @@
                 });
             }
             
-            // Xử lý hiển thị dropdown khi chọn loại danh mục
-            document.querySelectorAll('input[name="is_parent"]').forEach(radio => {
-                radio.addEventListener('change', function() {
-                    const parentSelect = document.getElementById('parentCategorySelect');
-                    parentSelect.style.display = this.value === 'false' ? 'block' : 'none';
-                    
-                    // Reset parent_id khi chọn danh mục cha
-                    if (this.value === 'true') {
-                        parentSelect.querySelector('select').value = '';
-                    }
-                });
+            // Toggle parent category select based on is_parent radio buttons
+            const parentCategoryRadio = document.getElementById('parentCategory');
+            const childCategoryRadio = document.getElementById('childCategory');
+            const parentCategorySelect = document.getElementById('parentCategorySelect');
+
+            parentCategoryRadio.addEventListener('change', function() {
+                parentCategorySelect.style.display = 'none';
+            });
+
+            childCategoryRadio.addEventListener('change', function() {
+                parentCategorySelect.style.display = 'block';
             });
             
             // Form validation
             const form = document.getElementById('categoryForm');
             const nameInput = form.querySelector('input[name="name"]');
             const statusSelect = form.querySelector('select[name="status"]');
+            const parentSelect = document.getElementById('parentCategorySelect');
             
             // Add input event listeners for real-time validation
             nameInput.addEventListener('input', function() {
@@ -176,18 +176,23 @@
                 // Validate all fields
                 const isNameValid = validateCategoryName(nameInput);
                 const isStatusValid = validateCategoryStatus(statusSelect);
+                const isParent = document.querySelector('input[name="is_parent"]:checked').value === 'true';
+                const parentId = parentSelect.querySelector('select').value;
+                
+                // Additional validation for parent/child relationship
+                if (!isParent && !parentId) {
+                    iziToast.error({
+                        title: 'Error',
+                        message: 'Vui lòng chọn danh mục cha khi tạo danh mục con',
+                        position: 'topRight',
+                        timeout: 2000
+                    });
+                    return;
+                }
                 
                 // If all validations pass, submit the form
                 if (isNameValid && isStatusValid) {
-                    const isChildCategory = document.querySelector('input[name="is_parent"]:checked').value === 'false';
-                    const parentId = document.querySelector('select[name="parent_id"]').value;
-                    
-                    if (isChildCategory && !parentId) {
-                        event.preventDefault();
-                        alert('Vui lòng chọn danh mục cha khi tạo danh mục con');
-                    } else {
-                        this.submit();
-                    }
+                    this.submit();
                 } else {
                     // Show error message
                     iziToast.error({

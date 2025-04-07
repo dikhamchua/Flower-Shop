@@ -217,44 +217,58 @@ public class ManageCategoryController extends HttpServlet {
             String name = request.getParameter("name");
             String description = request.getParameter("description");
             byte status = Byte.parseByte(request.getParameter("status"));
+            boolean isParent = Boolean.parseBoolean(request.getParameter("is_parent"));
+            
+            // Handle parent_id parameter
+            String parentIdStr = request.getParameter("parent_id");
+            Integer parentId = null;
+            
+            // Only parse parent_id if it's provided and the category is not a parent
+            if (!isParent && parentIdStr != null && !parentIdStr.isEmpty()) {
+                parentId = Integer.parseInt(parentIdStr);
+            }
+
+            // Validate data
+            Map<String, String> errors = validateCategoryData(name, categoryId);
+            
+            // Special validation for parent categories
+            if (isParent) {
+                if (parentId != null) {
+                    errors.put("parent_id", "Danh mục cha không thể có danh mục cha");
+                }
+            } else {
+                if (parentId == null) {
+                    errors.put("parent_id", "Danh mục con phải có danh mục cha");
+                }
+            }
+            
+            if (!errors.isEmpty()) {
+                request.getSession().setAttribute("errors", errors);
+                request.getSession().setAttribute("formData", request.getParameterMap());
+                response.sendRedirect(request.getContextPath() + "/admin/manage-category?action=edit&id=" + categoryId);
+                return;
+            }
 
             // Get category from database
             CategoryDAO categoryDAO = new CategoryDAO();
             Category category = categoryDAO.findById(categoryId);
 
             if (category != null) {
-                // Xử lý logic phân cấp
-                boolean isParent = Boolean.parseBoolean(request.getParameter("is_parent"));
-                String parentIdStr = request.getParameter("parent_id");
-                Integer parentId = (parentIdStr != null && !parentIdStr.isEmpty()) ? 
-                                  Integer.parseInt(parentIdStr) : null;
-
-                // Validate logic phân cấp
-                Map<String, String> errors = validateCategoryData(name, categoryId);
-                if (isParent && parentId != null) {
-                    errors.put("parent_id", "Danh mục cha không thể có danh mục cha");
-                }
-                
-                if (!errors.isEmpty()) {
-                    // If there are errors, save error information and entered data to session
-                    request.getSession().setAttribute("errors", errors);
-                    request.getSession().setAttribute("formData", request.getParameterMap());
-                    
-                    // Redirect back to edit form
-                    response.sendRedirect(request.getContextPath() + "/admin/manage-category?action=edit&id=" + categoryId);
-                    return;
-                }
-                
                 // Update fields
                 category.setName(name);
                 category.setDescription(description);
                 category.setStatus(status);
                 category.setIsParent(isParent);
-                category.setParentId(parentId);
+                
+                // Only set parent_id for child categories
+                if (!isParent) {
+                    category.setParentId(parentId);
+                } else {
+                    category.setParentId(null); // Ensure parent categories have no parent
+                }
                 
                 // Update timestamp
-                java.util.Date utilDate = new java.util.Date();
-                category.setUpdatedAt(new Timestamp(utilDate.getTime()));
+                category.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
                 
                 // Perform update
                 boolean isSuccess = categoryDAO.update(category);
@@ -276,13 +290,19 @@ public class ManageCategoryController extends HttpServlet {
             request.getSession().setAttribute("toastType", "error");
         }
         
-        // Redirect to list page
-        response.sendRedirect(request.getContextPath() + "/admin/manage-category?action=list");
+        // Redirect to list page with current page
+        String page = request.getParameter("page");
+        String redirectUrl = request.getContextPath() + "/admin/manage-category?action=list";
+        if (page != null && !page.isEmpty()) {
+            redirectUrl += "&page=" + page;
+        }
+        response.sendRedirect(redirectUrl);
     }
 
     private void deactivateCategory(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         String categoryIdStr = request.getParameter("id");
+        String page = request.getParameter("page");
         if (categoryIdStr != null && !categoryIdStr.isEmpty()) {
             int categoryId = Integer.parseInt(categoryIdStr);
             CategoryDAO categoryDAO = new CategoryDAO();
@@ -297,12 +317,17 @@ public class ManageCategoryController extends HttpServlet {
             setToastMessage(request, "Invalid category ID", "error");
         }
         
-        response.sendRedirect(request.getContextPath() + "/admin/manage-category");
+        String redirectUrl = request.getContextPath() + "/admin/manage-category?action=list";
+        if (page != null && !page.isEmpty()) {
+            redirectUrl += "&page=" + page;
+        }
+        response.sendRedirect(redirectUrl);
     }
 
     private void activateCategory(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         String categoryIdStr = request.getParameter("id");
+        String page = request.getParameter("page");
         if (categoryIdStr != null && !categoryIdStr.isEmpty()) {
             int categoryId = Integer.parseInt(categoryIdStr);
             CategoryDAO categoryDAO = new CategoryDAO();
@@ -317,7 +342,11 @@ public class ManageCategoryController extends HttpServlet {
             setToastMessage(request, "Invalid category ID", "error");
         }
         
-        response.sendRedirect(request.getContextPath() + "/admin/manage-category");
+        String redirectUrl = request.getContextPath() + "/admin/manage-category?action=list";
+        if (page != null && !page.isEmpty()) {
+            redirectUrl += "&page=" + page;
+        }
+        response.sendRedirect(redirectUrl);
     }
 
     private void setToastMessage(HttpServletRequest request, String message, String type) {

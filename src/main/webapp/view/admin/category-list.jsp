@@ -211,14 +211,16 @@
 
 <script>
 function confirmDeactivate(categoryId) {
+    var currentPage = new URLSearchParams(window.location.search).get('page') || 1;
     if (confirm('Are you sure you want to deactivate this category?')) {
-        window.location.href = '${pageContext.request.contextPath}/admin/manage-category?action=deactivate&id=' + categoryId;
+        window.location.href = '${pageContext.request.contextPath}/admin/manage-category?action=deactivate&id=' + categoryId + '&page=' + currentPage;
     }
 }
 
 function confirmActivate(categoryId) {
+    var currentPage = new URLSearchParams(window.location.search).get('page') || 1;
     if (confirm('Are you sure you want to activate this category?')) {
-        window.location.href = '${pageContext.request.contextPath}/admin/manage-category?action=activate&id=' + categoryId;
+        window.location.href = '${pageContext.request.contextPath}/admin/manage-category?action=activate&id=' + categoryId + '&page=' + currentPage;
     }
 }
 </script> 

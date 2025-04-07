@@ -36,7 +36,8 @@ public class CategoryDAO extends DBContext implements I_DAO<Category> {
 
     @Override
     public boolean update(Category category) {
-        String sql = "UPDATE categories SET name = ?, description = ?, status = ?, is_parent = ?, parent_id = ? WHERE category_id = ?";
+        String sql = "UPDATE categories SET name = ?, description = ?, status = ?, is_parent = ?, " +
+                     "parent_id = ?, updated_at = ? WHERE category_id = ?";
 
         try {
             connection = getConnection();
@@ -46,19 +47,27 @@ public class CategoryDAO extends DBContext implements I_DAO<Category> {
             statement.setByte(3, category.getStatus());
             statement.setBoolean(4, category.getIsParent());
             
-            // Xử lý parent_id null
-            if (category.getParentId() != null) {
-                statement.setInt(5, category.getParentId());
+            // Handle parent_id based on isParent flag
+            if (category.getIsParent()) {
+                statement.setNull(5, java.sql.Types.INTEGER); // Parent categories have no parent
             } else {
-                statement.setNull(5, java.sql.Types.INTEGER);
+                if (category.getParentId() != null) {
+                    statement.setInt(5, category.getParentId());
+                } else {
+                    statement.setNull(5, java.sql.Types.INTEGER); // Child categories must have a parent
+                }
             }
             
-            statement.setInt(6, category.getCategoryId());
+            // Set updated_at
+            statement.setTimestamp(6, new Timestamp(System.currentTimeMillis()));
+            
+            statement.setInt(7, category.getCategoryId());
 
             int affectedRows = statement.executeUpdate();
             return affectedRows > 0;
         } catch (SQLException ex) {
             System.out.println("Error updating category: " + ex.getMessage());
+            ex.printStackTrace();
             return false;
         } finally {
             closeResources();
