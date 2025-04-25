@@ -27,7 +27,7 @@
             <div class="col-lg-8">
                 <div class="card h-100">
                     <div class="card-body p-24">
-                        <form action="${pageContext.request.contextPath}/change-password" method="POST">
+                        <form id="changePasswordForm" action="${pageContext.request.contextPath}/change-password" method="POST">
                             <input type="hidden" name="id" value="${user.id}">
                             <div class="row">
                                 <div class="col-12">
@@ -61,6 +61,7 @@
                             <div class="text-center mt-3">
                                 <span style="color: #198754">${suc}</span>
                                 <span style="color: #dc3545">${err}</span>
+                                <span id="samePasswordError" style="color: #dc3545; display:none;">New password must be different from old password.</span>
                             </div>
                         </form>
                     </div>
@@ -90,7 +91,23 @@
                     }
                 });
             }
+
+            // Hide the password error on page load
+            document.getElementById('samePasswordError').style.display = 'none';
+
+            // Add client-side validation for password difference
+            document.getElementById('changePasswordForm').addEventListener('submit', function(e) {
+                var oldPwd = document.getElementById('oldPassword').value;
+                var newPwd = document.getElementById('newPassword').value;
+                var samePwdError = document.getElementById('samePasswordError');
+                if (oldPwd === newPwd) {
+                    samePwdError.style.display = 'inline';
+                    e.preventDefault();
+                } else {
+                    samePwdError.style.display = 'none';
+                }
+            });
         });
     </script>
 </body>
-</html> 
+</html>

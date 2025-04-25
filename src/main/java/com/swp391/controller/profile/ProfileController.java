@@ -194,6 +194,14 @@ public class ProfileController extends HttpServlet {
                 return;
             }
 
+            // Kiểm tra mật khẩu mới có giống mật khẩu cũ không
+            if (MD5PasswordEncoderUtils.encodeMD5(newPassword).equals(updatedAccount.getPassword())) {
+                request.getSession().setAttribute("toastMessage", "New password must be different from old password!");
+                request.getSession().setAttribute("toastType", "error");
+                response.sendRedirect("change-password");
+                return;
+            }
+
             // Cập nhật mật khẩu mới
             updatedAccount.setPassword(MD5PasswordEncoderUtils.encodeMD5(newPassword));
             boolean isUpdated = accountDAO.updatePassword(updatedAccount);
