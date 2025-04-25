@@ -27,7 +27,7 @@
         <!-- Edit Account Form -->
         <div class="card">
             <div class="card-body p-24">
-                <form action="${pageContext.request.contextPath}/admin/manage-account?action=update" method="POST">
+                <form id="accountEditForm" action="${pageContext.request.contextPath}/admin/manage-account?action=update" method="POST">
                     <input type="hidden" name="id" value="${account.userId}">
                     <input type="hidden" name="page" value="${param.page}">
                     <div class="row g-3">
@@ -50,7 +50,8 @@
                         <div class="col-md-6">
                             <label class="form-label">Phone Number</label>
                             <input type="tel" class="form-control ${not empty sessionScope.errors.phone ? 'is-invalid' : ''}" 
-                                   name="phone" value="${account.phone}" required>
+                                   name="phone" value="${account.phone}" required id="phoneInput">
+                            <div class="invalid-feedback" id="phoneError" style="display:none;">Phone number must start with 0 and have exactly 10 digits.</div>
                             <c:if test="${not empty sessionScope.errors.phone}">
                                 <div class="invalid-feedback">${sessionScope.errors.phone}</div>
                             </c:if>
@@ -126,7 +127,59 @@
                     }
                 });
             }
+
+            // Client-side validation for all fields
+            document.getElementById('accountEditForm').addEventListener('submit', function(e) {
+                let valid = true;
+
+                // Validate phone number
+                const phoneInput = document.getElementById('phoneInput');
+                const phoneError = document.getElementById('phoneError');
+                const phoneValue = phoneInput.value.trim();
+                const phonePattern = /^0\d{9}$/;
+
+                if (!phonePattern.test(phoneValue)) {
+                    phoneInput.classList.add('is-invalid');
+                    phoneError.style.display = 'block';
+                    valid = false;
+                } else {
+                    phoneInput.classList.remove('is-invalid');
+                    phoneError.style.display = 'none';
+                }
+
+                // Validate first name
+                const firstName = this.elements['firstName'].value.trim();
+                if (firstName === '') {
+                    this.elements['firstName'].classList.add('is-invalid');
+                    valid = false;
+                } else {
+                    this.elements['firstName'].classList.remove('is-invalid');
+                }
+
+                // Validate last name
+                const lastName = this.elements['lastName'].value.trim();
+                if (lastName === '') {
+                    this.elements['lastName'].classList.add('is-invalid');
+                    valid = false;
+                } else {
+                    this.elements['lastName'].classList.remove('is-invalid');
+                }
+
+                // Validate address (optional, but you can require if needed)
+                // const address = this.elements['address'].value.trim();
+                // if (address === '') {
+                //     this.elements['address'].classList.add('is-invalid');
+                //     valid = false;
+                // } else {
+                //     this.elements['address'].classList.remove('is-invalid');
+                // }
+
+                // Prevent form submission if not valid
+                if (!valid) {
+                    e.preventDefault();
+                }
+            });
         });
     </script>
 </body>
-</html> 
+</html>
