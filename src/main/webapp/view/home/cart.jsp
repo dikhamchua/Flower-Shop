@@ -68,25 +68,25 @@
             <jsp:include page="/view/common/home/header.jsp"></jsp:include>
             <!--Header Area End-->
             
-            <!--Breadcrumb One Start-->
-<!--            <div class="breadcrumb-one mb-120">
+            <!--Breadcrumb Start-->
+            <div class="breadcrumb-tow mb-120">
                 <div class="container">
                     <div class="row">
                         <div class="col-12">
-                            <div class="breadcrumb-img">
-                                <img src="${pageContext.request.contextPath}/img/page-banner/cart-banner.jpg" alt="">
+                            <div class="breadcrumb-title">
+                                <h1>Coupons</h1>
                             </div>
-                            <div class="breadcrumb-content">
+                            <div class="breadcrumb-content breadcrumb-content-tow">
                                 <ul>
-                                    <li><a href="${pageContext.request.contextPath}/home">Home</a></li>
-                                    <li class="active">Shopping Cart</li>
+                                    <li><a href="home">Home</a></li>
+                                    <li class="active">Cart</li>
                                 </ul>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>-->
-            <!--Breadcrumb One End-->
+            </div>
+            <!--Breadcrumb End-->
             
             <!--Shopping Cart Area Start-->
             <div class="Shopping-cart-area mb-110">

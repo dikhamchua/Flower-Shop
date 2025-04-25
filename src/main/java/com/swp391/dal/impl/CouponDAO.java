@@ -35,6 +35,28 @@ public class CouponDAO extends DBContext {
         return coupons;
     }
 
+    public List<Coupon> getAllActiveCoupons() {
+        List<Coupon> coupons = new ArrayList<>();
+        String sql = "SELECT * FROM coupons WHERE is_active = 1 AND end_date >= ? ORDER BY created_at DESC";
+        
+        try (Connection con = connection; 
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            
+            // Set current timestamp to filter out expired coupons
+            ps.setTimestamp(1, new Timestamp(new Date().getTime()));
+            
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    coupons.add(mapResultSetToCoupon(rs));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+        return coupons;
+    }
+
     public Coupon getCouponById(int couponId) {
         Coupon coupon = null;
         Connection con = null;
