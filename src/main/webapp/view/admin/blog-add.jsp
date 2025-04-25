@@ -204,7 +204,7 @@
                         title: 'Error',
                         message: 'Please correct the errors before submitting the form',
                         position: 'topRight',
-                        timeout: 5000
+                        timeout: 1500
                     });
                     
                     // Focus on the first invalid field
