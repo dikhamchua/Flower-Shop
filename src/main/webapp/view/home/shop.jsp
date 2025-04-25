@@ -16,207 +16,207 @@
         <!--All Css Here-->
         <jsp:include page="../common/home/common-css.jsp"></jsp:include>
 
-        <style>
-            .pagination li.disabled a {
-                pointer-events: none;
-                opacity: 0.5;
-                cursor: not-allowed;
-            }
-            
-            /* Product image styling improvements */
-            .single-product {
-                background: #fff;
-                border-radius: 8px;
-                box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-                transition: transform 0.3s ease, box-shadow 0.3s ease;
-                margin-bottom: 30px;
-                overflow: hidden;
-            }
-            
-            .single-product:hover {
-                transform: translateY(-5px);
-                box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            }
-            
-            .single-product .product-img {
-                width: 100%;
-                height: 280px;
-                position: relative;
-                overflow: hidden;
-                padding: 20px;
-                background: #fff;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-            }
-            
-            .single-product .product-img img {
-                max-width: 100%;
-                max-height: 100%;
-                object-fit: contain;
-                transition: transform 0.5s ease;
-            }
-            
-            .single-product:hover .product-img img {
-                transform: scale(1.08);
-            }
-            
-            .single-product .product-content {
-                padding: 15px;
-                text-align: center;
-                background: #fff;
-            }
-            
-            .single-product .product-content h2 {
-                font-size: 16px;
-                margin-bottom: 10px;
-                font-weight: 500;
-                height: 40px;
-                overflow: hidden;
-                display: -webkit-box;
-                -webkit-line-clamp: 2;
-                -webkit-box-orient: vertical;
-            }
-            
-            .single-product .product-content h2 a {
-                color: #333;
-                text-decoration: none;
-            }
-            
-            .single-product .product-price {
-                margin: 10px 0;
-            }
-            
-            .single-product .regular-price {
-                font-size: 18px;
-                color: #80b435;
-                font-weight: 600;
-            }
-            
-            .single-product .add-to-cart-btn {
-                display: inline-block;
-                padding: 8px 20px;
-                background-color: #80b435;
-                color: #fff;
-                border-radius: 4px;
-                text-decoration: none;
-                transition: background-color 0.3s ease;
-                margin-top: 10px;
-                font-size: 14px;
-                white-space: normal;
-                line-height: 1.2;
-                min-height: 40px;
-                width: 100%;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-            }
-            
-            .single-product .add-to-cart-btn:hover {
-                background-color: #6a9828;
-            }
-            
-            /* List view improvements */
-            .list-product-img {
-                height: 250px;
-                border-radius: 8px;
-                overflow: hidden;
-                background: #fff;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                padding: 20px;
-                box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            }
-            
-            .list-product-img img {
-                max-width: 100%;
-                max-height: 100%;
-                object-fit: contain;
-                transition: transform 0.5s ease;
-            }
-            
-            .product-list-item:hover .list-product-img img {
-                transform: scale(1.05);
-            }
-            
-            .product-content.shop-list {
-                padding: 20px;
-            }
-            
-            .product-content.shop-list h2 {
-                font-size: 20px;
-                margin-bottom: 15px;
-            }
-            
-            .product-content.shop-list .product-desc {
-                margin: 15px 0;
-                color: #666;
-                line-height: 1.6;
-            }
+            <style>
+                .pagination li.disabled a {
+                    pointer-events: none;
+                    opacity: 0.5;
+                    cursor: not-allowed;
+                }
 
-            /* Slider image styling */
-            #slider-carousel {
-                border-radius: 8px;
-                overflow: hidden; /* Prevents slider image overflow */
-                box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-                margin-bottom: 30px;
-            }
+                /* Product image styling improvements */
+                .single-product {
+                    background: #fff;
+                    border-radius: 8px;
+                    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+                    transition: transform 0.3s ease, box-shadow 0.3s ease;
+                    margin-bottom: 30px;
+                    overflow: hidden;
+                }
 
-            #slider-carousel .carousel-inner {
-                height: 300px; /* Fixed height for slider */
-            }
+                .single-product:hover {
+                    transform: translateY(-5px);
+                    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+                }
 
-            #slider-carousel .carousel-item {
-                height: 100%;
-            }
+                .single-product .product-img {
+                    width: 100%;
+                    height: 280px;
+                    position: relative;
+                    overflow: hidden;
+                    padding: 20px;
+                    background: #fff;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
 
-            #slider-carousel .carousel-item img {
-                width: 100%;
-                height: 100%;
-                object-fit: contain; /* Changed from cover to contain to show the entire image */
-                object-position: center; /* Centers the image */
-            }
+                .single-product .product-img img {
+                    max-width: 100%;
+                    max-height: 100%;
+                    object-fit: contain;
+                    transition: transform 0.5s ease;
+                }
 
-            /* Improve slider controls visibility */
-            #slider-carousel .carousel-control-prev,
-            #slider-carousel .carousel-control-next {
-                width: 40px;
-                height: 40px;
-                background-color: rgba(0,0,0,0.3);
-                border-radius: 50%;
-                top: 50%;
-                transform: translateY(-50%);
-                margin: 0 15px;
-            }
+                .single-product:hover .product-img img {
+                    transform: scale(1.08);
+                }
 
-            #slider-carousel .carousel-control-prev-icon,
-            #slider-carousel .carousel-control-next-icon {
-                width: 20px;
-                height: 20px;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="wrapper">
-            <!--Header Area Start-->
+                .single-product .product-content {
+                    padding: 15px;
+                    text-align: center;
+                    background: #fff;
+                }
+
+                .single-product .product-content h2 {
+                    font-size: 16px;
+                    margin-bottom: 10px;
+                    font-weight: 500;
+                    height: 40px;
+                    overflow: hidden;
+                    display: -webkit-box;
+                    -webkit-line-clamp: 2;
+                    -webkit-box-orient: vertical;
+                }
+
+                .single-product .product-content h2 a {
+                    color: #333;
+                    text-decoration: none;
+                }
+
+                .single-product .product-price {
+                    margin: 10px 0;
+                }
+
+                .single-product .regular-price {
+                    font-size: 18px;
+                    color: #80b435;
+                    font-weight: 600;
+                }
+
+                .single-product .add-to-cart-btn {
+                    display: inline-block;
+                    padding: 8px 20px;
+                    background-color: #80b435;
+                    color: #fff;
+                    border-radius: 4px;
+                    text-decoration: none;
+                    transition: background-color 0.3s ease;
+                    margin-top: 10px;
+                    font-size: 14px;
+                    white-space: normal;
+                    line-height: 1.2;
+                    min-height: 40px;
+                    width: 100%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+
+                .single-product .add-to-cart-btn:hover {
+                    background-color: #6a9828;
+                }
+
+                /* List view improvements */
+                .list-product-img {
+                    height: 250px;
+                    border-radius: 8px;
+                    overflow: hidden;
+                    background: #fff;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    padding: 20px;
+                    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+                }
+
+                .list-product-img img {
+                    max-width: 100%;
+                    max-height: 100%;
+                    object-fit: contain;
+                    transition: transform 0.5s ease;
+                }
+
+                .product-list-item:hover .list-product-img img {
+                    transform: scale(1.05);
+                }
+
+                .product-content.shop-list {
+                    padding: 20px;
+                }
+
+                .product-content.shop-list h2 {
+                    font-size: 20px;
+                    margin-bottom: 15px;
+                }
+
+                .product-content.shop-list .product-desc {
+                    margin: 15px 0;
+                    color: #666;
+                    line-height: 1.6;
+                }
+
+                /* Slider image styling */
+                #slider-carousel {
+                    border-radius: 8px;
+                    overflow: hidden; /* Prevents slider image overflow */
+                    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+                    margin-bottom: 30px;
+                }
+
+                #slider-carousel .carousel-inner {
+                    height: 300px; /* Fixed height for slider */
+                }
+
+                #slider-carousel .carousel-item {
+                    height: 100%;
+                }
+
+                #slider-carousel .carousel-item img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: contain; /* Changed from cover to contain to show the entire image */
+                    object-position: center; /* Centers the image */
+                }
+
+                /* Improve slider controls visibility */
+                #slider-carousel .carousel-control-prev,
+                #slider-carousel .carousel-control-next {
+                    width: 40px;
+                    height: 40px;
+                    background-color: rgba(0,0,0,0.3);
+                    border-radius: 50%;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    margin: 0 15px;
+                }
+
+                #slider-carousel .carousel-control-prev-icon,
+                #slider-carousel .carousel-control-next-icon {
+                    width: 20px;
+                    height: 20px;
+                }
+            </style>
+        </head>
+        <body>
+            <div class="wrapper">
+                <!--Header Area Start-->
             <jsp:include page="/view/common/home/header.jsp"></jsp:include>
-            <!--Header Area End-->
-            <!--Shop Area Start-->
-            <div class="shop-area mb-70">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-3 order-2 order-lg-1">
+                <!--Header Area End-->
+                <!--Shop Area Start-->
+                <div class="shop-area mb-70">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-3 order-2 order-lg-1">
                             <jsp:include page="/view/common/home/sidebar.jsp"></jsp:include>
-                        </div>
-                        <div class="col-lg-9 order-1 order-lg-2">
-                            <div class="shop-layout">
-                                <!--Breadcrumb One Start-->
-                                <div class="breadcrumb-one mb-120">
-                                    <div class="breadcrumb-img">
-                                        <!-- Slider implementation -->
-                                        <div id="slider-carousel" class="carousel slide" data-bs-ride="carousel">
-                                            <div class="carousel-inner">
+                            </div>
+                            <div class="col-lg-9 order-1 order-lg-2">
+                                <div class="shop-layout">
+                                    <!--Breadcrumb One Start-->
+                                    <div class="breadcrumb-one mb-120">
+                                        <div class="breadcrumb-img">
+                                            <!-- Slider implementation -->
+                                            <div id="slider-carousel" class="carousel slide" data-bs-ride="carousel">
+                                                <div class="carousel-inner">
                                                 <c:set var="count" value="0" />
                                                 <c:forEach var="slider" items="${sliders}">
                                                     <div class="carousel-item ${count == 0 ? 'active' : ''}">
@@ -226,7 +226,7 @@
                                                     </div>
                                                     <c:set var="count" value="${count + 1}" />
                                                 </c:forEach>
-                                                
+
                                                 <!-- If no sliders are available, show default image -->
                                                 <c:if test="${empty sliders}">
                                                     <div class="carousel-item active">
@@ -234,7 +234,7 @@
                                                     </div>
                                                 </c:if>
                                             </div>
-                                            
+
                                             <!-- Only show controls if there are multiple sliders -->
                                             <c:if test="${fn:length(sliders) > 1}">
                                                 <button class="carousel-control-prev" type="button" data-bs-target="#slider-carousel" data-bs-slide="prev">
@@ -248,12 +248,12 @@
                                             </c:if>
                                         </div>
                                     </div>
-<!--                                    <div class="breadcrumb-content">
-                                        <ul>
-                                            <li><a href="${pageContext.request.contextPath}/">Home</a></li>
-                                            <li class="active">Shop</li>
-                                        </ul>
-                                    </div>-->
+                                    <!--                                    <div class="breadcrumb-content">
+                                                                            <ul>
+                                                                                <li><a href="${pageContext.request.contextPath}/">Home</a></li>
+                                                                                <li class="active">Shop</li>
+                                                                            </ul>
+                                                                        </div>-->
                                 </div>
                                 <!--Breadcrumb One End-->
                                 <!--Grid & List View Start-->
@@ -270,17 +270,14 @@
                                     </div>
                                     <!--Toolbar Short Area Start-->
                                     <div class="toolbar-short-area d-md-flex align-items-center">
-<!--                                        <div class="toolbar-shorter">
+                                        <div class="toolbar-shorter">
                                             <label>Sort By:</label>
-                                            <select class="orderby">
+                                            <select class="orderby" onchange="sortProducts(this.value)">
                                                 <option value="default" ${param.sort == null || param.sort == 'default' ? 'selected' : ''}>Default sorting</option>
-                                                <option value="name_asc" ${param.sort == 'name_asc' ? 'selected' : ''}>Name, A to Z</option>
-                                                <option value="name_desc" ${param.sort == 'name_desc' ? 'selected' : ''}>Name, Z to A</option>
-                                                <option value="price_asc" ${param.sort == 'price_asc' ? 'selected' : ''}>Price, low to high</option>
-                                                <option value="price_desc" ${param.sort == 'price_desc' ? 'selected' : ''}>Price, high to low</option>
-                                                <option value="newest" ${param.sort == 'newest' ? 'selected' : ''}>Newest first</option>
+                                                <option value="price_asc" ${param.sort == 'price_asc' ? 'selected' : ''}>Price: Low to High</option>
+                                                <option value="price_desc" ${param.sort == 'price_desc' ? 'selected' : ''}>Price: High to Low</option>
                                             </select>
-                                        </div>-->
+                                        </div>
                                         <c:choose>
                                             <c:when test="${empty products || products.size() == 0}">
                                                 <p class="show-product">No products found</p>
@@ -321,7 +318,7 @@
                                                                             <a href="${pageContext.request.contextPath}/home?action=product-details&id=${product.productId}">
                                                                                 <img src="${product.image}" alt="${product.productName}">
                                                                             </a>
-                                                                             <div class="product-action">
+                                                                            <div class="product-action">
                                                                                 <ul>
                                                                                     <li><a href="${pageContext.request.contextPath}/home?action=product-details&id=${product.productId}" title="Quick view"><i class="fa fa-eye"></i></a></li>
                                                                                 </ul>
@@ -397,11 +394,11 @@
                                                                             </div>
                                                                             <div class="product-action-shop">
                                                                                 <a class="add-to-cart-btn" href="#" data-product-id="${product.productId}">Add to cart</a>
-<!--                                                                        <ul>
-                                                                            <li><a href="#" class="add-to-wishlist" data-product-id="${product.productId}" title="Wishlist"><i class="fa fa-heart-o"></i></a></li>
-                                                                            <li><a href="#" title="Compare"><i class="fa fa-refresh"></i></a></li>
-                                                                        </ul>-->
-                                                                    </div>
+                                                                                <!--                                                                        <ul>
+                                                                                                                                                            <li><a href="#" class="add-to-wishlist" data-product-id="${product.productId}" title="Wishlist"><i class="fa fa-heart-o"></i></a></li>
+                                                                                                                                                            <li><a href="#" title="Compare"><i class="fa fa-refresh"></i></a></li>
+                                                                                                                                                        </ul>-->
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -415,7 +412,7 @@
                                     </div>
                                 </div>
                                 <!--Shop Product End-->
-                                
+
                                 <!-- Pagination Start -->
                                 <div class="product-pagination">
                                     <ul>
@@ -460,269 +457,277 @@
                 </div>
             </div>
             <!--Shop Area End-->
-            
+
             <!--Footer Area Start-->
             <jsp:include page="/view/common/home/footer.jsp"></jsp:include>
-            <!--Footer Area End-->
-        </div>
-        
-        <!-- Quick View Modal -->
-        <div class="modal fade" id="open-modal" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body" id="quick-view-content">
-                        <!-- Content will be loaded dynamically -->
-                        <div class="text-center">
-                            <div class="spinner-border" role="status">
-                                <span class="visually-hidden">Loading...</span>
+                <!--Footer Area End-->
+            </div>
+
+            <!-- Quick View Modal -->
+            <div class="modal fade" id="open-modal" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body" id="quick-view-content">
+                            <!-- Content will be loaded dynamically -->
+                            <div class="text-center">
+                                <div class="spinner-border" role="status">
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        
-        <!-- All JS Files -->
+
+            <!-- All JS Files -->
         <jsp:include page="../common/home/common-js.jsp"></jsp:include>
-        
-        <!-- Toast container -->
-        <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 11">
-            <div id="cartToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-                <div class="toast-header bg-success text-white">
-                    <strong class="me-auto">Thông báo</strong>
-                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-                </div>
-                <div class="toast-body">
-                    Sản phẩm đã được thêm vào giỏ hàng
+
+            <!-- Toast container -->
+            <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+                <div id="cartToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                    <div class="toast-header bg-success text-white">
+                        <strong class="me-auto">Thông báo</strong>
+                        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                    <div class="toast-body">
+                        Sản phẩm đã được thêm vào giỏ hàng
+                    </div>
                 </div>
             </div>
-        </div>
-        
-        <script>
-            // Đợi DOM load xong
-            document.addEventListener('DOMContentLoaded', function() {
-                // Debug: Kiểm tra xem có tìm thấy element không
-                const sortSelect = document.querySelector('.orderby');
-                console.log('Sort select element:', sortSelect);
 
-                if (sortSelect) {
-                    sortSelect.addEventListener('change', function() {
-                        // Debug: Kiểm tra sự kiện change có được kích hoạt
-                        console.log('Sort changed to:', this.value);
-                        
-                        const sortValue = this.value;
-                        const urlParams = new URLSearchParams(window.location.search);
-                        
-                        // Debug: Kiểm tra URL params trước khi thay đổi
-                        console.log('Current URL params:', urlParams.toString());
-                        
-                        urlParams.set('sort', sortValue);
-                        urlParams.delete('page');
-                        
-                        // Debug: Kiểm tra URL params sau khi thay đổi
-                        console.log('New URL params:', urlParams.toString());
-                        
-                        const newUrl = window.location.pathname + '?' + urlParams.toString();
-                        console.log('Redirecting to:', newUrl);
-                        
-                        window.location.href = newUrl;
-                    });
-                } else {
-                    console.error('Sort select element not found!');
-                }
-            });
-            
-            // Quick view modal handler
-            $(document).on('click', '[data-bs-toggle="modal"][title="Quick view"]', function(e) {
-                e.preventDefault();
-                const productId = $(this).data('product-id');
-                
-                // Clear previous content and show loading spinner
-                $('#quick-view-content').html('<div class="text-center"><div class="spinner-border" role="status"><span class="visually-hidden">Loading...</span></div></div>');
-                
-                // Load product details via AJAX
-                $.ajax({
-                    url: '${pageContext.request.contextPath}/quick-view',
-                    type: 'GET',
-                    data: { id: productId },
-                    success: function(response) {
-                        $('#quick-view-content').html(response);
-                    },
-                    error: function() {
-                        $('#quick-view-content').html('<div class="alert alert-danger">Error loading product details</div>');
+            <script>
+                // Đợi DOM load xong
+                document.addEventListener('DOMContentLoaded', function () {
+                    // Debug: Kiểm tra xem có tìm thấy element không
+                    const sortSelect = document.querySelector('.orderby');
+                    console.log('Sort select element:', sortSelect);
+
+                    if (sortSelect) {
+                        sortSelect.addEventListener('change', function () {
+                            // Debug: Kiểm tra sự kiện change có được kích hoạt
+                            console.log('Sort changed to:', this.value);
+
+                            const sortValue = this.value;
+                            const urlParams = new URLSearchParams(window.location.search);
+
+                            // Debug: Kiểm tra URL params trước khi thay đổi
+                            console.log('Current URL params:', urlParams.toString());
+
+                            urlParams.set('sort', sortValue);
+                            urlParams.delete('page');
+
+                            // Debug: Kiểm tra URL params sau khi thay đổi
+                            console.log('New URL params:', urlParams.toString());
+
+                            const newUrl = window.location.pathname + '?' + urlParams.toString();
+                            console.log('Redirecting to:', newUrl);
+
+                            window.location.href = newUrl;
+                        });
+                    } else {
+                        console.error('Sort select element not found!');
                     }
                 });
-            });
-            
-            // Add to cart handler
-            $(document).on('click', '.add-to-cart-btn', function(e) {
-                e.preventDefault();
-                const productId = $(this).data('product-id');
-                
-                // Kiểm tra đăng nhập trước khi thêm vào giỏ hàng
-                <c:if test="${empty sessionScope.account}">
+
+                // Quick view modal handler
+                $(document).on('click', '[data-bs-toggle="modal"][title="Quick view"]', function (e) {
+                    e.preventDefault();
+                    const productId = $(this).data('product-id');
+
+                    // Clear previous content and show loading spinner
+                    $('#quick-view-content').html('<div class="text-center"><div class="spinner-border" role="status"><span class="visually-hidden">Loading...</span></div></div>');
+
+                    // Load product details via AJAX
+                    $.ajax({
+                        url: '${pageContext.request.contextPath}/quick-view',
+                        type: 'GET',
+                        data: {id: productId},
+                        success: function (response) {
+                            $('#quick-view-content').html(response);
+                        },
+                        error: function () {
+                            $('#quick-view-content').html('<div class="alert alert-danger">Error loading product details</div>');
+                        }
+                    });
+                });
+
+                // Add to cart handler
+                $(document).on('click', '.add-to-cart-btn', function (e) {
+                    e.preventDefault();
+                    const productId = $(this).data('product-id');
+
+                    // Kiểm tra đăng nhập trước khi thêm vào giỏ hàng
+            <c:if test="${empty sessionScope.account}">
                     // Hiển thị thông báo yêu cầu đăng nhập
                     const toast = new bootstrap.Toast(document.getElementById('cartToast'));
                     $('#cartToast').removeClass('bg-success').addClass('bg-warning');
                     $('#cartToast .toast-body').text('Please login to add products to your cart');
                     toast.show();
-                    
+
                     // Chuyển hướng đến trang đăng nhập sau 2 giây
-                    setTimeout(function() {
-                        window.location.href = '${pageContext.request.contextPath}/authen?action=login';
+                    setTimeout(function () {
+                    window.location.href = '${pageContext.request.contextPath}/authen?action=login';
                     }, 2000);
                     return;
-                </c:if>
-                
-                // Kiểm tra nếu người dùng là admin hoặc staff
-                <c:if test="${not empty sessionScope.account && (sessionScope.account.role eq 'admin' || sessionScope.account.role eq 'staff')}">
+            </c:if>
+
+                    // Kiểm tra nếu người dùng là admin hoặc staff
+            <c:if test="${not empty sessionScope.account && (sessionScope.account.role eq 'admin' || sessionScope.account.role eq 'staff')}">
                     // Hiển thị thông báo lỗi
                     const toast = new bootstrap.Toast(document.getElementById('cartToast'));
                     $('#cartToast').removeClass('bg-success').addClass('bg-danger');
                     $('#cartToast .toast-body').text('Admin and staff cannot add products to cart');
                     toast.show();
-                    
+
                     // Auto hide toast after 3 seconds
-                    setTimeout(function() {
+                    setTimeout(function () {
                         toast.hide();
                     }, 3000);
                     return;
-                </c:if>
-                
-                // Nếu đã đăng nhập và không phải admin/staff, tiếp tục thêm vào giỏ hàng
-                $.ajax({
-                    url: '${pageContext.request.contextPath}/cart',
-                    type: 'POST',
-                    data: { action: 'add', productId: productId, quantity: 1 },
-                    success: function(response) {
-                        // Update cart count in header
-                        $('.cart-quantity').text(response);
-                        
-                        // Show toast message
-                        const toast = new bootstrap.Toast(document.getElementById('cartToast'));
-                        $('#cartToast').removeClass('bg-danger').addClass('bg-success');
-                        $('#cartToast .toast-body').text('Product has been added to your cart');
-                        toast.show();
-                        
-                        // Auto hide toast after 3 seconds
-                        setTimeout(function() {
-                            toast.hide();
-                        }, 3000);
-                    },
-                    error: function(xhr) {
-                        // Show error toast
-                        $('#cartToast').removeClass('bg-success').addClass('bg-danger');
-                        $('#cartToast .toast-body').text('An error occurred while adding the product to cart');
-                        const toast = new bootstrap.Toast(document.getElementById('cartToast'));
-                        toast.show();
-                        
-                        // Auto hide toast after 3 seconds
-                        setTimeout(function() {
-                            toast.hide();
-                        }, 3000);
-                    }
-                });
-            });
-            
-            // Add to wishlist handler
-            $(document).on('click', '.add-to-wishlist', function(e) {
-                e.preventDefault();
-                const productId = $(this).data('product-id');
-                
-                $.ajax({
-                    url: '${pageContext.request.contextPath}/wishlist/add',
-                    type: 'POST',
-                    data: { productId: productId },
-                    success: function(response) {
-                        showNotification('success', 'Product added to wishlist successfully');
-                    },
-                    error: function(xhr) {
-                        if (xhr.status === 401) {
-                            showNotification('error', 'Please login to add products to wishlist');
-                        } else {
-                            showNotification('error', 'Failed to add product to wishlist');
-                        }
-                    }
-                });
-            });
-            
-            // Helper functions
-            function updateCartCount() {
-                $.ajax({
-                    url: '${pageContext.request.contextPath}/cart/count',
-                    type: 'GET',
-                    success: function(count) {
-                        $('.cart-count').text(count);
-                    }
-                });
-            }
-            
-            function showNotification(type, message) {
-                // Implement your notification system here
-                // For example, using toastr or a custom notification
-                alert(message);
-            }
+            </c:if>
 
-            // Category Filter
-            document.querySelectorAll('.category-filter').forEach(checkbox => {
-                checkbox.addEventListener('change', function() {
-                    const selectedCategories = Array.from(document.querySelectorAll('.category-filter:checked'))
-                        .map(cb => cb.value);
-                    
+                    // Nếu đã đăng nhập và không phải admin/staff, tiếp tục thêm vào giỏ hàng
+                    $.ajax({
+                        url: '${pageContext.request.contextPath}/cart',
+                        type: 'POST',
+                        data: {action: 'add', productId: productId, quantity: 1},
+                        success: function (response) {
+                            // Update cart count in header
+                            $('.cart-quantity').text(response);
+
+                            // Show toast message
+                            const toast = new bootstrap.Toast(document.getElementById('cartToast'));
+                            $('#cartToast').removeClass('bg-danger').addClass('bg-success');
+                            $('#cartToast .toast-body').text('Product has been added to your cart');
+                            toast.show();
+
+                            // Auto hide toast after 3 seconds
+                            setTimeout(function () {
+                                toast.hide();
+                            }, 3000);
+                        },
+                        error: function (xhr) {
+                            // Show error toast
+                            $('#cartToast').removeClass('bg-success').addClass('bg-danger');
+                            $('#cartToast .toast-body').text('An error occurred while adding the product to cart');
+                            const toast = new bootstrap.Toast(document.getElementById('cartToast'));
+                            toast.show();
+
+                            // Auto hide toast after 3 seconds
+                            setTimeout(function () {
+                                toast.hide();
+                            }, 3000);
+                        }
+                    });
+                });
+
+                // Add to wishlist handler
+                $(document).on('click', '.add-to-wishlist', function (e) {
+                    e.preventDefault();
+                    const productId = $(this).data('product-id');
+
+                    $.ajax({
+                        url: '${pageContext.request.contextPath}/wishlist/add',
+                        type: 'POST',
+                        data: {productId: productId},
+                        success: function (response) {
+                            showNotification('success', 'Product added to wishlist successfully');
+                        },
+                        error: function (xhr) {
+                            if (xhr.status === 401) {
+                                showNotification('error', 'Please login to add products to wishlist');
+                            } else {
+                                showNotification('error', 'Failed to add product to wishlist');
+                            }
+                        }
+                    });
+                });
+
+                // Helper functions
+                function updateCartCount() {
+                    $.ajax({
+                        url: '${pageContext.request.contextPath}/cart/count',
+                        type: 'GET',
+                        success: function (count) {
+                            $('.cart-count').text(count);
+                        }
+                    });
+                }
+
+                function showNotification(type, message) {
+                    // Implement your notification system here
+                    // For example, using toastr or a custom notification
+                    alert(message);
+                }
+
+                // Category Filter
+                document.querySelectorAll('.category-filter').forEach(checkbox => {
+                    checkbox.addEventListener('change', function () {
+                        const selectedCategories = Array.from(document.querySelectorAll('.category-filter:checked'))
+                                .map(cb => cb.value);
+
+                        const urlParams = new URLSearchParams(window.location.search);
+                        if (selectedCategories.length > 0) {
+                            urlParams.set('categories', selectedCategories.join(','));
+                        } else {
+                            urlParams.delete('categories');
+                        }
+                        urlParams.delete('page'); // Reset về page 1
+
+                        window.location.href = window.location.pathname + '?' + urlParams.toString();
+                    });
+                });
+
+                // Price Filter
+                document.getElementById('priceFilterForm').addEventListener('submit', function (e) {
+                    e.preventDefault();
+
+                    const minPrice = document.getElementById('minPrice').value;
+                    const maxPrice = document.getElementById('maxPrice').value;
+
                     const urlParams = new URLSearchParams(window.location.search);
-                    if (selectedCategories.length > 0) {
-                        urlParams.set('categories', selectedCategories.join(','));
-                    } else {
-                        urlParams.delete('categories');
-                    }
+                    urlParams.set('minPrice', minPrice);
+                    urlParams.set('maxPrice', maxPrice);
                     urlParams.delete('page'); // Reset về page 1
-                    
+
                     window.location.href = window.location.pathname + '?' + urlParams.toString();
                 });
-            });
 
-            // Price Filter
-            document.getElementById('priceFilterForm').addEventListener('submit', function(e) {
-                e.preventDefault();
-                
-                const minPrice = document.getElementById('minPrice').value;
-                const maxPrice = document.getElementById('maxPrice').value;
-                
-                const urlParams = new URLSearchParams(window.location.search);
-                urlParams.set('minPrice', minPrice);
-                urlParams.set('maxPrice', maxPrice);
-                urlParams.delete('page'); // Reset về page 1
-                
-                window.location.href = window.location.pathname + '?' + urlParams.toString();
-            });
+                // Search
+                document.getElementById('searchForm').addEventListener('submit', function (e) {
+                    e.preventDefault();
 
-            // Search
-            document.getElementById('searchForm').addEventListener('submit', function(e) {
-                e.preventDefault();
-                
-                const searchValue = document.getElementById('searchInput').value;
-                
-                const urlParams = new URLSearchParams(window.location.search);
-                if (searchValue) {
-                    urlParams.set('search', searchValue);
-                } else {
-                    urlParams.delete('search');
+                    const searchValue = document.getElementById('searchInput').value;
+
+                    const urlParams = new URLSearchParams(window.location.search);
+                    if (searchValue) {
+                        urlParams.set('search', searchValue);
+                    } else {
+                        urlParams.delete('search');
+                    }
+                    urlParams.delete('page');
+
+                    window.location.href = window.location.pathname + '?' + urlParams.toString();
+                });
+
+                // Pagination
+                function goToPage(pageNumber) {
+                    const urlParams = new URLSearchParams(window.location.search);
+                    urlParams.set('page', pageNumber);
+
+                    window.location.href = window.location.pathname + '?' + urlParams.toString();
                 }
-                urlParams.delete('page');
-                
-                window.location.href = window.location.pathname + '?' + urlParams.toString();
-            });
-
-            // Pagination
-            function goToPage(pageNumber) {
+        </script>
+        <script>
+            function sortProducts(sortValue) {
                 const urlParams = new URLSearchParams(window.location.search);
-                urlParams.set('page', pageNumber);
-                
+                urlParams.set('sort', sortValue);
+                urlParams.delete('page'); // Reset to page 1 when sorting
                 window.location.href = window.location.pathname + '?' + urlParams.toString();
             }
         </script>

@@ -272,6 +272,9 @@ public class HomeController extends HttpServlet {
             case "newest":
                 Collections.sort(products, (a, b) -> b.getCreatedAt().compareTo(a.getCreatedAt()));
                 break;
+            default:
+                // Default sorting (you can define your default sorting logic here)
+                break;
         }
     }
 
