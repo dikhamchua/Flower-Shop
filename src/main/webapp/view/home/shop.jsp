@@ -332,6 +332,10 @@
                                                                                         <fmt:formatNumber value="${product.price}" pattern="#,##0"/> VND
                                                                                     </span>
                                                                                 </div>
+                                                                             
+                                                                                <div class="product-stock">
+                                                                                    <span>Stock: ${product.stock}</span>
+                                                                                </div>
                                                                                 <div class="add-to-cart">
                                                                                     <c:choose>
                                                                                         <c:when test="${not empty sessionScope.account && sessionScope.account.role ne 'admin' && sessionScope.account.role ne 'staff'}">
@@ -394,10 +398,6 @@
                                                                             </div>
                                                                             <div class="product-action-shop">
                                                                                 <a class="add-to-cart-btn" href="#" data-product-id="${product.productId}">Add to cart</a>
-                                                                                <!--                                                                        <ul>
-                                                                                                                                                            <li><a href="#" class="add-to-wishlist" data-product-id="${product.productId}" title="Wishlist"><i class="fa fa-heart-o"></i></a></li>
-                                                                                                                                                            <li><a href="#" title="Compare"><i class="fa fa-refresh"></i></a></li>
-                                                                                                                                                        </ul>-->
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -571,7 +571,7 @@
 
                     // Chuyển hướng đến trang đăng nhập sau 2 giây
                     setTimeout(function () {
-                    window.location.href = '${pageContext.request.contextPath}/authen?action=login';
+                        window.location.href = '${pageContext.request.contextPath}/authen?action=login';
                     }, 2000);
                     return;
             </c:if>
