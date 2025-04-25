@@ -85,7 +85,7 @@
                         <table class="table table-hover">
                             <thead>
                                 <tr>
-                                    <th scope="col">ID</th>
+                                    <th scope="col">No.</th>
                                     <th scope="col">Name</th>
                                     <th scope="col">Email</th>
                                     <th scope="col">Phone</th>
@@ -96,9 +96,9 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <c:forEach items="${suppliers}" var="supplier">
+                                <c:forEach items="${suppliers}" var="supplier" varStatus="status">
                                     <tr>
-                                        <td>${supplier.supplierId}</td>
+                                        <td>${(currentPage-1) * pageSize + status.index + 1}</td>
                                         <td>${supplier.name}</td>
                                         <td>${supplier.email}</td>
                                         <td>${supplier.phone}</td>

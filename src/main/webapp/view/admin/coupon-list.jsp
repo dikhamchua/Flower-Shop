@@ -176,7 +176,7 @@
                         <table class="table table-hover">
                             <thead>
                                 <tr>
-                                    <th>ID</th>
+                                    <th>No.</th>
                                     <th>Coupon</th>
                                     <th>Type</th>
                                     <th>Amount</th>
@@ -213,9 +213,9 @@
                                         </td>
                                     </tr>
                                 </c:if>
-                                <c:forEach items="${coupons}" var="coupon">
+                                <c:forEach items="${coupons}" var="coupon" varStatus="status">
                                     <tr>
-                                        <td>${coupon.couponId}</td>
+                                        <td>${(currentPage-1) * pageSize + status.index + 1}</td>
                                         <td class="coupon-code">${coupon.code}</td>
                                         <td>
                                             <span class="badge ${coupon.discountType eq 'percentage' ? 'bg-info' : 'bg-warning'}">
