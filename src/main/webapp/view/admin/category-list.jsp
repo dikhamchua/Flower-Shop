@@ -81,7 +81,7 @@
                                 <th>#</th>
                                 <th>Name</th>
                                 <th>Description</th>
-                                <th>Status</th>
+                                <!--<th>Status</th>-->
                                 <th>Created At</th>
                                 <th>Updated At</th>
                                 <th>Actions</th>
@@ -102,11 +102,11 @@
                                             </c:otherwise>
                                         </c:choose>
                                     </td>
-                                    <td>
+<!--                                    <td>
                                         <span class="badge ${category.status == 1 ? 'bg-success' : 'bg-danger'}">
                                             ${category.status == 1 ? 'Active' : 'Inactive'}
                                         </span>
-                                    </td>
+                                    </td>-->
                                     <td>${category.createdAt}</td>
                                     <td>${category.updatedAt}</td>
                                     <td>
@@ -115,22 +115,22 @@
                                                class="btn btn-sm btn-primary">
                                                 <iconify-icon icon="material-symbols:edit"></iconify-icon>
                                             </a>
-                                            <c:choose>
-                                                <c:when test="${category.status == 1}">
-                                                    <button type="button" 
-                                                            class="btn btn-sm btn-danger fixed-width-btn"
-                                                            onclick="confirmDeactivate('${category.categoryId}')">
-                                                        <i class="fas fa-trash-alt"></i> Deactivate
-                                                    </button>
-                                                </c:when>
-                                                <c:otherwise>
-                                                    <button type="button" 
-                                                            class="btn btn-sm btn-success fixed-width-btn"
-                                                            onclick="confirmActivate('${category.categoryId}')">
-                                                        <i class="fas fa-check"></i> Activate
-                                                    </button>
-                                                </c:otherwise>
-                                            </c:choose>
+                                            <%--<c:choose>--%>
+                                                <%--<c:when test="${category.status == 1}">--%>
+                                                    <!--<button type="button"--> 
+                                                            <!--class="btn btn-sm btn-danger fixed-width-btn"-->
+                                                            <!--onclick="confirmDeactivate('${category.categoryId}')">-->
+                                                        <!--<i class="fas fa-trash-alt"></i> Deactivate-->
+                                                    <!--</button>-->
+                                                <%--</c:when>--%>
+                                                <%--<c:otherwise>--%>
+                                                    <!--<button type="button"--> 
+                                                            <!--class="btn btn-sm btn-success fixed-width-btn"-->
+                                                            <!--onclick="confirmActivate('${category.categoryId}')">-->
+                                                        <!--<i class="fas fa-check"></i> Activate-->
+                                                    <!--</button>-->
+                                                <%--</c:otherwise>--%>
+                                            <%--</c:choose>--%>
                                         </div>
                                     </td>
                                 </tr>

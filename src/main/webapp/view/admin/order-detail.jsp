@@ -198,6 +198,12 @@
                                         <td><fmt:formatNumber value="${item.subtotal}" type="currency" currencySymbol="" maxFractionDigits="0"/> VNĐ</td>
                                     </tr>
                                 </c:forEach>
+                                <c:if test="${not empty order.discountAmount}">
+                                    <tr>
+                                        <td colspan="4" class="text-end"><strong>Discount Amount:</strong></td>
+                                        <td>-<fmt:formatNumber value="${order.discountAmount}" type="currency" currencySymbol="" maxFractionDigits="0"/> VNĐ</td>
+                                    </tr>
+                                </c:if>
                                 <tr>
                                     <td colspan="4" class="text-end"><strong>Total:</strong></td>
                                     <td><fmt:formatNumber value="${order.total}" type="currency" currencySymbol="" maxFractionDigits="0"/> VNĐ</td>
@@ -365,4 +371,4 @@
             });
         </script>
     </body>
-</html> 
+</html>
