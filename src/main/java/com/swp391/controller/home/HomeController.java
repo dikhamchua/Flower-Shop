@@ -305,6 +305,10 @@ public class HomeController extends HttpServlet {
                 return;
             }
             
+            // Add this line to get product quantity
+            int productQuantity = product.getStock(); // Assuming there's a getQuantity() method
+            request.setAttribute("productQuantity", productQuantity);
+            
             // Lấy danh sách categories của sản phẩm
             List<Category> productCategories = product.getCategories();
             
