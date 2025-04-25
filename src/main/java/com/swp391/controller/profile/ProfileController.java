@@ -98,7 +98,6 @@ public class ProfileController extends HttpServlet {
                 updatedAccount.setEmail(currentAccount.getEmail());
                 updatedAccount.setUsername(currentAccount.getUsername());
                 updatedAccount.setPassword(currentAccount.getPassword());
-                updatedAccount.setAvatar(currentAccount.getAvatar());
                 updatedAccount.setStatus(currentAccount.getStatus());
                 // updatedAccount.setIsActive(currentAccount.getIsActive());
 

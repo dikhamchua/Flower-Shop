@@ -46,7 +46,7 @@ public class AccountDAO extends DBContext implements I_DAO<Account> {
 
     @Override
     public boolean update(Account account) {
-        String sql = "UPDATE account SET username = ?, email = ?, password = ?, avatar = ?, first_name = ?, " +
+        String sql = "UPDATE account SET username = ?, email = ?, password = ?, first_name = ?, " +
                 "last_name = ?, phone = ?, address = ?, role = ?, status = ? WHERE user_id = ?";
 
         try {
@@ -55,14 +55,14 @@ public class AccountDAO extends DBContext implements I_DAO<Account> {
             statement.setString(1, account.getUsername());
             statement.setString(2, account.getEmail());
             statement.setString(3, account.getPassword());
-            statement.setString(4, account.getAvatar());
-            statement.setString(5, account.getFirstName());
-            statement.setString(6, account.getLastName());
-            statement.setString(7, account.getPhone());
-            statement.setString(8, account.getAddress());
-            statement.setString(9, account.getRole());
-            statement.setObject(10, account.getStatus());
-            statement.setInt(11, account.getUserId());
+            // statement.setString(4, account.getAvatar()); // Removed
+            statement.setString(4, account.getFirstName());
+            statement.setString(5, account.getLastName());
+            statement.setString(6, account.getPhone());
+            statement.setString(7, account.getAddress());
+            statement.setString(8, account.getRole());
+            statement.setObject(9, account.getStatus());
+            statement.setInt(10, account.getUserId());
 
             int affectedRows = statement.executeUpdate();
             return affectedRows > 0;
@@ -82,8 +82,8 @@ public class AccountDAO extends DBContext implements I_DAO<Account> {
 
     @Override
     public int insert(Account account) {
-        String sql = "INSERT INTO account (username, email, password, avatar, first_name, last_name, " +
-                "phone, address, role, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO account (username, email, password, first_name, last_name, " +
+                "phone, address, role, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try {
             connection = getConnection();
@@ -91,13 +91,13 @@ public class AccountDAO extends DBContext implements I_DAO<Account> {
             statement.setString(1, account.getUsername());
             statement.setString(2, account.getEmail());
             statement.setString(3, account.getPassword());
-            statement.setString(4, account.getAvatar());
-            statement.setString(5, account.getFirstName());
-            statement.setString(6, account.getLastName());
-            statement.setString(7, account.getPhone());
-            statement.setString(8, account.getAddress());
-            statement.setString(9, account.getRole());
-            statement.setObject(10, account.getStatus());
+            // statement.setString(4, account.getAvatar()); // Removed
+            statement.setString(4, account.getFirstName());
+            statement.setString(5, account.getLastName());
+            statement.setString(6, account.getPhone());
+            statement.setString(7, account.getAddress());
+            statement.setString(8, account.getRole());
+            statement.setObject(9, account.getStatus());
 
             int affectedRows = statement.executeUpdate();
 
@@ -126,7 +126,7 @@ public class AccountDAO extends DBContext implements I_DAO<Account> {
         account.setUsername(rs.getString("username"));
         account.setEmail(rs.getString("email"));
         account.setPassword(rs.getString("password"));
-        account.setAvatar(rs.getString("avatar"));
+        // account.setAvatar(rs.getString("avatar")); // Removed
         account.setFirstName(rs.getString("first_name"));
         account.setLastName(rs.getString("last_name"));
         account.setPhone(rs.getString("phone"));
@@ -249,20 +249,8 @@ public class AccountDAO extends DBContext implements I_DAO<Account> {
     }
 
     public boolean updateProfileImage(Account account) {
-        String sql = "UPDATE account SET avatar = ? WHERE id = ?";
-        try {
-            connection = getConnection();
-            statement = connection.prepareStatement(sql);
-            statement.setString(1, account.getAvatar());
-            statement.setInt(2, account.getUserId());
-            int affectedRows = statement.executeUpdate();
-            return affectedRows > 0;
-        } catch (SQLException ex) {
-            System.out.println("Error updating profile image: " + ex.getMessage());
-            return false;
-        } finally {
-            closeResources();
-        }
+        // This method is now obsolete since avatar is removed
+        throw new UnsupportedOperationException("Avatar property has been removed.");
     }
 
     public Account findById(int accountId) {
@@ -503,7 +491,6 @@ public class AccountDAO extends DBContext implements I_DAO<Account> {
         newAccount.setUsername("1234565");
         newAccount.setEmail("ass@example.com");
         newAccount.setPassword("test123");
-        newAccount.setAvatar("default.jpg");
         newAccount.setFirstName("Test");
         newAccount.setLastName("User");
         newAccount.setPhone("1234567890");

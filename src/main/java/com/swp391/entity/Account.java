@@ -19,7 +19,7 @@ public class Account {
     private String username;
     private String email;
     private String password;
-    private String avatar;
+    // private String avatar; // Removed
     private String firstName;
     private String lastName;
     private String phone;
