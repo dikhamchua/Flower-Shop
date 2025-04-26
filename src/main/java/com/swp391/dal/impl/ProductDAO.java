@@ -153,6 +153,32 @@ public class ProductDAO extends DBContext implements I_DAO<Product> {
         return product;
     }
 
+    /**
+     * Find all active products
+     * 
+     * @return List of active products
+     */
+    public List<Product> findAllActive() {
+        List<Product> products = new ArrayList<>();
+        String sql = "SELECT * FROM products WHERE status = 1";
+
+        try {
+            connection = getConnection();
+            statement = connection.prepareStatement(sql);
+            resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                products.add(getFromResultSet(resultSet));
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error finding active products: " + ex.getMessage());
+        } finally {
+            closeResources();
+        }
+
+        return products;
+    }
+
     public static void main(String[] args) {
         ProductDAO productDAO = new ProductDAO();
 
