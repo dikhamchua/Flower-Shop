@@ -84,7 +84,8 @@
                                         </div>
                                     </div>
 
-                                    <!-- Product Selection Section -->
+                                    <!-- Replace the Product Selection Section with this -->
+                                    <!-- Replace the product search section with this dropdown -->
                                     <div class="card border-info mt-4 mb-4">
                                         <div class="card-header bg-info text-white">
                                             <h6 class="mb-0"><i class="fas fa-boxes me-2"></i>Chọn sản phẩm cho Combo</h6>
@@ -99,11 +100,10 @@
                                             </div>
 
                                             <div class="product-selection-container">
-                                                <div class="product-selection-row row align-items-end mb-3">
-                                                    <div class="col-md-7">
-                                                        <label class="form-label">Sản phẩm <span class="text-danger">*</span></label>
-                                                        <select class="form-select product-select" name="product_id" required>
-                                                            <option value="">-- Chọn sản phẩm --</option>
+                                                <div class="product-selection-row row mb-3">
+                                                    <div class="col-md-8">
+                                                        <select class="form-control product-select" required>
+                                                            <option value="">Chọn sản phẩm</option>
                                                             <c:forEach items="${products}" var="product">
                                                                 <option value="${product.productId}" data-price="${product.price}">
                                                                     ${product.productName} - ${product.price}đ
@@ -111,26 +111,28 @@
                                                             </c:forEach>
                                                         </select>
                                                     </div>
-                                                    <div class="col-md-3">
-                                                        <label class="form-label">Số lượng <span class="text-danger">*</span></label>
-                                                        <input type="number" class="form-control product-quantity" name="quantity"
-                                                               min="1" value="1" required>
+                                                    <div class="col-md-2">
+                                                        <input type="number" class="form-control product-quantity" value="1" min="1" required>
                                                     </div>
-                                                    <div class="col-md-2 d-flex align-items-center">
-                                                        <button type="button" class="btn btn-outline-danger remove-product w-100" disabled>
+                                                    <div class="col-md-2">
+                                                        <button type="button" class="btn btn-danger remove-product" disabled>
                                                             <i class="fas fa-trash"></i>
                                                         </button>
                                                     </div>
                                                 </div>
                                             </div>
 
-                                            <div class="row mt-2">
+                                            <div class="row mt-3">
                                                 <div class="col-12">
-                                                    <button type="button" class="btn btn-success add-product">
+                                                    <button type="button" id="addProductBtn" class="btn btn-success add-product">
                                                         <i class="fas fa-plus"></i> Thêm sản phẩm
                                                     </button>
                                                 </div>
                                             </div>
+
+                                            <!-- Hidden inputs for form submission -->
+                                            <input type="hidden" id="productIdsInput" name="productIds">
+                                            <input type="hidden" id="quantitiesInput" name="quantities">
 
                                             <!-- Price Summary -->
                                             <div class="row mt-4">
@@ -138,22 +140,21 @@
                                                     <div class="table-responsive">
                                                         <table class="table table-bordered mb-0">
                                                             <tr>
-                                                                <th class="align-middle">Tổng giá gốc:</th>
+                                                                <th>Tổng giá gốc:</th>
                                                                 <td>
                                                                     <span id="original-price-display">0</span>đ
                                                                     <input type="hidden" id="original_price" name="original_price" value="0">
                                                                 </td>
                                                             </tr>
                                                             <tr>
-                                                                <th class="align-middle">Giá ưu đãi: <span class="text-danger">*</span></th>
+                                                                <th>Giá ưu đãi: <span class="text-danger">*</span></th>
                                                                 <td>
                                                                     <input type="number" class="form-control" id="discount_price"
-                                                                           name="discount_price" min="0" step="0.01" required
-                                                                           value="${param.discount_price != null ? param.discount_price : '0'}">
+                                                                           name="discount_price" min="0" required>
                                                                 </td>
                                                             </tr>
                                                             <tr>
-                                                                <th class="align-middle">Tiết kiệm:</th>
+                                                                <th>Tiết kiệm:</th>
                                                                 <td><span id="savings-display">0</span>đ</td>
                                                             </tr>
                                                         </table>
@@ -162,7 +163,51 @@
                                             </div>
                                         </div>
                                     </div>
-
+                                    
+                                    <!-- Update the script section -->
+                                    <script>
+                                        // Dữ liệu sản phẩm từ server
+                                        window.products = ${productsJson};
+                                        window.selectedProducts = [];
+                                    </script>
+                                    
+                                    <!-- Make sure these scripts are loaded in the correct order -->
+                                    <jsp:include page="../common/dashboard/js-dashboard.jsp"></jsp:include>
+                                    <!-- Select2 -->
+                                    <script src="${pageContext.request.contextPath}/assets/admin/plugins/select2/js/select2.full.min.js"></script>
+                                    <!-- Tagify -->
+                                    <script src="https://unpkg.com/@yaireo/tagify"></script>
+                                    <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"></script>
+                                    <!-- Combo Product Manager - Load this last -->
+                                    <script src="${pageContext.request.contextPath}/assets/js/comboProductManager.js"></script>
+                                    
+                                    <!-- Add this CSS in the head section -->
+                                    <style>
+                                        .product-suggestions {
+                                            position: absolute;
+                                            z-index: 1000;
+                                            background: white;
+                                            border: 1px solid #ddd;
+                                            border-radius: 4px;
+                                            max-height: 200px;
+                                            overflow-y: auto;
+                                            width: calc(100% - 50px);
+                                            display: none;
+                                        }
+                                    
+                                        .product-suggestion {
+                                            padding: 8px 12px;
+                                            cursor: pointer;
+                                        }
+                                    
+                                        .product-suggestion:hover {
+                                            background-color: #f8f9fa;
+                                        }
+                                    
+                                        .selected-product {
+                                            background-color: #f8f9fa;
+                                        }
+                                    </style>
                                     <!-- Tags Section -->
                                     <div class="row g-3 mt-2">
                                         <div class="col-md-12">

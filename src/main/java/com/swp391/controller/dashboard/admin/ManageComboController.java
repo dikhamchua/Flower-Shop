@@ -190,8 +190,25 @@ public class ManageComboController extends HttpServlet {
         // Get all active products for the combo selection
         ProductDAO productDAO = new ProductDAO();
         List<Product> products = productDAO.findAllActive();
+        
+        // Convert products to JSON for JavaScript
+        StringBuilder productsJson = new StringBuilder("[");
+        for (int i = 0; i < products.size(); i++) {
+            Product product = products.get(i);
+            productsJson.append("{")
+                    .append("\"id\":").append(product.getProductId()).append(",")
+                    .append("\"name\":\"").append(product.getProductName().replace("\"", "\\\"")).append("\",")
+                    .append("\"price\":").append(product.getPrice())
+                    .append("}");
+            if (i < products.size() - 1) {
+                productsJson.append(",");
+            }
+        }
+        productsJson.append("]");
+        
         request.setAttribute("products", products);
-
+        request.setAttribute("productsJson", productsJson.toString());
+    
         request.getRequestDispatcher("../view/admin/combo-add.jsp").forward(request, response);
     }
 
@@ -221,11 +238,57 @@ public class ManageComboController extends HttpServlet {
                 ProductDAO productDAO = new ProductDAO();
                 List<Product> allProducts = productDAO.findAllActive();
                 
+                // Convert products to JSON for JavaScript
+                StringBuilder productsJson = new StringBuilder("[");
+                for (int i = 0; i < allProducts.size(); i++) {
+                    Product product = allProducts.get(i);
+                    productsJson.append("{")
+                            .append("\"id\":").append(product.getProductId()).append(",")
+                            .append("\"name\":\"").append(product.getProductName().replace("\"", "\\\"")).append("\",")
+                            .append("\"price\":").append(product.getPrice())
+                            .append("}");
+                    if (i < allProducts.size() - 1) {
+                        productsJson.append(",");
+                    }
+                }
+                productsJson.append("]");
+                
+                // Convert selected products to JSON for JavaScript
+                StringBuilder selectedProductsJson = new StringBuilder("[");
+                for (int i = 0; i < comboProducts.size(); i++) {
+                    ComboProduct cp = comboProducts.get(i);
+                    Product product = productDAO.findById(cp.getProductId());
+                    if (product != null) {
+                        selectedProductsJson.append("{")
+                                .append("\"id\":").append(product.getProductId()).append(",")
+                                .append("\"name\":\"").append(product.getProductName().replace("\"", "\\\"")).append("\",")
+                                .append("\"price\":").append(product.getPrice()).append(",")
+                                .append("\"quantity\":").append(cp.getQuantityInCombo())
+                                .append("}");
+                        if (i < comboProducts.size() - 1) {
+                            selectedProductsJson.append(",");
+                        }
+                    }
+                }
+                selectedProductsJson.append("]");
+                
+                // Convert tags to string
+                StringBuilder tagsStr = new StringBuilder();
+                for (int i = 0; i < comboTags.size(); i++) {
+                    tagsStr.append(comboTags.get(i).getTagName());
+                    if (i < comboTags.size() - 1) {
+                        tagsStr.append(",");
+                    }
+                }
+                
                 // Set attributes for JSP
                 request.setAttribute("combo", combo);
                 request.setAttribute("comboProducts", comboProducts);
                 request.setAttribute("comboTags", comboTags);
                 request.setAttribute("allProducts", allProducts);
+                request.setAttribute("productsJson", productsJson.toString());
+                request.setAttribute("selectedProductsJson", selectedProductsJson.toString());
+                request.setAttribute("tagsString", tagsStr.toString());
                 
                 request.getRequestDispatcher("../view/admin/combo-edit.jsp").forward(request, response);
                 return;
@@ -247,9 +310,20 @@ public class ManageComboController extends HttpServlet {
             Float discountPrice = Float.parseFloat(request.getParameter("discount_price"));
             String status = request.getParameter("status");
             
-            // Calculate original price from selected products
-            String[] productIds = request.getParameterValues("product_id");
-            String[] quantities = request.getParameterValues("quantity");
+            // Get product IDs and quantities from form
+            String productIdsStr = request.getParameter("productIds");
+            String quantitiesStr = request.getParameter("quantities");
+            
+            String[] productIds = null;
+            String[] quantities = null;
+            
+            if (productIdsStr != null && !productIdsStr.isEmpty()) {
+                productIds = productIdsStr.split(",");
+            }
+            
+            if (quantitiesStr != null && !quantitiesStr.isEmpty()) {
+                quantities = quantitiesStr.split(",");
+            }
             
             // Validate input
             Map<String, String> errors = validateComboData(name, discountPrice, productIds, quantities, null);
@@ -343,9 +417,20 @@ public class ManageComboController extends HttpServlet {
             Float discountPrice = Float.parseFloat(request.getParameter("discount_price"));
             String status = request.getParameter("status");
             
-            // Get selected products
-            String[] productIds = request.getParameterValues("product_id");
-            String[] quantities = request.getParameterValues("quantity");
+            // Get product IDs and quantities from form
+            String productIdsStr = request.getParameter("productIds");
+            String quantitiesStr = request.getParameter("quantities");
+            
+            String[] productIds = null;
+            String[] quantities = null;
+            
+            if (productIdsStr != null && !productIdsStr.isEmpty()) {
+                productIds = productIdsStr.split(",");
+            }
+            
+            if (quantitiesStr != null && !quantitiesStr.isEmpty()) {
+                quantities = quantitiesStr.split(",");
+            }
             
             // Validate input
             Map<String, String> errors = validateComboData(name, discountPrice, productIds, quantities, comboId);
