@@ -61,7 +61,18 @@
                           </li>
                         </ul>-->
             </li>     
-
+            <li>
+                <a href="${pageContext.request.contextPath}/profile">
+                    <iconify-icon icon="icon-park-outline:setting-two" class="menu-icon"></iconify-icon>
+                    <span>My Account</span> 
+                </a>
+            </li>
+            <li>
+                <a href="${pageContext.request.contextPath}/change-password">
+                    <iconify-icon icon="icon-park-outline:setting-two" class="menu-icon"></iconify-icon>
+                    <span>Change Password</span> 
+                </a>
+            </li>
             <c:if test="${sessionScope.account.role eq 'admin'}">
                 <li>
                     <a href="${pageContext.request.contextPath}/admin/manage-account">
@@ -105,6 +116,12 @@
                         <span>Blog Management</span>
                     </a>
                 </li>
+                <li>
+                    <a href="${pageContext.request.contextPath}/admin/manage-combo">
+                        <iconify-icon icon="icon-park-outline:setting-two" class="menu-icon"></iconify-icon>
+                        <span>Combo Management</span>
+                    </a>
+                </li>
             </c:if>
             <c:if test="${sessionScope.account.role eq 'staff' }">
                 <li>
@@ -114,19 +131,6 @@
                     </a>
                 </li>
             </c:if>
-            <li>
-                <a href="${pageContext.request.contextPath}/profile">
-                    <iconify-icon icon="icon-park-outline:setting-two" class="menu-icon"></iconify-icon>
-                    <span>My Account</span> 
-                </a>
-            </li>
-            <li>
-                <a href="${pageContext.request.contextPath}/change-password">
-                    <iconify-icon icon="icon-park-outline:setting-two" class="menu-icon"></iconify-icon>
-                    <span>Change Password</span> 
-                </a>
-            </li>
-            
             <c:if test="${sessionScope.account.role eq 'user' }">
                 <li>
                     <a href="${pageContext.request.contextPath}/feedbackControl">
@@ -135,11 +139,11 @@
                     </a>
                 </li>
                 <li>
-                <a href="${pageContext.request.contextPath}/orderControll">
-                    <iconify-icon icon="icon-park-outline:setting-two" class="menu-icon"></iconify-icon>
-                    <span>My Order</span>
-                </a>
-            </li>
+                    <a href="${pageContext.request.contextPath}/orderControll">
+                        <iconify-icon icon="icon-park-outline:setting-two" class="menu-icon"></iconify-icon>
+                        <span>My Order</span>
+                    </a>
+                </li>
             </c:if>
         </ul>
     </div>
