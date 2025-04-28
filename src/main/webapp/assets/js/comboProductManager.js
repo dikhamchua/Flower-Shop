@@ -291,3 +291,39 @@ function createProductRow(productData, isFirstRow) {
 
     return row;
 }
+
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.product-selection-container').forEach(container => {
+        container.addEventListener('click', function(e) {
+            if (e.target.closest('.add-product')) {
+                const newRow = createProductRow();
+                container.querySelector('.product-selection-container').appendChild(newRow);
+                updateRemoveButtons();
+            }
+            
+            if (e.target.closest('.remove-product')) {
+                const row = e.target.closest('.product-selection-row');
+                row.remove();
+                updateRemoveButtons();
+            }
+        });
+    });
+
+    function createProductRow() {
+        const newRow = document.querySelector('.product-selection-row').cloneNode(true);
+        newRow.querySelector('.product-select').value = '';
+        newRow.querySelector('.product-quantity').value = 1;
+        newRow.querySelector('.remove-product').disabled = false;
+        return newRow;
+    }
+
+    function updateRemoveButtons() {
+        document.querySelectorAll('.product-selection-container').forEach(container => {
+            const rows = container.querySelectorAll('.product-selection-row');
+            rows.forEach((row, index) => {
+                const btn = row.querySelector('.remove-product');
+                btn.disabled = rows.length <= 1;
+            });
+        });
+    }
+});

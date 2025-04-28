@@ -141,7 +141,8 @@
                                                                    value="1" min="1" required>
                                                         </div>
                                                         <div class="col-md-2">
-                                                            <button type="button" class="btn btn-danger remove-product" disabled>
+                                                            <button type="button" class="btn btn-danger remove-product" 
+                                                                    ${status.index == 0 && comboProducts.size() == 1 ? 'disabled' : ''}>
                                                                 <i class="fas fa-trash"></i>
                                                             </button>
                                                         </div>

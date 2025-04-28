@@ -14,6 +14,8 @@
             <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/admin/plugins/select2/css/select2.min.css">
         <!-- Tagify -->
         <link rel="stylesheet" href="https://unpkg.com/@yaireo/tagify/dist/tagify.css">
+        <!-- Add this with other CSS links -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     </head>
     <body class="hold-transition sidebar-mini">
         <div class="wrapper">
