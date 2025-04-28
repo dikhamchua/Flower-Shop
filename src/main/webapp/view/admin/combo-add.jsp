@@ -181,3 +181,17 @@
         </script>
     </body>
 </html>
+
+
+<!-- Add Submit Button -->
+<div class="row mt-4">
+    <div class="col-12 text-end">
+        <button type="submit" class="btn btn-primary">
+            <i class="fas fa-save me-2"></i>Create Combo
+        </button>
+        <a href="${pageContext.request.contextPath}/admin/manage-combo" class="btn btn-secondary ms-2">
+            <i class="fas fa-times me-2"></i>Cancel
+        </a>
+    </div>
+</div>
+</form>

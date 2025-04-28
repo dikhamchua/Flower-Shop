@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 function initializeSelect2() {
-    
+
     const selects = $('.product-select');
 
     // selects.select2({
@@ -154,4 +154,140 @@ function updateTotalPrice() {
 function updateSavings() {
     // Assuming you have a logic for savings update
     console.log('Updating savings...');
+}
+
+// Add this function
+function validateComboForm() {
+    // Kiểm tra xem có ít nhất một sản phẩm được chọn
+    const productRows = document.querySelectorAll('.product-selection-row');
+    let hasValidProduct = false;
+
+    productRows.forEach(row => {
+        const select = row.querySelector('.product-select');
+        if (select && select.value) {
+            hasValidProduct = true;
+        }
+    });
+
+    if (!hasValidProduct) {
+        alert('Vui lòng chọn ít nhất một sản phẩm cho combo');
+        return false;
+    }
+
+    // Kiểm tra giá khuyến mãi
+    const originalPrice = parseFloat(document.getElementById('original_price').value) || 0;
+    const discountPrice = parseFloat(document.getElementById('discount_price').value) || 0;
+
+    if (discountPrice >= originalPrice) {
+        alert('Giá khuyến mãi phải nhỏ hơn giá gốc');
+        return false;
+    }
+
+    return true;
+}
+
+// Thêm hàm mới để cập nhật hidden inputs trước khi submit
+function updateHiddenInputs() {
+    const productIds = [];
+    const quantities = [];
+
+    document.querySelectorAll('.product-selection-row').forEach(function (row) {
+        const select = row.querySelector('.product-select');
+        const quantity = row.querySelector('.product-quantity');
+
+        if (select && select.value) {
+            productIds.push(select.value);
+            quantities.push(quantity.value);
+        }
+    });
+
+    document.getElementById('productIdsInput').value = productIds.join(',');
+    document.getElementById('quantitiesInput').value = quantities.join(',');
+}
+
+// Sửa lại event listener cho form submit
+document.addEventListener('DOMContentLoaded', function () {
+    const comboForm = document.getElementById('comboForm');
+    if (comboForm) {
+        // Nếu là trang edit, load sản phẩm đã chọn
+        if (window.selectedProducts && Array.isArray(window.selectedProducts)) {
+            console.log('Loading selected products:', window.selectedProducts);
+            loadSelectedProducts();
+        }
+
+        comboForm.addEventListener('submit', function (e) {
+            e.preventDefault(); // Ngăn form submit mặc định
+
+            if (!validateComboForm()) {
+                return;
+            }
+
+            // Cập nhật hidden inputs trước khi submit
+            updateHiddenInputs();
+
+            // Submit form
+            this.submit();
+        });
+    }
+});
+
+// Thêm hàm mới để load sản phẩm đã chọn trong trang edit
+function loadSelectedProducts() {
+    const container = document.querySelector('.product-selection-container');
+    if (!container)
+        return;
+
+    // Xóa hàng mẫu mặc định nếu có
+    container.innerHTML = '';
+
+    // Thêm lại các sản phẩm đã chọn
+    window.selectedProducts.forEach((product, index) => {
+        const row = createProductRow(product, index === 0);
+        container.appendChild(row);
+    });
+
+    // Cập nhật tổng giá
+    updateTotalPrice();
+}
+
+// Hàm tạo một hàng sản phẩm mới với dữ liệu có sẵn
+function createProductRow(productData, isFirstRow) {
+    const row = document.createElement('div');
+    row.className = 'product-selection-row row align-items-end mb-3';
+
+    row.innerHTML = `
+        <div class="col-md-7">
+            <label class="form-label">Sản phẩm <span class="text-danger">*</span></label>
+            <select class="form-select product-select" required>
+                <option value="">-- Chọn sản phẩm --</option>
+                ${window.products.map(p => `
+                    <option value="${p.id}" 
+                            data-price="${p.price}"
+                            ${p.id === productData.id ? 'selected' : ''}>
+                        ${p.name} - ${p.price}đ
+                    </option>
+                `).join('')}
+            </select>
+        </div>
+        <div class="col-md-3">
+            <label class="form-label">Số lượng <span class="text-danger">*</span></label>
+            <input type="number" class="form-control product-quantity" 
+                   min="1" value="${productData.quantity}" required>
+        </div>
+        <div class="col-md-2 d-flex align-items-center">
+            <button type="button" class="btn btn-outline-danger remove-product w-100" 
+                    ${isFirstRow ? 'disabled' : ''}>
+                <i class="fas fa-trash"></i>
+            </button>
+        </div>
+    `;
+
+    // Khởi tạo Select2 cho select mới
+    $(row.querySelector('.product-select')).select2({
+        theme: 'bootstrap4',
+        placeholder: 'Chọn sản phẩm',
+        allowClear: true
+    });
+
+    return row;
 }
