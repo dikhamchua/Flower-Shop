@@ -1,6 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -88,156 +89,124 @@
                                     </div>
 
                                     <!-- Replace the Product Selection Section with this -->
+                                    <!-- Product Selection Section -->
                                     <div class="card border-info mt-4 mb-4">
                                         <div class="card-header bg-info text-white">
                                             <h6 class="mb-0"><i class="fas fa-boxes me-2"></i>Chọn sản phẩm cho Combo</h6>
                                         </div>
                                         <div class="card-body">
-                                            <div class="row mb-2">
-                                                <div class="col-12">
-                                                    <p class="text-muted mb-2">
-                                                        <i class="fas fa-info-circle"></i> Chọn ít nhất một sản phẩm cho combo và số lượng cần thiết
-                                                    </p>
-                                                </div>
-                                            </div>
-
-                                            <div class="input-group mb-3">
-                                                <input type="text" class="form-control" id="productInput" placeholder="Tìm kiếm sản phẩm...">
-                                                <button class="btn btn-outline-secondary" type="button" id="searchProductBtn">
-                                                    <i class="fas fa-search"></i>
-                                                </button>
-                                            </div>
-                                            <div id="productSuggestions" class="product-suggestions"></div>
-                                            
-                                            <!-- Sản phẩm đã chọn -->
-                                            <div id="selectedProducts" class="mt-3">
-                                                <!-- Sẽ được điền bởi JavaScript -->
-                                            </div>
-                                            
-                                            <!-- Input hidden để lưu dữ liệu -->
-                                            <input type="hidden" id="productIdsInput" name="productIds">
-                                            <input type="hidden" id="quantitiesInput" name="quantities">
-
-                                            <!-- Price Summary -->
-                                            <div class="row mt-4">
-                                                <div class="col-md-6 offset-md-6">
-                                                    <div class="table-responsive">
-                                                        <table class="table table-bordered mb-0">
-                                                            <tr>
-                                                                <th class="align-middle">Tổng giá gốc:</th>
-                                                                <td>
-                                                                    <span id="original-price-display">${combo.originalPrice}</span>đ
-                                                                    <input type="hidden" id="original_price" name="original_price" value="${combo.originalPrice}">
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <th class="align-middle">Giá ưu đãi: <span class="text-danger">*</span></th>
-                                                                <td>
-                                                                    <input type="number" class="form-control" id="discount_price"
-                                                                           name="discount_price" min="0" step="0.01" required
-                                                                           value="${combo.discountPrice}">
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <th class="align-middle">Tiết kiệm:</th>
-                                                                <td><span id="savings-display">${combo.originalPrice - combo.discountPrice}</span>đ</td>
-                                                            </tr>
-                                                        </table>
+                                            <div class="product-selection-container">
+                                                <c:forEach items="${comboProducts}" var="comboProduct" varStatus="status">
+                                                    <div class="product-selection-row row mb-3">
+                                                        <div class="col-md-8">
+                                                            <select class="form-control product-select" required>
+                                                                <option value="">Chọn sản phẩm</option>
+                                                                <!-- Sửa phần forEach products thành allProducts -->
+                                                                <c:forEach items="${allProducts}" var="product">
+                                                                    <option value="${product.productId}" 
+                                                                            data-price="${product.price}"
+                                                                            ${product.productId == comboProduct.productId ? 'selected' : ''}>
+                                                                        ${product.productName} - ${product.price}đ
+                                                                    </option>
+                                                                </c:forEach>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-md-2">
+                                                            <input type="number" class="form-control product-quantity" 
+                                                                   value="${comboProduct.quantityInCombo}" min="1" required>
+                                                        </div>
+                                                        <div class="col-md-2">
+                                                            <button type="button" class="btn btn-danger remove-product" 
+                                                                    ${status.index == 0 && comboProducts.size() == 1 ? 'disabled' : ''}>
+                                                                <i class="fas fa-trash"></i>
+                                                            </button>
+                                                        </div>
                                                     </div>
+                                                </c:forEach>
+                                                
+                                                <c:if test="${empty comboProducts}">
+                                                    <div class="product-selection-row row mb-3">
+                                                        <div class="col-md-8">
+                                                            <select class="form-control product-select" required>
+                                                                <option value="">Chọn sản phẩm</option>
+                                                                <c:forEach items="${products}" var="product">
+                                                                    <option value="${product.productId}" data-price="${product.price}">
+                                                                        ${product.productName} - ${product.price}đ
+                                                                    </option>
+                                                                </c:forEach>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-md-2">
+                                                            <input type="number" class="form-control product-quantity" 
+                                                                   value="1" min="1" required>
+                                                        </div>
+                                                        <div class="col-md-2">
+                                                            <button type="button" class="btn btn-danger remove-product" disabled>
+                                                                <i class="fas fa-trash"></i>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </c:if>
+                                            </div>
+
+                                            <div class="row mt-3">
+                                                <div class="col-12">
+                                                    <button type="button" class="btn btn-success add-product">
+                                                        <i class="fas fa-plus"></i> Thêm sản phẩm
+                                                    </button>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+
+                                    <!-- Hidden inputs for form submission -->
+                                    <input type="hidden" id="productIdsInput" name="productIds">
+                                    <input type="hidden" id="quantitiesInput" name="quantities">
                                     
-                                    <!-- Add this script before the closing body tag -->
-                                    <script>
-                                        // Dữ liệu sản phẩm từ server
-                                        window.products = ${productsJson};
-                                        window.selectedProducts = ${selectedProductsJson};
-                                    </script>
-
-                                    <!-- Add this CSS in the head section -->
-                                    <style>
-                                        .product-suggestions {
-                                            position: absolute;
-                                            z-index: 1000;
-                                            background: white;
-                                            border: 1px solid #ddd;
-                                            border-radius: 4px;
-                                            max-height: 200px;
-                                            overflow-y: auto;
-                                            width: calc(100% - 50px);
-                                            display: none;
-                                        }
-
-                                        .product-suggestion {
-                                            padding: 8px 12px;
-                                            cursor: pointer;
-                                        }
-
-                                        .product-suggestion:hover {
-                                            background-color: #f8f9fa;
-                                        }
-
-                                        .selected-product {
-                                            background-color: #f8f9fa;
-                                        }
-                                    </style>
-                                    <div class="product-selection-container">
-                                        <c:forEach items="${comboProducts}" var="comboProduct" varStatus="status">
-                                            <div class="product-selection-row row align-items-end mb-3">
-                                                <div class="col-md-7">
-                                                    <label class="form-label">Sản phẩm <span class="text-danger">*</span></label>
-                                                    <select class="form-select product-select" name="product_id" required>
-                                                        <option value="">-- Chọn sản phẩm --</option>
-                                                        <c:forEach items="${allProducts}" var="product">
-                                                            <option value="${product.productId}" 
-                                                                    data-price="${product.price}"
-                                                                    ${product.productId == comboProduct.productId ? 'selected' : ''}>
-                                                                        ${product.productName} - ${product.price}đ
-                                                            </option>
-                                                        </c:forEach>
-                                                    </select>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <label class="form-label">Số lượng <span class="text-danger">*</span></label>
-                                                    <input type="number" class="form-control product-quantity" name="quantity" 
-                                                           min="1" value="${comboProduct.quantityInCombo}" required>
-                                                </div>
-                                                <div class="col-md-2 d-flex align-items-center">
-                                                    <button type="button" class="btn btn-outline-danger remove-product w-100" ${status.index == 0 && comboProducts.size() == 1 ? 'disabled' : ''}>
-                                                        <i class="fas fa-trash"></i>
-                                                    </button>
-                                                </div>
+                                    <!-- Price Summary -->
+                                    <div class="row mt-4">
+                                        <div class="col-md-6 offset-md-6">
+                                            <div class="table-responsive">
+                                                <table class="table table-bordered">
+                                                    <tr>
+                                                        <th>Tổng giá gốc:</th>
+                                                        <td>
+                                                            <span id="original-price-display">${combo.originalPrice}</span>đ
+                                                            <input type="hidden" id="original_price" name="original_price" 
+                                                                   value="${combo.originalPrice}">
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Giá ưu đãi: <span class="text-danger">*</span></th>
+                                                        <td>
+                                                            <input type="number" class="form-control" id="discount_price" 
+                                                                   name="discount_price" value="${combo.discountPrice}" 
+                                                                   min="0" required>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Tiết kiệm:</th>
+                                                        <td><span id="savings-display">0</span>đ</td>
+                                                    </tr>
+                                                </table>
                                             </div>
-                                        </c:forEach>
-                                        <c:if test="${empty comboProducts}">
-                                            <div class="product-selection-row row align-items-end mb-3">
-                                                <div class="col-md-7">
-                                                    <label class="form-label">Sản phẩm <span class="text-danger">*</span></label>
-                                                    <select class="form-select product-select" name="product_id" required>
-                                                        <option value="">-- Chọn sản phẩm --</option>
-                                                        <c:forEach items="${allProducts}" var="product">
-                                                            <option value="${product.productId}" data-price="${product.price}">
-                                                                        ${product.productName} - ${product.price}đ
-                                                            </option>
-                                                        </c:forEach>
-                                                    </select>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <label class="form-label">Số lượng <span class="text-danger">*</span></label>
-                                                    <input type="number" class="form-control product-quantity" name="quantity" 
-                                                           min="1" value="1" required>
-                                                </div>
-                                                <div class="col-md-2 d-flex align-items-center">
-                                                    <button type="button" class="btn btn-outline-danger remove-product w-100" disabled>
-                                                        <i class="fas fa-trash"></i>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </c:if>
+                                        </div>
                                     </div>
-                                    <div class="row mt-2">
+
+                                    <!-- Submit Buttons -->
+                                    <div class="row mt-4">
+                                        <div class="col-12 text-end">
+                                            <a href="${pageContext.request.contextPath}/admin/manage-combo" 
+                                               class="btn btn-secondary me-2">
+                                                <i class="fas fa-times"></i> Hủy
+                                            </a>
+                                            <button type="submit" class="btn btn-primary">
+                                                <i class="fas fa-save"></i> Lưu thay đổi
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                                <div class="row mt-2">
                                         <div class="col-12">
                                             <button type="button" class="btn btn-success add-product">
                                                 <i class="fas fa-plus"></i> Thêm sản phẩm
@@ -263,5 +232,43 @@
         <script src="https://unpkg.com/@yaireo/tagify"></script>
         <!-- Combo Product Manager -->
         <script src="${pageContext.request.contextPath}/assets/js/comboProductManager.js"></script>
+        
+        <!-- Thêm đoạn script này trước đóng body -->
+        <script>
+            // Khởi tạo dữ liệu cho JavaScript
+            window.products = ${productsJson};
+            window.selectedProducts = ${comboProductsJson};
+            
+            // Log để debug
+            console.log('Products:', window.products);
+            console.log('Selected Products:', window.selectedProducts);
+            
+            $(document).ready(function() {
+                // Khởi tạo Select2
+                $('.product-select').select2({
+                    theme: 'bootstrap4',
+                    placeholder: 'Chọn sản phẩm',
+                    allowClear: true
+                });
+
+                // Cập nhật tiết kiệm khi giá ưu đãi thay đổi
+                $('#discount_price').on('input', function() {
+                    updateSavings();
+                });
+
+                // Hàm tính và cập nhật số tiền tiết kiệm
+                function updateSavings() {
+                    const originalPrice = parseInt($('#original-price-display').text().replace(/\D/g,'')) || 0;
+                    const discountPrice = parseInt($('#discount_price').val()) || 0;
+                    const savings = originalPrice - discountPrice;
+                    
+                    // Format số với dấu phẩy ngăn cách hàng nghìn
+                    $('#savings-display').text(savings.toLocaleString('vi-VN'));
+                }
+
+                // Tính toán tiết kiệm ngay khi trang load
+                updateSavings();
+            });
+        </script>
     </body>
 </html>
