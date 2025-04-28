@@ -85,7 +85,7 @@ public class ManageComboController extends HttpServlet {
         // Get filter parameters
         String searchFilter = request.getParameter("search");
         String statusFilter = request.getParameter("status");
-
+    
         // Get pagination parameters
         int page = 1;
         int pageSize = 10;
@@ -100,49 +100,29 @@ public class ManageComboController extends HttpServlet {
                 page = 1;
             }
         }
-
+    
         ComboDAO comboDAO = new ComboDAO();
-        List<Combo> combos;
-        int totalCombos;
-
-        // Apply filters if provided
-        if ((searchFilter != null && !searchFilter.isEmpty()) ||
-                (statusFilter != null && !statusFilter.isEmpty())) {
-
-            // Get filtered combos with pagination
-            combos = getFilteredCombos(comboDAO, searchFilter, statusFilter, page, pageSize);
-            totalCombos = getFilteredCombosCount(comboDAO, searchFilter, statusFilter);
-        } else {
-            // Get all combos with pagination
-            combos = comboDAO.findAll();
-            totalCombos = combos.size();
-            
-            // Apply pagination in memory (this should be done in the DAO in a real implementation)
-            int startIndex = (page - 1) * pageSize;
-            int endIndex = Math.min(startIndex + pageSize, combos.size());
-            
-            if (startIndex < combos.size()) {
-                combos = combos.subList(startIndex, endIndex);
-            } else {
-                combos = new ArrayList<>();
-            }
-        }
-
+        
+        // Sử dụng phương thức tìm kiếm mới
+        List<Combo> combos = comboDAO.searchCombos(searchFilter, statusFilter, page, pageSize);
+        int totalCombos = comboDAO.countSearchResults(searchFilter, statusFilter);
+        
         int totalPages = (int) Math.ceil((double) totalCombos / pageSize);
-
+    
         // Set attributes for JSP
         request.setAttribute("combos", combos);
         request.setAttribute("currentPage", page);
         request.setAttribute("totalPages", totalPages);
         request.setAttribute("totalCombos", totalCombos);
-
+    
         // Set filter values for maintaining state
         request.setAttribute("statusFilter", statusFilter);
         request.setAttribute("searchFilter", searchFilter);
-
+    
         request.getRequestDispatcher("../view/admin/combo-list.jsp").forward(request, response);
     }
 
+    // Xóa các phương thức getFilteredCombos và getFilteredCombosCount vì không cần thiết nữa
     /**
      * Get filtered combos based on search and status filters
      */

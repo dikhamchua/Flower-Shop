@@ -203,4 +203,104 @@ public class ComboDAO extends DBContext implements I_DAO<Combo> {
             closeResources();
         }
     }
+
+    /**
+     * Tìm kiếm combo theo nhiều tiêu chí
+     * 
+     * @param searchTerm Từ khóa tìm kiếm (tên, mô tả)
+     * @param status Trạng thái combo (active/inactive)
+     * @param page Trang hiện tại
+     * @param pageSize Số lượng combo mỗi trang
+     * @return Danh sách combo thỏa mãn điều kiện
+     */
+    public List<Combo> searchCombos(String searchTerm, String status, int page, int pageSize) {
+        List<Combo> combos = new ArrayList<>();
+        StringBuilder sql = new StringBuilder("SELECT * FROM combo WHERE 1=1");
+        List<Object> params = new ArrayList<>();
+        
+        // Thêm điều kiện tìm kiếm
+        if (searchTerm != null && !searchTerm.isEmpty()) {
+            sql.append(" AND (name LIKE ? OR description LIKE ?)");
+            params.add("%" + searchTerm + "%");
+            params.add("%" + searchTerm + "%");
+        }
+        
+        // Thêm điều kiện lọc theo trạng thái
+        if (status != null && !status.isEmpty()) {
+            sql.append(" AND status = ?");
+            params.add(status);
+        }
+        
+        // Thêm phân trang
+        sql.append(" ORDER BY combo_id DESC LIMIT ? OFFSET ?");
+        params.add(pageSize);
+        params.add((page - 1) * pageSize);
+        
+        try {
+            connection = getConnection();
+            statement = connection.prepareStatement(sql.toString());
+            
+            // Thiết lập tham số
+            for (int i = 0; i < params.size(); i++) {
+                statement.setObject(i + 1, params.get(i));
+            }
+            
+            resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                combos.add(getFromResultSet(resultSet));
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error searching combos: " + ex.getMessage());
+        } finally {
+            closeResources();
+        }
+        
+        return combos;
+    }
+
+    /**
+     * Đếm tổng số combo thỏa mãn điều kiện tìm kiếm
+     * 
+     * @param searchTerm Từ khóa tìm kiếm (tên, mô tả)
+     * @param status Trạng thái combo (active/inactive)
+     * @return Tổng số combo thỏa mãn điều kiện
+     */
+    public int countSearchResults(String searchTerm, String status) {
+        StringBuilder sql = new StringBuilder("SELECT COUNT(*) FROM combo WHERE 1=1");
+        List<Object> params = new ArrayList<>();
+        
+        // Thêm điều kiện tìm kiếm
+        if (searchTerm != null && !searchTerm.isEmpty()) {
+            sql.append(" AND (name LIKE ? OR description LIKE ?)");
+            params.add("%" + searchTerm + "%");
+            params.add("%" + searchTerm + "%");
+        }
+        
+        // Thêm điều kiện lọc theo trạng thái
+        if (status != null && !status.isEmpty()) {
+            sql.append(" AND status = ?");
+            params.add(status);
+        }
+        
+        try {
+            connection = getConnection();
+            statement = connection.prepareStatement(sql.toString());
+            
+            // Thiết lập tham số
+            for (int i = 0; i < params.size(); i++) {
+                statement.setObject(i + 1, params.get(i));
+            }
+            
+            resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getInt(1);
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error counting search results: " + ex.getMessage());
+        } finally {
+            closeResources();
+        }
+        
+        return 0;
+    }
 }
