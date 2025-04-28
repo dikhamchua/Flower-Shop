@@ -74,7 +74,7 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="breadcrumb-title">
-                                <h1>Coupons</h1>
+                                <h1>Cart</h1>
                             </div>
                             <div class="breadcrumb-content breadcrumb-content-tow">
                                 <ul>
