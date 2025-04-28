@@ -124,7 +124,7 @@
                         <table class="table table-hover">
                             <thead>
                                 <tr>
-                                    <th>#</th>
+                                    <th>No.</th>
                                     <th>Image</th>
                                     <th>Product Name</th>
                                     <th>Category</th>
@@ -143,7 +143,7 @@
                                 </c:if>
                                 <c:forEach var="product" items="${products}" varStatus="loop">
                                     <tr>
-                                        <td>${product.productId}</td>
+                                        <td>${(currentPage - 1) * pageSize + loop.index + 1}</td>
                                         <td>
                                             <div class="product-image-container">
                                                 <img src="${pageContext.request.contextPath}/${product.image}" alt="${product.productName}" class="product-image">
