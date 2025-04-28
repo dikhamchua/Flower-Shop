@@ -79,7 +79,7 @@
                     <table class="table table-hover">
                         <thead>
                             <tr>
-                                <th>#</th>
+                                <th>No</th>
                                 <th>Tên Combo</th>
                                 <th>Mô tả</th>
                                 <th>Giá gốc</th>
@@ -92,7 +92,7 @@
                         <tbody>
                             <c:forEach items="${combos}" var="combo" varStatus="loop">
                                 <tr>
-                                    <td>${combo.comboId}</td>
+                                   <td>${(currentPage - 1) * pageSize + loop.index + 1}</td>
                                     <td>${combo.name}</td>
                                     <td>
                                         <c:choose>
@@ -112,7 +112,7 @@
                                         </span>
                                     </td>
                                     <td>
-                                        <fmt:formatDate value="${combo.createdAt}" pattern="dd/MM/yyyy"/>
+                                       ${combo.createdAt}
                                     </td>
                                     <td>
                                         <div class="d-flex gap-2">

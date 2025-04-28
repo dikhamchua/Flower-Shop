@@ -125,35 +125,35 @@ function updateTotalPrice() {
             const subtotal = price * quantity;
 
             totalPrice += subtotal;
-
-            console.log('Calculating product subtotal:', {
-                productId: select.value,
-                price: price,
-                quantity: quantity,
-                subtotal: subtotal
-            });
-        } else {
-            console.warn('Select or selected value is missing in a row');
         }
     });
 
-    console.log('Total price calculated:', totalPrice);
     const priceDisplay = document.getElementById('original-price-display');
     const priceInput = document.getElementById('original_price');
 
     if (priceDisplay && priceInput) {
         priceDisplay.textContent = totalPrice.toLocaleString('vi-VN');
         priceInput.value = totalPrice;
-    } else {
-        console.error('Price display or input element not found');
     }
 
+    // Call updateSavings after updating the total price
     updateSavings();
 }
 
 function updateSavings() {
-    // Assuming you have a logic for savings update
-    console.log('Updating savings...');
+    const originalPrice = parseFloat(document.getElementById('original_price').value) || 0;
+    const discountPrice = parseFloat(document.getElementById('discount_price').value) || 0;
+    
+    const savings = originalPrice - discountPrice;
+    
+    const savingsDisplay = document.getElementById('savings-display');
+    if (savingsDisplay) {
+        if (!isNaN(savings) && savings >= 0) {
+            savingsDisplay.textContent = savings.toLocaleString('vi-VN');
+        } else {
+            savingsDisplay.textContent = '0';
+        }
+    }
 }
 
 // Add this function

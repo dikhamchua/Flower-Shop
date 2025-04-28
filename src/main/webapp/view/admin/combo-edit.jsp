@@ -186,7 +186,7 @@
                                                     </tr>
                                                     <tr>
                                                         <th>Tiết kiệm:</th>
-                                                        <td><span id="savings-display">0</span>đ</td>
+                                                        <td><span id="savings-display">${combo.originalPrice - combo.discountPrice}</span>đ</td>
                                                     </tr>
                                                 </table>
                                             </div>
@@ -206,13 +206,13 @@
                                         </div>
                                     </div>
                                 </form>
-                                <div class="row mt-2">
+<!--                                <div class="row mt-2">
                                         <div class="col-12">
                                             <button type="button" class="btn btn-success add-product">
                                                 <i class="fas fa-plus"></i> Thêm sản phẩm
                                             </button>
                                         </div>
-                                    </div>
+                                    </div>-->
                                 </div>
                             </div>
                         </div>
@@ -239,10 +239,6 @@
             window.products = ${productsJson};
             window.selectedProducts = ${comboProductsJson};
             
-            // Log để debug
-            console.log('Products:', window.products);
-            console.log('Selected Products:', window.selectedProducts);
-            
             $(document).ready(function() {
                 // Khởi tạo Select2
                 $('.product-select').select2({
@@ -258,12 +254,16 @@
 
                 // Hàm tính và cập nhật số tiền tiết kiệm
                 function updateSavings() {
-                    const originalPrice = parseInt($('#original-price-display').text().replace(/\D/g,'')) || 0;
-                    const discountPrice = parseInt($('#discount_price').val()) || 0;
+                    const originalPrice = parseFloat($('#original_price').val()) || 0;
+                    const discountPrice = parseFloat($('#discount_price').val()) || 0;
+                    
                     const savings = originalPrice - discountPrice;
                     
-                    // Format số với dấu phẩy ngăn cách hàng nghìn
-                    $('#savings-display').text(savings.toLocaleString('vi-VN'));
+                    if (!isNaN(savings) && savings >= 0) {
+                        $('#savings-display').text(savings.toLocaleString('vi-VN'));
+                    } else {
+                        $('#savings-display').text('0');
+                    }
                 }
 
                 // Tính toán tiết kiệm ngay khi trang load
