@@ -24,7 +24,7 @@ import java.util.List;
  *
  * @author FPTSHOP
  */
-@WebFilter(filterName = "AuthenticationFilter", urlPatterns = {"/admin/*", "/orderControll", "/cart", "/profile", "/dashboard"})
+//@WebFilter(filterName = "AuthenticationFilter", urlPatterns = {"/admin/*", "/orderControll", "/cart", "/profile", "/dashboard"})
 public class AuthenticationFilter implements jakarta.servlet.Filter {
     
     private static final boolean debug = true;
