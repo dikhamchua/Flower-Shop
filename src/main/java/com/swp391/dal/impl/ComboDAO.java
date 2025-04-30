@@ -8,7 +8,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * DAO class for handling Combo operations
@@ -302,5 +304,37 @@ public class ComboDAO extends DBContext implements I_DAO<Combo> {
         }
         
         return 0;
+    }
+    
+    /**
+     * Lấy danh sách sản phẩm trong combo
+     * 
+     * @param comboId ID của combo
+     * @return Danh sách sản phẩm trong combo
+     */
+    public List<Map<String, Object>> getComboProducts(int comboId) {
+        List<Map<String, Object>> comboProducts = new ArrayList<>();
+        String sql = "SELECT * FROM combo_product WHERE combo_id = ?";
+        
+        try {
+            connection = getConnection();
+            statement = connection.prepareStatement(sql);
+            statement.setInt(1, comboId);
+            resultSet = statement.executeQuery();
+            
+            while (resultSet.next()) {
+                Map<String, Object> product = new HashMap<>();
+                product.put("combo_id", resultSet.getInt("combo_id"));
+                product.put("product_id", resultSet.getInt("product_id"));
+                product.put("quantity", resultSet.getInt("quantity"));
+                comboProducts.add(product);
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error getting combo products: " + ex.getMessage());
+        } finally {
+            closeResources();
+        }
+        
+        return comboProducts;
     }
 }

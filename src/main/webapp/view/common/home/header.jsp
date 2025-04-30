@@ -23,6 +23,7 @@
                             <nav>
                                 <ul class="main-menu">
                                     <li><a href="${pageContext.request.contextPath}/home">Home</a></li>
+                                    <li><a href="${pageContext.request.contextPath}/combo">Combo</a></li>
                                     <li><a href="${pageContext.request.contextPath}/blog">Blog</a></li>
                                     <li><a href="${pageContext.request.contextPath}/coupon">Coupon</a></li>
                                     
