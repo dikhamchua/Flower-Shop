@@ -86,6 +86,26 @@
                                             <textarea class="form-control" id="description" name="description"
                                                       rows="3" placeholder="Nhập mô tả chi tiết về combo">${combo.description}</textarea>
                                         </div>
+                                        <!-- Add image upload field and current image display -->
+                                        <div class="col-md-12">
+                                            <label for="image" class="form-label">Hình ảnh Combo</label>
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <c:if test="${not empty combo.image}">
+                                                        <div class="mb-2">
+                                                            <img src="${pageContext.request.contextPath}/${combo.image}" 
+                                                                     alt="${combo.name}" class="img-thumbnail" style="max-width: 150px;">
+                                                            <div class="form-text">Hình ảnh hiện tại</div>
+                                                        </div>
+                                                    </c:if>
+                                                </div>
+                                                <div class="col-md-9">
+                                                    <input type="file" class="form-control" id="image" name="image" accept="image/*">
+                                                    <input type="hidden" name="currentImage" value="${combo.image}">
+                                                    <small class="form-text text-muted">Chọn hình ảnh mới để thay thế (để trống nếu không muốn thay đổi)</small>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
 
                                     <!-- Replace the Product Selection Section with this -->

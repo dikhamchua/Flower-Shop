@@ -16,6 +16,25 @@
             text-align: center;
         }
     </style>
+    <style>
+        .fixed-width-btn {
+            min-width: 120px; /* Có thể điều chỉnh giá trị này */
+            text-align: center;
+        }
+        .product-image {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        .product-image-container {
+            width: 100px;
+            height: 100px;
+            overflow: hidden;
+            position: relative;
+        }
+    </style>
 </head>
 
 <body>
@@ -80,6 +99,7 @@
                         <thead>
                             <tr>
                                 <th>No</th>
+                                <th>Hình ảnh</th> <!-- Add this column for images -->
                                 <th>Tên Combo</th>
                                 <th>Mô tả</th>
                                 <th>Giá gốc</th>
@@ -93,6 +113,18 @@
                             <c:forEach items="${combos}" var="combo" varStatus="loop">
                                 <tr>
                                    <td>${(currentPage - 1) * pageSize + loop.index + 1}</td>
+                                    <td>
+                                        <div class="product-image-container">
+                                            <c:choose>
+                                                <c:when test="${not empty combo.image}">
+                                                    <img src="${pageContext.request.contextPath}/${combo.image}" alt="${combo.name}" class="product-image">
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <img src="${pageContext.request.contextPath}/assets/images/placeholder.jpg" alt="No Image" class="product-image">
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </div>
+                                    </td>
                                     <td>${combo.name}</td>
                                     <td>
                                         <c:choose>
@@ -144,7 +176,7 @@
                             
                             <c:if test="${empty combos}">
                                 <tr>
-                                    <td colspan="8" class="text-center">Không có combo nào được tìm thấy</td>
+                                    <td colspan="9" class="text-center">Không có combo nào được tìm thấy</td> <!-- Update colspan to 9 -->
                                 </tr>
                             </c:if>
                         </tbody>

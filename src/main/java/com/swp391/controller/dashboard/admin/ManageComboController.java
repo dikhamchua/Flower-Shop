@@ -25,9 +25,28 @@ import com.swp391.entity.Product;
 /**
  * Controller for managing combo products in the admin dashboard
  */
-@WebServlet(name = "ManageComboController", urlPatterns = {"/admin/manage-combo"})
-public class ManageComboController extends HttpServlet {
+// Add these imports at the top
+import jakarta.servlet.annotation.MultipartConfig;
+import jakarta.servlet.http.Part;
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.util.UUID;
 
+// Add MultipartConfig annotation to the class
+@WebServlet(name = "ManageComboController", urlPatterns = {"/admin/manage-combo"})
+@MultipartConfig(
+    fileSizeThreshold = 1024 * 1024, // 1 MB
+    maxFileSize = 1024 * 1024 * 10,  // 10 MB
+    maxRequestSize = 1024 * 1024 * 50 // 50 MB
+)
+public class ManageComboController extends HttpServlet {
+    
+    // Add a constant for the upload directory
+    private static final String UPLOAD_DIR = "uploads/combos";
+    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -309,6 +328,32 @@ public class ManageComboController extends HttpServlet {
             String description = request.getParameter("description");
             Float discountPrice = Float.parseFloat(request.getParameter("discount_price"));
             String status = request.getParameter("status");
+            
+            // Handle image upload
+            String imagePath = null;
+            Part filePart = request.getPart("image");
+            if (filePart != null && filePart.getSize() > 0) {
+                String fileName = getSubmittedFileName(filePart);
+                if (fileName != null && !fileName.isEmpty()) {
+                    // Generate unique filename
+                    String uniqueFileName = UUID.randomUUID().toString() + "_" + fileName;
+                    
+                    // Create upload directory if it doesn't exist
+                    String applicationPath = request.getServletContext().getRealPath("");
+                    String uploadPath = applicationPath + File.separator + UPLOAD_DIR;
+                    File uploadDir = new File(uploadPath);
+                    if (!uploadDir.exists()) {
+                        uploadDir.mkdirs();
+                    }
+                    
+                    // Save the file
+                    String filePath = uploadPath + File.separator + uniqueFileName;
+                    filePart.write(filePath);
+                    
+                    // Set the relative path for database storage
+                    imagePath = UPLOAD_DIR + "/" + uniqueFileName;
+                }
+            }
             
             // Get product IDs and quantities from form
             String productIdsStr = request.getParameter("productIds");
@@ -656,5 +701,19 @@ public class ManageComboController extends HttpServlet {
     private void setToastMessage(HttpServletRequest request, String message, String type) {
         request.getSession().setAttribute("toastMessage", message);
         request.getSession().setAttribute("toastType", type);
+    }
+
+    /**
+     * Utility method to get the submitted filename from a Part
+     */
+    private String getSubmittedFileName(Part part) {
+        for (String cd : part.getHeader("content-disposition").split(";")) {
+            if (cd.trim().startsWith("filename")) {
+                String fileName = cd.substring(cd.indexOf('=') + 1).trim().replace("\"", "");
+                return fileName.substring(fileName.lastIndexOf('/') + 1)
+                        .substring(fileName.lastIndexOf('\\') + 1);
+            }
+        }
+        return null;
     }
 }

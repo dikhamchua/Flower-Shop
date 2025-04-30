@@ -84,6 +84,12 @@
                                             <textarea class="form-control" id="description" name="description"
                                                       rows="3" placeholder="Nhập mô tả chi tiết về combo">${param.description != null ? param.description : ''}</textarea>
                                         </div>
+                                        <!-- Add image upload field -->
+                                        <div class="col-md-12">
+                                            <label for="image" class="form-label">Hình ảnh Combo</label>
+                                            <input type="file" class="form-control" id="image" name="image" accept="image/*">
+                                            <small class="form-text text-muted">Chọn hình ảnh đại diện cho combo (JPG, PNG, GIF)</small>
+                                        </div>
                                     </div>
 
                                     <!-- Product Selection Section -->

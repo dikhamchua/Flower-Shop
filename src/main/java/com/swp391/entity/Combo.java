@@ -30,6 +30,7 @@ public class Combo {
     private Float originalPrice;
     private Float discountPrice;
     private String status; // ENUM('active', 'inactive')
+    private String image; // New attribute for combo image
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }

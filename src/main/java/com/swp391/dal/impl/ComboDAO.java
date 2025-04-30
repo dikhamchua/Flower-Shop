@@ -121,6 +121,7 @@ public class ComboDAO extends DBContext implements I_DAO<Combo> {
         combo.setOriginalPrice(rs.getFloat("original_price"));
         combo.setDiscountPrice(rs.getFloat("discount_price"));
         combo.setStatus(rs.getString("status"));
+        combo.setImage(rs.getString("image")); // Add this line to get image from result set
         
         Timestamp createdAt = rs.getTimestamp("created_at");
         if (createdAt != null) {
