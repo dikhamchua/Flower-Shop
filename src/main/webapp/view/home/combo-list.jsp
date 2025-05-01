@@ -387,8 +387,6 @@
                             </div>
                             
                             <!-- Replace the pagination HTML structure -->
-                            ## 3. Let's also update the pagination links to maintain the search parameter:
-                            ```html
                             <c:if test="${totalPages > 1}">
                                 <div class="col-12">
                                     <div class="pagination-area">
@@ -418,7 +416,6 @@
                                     </div>
                                 </div>
                             </c:if>
-                            ```
                         </div>
                     </div>
                 </div>

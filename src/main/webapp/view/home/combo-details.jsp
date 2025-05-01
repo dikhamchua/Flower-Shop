@@ -17,13 +17,14 @@
         <jsp:include page="../common/home/common-css.jsp"></jsp:include>
 
             <style>
-                /* Styling for combo details */
+                /* Enhanced styling for combo details */
                 .combo-details-container {
                     background: #fff;
-                    border-radius: 8px;
-                    box-shadow: 0 2px 15px rgba(0,0,0,0.08);
+                    border-radius: 12px;
+                    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
                     padding: 30px;
                     margin-bottom: 40px;
+                    border: 2px dashed #80b435;
                 }
 
                 .combo-image {
@@ -32,21 +33,17 @@
                     overflow: hidden;
                     border-radius: 8px;
                     margin-bottom: 15px;
-                    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
                     display: flex;
                     align-items: center;
                     justify-content: center;
                     background-color: #fff;
+                    padding: 20px;
                 }
 
                 .combo-image img {
-                    width: 100%;
-                    height: 100%;
-                    object-fit: contain;
                     max-width: 100%;
                     max-height: 100%;
-                    padding: 15px;
-                    background: #fff;
+                    object-fit: contain;
                 }
 
                 .combo-title {
@@ -80,7 +77,7 @@
                 .combo-discount-price {
                     font-size: 24px;
                     color: #80b435;
-                    font-weight: 600;
+                    font-weight: 700;
                 }
 
                 .combo-savings {
@@ -252,39 +249,42 @@
                                 <div class="combo-details-container">
                                     <div class="row">
                                         <!-- Combo Image -->
-                                        <div class="tab-content single-product-img">
-                                            <div class="tab-pane fade show active" id="product1">
-                                                <div class="product-large-thumb img-full">
-                                                    <div class="easyzoom easyzoom--overlay">
-                                                        <a href="${combo.image}">
-                                                        <img src="${combo.image}" alt="${combo.name}">
-                                                    </a>
-                                                    <a href="${combo.image}" class="popup-img venobox" data-gall="myGallery"><i class="fa fa-search"></i></a>
+                                        <div class="col-md-5">
+                                            <div class="tab-content single-product-img">
+                                                <div class="tab-pane fade show active" id="product1">
+                                                    <div class="product-large-thumb img-full">
+                                                        <div class="easyzoom easyzoom--overlay">
+                                                            <a href="${combo.image}">
+                                                                <img src="${combo.image}" alt="${combo.name}">
+                                                            </a>
+                                                            <a href="${combo.image}" class="popup-img venobox" data-gall="myGallery"><i class="fa fa-search"></i></a>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
 
-                                    <!-- Combo Info -->
-                                    <div class="col-md-7">
-                                        <span class="combo-badge">Tiết kiệm <fmt:formatNumber value="${combo.originalPrice - combo.discountPrice}" type="currency" currencySymbol="" maxFractionDigits="0"/>đ</span>
-                                        <h1 class="combo-title">${combo.name}</h1>
-                                        <p class="combo-description">${combo.description}</p>
+                                        <!-- Combo Info -->
+                                        <div class="col-md-7">
+                                            <span class="combo-badge">Tiết kiệm <fmt:formatNumber value="${combo.originalPrice - combo.discountPrice}" type="currency" currencySymbol="" maxFractionDigits="0"/>đ</span>
+                                            <h1 class="combo-title">${combo.name}</h1>
+                                            <p class="combo-description">${combo.description}</p>
 
-                                        <div class="combo-price-container">
-                                            <div class="combo-original-price">Giá gốc: <fmt:formatNumber value="${combo.originalPrice}" type="currency" currencySymbol="" maxFractionDigits="0"/>đ</div>
-                                            <div class="combo-discount-price">Giá ưu đãi: <fmt:formatNumber value="${combo.discountPrice}" type="currency" currencySymbol="" maxFractionDigits="0"/>đ</div>
-                                            <div class="combo-savings">Tiết kiệm: <fmt:formatNumber value="${combo.originalPrice - combo.discountPrice}" type="currency" currencySymbol="" maxFractionDigits="0"/>đ</div>
-                                        </div>
-
-                                        <div class="combo-add-to-cart">
-                                            <div class="combo-quantity">
-                                                <span>Số lượng:</span>
-                                                <button type="button" class="combo-quantity-btn decrease-quantity">-</button>
-                                                <input type="number" class="combo-quantity-input" value="1" min="1" id="combo-quantity">
-                                                <button type="button" class="combo-quantity-btn increase-quantity">+</button>
+                                            <div class="combo-price-container">
+                                                <div class="combo-original-price">Giá gốc: <fmt:formatNumber value="${combo.originalPrice}" type="currency" currencySymbol="" maxFractionDigits="0"/>đ</div>
+                                                <div class="combo-discount-price">Giá ưu đãi: <fmt:formatNumber value="${combo.discountPrice}" type="currency" currencySymbol="" maxFractionDigits="0"/>đ</div>
+                                                <div class="combo-savings">Tiết kiệm: <fmt:formatNumber value="${combo.originalPrice - combo.discountPrice}" type="currency" currencySymbol="" maxFractionDigits="0"/>đ</div>
                                             </div>
-                                            <button type="button" class="combo-add-to-cart-btn" onclick="addComboToCart(${combo.comboId})">Thêm vào giỏ hàng</button>
+
+                                            <div class="combo-add-to-cart">
+                                                <div class="combo-quantity">
+                                                    <span>Số lượng:</span>
+                                                    <button type="button" class="combo-quantity-btn decrease-quantity">-</button>
+                                                    <input type="number" class="combo-quantity-input" value="1" min="1" id="combo-quantity">
+                                                    <button type="button" class="combo-quantity-btn increase-quantity">+</button>
+                                                </div>
+                                                <button type="button" class="combo-add-to-cart-btn" onclick="addComboToCart(${combo.comboId})">Thêm vào giỏ hàng</button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -305,7 +305,6 @@
                                         </div>
                                     </c:forEach>
                                 </div>
-
                             </div>
                         </div>
                     </div>
