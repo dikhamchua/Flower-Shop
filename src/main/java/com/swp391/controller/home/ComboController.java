@@ -175,28 +175,14 @@ public class ComboController extends HttpServlet {
             }
             
             // Lấy danh sách sản phẩm trong combo
-            List<Map<String, Object>> comboProducts = comboDAO.getComboProducts(comboId);
-            List<Product> products = new ArrayList<>();
+            List<Map<String, Object>> comboProducts = comboDAO.getComboProductDetails(comboId);
             
-            // Chuyển đổi dữ liệu để hiển thị
-            for (Map<String, Object> comboProduct : comboProducts) {
-                int productId = (int) comboProduct.get("product_id");
-                int quantity = (int) comboProduct.get("quantity");
-                
-                Product product = productDAO.findById(productId);
-                if (product != null) {
-                    product.setQuantity(quantity); // Đặt số lượng sản phẩm trong combo
-                    products.add(product);
-                }
-            }
-            
-            // Đặt các thuộc tính vào request
+            // Đặt thuộc tính vào request
             request.setAttribute("combo", combo);
-            request.setAttribute("comboProducts", products);
+            request.setAttribute("comboProducts", comboProducts);
             
             // Forward đến trang chi tiết combo
             request.getRequestDispatcher(COMBO_DETAILS_PAGE).forward(request, response);
-            
         } catch (NumberFormatException e) {
             response.sendRedirect(request.getContextPath() + "/combo");
         }

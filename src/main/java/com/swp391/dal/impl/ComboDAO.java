@@ -310,34 +310,100 @@ public class ComboDAO extends DBContext implements I_DAO<Combo> {
     }
 
     /**
-     * Lấy danh sách sản phẩm trong combo
-     *
-     * @param comboId ID của combo
-     * @return Danh sách sản phẩm trong combo
+     * Get detailed information about products in a combo
+     * 
+     * @param comboId The ID of the combo
+     * @return List of maps containing product details
      */
-    public List<Map<String, Object>> getComboProducts(int comboId) {
-        List<Map<String, Object>> comboProducts = new ArrayList<>();
-        String sql = "SELECT * FROM combo_product WHERE combo_id = ?";
-
+    public List<Map<String, Object>> getComboProductDetails(int comboId) {
+        List<Map<String, Object>> productDetails = new ArrayList<>();
+        String sql = "SELECT p.product_id, p.name AS productName, p.price, p.image, cp.quantity_in_combo AS quantity " +
+                     "FROM combo_product cp " +
+                     "JOIN products p ON cp.product_id = p.product_id " +
+                     "WHERE cp.combo_id = ?";
+        
         try {
             connection = getConnection();
             statement = connection.prepareStatement(sql);
             statement.setInt(1, comboId);
             resultSet = statement.executeQuery();
-
+            
             while (resultSet.next()) {
                 Map<String, Object> product = new HashMap<>();
-                product.put("combo_id", resultSet.getInt("combo_id"));
-                product.put("product_id", resultSet.getInt("product_id"));
+                product.put("productId", resultSet.getInt("product_id"));
+                product.put("productName", resultSet.getString("productName"));
+                product.put("price", resultSet.getFloat("price"));
+                product.put("image", resultSet.getString("image"));
                 product.put("quantity", resultSet.getInt("quantity"));
-                comboProducts.add(product);
+                
+                productDetails.add(product);
             }
         } catch (SQLException ex) {
-            System.out.println("Error getting combo products: " + ex.getMessage());
+            System.out.println("Error getting combo product details: " + ex.getMessage());
         } finally {
             closeResources();
         }
-
-        return comboProducts;
+        
+        return productDetails;
+    }
+    
+    /**
+     * Test method for getComboProductDetails
+     * Run this method to test if combo product details are being retrieved correctly
+     */
+    public static void main(String[] args) {
+        ComboDAO comboDAO = new ComboDAO();
+        
+        // Test with combo ID 1 - replace with an actual combo ID from your database
+        int testComboId = 66;
+        List<Map<String, Object>> products = comboDAO.getComboProductDetails(testComboId);
+        
+        System.out.println("===== Testing getComboProductDetails for Combo ID: " + testComboId + " =====");
+        
+        if (products.isEmpty()) {
+            System.out.println("No products found for this combo. Check if the combo ID exists or if it has any products.");
+        } else {
+            System.out.println("Found " + products.size() + " products in this combo:");
+            
+            for (Map<String, Object> product : products) {
+                System.out.println("\n--- Product Details ---");
+                System.out.println("Product ID: " + product.get("productId"));
+                System.out.println("Product Name: " + product.get("productName"));
+                System.out.println("Price: " + product.get("price"));
+                System.out.println("Image Path: " + product.get("image"));
+                System.out.println("Quantity in Combo: " + product.get("quantity"));
+            }
+        }
+        
+        // Test SQL query directly to debug
+        System.out.println("\n===== Testing SQL Query Directly =====");
+        try {
+            comboDAO.connection = comboDAO.getConnection();
+            String sql = "SELECT cp.combo_id, cp.product_id, p.name, cp.quantity_in_combo " +
+                         "FROM combo_product cp " +
+                         "JOIN product p ON cp.product_id = p.product_id " +
+                         "WHERE cp.combo_id = ?";
+            
+            comboDAO.statement = comboDAO.connection.prepareStatement(sql);
+            comboDAO.statement.setInt(1, testComboId);
+            comboDAO.resultSet = comboDAO.statement.executeQuery();
+            
+            boolean hasResults = false;
+            while (comboDAO.resultSet.next()) {
+                hasResults = true;
+                System.out.println("Combo ID: " + comboDAO.resultSet.getInt("combo_id") + 
+                                  ", Product ID: " + comboDAO.resultSet.getInt("product_id") + 
+                                  ", Product Name: " + comboDAO.resultSet.getString("name") + 
+                                  ", Quantity: " + comboDAO.resultSet.getInt("quantity_in_combo"));
+            }
+            
+            if (!hasResults) {
+                System.out.println("No results found with direct SQL query. Check your combo_product table.");
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error in direct SQL test: " + ex.getMessage());
+        } finally {
+            comboDAO.closeResources();
+        }
     }
 }

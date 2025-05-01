@@ -290,20 +290,28 @@
                                 </div>
 
                                 <!-- Combo Products -->
-                                <h3 class="mt-4">Danh sách sản phẩm trong combo:</h3>
-                                <div class="row">
-                                    <c:forEach var="product" items="${comboProducts}">
-                                        <div class="col-md-4 mb-4">
-                                            <div class="card">
-                                                <img src="${pageContext.request.contextPath}/${product.image}" class="card-img-top" alt="${product.productName}">
-                                                <div class="card-body">
-                                                    <h5 class="card-title">${product.productName}</h5>
-                                                    <p class="card-text">Giá: <fmt:formatNumber value="${product.price}" type="currency" currencySymbol="₫" /></p>
-                                                    <p class="card-text">Số lượng trong combo: ${product.quantity}</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </c:forEach>
+                                <div class="combo-details-container mt-4">
+                                    <h3 class="combo-products-title">Danh sách sản phẩm trong combo:</h3>
+                                    <div class="table-responsive">
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>Tên sản phẩm</th>
+                                                    <th>Giá</th>
+                                                    <th>Số lượng</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <c:forEach var="product" items="${comboProducts}">
+                                                    <tr>
+                                                        <td>${product.productName}</td>
+                                                        <td><fmt:formatNumber value="${product.price}" type="currency" currencySymbol="" maxFractionDigits="0"/>đ</td>
+                                                        <td>${product.quantity}</td>
+                                                    </tr>
+                                                </c:forEach>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                         </div>
