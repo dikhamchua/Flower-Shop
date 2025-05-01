@@ -63,6 +63,9 @@ public class ComboController extends HttpServlet {
             throws ServletException, IOException {
         ComboDAO comboDAO = new ComboDAO();
         
+        // Get search parameter
+        String searchTerm = request.getParameter("search");
+        
         // Xử lý phân trang
         int pageSize = 9; // Số combo trên mỗi trang
         int currentPage = 1;
@@ -75,11 +78,29 @@ public class ComboController extends HttpServlet {
             }
         }
         
-        // Lấy danh sách combo có trạng thái active
-        List<Combo> allCombos = comboDAO.findAllActive();
+        List<Combo> combos;
+        int totalCombos;
+        
+        // If search term exists, use search functionality
+        if (searchTerm != null && !searchTerm.trim().isEmpty()) {
+            // Get total count for pagination
+            totalCombos = comboDAO.countSearchResults(searchTerm, "active");
+            
+            // Get combos for current page
+            combos = comboDAO.searchCombos(searchTerm, "active", currentPage, pageSize);
+        } else {
+            // Get all active combos if no search term
+            List<Combo> allCombos = comboDAO.findAllActive();
+            totalCombos = allCombos.size();
+            
+            // Calculate pagination
+            int fromIndex = (currentPage - 1) * pageSize;
+            int toIndex = Math.min(fromIndex + pageSize, totalCombos);
+            
+            combos = fromIndex < totalCombos ? allCombos.subList(fromIndex, toIndex) : new ArrayList<>();
+        }
         
         // Tính tổng số trang
-        int totalCombos = allCombos.size();
         int totalPages = (int) Math.ceil((double) totalCombos / pageSize);
         
         // Validate currentPage
@@ -88,12 +109,6 @@ public class ComboController extends HttpServlet {
         } else if (currentPage > totalPages) {
             currentPage = totalPages > 0 ? totalPages : 1;
         }
-        
-        // Lấy danh sách combo cho trang hiện tại
-        int fromIndex = (currentPage - 1) * pageSize;
-        int toIndex = Math.min(fromIndex + pageSize, totalCombos);
-        
-        List<Combo> combos = fromIndex < totalCombos ? allCombos.subList(fromIndex, toIndex) : new ArrayList<>();
         
         // Tính toán phân trang
         int maxVisiblePages = 5;
@@ -116,13 +131,20 @@ public class ComboController extends HttpServlet {
             }
         }
         
+        // Create search query string for pagination links
+        String searchQueryString = "";
+        if (searchTerm != null && !searchTerm.trim().isEmpty()) {
+            searchQueryString = "&search=" + searchTerm;
+        }
+        
         // Đặt các thuộc tính vào request
         request.setAttribute("combos", combos);
         request.setAttribute("currentPage", currentPage);
         request.setAttribute("totalPages", totalPages);
         request.setAttribute("startPage", startPage);
         request.setAttribute("endPage", endPage);
-        request.setAttribute("searchQueryString", ""); // Chuỗi query cho phân trang
+        request.setAttribute("searchQueryString", searchQueryString);
+        request.setAttribute("searchTerm", searchTerm);
         
         // Forward đến trang danh sách combo
         request.getRequestDispatcher(COMBO_LIST_PAGE).forward(request, response);

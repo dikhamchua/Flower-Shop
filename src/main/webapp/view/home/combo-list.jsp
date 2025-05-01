@@ -339,7 +339,7 @@
                                 <div class="coupon-search mb-5">
                                     <form action="${pageContext.request.contextPath}/combo" method="get">
                                         <div class="input-group">
-                                            <input type="text" class="form-control" name="search" value="${param.search}" placeholder="Tìm kiếm combo...">
+                                            <input type="text" class="form-control" name="search" value="${searchTerm}" placeholder="Tìm kiếm combo...">
                                             <div class="input-group-append">
                                                 <button class="btn btn-outline-secondary" type="submit">Tìm kiếm</button>
                                             </div>
@@ -387,6 +387,8 @@
                             </div>
                             
                             <!-- Replace the pagination HTML structure -->
+                            ## 3. Let's also update the pagination links to maintain the search parameter:
+                            ```html
                             <c:if test="${totalPages > 1}">
                                 <div class="col-12">
                                     <div class="pagination-area">
@@ -416,6 +418,7 @@
                                     </div>
                                 </div>
                             </c:if>
+                            ```
                         </div>
                     </div>
                 </div>
