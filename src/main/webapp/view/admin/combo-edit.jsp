@@ -10,8 +10,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Chỉnh sửa Combo | Admin</title>
         <jsp:include page="../common/dashboard/css-dashboard.jsp"></jsp:include>
-        <!-- Select2 -->
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/admin/plugins/select2/css/select2.min.css">
+            <!-- Select2 -->
+            <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/admin/plugins/select2/css/select2.min.css">
         <!-- Tagify -->
         <link rel="stylesheet" href="https://unpkg.com/@yaireo/tagify/dist/tagify.css">
     </head>
@@ -27,22 +27,22 @@
                 <!-- Content Wrapper. Contains page content -->
                 <div class="content-wrapper">
                     <!-- Content Header (Page header) -->
-<!--                    <section class="content-header">
-                        <div class="container-fluid">
-                            <div class="row mb-2">
-                                <div class="col-sm-6">
-                                    <h1>Chỉnh sửa Combo</h1>
-                                </div>
-                                <div class="col-sm-6">
-                                    <ol class="breadcrumb float-sm-right">
-                                        <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/admin/dashboard">Dashboard</a></li>
-                                    <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/admin/manage-combo">Quản lý Combo</a></li>
-                                    <li class="breadcrumb-item active">Chỉnh sửa Combo</li>
-                                </ol>
-                            </div>
-                        </div>
-                    </div> /.container-fluid 
-                </section>-->
+                    <!--                    <section class="content-header">
+                                            <div class="container-fluid">
+                                                <div class="row mb-2">
+                                                    <div class="col-sm-6">
+                                                        <h1>Chỉnh sửa Combo</h1>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <ol class="breadcrumb float-sm-right">
+                                                            <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/admin/dashboard">Dashboard</a></li>
+                                                        <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/admin/manage-combo">Quản lý Combo</a></li>
+                                                        <li class="breadcrumb-item active">Chỉnh sửa Combo</li>
+                                                    </ol>
+                                                </div>
+                                            </div>
+                                        </div> /.container-fluid 
+                                    </section>-->
 
                 <!-- Main content -->
                 <section class="content">
@@ -52,7 +52,7 @@
                         </div>
                         <div class="card">
                             <div class="card-body p-24">
-                                <form id="comboForm" action="${pageContext.request.contextPath}/admin/manage-combo?action=update" method="post">
+                                <form id="comboForm" action="${pageContext.request.contextPath}/admin/manage-combo?action=update" method="post" enctype="multipart/form-data">
                                     <input type="hidden" name="id" value="${combo.comboId}">
                                     <input type="hidden" name="page" value="${param.page}">
 
@@ -61,7 +61,7 @@
                                             <ul class="mb-0">
                                                 <c:forEach items="${sessionScope.errors}" var="error">
                                                     <li>${error.value}</li>
-                                                </c:forEach>
+                                                    </c:forEach>
                                             </ul>
                                         </div>
                                         <% session.removeAttribute("errors"); %>
@@ -94,7 +94,7 @@
                                                     <c:if test="${not empty combo.image}">
                                                         <div class="mb-2">
                                                             <img src="${pageContext.request.contextPath}/${combo.image}" 
-                                                                     alt="${combo.name}" class="img-thumbnail" style="max-width: 150px;">
+                                                                 alt="${combo.name}" class="img-thumbnail" style="max-width: 150px;">
                                                             <div class="form-text">Hình ảnh hiện tại</div>
                                                         </div>
                                                     </c:if>
@@ -143,7 +143,7 @@
                                                         </div>
                                                     </div>
                                                 </c:forEach>
-                                                
+
                                                 <c:if test="${empty comboProducts}">
                                                     <div class="product-selection-row row mb-3">
                                                         <div class="col-md-8">
@@ -183,7 +183,7 @@
                                     <!-- Hidden inputs for form submission -->
                                     <input type="hidden" id="productIdsInput" name="productIds">
                                     <input type="hidden" id="quantitiesInput" name="quantities">
-                                    
+
                                     <!-- Price Summary -->
                                     <div class="row mt-4">
                                         <div class="col-md-6 offset-md-6">
@@ -227,69 +227,69 @@
                                         </div>
                                     </div>
                                 </form>
-<!--                                <div class="row mt-2">
-                                        <div class="col-12">
-                                            <button type="button" class="btn btn-success add-product">
-                                                <i class="fas fa-plus"></i> Thêm sản phẩm
-                                            </button>
-                                        </div>
-                                    </div>-->
-                                </div>
+                                <!--                                <div class="row mt-2">
+                                                                        <div class="col-12">
+                                                                            <button type="button" class="btn btn-success add-product">
+                                                                                <i class="fas fa-plus"></i> Thêm sản phẩm
+                                                                            </button>
+                                                                        </div>
+                                                                    </div>-->
                             </div>
                         </div>
                     </div>
-                </section>
-                <!-- /.content -->
             </div>
-            <!-- /.content-wrapper -->
+        </section>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
 
-        </div>
-        <!-- ./wrapper -->
+</div>
+<!-- ./wrapper -->
 
-        <jsp:include page="../common/dashboard/js-dashboard.jsp"></jsp:include>
-        <!-- Select2 -->
-        <script src="${pageContext.request.contextPath}/assets/admin/plugins/select2/js/select2.full.min.js"></script>
-        <!-- Tagify -->
-        <script src="https://unpkg.com/@yaireo/tagify"></script>
-        <!-- Combo Product Manager -->
-        <script src="${pageContext.request.contextPath}/assets/js/comboProductManager.js"></script>
-        
-        <!-- Thêm đoạn script này trước đóng body -->
-        <script>
-            // Khởi tạo dữ liệu cho JavaScript
-            window.products = ${productsJson};
-            window.selectedProducts = ${comboProductsJson};
-            
-            $(document).ready(function() {
-                // Khởi tạo Select2
-                $('.product-select').select2({
-                    theme: 'bootstrap4',
-                    placeholder: 'Chọn sản phẩm',
-                    allowClear: true
-                });
+<jsp:include page="../common/dashboard/js-dashboard.jsp"></jsp:include>
+    <!-- Select2 -->
+    <script src="${pageContext.request.contextPath}/assets/admin/plugins/select2/js/select2.full.min.js"></script>
+<!-- Tagify -->
+<script src="https://unpkg.com/@yaireo/tagify"></script>
+<!-- Combo Product Manager -->
+<script src="${pageContext.request.contextPath}/assets/js/comboProductManager.js"></script>
 
-                // Cập nhật tiết kiệm khi giá ưu đãi thay đổi
-                $('#discount_price').on('input', function() {
-                    updateSavings();
-                });
+<!-- Thêm đoạn script này trước đóng body -->
+<script>
+    // Khởi tạo dữ liệu cho JavaScript
+    window.products = ${productsJson};
+    window.selectedProducts = ${comboProductsJson};
 
-                // Hàm tính và cập nhật số tiền tiết kiệm
-                function updateSavings() {
-                    const originalPrice = parseFloat($('#original_price').val()) || 0;
-                    const discountPrice = parseFloat($('#discount_price').val()) || 0;
-                    
-                    const savings = originalPrice - discountPrice;
-                    
-                    if (!isNaN(savings) && savings >= 0) {
-                        $('#savings-display').text(savings.toLocaleString('vi-VN'));
-                    } else {
-                        $('#savings-display').text('0');
-                    }
-                }
+    $(document).ready(function () {
+        // Khởi tạo Select2
+        $('.product-select').select2({
+            theme: 'bootstrap4',
+            placeholder: 'Chọn sản phẩm',
+            allowClear: true
+        });
 
-                // Tính toán tiết kiệm ngay khi trang load
-                updateSavings();
-            });
-        </script>
-    </body>
+        // Cập nhật tiết kiệm khi giá ưu đãi thay đổi
+        $('#discount_price').on('input', function () {
+            updateSavings();
+        });
+
+        // Hàm tính và cập nhật số tiền tiết kiệm
+        function updateSavings() {
+            const originalPrice = parseFloat($('#original_price').val()) || 0;
+            const discountPrice = parseFloat($('#discount_price').val()) || 0;
+
+            const savings = originalPrice - discountPrice;
+
+            if (!isNaN(savings) && savings >= 0) {
+                $('#savings-display').text(savings.toLocaleString('vi-VN'));
+            } else {
+                $('#savings-display').text('0');
+            }
+        }
+
+        // Tính toán tiết kiệm ngay khi trang load
+        updateSavings();
+    });
+</script>
+</body>
 </html>

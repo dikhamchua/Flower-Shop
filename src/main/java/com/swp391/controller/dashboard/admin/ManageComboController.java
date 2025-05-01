@@ -38,15 +38,14 @@ import java.util.UUID;
 // Add MultipartConfig annotation to the class
 @WebServlet(name = "ManageComboController", urlPatterns = {"/admin/manage-combo"})
 @MultipartConfig(
-    fileSizeThreshold = 1024 * 1024, // 1 MB
-    maxFileSize = 1024 * 1024 * 10,  // 10 MB
-    maxRequestSize = 1024 * 1024 * 50 // 50 MB
+        fileSizeThreshold = 1024 * 1024, // 1 MB
+        maxFileSize = 1024 * 1024 * 10, // 10 MB
+        maxRequestSize = 1024 * 1024 * 50 // 50 MB
 )
 public class ManageComboController extends HttpServlet {
-    
+
     // Add a constant for the upload directory
-    private static final String UPLOAD_DIR = "uploads/combos";
-    
+//    private static final String UPLOAD_DIR = "uploads/combos";
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -104,7 +103,7 @@ public class ManageComboController extends HttpServlet {
         // Get filter parameters
         String searchFilter = request.getParameter("search");
         String statusFilter = request.getParameter("status");
-    
+
         // Get pagination parameters
         int page = 1;
         int pageSize = 10;
@@ -119,25 +118,25 @@ public class ManageComboController extends HttpServlet {
                 page = 1;
             }
         }
-    
+
         ComboDAO comboDAO = new ComboDAO();
-        
+
         // Sử dụng phương thức tìm kiếm mới
         List<Combo> combos = comboDAO.searchCombos(searchFilter, statusFilter, page, pageSize);
         int totalCombos = comboDAO.countSearchResults(searchFilter, statusFilter);
-        
+
         int totalPages = (int) Math.ceil((double) totalCombos / pageSize);
-    
+
         // Set attributes for JSP
         request.setAttribute("combos", combos);
         request.setAttribute("currentPage", page);
         request.setAttribute("totalPages", totalPages);
         request.setAttribute("totalCombos", totalCombos);
-    
+
         // Set filter values for maintaining state
         request.setAttribute("statusFilter", statusFilter);
         request.setAttribute("searchFilter", searchFilter);
-    
+
         request.getRequestDispatcher("../view/admin/combo-list.jsp").forward(request, response);
     }
 
@@ -156,7 +155,7 @@ public class ManageComboController extends HttpServlet {
             boolean matchesSearch = searchFilter == null || searchFilter.isEmpty()
                     || combo.getName().toLowerCase().contains(searchFilter.toLowerCase())
                     || (combo.getDescription() != null && combo.getDescription().toLowerCase().contains(searchFilter.toLowerCase()));
-            
+
             boolean matchesStatus = statusFilter == null || statusFilter.isEmpty()
                     || combo.getStatus().equals(statusFilter);
 
@@ -189,7 +188,7 @@ public class ManageComboController extends HttpServlet {
             boolean matchesSearch = searchFilter == null || searchFilter.isEmpty()
                     || combo.getName().toLowerCase().contains(searchFilter.toLowerCase())
                     || (combo.getDescription() != null && combo.getDescription().toLowerCase().contains(searchFilter.toLowerCase()));
-            
+
             boolean matchesStatus = statusFilter == null || statusFilter.isEmpty()
                     || combo.getStatus().equals(statusFilter);
 
@@ -209,7 +208,7 @@ public class ManageComboController extends HttpServlet {
         // Get all active products for the combo selection
         ProductDAO productDAO = new ProductDAO();
         List<Product> products = productDAO.findAllActive();
-        
+
         // Convert products to JSON for JavaScript
         StringBuilder productsJson = new StringBuilder("[");
         for (int i = 0; i < products.size(); i++) {
@@ -224,10 +223,10 @@ public class ManageComboController extends HttpServlet {
             }
         }
         productsJson.append("]");
-        
+
         request.setAttribute("products", products);
         request.setAttribute("productsJson", productsJson.toString());
-    
+
         request.getRequestDispatcher("../view/admin/combo-add.jsp").forward(request, response);
     }
 
@@ -239,24 +238,24 @@ public class ManageComboController extends HttpServlet {
         String comboIdStr = request.getParameter("id");
         if (comboIdStr != null && !comboIdStr.isEmpty()) {
             int comboId = Integer.parseInt(comboIdStr);
-            
+
             // Get combo data
             ComboDAO comboDAO = new ComboDAO();
             Combo combo = comboDAO.findById(comboId);
-            
+
             if (combo != null) {
                 // Get products in this combo
                 ComboProductDAO comboProductDAO = new ComboProductDAO();
                 List<ComboProduct> comboProducts = comboProductDAO.findByComboId(comboId);
-                
+
                 // Get tags for this combo
                 ComboTagDAO comboTagDAO = new ComboTagDAO();
                 List<ComboTag> comboTags = comboTagDAO.findByComboId(comboId);
-                
+
                 // Get all active products for selection
                 ProductDAO productDAO = new ProductDAO();
                 List<Product> allProducts = productDAO.findAllActive();
-                
+
                 // Convert products to JSON for JavaScript
                 StringBuilder productsJson = new StringBuilder("[");
                 for (int i = 0; i < allProducts.size(); i++) {
@@ -271,7 +270,7 @@ public class ManageComboController extends HttpServlet {
                     }
                 }
                 productsJson.append("]");
-                
+
                 // Convert selected products to JSON for JavaScript
                 StringBuilder selectedProductsJson = new StringBuilder("[");
                 for (int i = 0; i < comboProducts.size(); i++) {
@@ -290,7 +289,7 @@ public class ManageComboController extends HttpServlet {
                     }
                 }
                 selectedProductsJson.append("]");
-                
+
                 // Convert tags to string
                 StringBuilder tagsStr = new StringBuilder();
                 for (int i = 0; i < comboTags.size(); i++) {
@@ -299,7 +298,7 @@ public class ManageComboController extends HttpServlet {
                         tagsStr.append(",");
                     }
                 }
-                
+
                 // Set attributes for JSP
                 request.setAttribute("combo", combo);
                 request.setAttribute("comboProducts", comboProducts);
@@ -308,7 +307,7 @@ public class ManageComboController extends HttpServlet {
                 request.setAttribute("productsJson", productsJson.toString());
                 request.setAttribute("selectedProductsJson", selectedProductsJson.toString());
                 request.setAttribute("tagsString", tagsStr.toString());
-                
+
                 request.getRequestDispatcher("../view/admin/combo-edit.jsp").forward(request, response);
                 return;
             }
@@ -323,247 +322,170 @@ public class ManageComboController extends HttpServlet {
     private void addCombo(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            // Get basic combo information
             String name = request.getParameter("name");
             String description = request.getParameter("description");
             Float discountPrice = Float.parseFloat(request.getParameter("discount_price"));
             String status = request.getParameter("status");
-            
-            // Handle image upload
-            String imagePath = null;
+
+            // Ởt image
             Part filePart = request.getPart("image");
+            String imagePath = null;
+
             if (filePart != null && filePart.getSize() > 0) {
-                String fileName = getSubmittedFileName(filePart);
-                if (fileName != null && !fileName.isEmpty()) {
-                    // Generate unique filename
-                    String uniqueFileName = UUID.randomUUID().toString() + "_" + fileName;
-                    
-                    // Create upload directory if it doesn't exist
-                    String applicationPath = request.getServletContext().getRealPath("");
-                    String uploadPath = applicationPath + File.separator + UPLOAD_DIR;
-                    File uploadDir = new File(uploadPath);
-                    if (!uploadDir.exists()) {
-                        uploadDir.mkdirs();
-                    }
-                    
-                    // Save the file
-                    String filePath = uploadPath + File.separator + uniqueFileName;
-                    filePart.write(filePath);
-                    
-                    // Set the relative path for database storage
-                    imagePath = UPLOAD_DIR + "/" + uniqueFileName;
+                String originalFileName = filePart.getSubmittedFileName();
+                String uniqueFileName = System.currentTimeMillis() + "_" + originalFileName;
+
+                String uploadPath = request.getServletContext().getRealPath("/uploads/combos/");
+                File uploadDir = new File(uploadPath);
+                if (!uploadDir.exists()) {
+                    uploadDir.mkdirs();
                 }
+
+                String fullPath = uploadPath + File.separator + uniqueFileName;
+                filePart.write(fullPath);
+                imagePath = "uploads/combos/" + uniqueFileName;
             }
-            
-            // Get product IDs and quantities from form
+
             String productIdsStr = request.getParameter("productIds");
             String quantitiesStr = request.getParameter("quantities");
-            
-            String[] productIds = null;
-            String[] quantities = null;
-            
-            if (productIdsStr != null && !productIdsStr.isEmpty()) {
-                productIds = productIdsStr.split(",");
-            }
-            
-            if (quantitiesStr != null && !quantitiesStr.isEmpty()) {
-                quantities = quantitiesStr.split(",");
-            }
-            
-            // Validate input
+            String[] productIds = productIdsStr != null ? productIdsStr.split(",") : null;
+            String[] quantities = quantitiesStr != null ? quantitiesStr.split(",") : null;
+
             Map<String, String> errors = validateComboData(name, discountPrice, productIds, quantities, null);
-            
             if (!errors.isEmpty()) {
                 request.getSession().setAttribute("errors", errors);
                 request.getSession().setAttribute("formData", request.getParameterMap());
                 response.sendRedirect(request.getContextPath() + "/admin/manage-combo?action=add");
                 return;
             }
-            
-            // Calculate original price based on selected products
+
             ProductDAO productDAO = new ProductDAO();
             Float originalPrice = calculateOriginalPrice(productIds, quantities, productDAO);
-            
-            // Create new combo
+
             Combo newCombo = Combo.builder()
                     .name(name)
                     .description(description)
                     .originalPrice(originalPrice)
                     .discountPrice(discountPrice)
                     .status(status)
+                    .image(imagePath)
                     .build();
-            
-            // Insert combo
+
             ComboDAO comboDAO = new ComboDAO();
             int comboId = comboDAO.insert(newCombo);
-            
+
             if (comboId > 0) {
-                // Insert combo products
                 ComboProductDAO comboProductDAO = new ComboProductDAO();
                 for (int i = 0; i < productIds.length; i++) {
                     int productId = Integer.parseInt(productIds[i]);
                     int quantity = Integer.parseInt(quantities[i]);
-                    
-                    ComboProduct comboProduct = ComboProduct.builder()
-                            .comboId(comboId)
-                            .productId(productId)
-                            .quantityInCombo(quantity)
-                            .build();
-                    
-                    comboProductDAO.insert(comboProduct);
+                    comboProductDAO.insert(ComboProduct.builder().comboId(comboId).productId(productId).quantityInCombo(quantity).build());
                 }
-                
-                // Insert combo tags
+
                 String tagInput = request.getParameter("tags");
                 if (tagInput != null && !tagInput.isEmpty()) {
                     ComboTagDAO comboTagDAO = new ComboTagDAO();
-                    String[] tags = tagInput.split(",");
-                    
-                    for (String tag : tags) {
+                    for (String tag : tagInput.split(",")) {
                         tag = tag.trim();
                         if (!tag.isEmpty()) {
-                            ComboTag comboTag = ComboTag.builder()
-                                    .comboId(comboId)
-                                    .tagName(tag)
-                                    .build();
-                            
-                            comboTagDAO.insert(comboTag);
+                            comboTagDAO.insert(ComboTag.builder().comboId(comboId).tagName(tag).build());
                         }
                     }
                 }
-                
                 request.getSession().setAttribute("toastMessage", "Combo created successfully!");
                 request.getSession().setAttribute("toastType", "success");
             } else {
                 request.getSession().setAttribute("toastMessage", "Failed to create combo!");
                 request.getSession().setAttribute("toastType", "error");
             }
-            
         } catch (Exception e) {
             request.getSession().setAttribute("toastMessage", "Error: " + e.getMessage());
             request.getSession().setAttribute("toastType", "error");
         }
-        
         response.sendRedirect(request.getContextPath() + "/admin/manage-combo");
     }
 
-    /**
-     * Update an existing combo
-     */
     private void updateCombo(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            // Get combo ID
             int comboId = Integer.parseInt(request.getParameter("id"));
-            
-            // Get basic combo information
             String name = request.getParameter("name");
             String description = request.getParameter("description");
             Float discountPrice = Float.parseFloat(request.getParameter("discount_price"));
             String status = request.getParameter("status");
-            
-            // Get product IDs and quantities from form
+
             String productIdsStr = request.getParameter("productIds");
             String quantitiesStr = request.getParameter("quantities");
-            
-            String[] productIds = null;
-            String[] quantities = null;
-            
-            if (productIdsStr != null && !productIdsStr.isEmpty()) {
-                productIds = productIdsStr.split(",");
-            }
-            
-            if (quantitiesStr != null && !quantitiesStr.isEmpty()) {
-                quantities = quantitiesStr.split(",");
-            }
-            
-            // Validate input
+            String[] productIds = productIdsStr != null ? productIdsStr.split(",") : null;
+            String[] quantities = quantitiesStr != null ? quantitiesStr.split(",") : null;
+
             Map<String, String> errors = validateComboData(name, discountPrice, productIds, quantities, comboId);
-            
             if (!errors.isEmpty()) {
                 request.getSession().setAttribute("errors", errors);
                 request.getSession().setAttribute("formData", request.getParameterMap());
                 response.sendRedirect(request.getContextPath() + "/admin/manage-combo?action=edit&id=" + comboId);
                 return;
             }
-            
-            // Calculate original price based on selected products
+
             ProductDAO productDAO = new ProductDAO();
             Float originalPrice = calculateOriginalPrice(productIds, quantities, productDAO);
-            
-            // Get combo from database
+
             ComboDAO comboDAO = new ComboDAO();
             Combo combo = comboDAO.findById(comboId);
-            
+
             if (combo != null) {
-                // Update combo fields
                 combo.setName(name);
                 combo.setDescription(description);
                 combo.setOriginalPrice(originalPrice);
                 combo.setDiscountPrice(discountPrice);
                 combo.setStatus(status);
-                
-                // Update combo
+
+                // Đổi ảnh nếu có
+                Part filePart = request.getPart("image");
+                if (filePart != null && filePart.getSize() > 0) {
+                    String originalFileName = filePart.getSubmittedFileName();
+                    String uniqueFileName = System.currentTimeMillis() + "_" + originalFileName;
+                    String uploadPath = request.getServletContext().getRealPath("/uploads/combos/");
+                    File uploadDir = new File(uploadPath);
+                    if (!uploadDir.exists()) {
+                        uploadDir.mkdirs();
+                    }
+                    filePart.write(uploadPath + File.separator + uniqueFileName);
+                    combo.setImage("uploads/combos/" + uniqueFileName);
+                }
+
                 boolean updated = comboDAO.update(combo);
-                
+
                 if (updated) {
-                    // Delete existing combo products
                     ComboProductDAO comboProductDAO = new ComboProductDAO();
                     comboProductDAO.deleteByComboId(comboId);
-                    
-                    // Insert new combo products
                     for (int i = 0; i < productIds.length; i++) {
                         int productId = Integer.parseInt(productIds[i]);
                         int quantity = Integer.parseInt(quantities[i]);
-                        
-                        ComboProduct comboProduct = ComboProduct.builder()
-                                .comboId(comboId)
-                                .productId(productId)
-                                .quantityInCombo(quantity)
-                                .build();
-                        
-                        comboProductDAO.insert(comboProduct);
+                        comboProductDAO.insert(ComboProduct.builder().comboId(comboId).productId(productId).quantityInCombo(quantity).build());
                     }
-                    
-                    // Delete existing combo tags
+
                     ComboTagDAO comboTagDAO = new ComboTagDAO();
                     comboTagDAO.deleteByComboId(comboId);
-                    
-                    // Insert new combo tags
                     String tagInput = request.getParameter("tags");
                     if (tagInput != null && !tagInput.isEmpty()) {
-                        String[] tags = tagInput.split(",");
-                        
-                        for (String tag : tags) {
+                        for (String tag : tagInput.split(",")) {
                             tag = tag.trim();
                             if (!tag.isEmpty()) {
-                                ComboTag comboTag = ComboTag.builder()
-                                        .comboId(comboId)
-                                        .tagName(tag)
-                                        .build();
-                                
-                                comboTagDAO.insert(comboTag);
+                                comboTagDAO.insert(ComboTag.builder().comboId(comboId).tagName(tag).build());
                             }
                         }
                     }
-                    
-                    request.getSession().setAttribute("toastMessage", "Combo updated successfully!");
-                    request.getSession().setAttribute("toastType", "success");
+                    setToastMessage(request, "Combo updated successfully!", "success");
                 } else {
-                    request.getSession().setAttribute("toastMessage", "Failed to update combo!");
-                    request.getSession().setAttribute("toastType", "error");
+                    setToastMessage(request, "Failed to update combo!", "error");
                 }
             } else {
-                request.getSession().setAttribute("toastMessage", "Combo not found!");
-                request.getSession().setAttribute("toastType", "error");
+                setToastMessage(request, "Combo not found!", "error");
             }
-            
         } catch (Exception e) {
-            request.getSession().setAttribute("toastMessage", "Error: " + e.getMessage());
-            request.getSession().setAttribute("toastType", "error");
+            setToastMessage(request, "Error: " + e.getMessage(), "error");
         }
-        
-        // Redirect to list page with current page
         String page = request.getParameter("page");
         String redirectUrl = request.getContextPath() + "/admin/manage-combo?action=list";
         if (page != null && !page.isEmpty()) {
@@ -579,12 +501,12 @@ public class ManageComboController extends HttpServlet {
             throws ServletException, IOException {
         String comboIdStr = request.getParameter("id");
         String page = request.getParameter("page");
-        
+
         if (comboIdStr != null && !comboIdStr.isEmpty()) {
             int comboId = Integer.parseInt(comboIdStr);
             ComboDAO comboDAO = new ComboDAO();
             boolean deactivated = comboDAO.updateStatus(comboId, "inactive");
-            
+
             if (deactivated) {
                 setToastMessage(request, "Combo deactivated successfully", "success");
             } else {
@@ -593,7 +515,7 @@ public class ManageComboController extends HttpServlet {
         } else {
             setToastMessage(request, "Invalid combo ID", "error");
         }
-        
+
         String redirectUrl = request.getContextPath() + "/admin/manage-combo?action=list";
         if (page != null && !page.isEmpty()) {
             redirectUrl += "&page=" + page;
@@ -608,12 +530,12 @@ public class ManageComboController extends HttpServlet {
             throws ServletException, IOException {
         String comboIdStr = request.getParameter("id");
         String page = request.getParameter("page");
-        
+
         if (comboIdStr != null && !comboIdStr.isEmpty()) {
             int comboId = Integer.parseInt(comboIdStr);
             ComboDAO comboDAO = new ComboDAO();
             boolean activated = comboDAO.updateStatus(comboId, "active");
-            
+
             if (activated) {
                 setToastMessage(request, "Combo activated successfully", "success");
             } else {
@@ -622,7 +544,7 @@ public class ManageComboController extends HttpServlet {
         } else {
             setToastMessage(request, "Invalid combo ID", "error");
         }
-        
+
         String redirectUrl = request.getContextPath() + "/admin/manage-combo?action=list";
         if (page != null && !page.isEmpty()) {
             redirectUrl += "&page=" + page;
@@ -631,43 +553,44 @@ public class ManageComboController extends HttpServlet {
     }
 
     /**
-     * Calculate the original price of the combo based on selected products and quantities
+     * Calculate the original price of the combo based on selected products and
+     * quantities
      */
     private Float calculateOriginalPrice(String[] productIds, String[] quantities, ProductDAO productDAO) {
         float originalPrice = 0.0f;
-        
+
         for (int i = 0; i < productIds.length; i++) {
             int productId = Integer.parseInt(productIds[i]);
             int quantity = Integer.parseInt(quantities[i]);
-            
+
             Product product = productDAO.findById(productId);
             if (product != null) {
                 originalPrice += product.getPrice().floatValue() * quantity;
             }
         }
-        
+
         return originalPrice;
     }
 
     /**
      * Validate combo data
      */
-    private Map<String, String> validateComboData(String name, Float discountPrice, 
+    private Map<String, String> validateComboData(String name, Float discountPrice,
             String[] productIds, String[] quantities, Integer comboId) {
         Map<String, String> errors = new HashMap<>();
-        
+
         // Validate name
         if (name == null || name.trim().isEmpty()) {
             errors.put("name", "Combo name is required");
         } else if (name.length() > 255) {
             errors.put("name", "Combo name must be less than 255 characters");
         }
-        
+
         // Validate products
         if (productIds == null || productIds.length == 0) {
             errors.put("products", "You must select at least one product for the combo");
         }
-        
+
         // Validate quantities
         if (quantities != null) {
             for (int i = 0; i < quantities.length; i++) {
@@ -681,17 +604,17 @@ public class ManageComboController extends HttpServlet {
                 }
             }
         }
-        
+
         // Validate discount price (must be less than original price)
         if (discountPrice != null && productIds != null && quantities != null) {
             ProductDAO productDAO = new ProductDAO();
             float originalPrice = calculateOriginalPrice(productIds, quantities, productDAO);
-            
+
             if (discountPrice >= originalPrice) {
                 errors.put("discount_price", "Discount price must be less than original price");
             }
         }
-        
+
         return errors;
     }
 

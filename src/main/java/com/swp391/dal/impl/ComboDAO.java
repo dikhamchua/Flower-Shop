@@ -38,8 +38,8 @@ public class ComboDAO extends DBContext implements I_DAO<Combo> {
 
     @Override
     public boolean update(Combo combo) {
-        String sql = "UPDATE combo SET name = ?, description = ?, original_price = ?, " +
-                "discount_price = ?, status = ? WHERE combo_id = ?";
+        String sql = "UPDATE combo SET name = ?, description = ?, original_price = ?, "
+                + "discount_price = ?, status = ?, image = ? WHERE combo_id = ?";
 
         try {
             connection = getConnection();
@@ -49,7 +49,8 @@ public class ComboDAO extends DBContext implements I_DAO<Combo> {
             statement.setFloat(3, combo.getOriginalPrice());
             statement.setFloat(4, combo.getDiscountPrice());
             statement.setString(5, combo.getStatus());
-            statement.setInt(6, combo.getComboId());
+            statement.setString(6, combo.getImage());
+            statement.setInt(7, combo.getComboId());
 
             int affectedRows = statement.executeUpdate();
             return affectedRows > 0;
@@ -80,8 +81,8 @@ public class ComboDAO extends DBContext implements I_DAO<Combo> {
 
     @Override
     public int insert(Combo combo) {
-        String sql = "INSERT INTO combo (name, description, original_price, discount_price, status) " +
-                "VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO combo (name, description, original_price, discount_price, status, image) "
+                + "VALUES (?, ?, ?, ?, ?, ?)";
 
         try {
             connection = getConnection();
@@ -91,6 +92,7 @@ public class ComboDAO extends DBContext implements I_DAO<Combo> {
             statement.setFloat(3, combo.getOriginalPrice());
             statement.setFloat(4, combo.getDiscountPrice());
             statement.setString(5, combo.getStatus());
+            statement.setString(6, combo.getImage());
 
             int affectedRows = statement.executeUpdate();
 
@@ -122,23 +124,23 @@ public class ComboDAO extends DBContext implements I_DAO<Combo> {
         combo.setDiscountPrice(rs.getFloat("discount_price"));
         combo.setStatus(rs.getString("status"));
         combo.setImage(rs.getString("image")); // Add this line to get image from result set
-        
+
         Timestamp createdAt = rs.getTimestamp("created_at");
         if (createdAt != null) {
             combo.setCreatedAt(createdAt.toLocalDateTime());
         }
-        
+
         Timestamp updatedAt = rs.getTimestamp("updated_at");
         if (updatedAt != null) {
             combo.setUpdatedAt(updatedAt.toLocalDateTime());
         }
-        
+
         return combo;
     }
-    
+
     /**
      * Find a combo by its ID
-     * 
+     *
      * @param comboId The ID of the combo to find
      * @return The combo if found, null otherwise
      */
@@ -159,10 +161,10 @@ public class ComboDAO extends DBContext implements I_DAO<Combo> {
         }
         return null;
     }
-    
+
     /**
      * Find all active combos
-     * 
+     *
      * @return List of active combos
      */
     public List<Combo> findAllActive() {
@@ -182,10 +184,10 @@ public class ComboDAO extends DBContext implements I_DAO<Combo> {
         }
         return combos;
     }
-    
+
     /**
      * Update the status of a combo
-     * 
+     *
      * @param comboId The ID of the combo to update
      * @param status The new status (active/inactive)
      * @return True if successful, false otherwise
@@ -209,7 +211,7 @@ public class ComboDAO extends DBContext implements I_DAO<Combo> {
 
     /**
      * Tìm kiếm combo theo nhiều tiêu chí
-     * 
+     *
      * @param searchTerm Từ khóa tìm kiếm (tên, mô tả)
      * @param status Trạng thái combo (active/inactive)
      * @param page Trang hiện tại
@@ -220,34 +222,34 @@ public class ComboDAO extends DBContext implements I_DAO<Combo> {
         List<Combo> combos = new ArrayList<>();
         StringBuilder sql = new StringBuilder("SELECT * FROM combo WHERE 1=1");
         List<Object> params = new ArrayList<>();
-        
+
         // Thêm điều kiện tìm kiếm
         if (searchTerm != null && !searchTerm.isEmpty()) {
             sql.append(" AND (name LIKE ? OR description LIKE ?)");
             params.add("%" + searchTerm + "%");
             params.add("%" + searchTerm + "%");
         }
-        
+
         // Thêm điều kiện lọc theo trạng thái
         if (status != null && !status.isEmpty()) {
             sql.append(" AND status = ?");
             params.add(status);
         }
-        
+
         // Thêm phân trang
         sql.append(" ORDER BY combo_id DESC LIMIT ? OFFSET ?");
         params.add(pageSize);
         params.add((page - 1) * pageSize);
-        
+
         try {
             connection = getConnection();
             statement = connection.prepareStatement(sql.toString());
-            
+
             // Thiết lập tham số
             for (int i = 0; i < params.size(); i++) {
                 statement.setObject(i + 1, params.get(i));
             }
-            
+
             resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 combos.add(getFromResultSet(resultSet));
@@ -257,13 +259,13 @@ public class ComboDAO extends DBContext implements I_DAO<Combo> {
         } finally {
             closeResources();
         }
-        
+
         return combos;
     }
 
     /**
      * Đếm tổng số combo thỏa mãn điều kiện tìm kiếm
-     * 
+     *
      * @param searchTerm Từ khóa tìm kiếm (tên, mô tả)
      * @param status Trạng thái combo (active/inactive)
      * @return Tổng số combo thỏa mãn điều kiện
@@ -271,29 +273,29 @@ public class ComboDAO extends DBContext implements I_DAO<Combo> {
     public int countSearchResults(String searchTerm, String status) {
         StringBuilder sql = new StringBuilder("SELECT COUNT(*) FROM combo WHERE 1=1");
         List<Object> params = new ArrayList<>();
-        
+
         // Thêm điều kiện tìm kiếm
         if (searchTerm != null && !searchTerm.isEmpty()) {
             sql.append(" AND (name LIKE ? OR description LIKE ?)");
             params.add("%" + searchTerm + "%");
             params.add("%" + searchTerm + "%");
         }
-        
+
         // Thêm điều kiện lọc theo trạng thái
         if (status != null && !status.isEmpty()) {
             sql.append(" AND status = ?");
             params.add(status);
         }
-        
+
         try {
             connection = getConnection();
             statement = connection.prepareStatement(sql.toString());
-            
+
             // Thiết lập tham số
             for (int i = 0; i < params.size(); i++) {
                 statement.setObject(i + 1, params.get(i));
             }
-            
+
             resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 return resultSet.getInt(1);
@@ -303,26 +305,26 @@ public class ComboDAO extends DBContext implements I_DAO<Combo> {
         } finally {
             closeResources();
         }
-        
+
         return 0;
     }
-    
+
     /**
      * Lấy danh sách sản phẩm trong combo
-     * 
+     *
      * @param comboId ID của combo
      * @return Danh sách sản phẩm trong combo
      */
     public List<Map<String, Object>> getComboProducts(int comboId) {
         List<Map<String, Object>> comboProducts = new ArrayList<>();
         String sql = "SELECT * FROM combo_product WHERE combo_id = ?";
-        
+
         try {
             connection = getConnection();
             statement = connection.prepareStatement(sql);
             statement.setInt(1, comboId);
             resultSet = statement.executeQuery();
-            
+
             while (resultSet.next()) {
                 Map<String, Object> product = new HashMap<>();
                 product.put("combo_id", resultSet.getInt("combo_id"));
@@ -335,7 +337,7 @@ public class ComboDAO extends DBContext implements I_DAO<Combo> {
         } finally {
             closeResources();
         }
-        
+
         return comboProducts;
     }
 }

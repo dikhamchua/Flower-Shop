@@ -9,7 +9,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Tạo Combo Mới | Admin</title>
         <jsp:include page="../common/dashboard/css-dashboard.jsp"></jsp:include>
-        
+
             <!-- Select2 -->
             <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/admin/plugins/select2/css/select2.min.css">
         <!-- Tagify -->
@@ -28,22 +28,22 @@
                 <!-- Content Wrapper. Contains page content -->
                 <div class="content-wrapper">
                     <!-- Content Header (Page header) -->
-<!--                    <section class="content-header">
-                        <div class="container-fluid">
-                            <div class="row mb-2">
-                                <div class="col-sm-6">
-                                    <h1>Tạo Combo Mới</h1>
-                                </div>
-                                <div class="col-sm-6">
-                                    <ol class="breadcrumb float-sm-right">
-                                        <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/admin/dashboard">Dashboard</a></li>
-                                    <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/admin/manage-combo">Quản lý Combo</a></li>
-                                    <li class="breadcrumb-item active">Tạo Combo Mới</li>
-                                </ol>
-                            </div>
-                        </div>
-                    </div> /.container-fluid 
-                </section>-->
+                    <!--                    <section class="content-header">
+                                            <div class="container-fluid">
+                                                <div class="row mb-2">
+                                                    <div class="col-sm-6">
+                                                        <h1>Tạo Combo Mới</h1>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <ol class="breadcrumb float-sm-right">
+                                                            <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/admin/dashboard">Dashboard</a></li>
+                                                        <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/admin/manage-combo">Quản lý Combo</a></li>
+                                                        <li class="breadcrumb-item active">Tạo Combo Mới</li>
+                                                    </ol>
+                                                </div>
+                                            </div>
+                                        </div> /.container-fluid 
+                                    </section>-->
 
                 <!-- Main content -->
                 <section class="content">
@@ -53,7 +53,7 @@
                         </div>
                         <div class="card">
                             <div class="card-body p-24">
-                                <form id="comboForm" action="${pageContext.request.contextPath}/admin/manage-combo?action=add" method="post">
+                                <form id="comboForm" action="${pageContext.request.contextPath}/admin/manage-combo?action=add" method="post" enctype="multipart/form-data">
                                     <c:if test="${not empty sessionScope.errors}">
                                         <div class="alert alert-danger">
                                             <ul class="mb-0">
@@ -130,7 +130,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    
+
                                     <!-- Hidden inputs for form submission -->
                                     <input type="hidden" id="productIdsInput" name="productIds">
                                     <input type="hidden" id="quantitiesInput" name="quantities">
@@ -162,32 +162,32 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
                             </div>
                         </div>
                     </div>
-                </section>
-                <!-- /.content -->
             </div>
-        </div>
-        <!-- ./wrapper -->
+        </section>
+        <!-- /.content -->
+    </div>
+</div>
+<!-- ./wrapper -->
 
-        <!-- JS here -->
-        <jsp:include page="../common/dashboard/js-dashboard.jsp"></jsp:include>
-            <!-- Select2 -->
-       <script src="${pageContext.request.contextPath}/assets/admin/plugins/select2/js/select2.full.min.js"></script>
-        <!-- Tagify -->
-        <script src="https://unpkg.com/@yaireo/tagify"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"></script>
-        <!-- Combo Product Manager -->
-        <script src="${pageContext.request.contextPath}/assets/js/comboProductManager.js"></script>
-        <!-- Add this before closing body tag -->
-        <script>
+<!-- JS here -->
+<jsp:include page="../common/dashboard/js-dashboard.jsp"></jsp:include>
+    <!-- Select2 -->
+    <script src="${pageContext.request.contextPath}/assets/admin/plugins/select2/js/select2.full.min.js"></script>
+<!-- Tagify -->
+<script src="https://unpkg.com/@yaireo/tagify"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"></script>
+<!-- Combo Product Manager -->
+<script src="${pageContext.request.contextPath}/assets/js/comboProductManager.js"></script>
+<!-- Add this before closing body tag -->
+<script>
             console.log('Available products:', ${productsJson});
             console.log('jQuery loaded:', typeof jQuery !== 'undefined');
             console.log('Select2 loaded:', typeof jQuery.fn.select2 !== 'undefined');
-        </script>
-    </body>
+</script>
+</body>
 </html>
 
 
