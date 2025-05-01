@@ -359,7 +359,7 @@
                                                 </div>
                                                 
                                                 <div class="product-img">
-                                                    <img src="${pageContext.request.contextPath}/img/product/combo-default.jpg" alt="${combo.name}">
+                                                    <img src="${pageContext.request.contextPath}/${combo.image}" alt="${combo.name}" class="product-image">
                                                 </div>
 
                                                 <div class="combo-price">
