@@ -283,7 +283,7 @@
                                                     <input type="number" class="combo-quantity-input" value="1" min="1" id="combo-quantity">
                                                     <button type="button" class="combo-quantity-btn increase-quantity">+</button>
                                                 </div>
-                                                <button type="button" class="combo-add-to-cart-btn" onclick="addComboToCart(${combo.comboId})">Thêm vào giỏ hàng</button>
+                                                <button type="button" class="combo-add-to-cart-btn" onclick="buyComboNow(${combo.comboId})">Mua ngay</button>
                                             </div>
                                         </div>
                                     </div>
@@ -349,9 +349,15 @@
                 });
 
                 // Hàm thêm combo vào giỏ hàng
-                function addComboToCart(comboId) {
+//                <!-- function addComboToCart(comboId) {
+//                    const quantity = document.getElementById('combo-quantity').value;
+//                    window.location.href = '${pageContext.request.contextPath}/cart?action=add&comboId=' + comboId + '&quantity=' + quantity;
+//                } -->
+                
+                // Hàm mua ngay combo
+                function buyComboNow(comboId) {
                     const quantity = document.getElementById('combo-quantity').value;
-                    window.location.href = '${pageContext.request.contextPath}/cart?action=add&comboId=' + comboId + '&quantity=' + quantity;
+                    window.location.href = '${pageContext.request.contextPath}/buy-combo?action=buynow&comboId=' + comboId + '&quantity=' + quantity;
                 }
         </script>
     </body>
