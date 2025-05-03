@@ -40,6 +40,7 @@
                                     <div class="mb-20">
                                         <label for="newPassword" class="form-label fw-semibold text-primary-light text-sm mb-8">New Password</label>
                                         <input type="password" class="form-control radius-8" id="newPassword" name="newPassword" required>
+                                        <small class="text-muted">Password must be at least 8 characters, including 1 uppercase, 1 lowercase, and 1 number</small>
                                     </div>
                                 </div>
                                 <div class="col-12">
@@ -62,6 +63,7 @@
                                 <span style="color: #198754">${suc}</span>
                                 <span style="color: #dc3545">${err}</span>
                                 <span id="samePasswordError" style="color: #dc3545; display:none;">New password must be different from old password.</span>
+                                <span id="passwordFormatError" style="color: #dc3545; display:none;">Password must be at least 8 characters, including 1 uppercase, 1 lowercase, and 1 number.</span>
                             </div>
                         </form>
                     </div>
@@ -96,15 +98,38 @@
             document.getElementById('samePasswordError').style.display = 'none';
 
             // Add client-side validation for password difference
+            // Password validation function
+            function validatePassword(password) {
+                const minLength = 8;
+                const hasUpperCase = /[A-Z]/.test(password);
+                const hasLowerCase = /[a-z]/.test(password);
+                const hasNumber = /[0-9]/.test(password);
+                
+                return password.length >= minLength && hasUpperCase && hasLowerCase && hasNumber;
+            }
+
+            // Form validation
             document.getElementById('changePasswordForm').addEventListener('submit', function(e) {
                 var oldPwd = document.getElementById('oldPassword').value;
                 var newPwd = document.getElementById('newPassword').value;
                 var samePwdError = document.getElementById('samePasswordError');
+                var passwordFormatError = document.getElementById('passwordFormatError');
+                
+                // Reset error messages
+                samePwdError.style.display = 'none';
+                passwordFormatError.style.display = 'none';
+                
+                // Validate password format
+                if (!validatePassword(newPwd)) {
+                    passwordFormatError.style.display = 'inline';
+                    e.preventDefault();
+                    return;
+                }
+                
+                // Check if old and new passwords are same
                 if (oldPwd === newPwd) {
                     samePwdError.style.display = 'inline';
                     e.preventDefault();
-                } else {
-                    samePwdError.style.display = 'none';
                 }
             });
         });
