@@ -1,12 +1,18 @@
 package com.swp391.controller.home;
 
+import com.swp391.config.GlobalConfig;
 import com.swp391.dal.impl.ComboDAO; // Giả sử bạn có ComboDAO
 import com.swp391.dal.impl.ComboProductDAO; // Giả sử bạn có ComboProductDAO
+import com.swp391.dal.impl.OrderComboDAO;
+import com.swp391.dal.impl.OrderComboProductDAO;
+import com.swp391.dal.impl.OrderDAO;
 import com.swp391.dal.impl.ProductDAO;
 import com.swp391.entity.Account;
-import com.swp391.entity.Cart; // Giả sử bạn có entity Cart
 import com.swp391.entity.Combo;
 import com.swp391.entity.ComboProduct;
+import com.swp391.entity.Order;
+import com.swp391.entity.OrderCombo;
+import com.swp391.entity.OrderComboProduct;
 import com.swp391.entity.Product;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -16,15 +22,19 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.math.BigDecimal;
 import java.util.List;
-import java.util.Map; // Import Map nếu Cart dùng Map
 
-@WebServlet(name = "BuyComboController", urlPatterns = {"/buy-combo"})
+@WebServlet(name = "BuyComboController", urlPatterns = {"/buy-combo", "/process-vnpay"})
 public class BuyComboController extends HttpServlet {
 
     private ProductDAO productDAO;
     private ComboDAO comboDAO; // Khởi tạo DAO
     private ComboProductDAO comboProductDAO; // Khởi tạo DAO
+    private OrderDAO orderDAO; // Khởi tạo DAO
+    private OrderComboDAO orderComboDAO;
+    private OrderComboProductDAO orderComboProductDAO;
 
     @Override
     public void init() throws ServletException {
@@ -32,20 +42,122 @@ public class BuyComboController extends HttpServlet {
         productDAO = new ProductDAO();
         comboDAO = new ComboDAO(); // Khởi tạo
         comboProductDAO = new ComboProductDAO(); // Khởi tạo
+        orderDAO = new OrderDAO(); // Khởi tạo
+        orderComboDAO = new OrderComboDAO();
+        orderComboProductDAO = new OrderComboProductDAO();
     }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // Chuyển hướng về trang chủ hoặc trang combo nếu truy cập GET
-        response.sendRedirect(request.getContextPath() + "/combo");
+
+        //get part
+        String path = request.getServletPath();
+
+        switch (path) {
+            case "/buy-combo":
+                processBuyCombo(request, response);
+                break;
+            case "/process-vnpay":
+                processVnpay(request, response);
+                break;
+            default:
+                response.sendRedirect(request.getContextPath() + "/home");
+        }
     }
 
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    /**
+     * Xử lý thông tin khi VNPAY trả về
+     * @param request
+     * @param response
+     * @throws IOException 
+     */
+    private void processVnpay(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        //get combo info
         HttpSession session = request.getSession();
-        Account account = (Account) session.getAttribute("account");
+        try {
+            Combo combo = (Combo) session.getAttribute("combo");
+            int quantity = (int) session.getAttribute("quantity");
+            List<ComboProduct> comboProducts = (List<ComboProduct>) session.getAttribute("comboProducts");
+            Account account = (Account) session.getAttribute(GlobalConfig.SESSION_ACCOUNT);
+
+
+            //get VNPAY info
+            String vnp_ResponseCode = request.getParameter("vnp_ResponseCode");
+            String vnp_TransactionStatus = request.getParameter("vnp_TransactionStatus");
+
+            //kiểm tra trạng thái thanh toán
+            if ("00".equals(vnp_ResponseCode) && "00".equals(vnp_TransactionStatus)) {
+                // Thanh toán thành công
+                //STEP 1:  insert order
+                Order order = new Order();
+                order.setUserId(account.getUserId());
+                order.setStatus(GlobalConfig.ORDER_STATUS_PENDING);
+                order.setShippingAddress(account.getAddress());
+                order.setTotal(BigDecimal.valueOf(combo.getDiscountPrice()));
+                order.setPaymentMethod(GlobalConfig.PAYMENT_METHOD_VNPAY);
+
+                int orderIdAfterInsrt = orderDAO.insert(order);
+
+                //STEP2: insert order combo
+                OrderCombo orderCombo = OrderCombo
+                                            .builder()
+                                            .orderId(orderIdAfterInsrt)
+                                            .comboId(combo.getComboId())
+                                            .comboName(combo.getName())
+                                            .comboDiscountPrice(BigDecimal.valueOf(combo.getDiscountPrice()))
+                                            .quantity(quantity)
+                                            .totalPrice(BigDecimal.valueOf(combo.getOriginalPrice()))
+                                            .build();
+
+                int orderComboIdAfterInsert = orderComboDAO.insert(orderCombo);
+
+                //STEP3 : insert order combo product
+                for (ComboProduct cp : comboProducts) {
+                    Product product = productDAO.findById(cp.getProductId());
+                    OrderComboProduct orderComboProduct = OrderComboProduct
+                                                             .builder()
+                                                            .orderComboId(orderComboIdAfterInsert)
+                                                            .productId(product.getProductId())
+                                                            .productName(product.getProductName())
+                                                            .productPrice(product.getPrice())
+                                                            .quantityInCombo(cp.getQuantityInCombo())
+                                                            .totalQuantity(cp.getQuantityInCombo() * quantity)
+                                                            .build();
+
+                    orderComboProductDAO.insert(orderComboProduct);
+                    int newStock = product.getStock() - cp.getQuantityInCombo() * quantity;
+                    product.setStock(newStock);
+                    productDAO.update(product);
+                }
+
+            }else {
+                // Thanh toán không thành công hoặc lỗi
+                // Xử lý lỗi hoặc chuyển hướng đến trang thông báo lỗi
+                
+            }
+        response.sendRedirect(request.getContextPath() + "/home");
+
+
+        } catch (Exception e) {
+            response.sendRedirect(request.getContextPath() + "/home");
+        }
+        
+
+    }
+
+    /**
+     * Xử lý khi bấm nút mua combo
+     * 
+     * @param request
+     * @param response
+     * @throws UnsupportedEncodingException
+     * @throws IOException
+     */
+    private void processBuyCombo(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException, IOException {
+        // Chuyển hướng về trang chủ hoặc trang combo nếu truy cập GET
+        HttpSession session = request.getSession();
+        Account account = (Account) session.getAttribute(GlobalConfig.SESSION_ACCOUNT);
 
         // Kiểm tra đăng nhập
         if (account == null) {
@@ -112,31 +224,24 @@ public class BuyComboController extends HttpServlet {
 
 
         if (stockAvailable) {
-            // Thêm vào giỏ hàng (Logic thêm vào giỏ hàng cần được điều chỉnh theo cấu trúc Cart của bạn)
-            Cart cart = (Cart) session.getAttribute("cart");
-            if (cart == null) {
-                cart = new Cart(); // Tạo giỏ hàng mới nếu chưa có
-                session.setAttribute("cart", cart);
-            }
-
-            // Logic thêm combo vào giỏ hàng (có thể bạn cần phương thức riêng)
-            // Ví dụ: cart.addCombo(combo, quantity);
-            // Hoặc thêm từng sản phẩm riêng lẻ nếu giỏ hàng chỉ chứa sản phẩm
-             for (ComboProduct cp : comboProducts) {
-                 Product productToAdd = productDAO.findById(cp.getProductId());
-                 int quantityToAdd = cp.getQuantityInCombo() * quantity;
-                 // Giả sử cart có phương thức addItem(Product p, int quantity)
-                 // cart.addItem(productToAdd, quantityToAdd); // Cần triển khai logic này trong Cart
-             }
-             // **Lưu ý:** Cần có logic cụ thể để thêm combo hoặc sản phẩm vào giỏ hàng trong lớp Cart.java
-
-            successMessage = "Đã thêm combo '" + combo.getName() + "' vào giỏ hàng thành công!";
-            // Chuyển hướng đến trang giỏ hàng với thông báo thành công
-            response.sendRedirect(request.getContextPath() + "/cart?success=" + java.net.URLEncoder.encode(successMessage, "UTF-8"));
+            // Lưu thông tin combo và số lượng vào session
+            session.setAttribute("combo", combo);
+            session.setAttribute("quantity", quantity);
+            session.setAttribute("comboProducts", comboProducts);
+            
+            //chuyen toi trang VNPAY
+            response.sendRedirect(request.getContextPath() + "/ajaxServlet?amount=" + combo.getDiscountPrice());
+            
         } else {
             // Chuyển hướng lại trang chi tiết combo với thông báo lỗi tồn kho
             response.sendRedirect(request.getContextPath() + "/combo-details?id=" + comboId + "&error=" + java.net.URLEncoder.encode(errorMessage, "UTF-8"));
         }
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        
     }
 
     @Override
