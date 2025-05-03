@@ -36,6 +36,8 @@ public class BuyComboController extends HttpServlet {
     private OrderComboDAO orderComboDAO;
     private OrderComboProductDAO orderComboProductDAO;
 
+    private static final String COMBO_SERVLET_URL = "combo";
+
     @Override
     public void init() throws ServletException {
         super.init();
@@ -130,17 +132,24 @@ public class BuyComboController extends HttpServlet {
                     product.setStock(newStock);
                     productDAO.update(product);
                 }
+                //Xóa session
+                session.removeAttribute("combo");
+                session.removeAttribute("quantity");
+                session.removeAttribute("comboProducts");
 
+                setToastMessage(request, "Order Successful !!", "success");
+                response.sendRedirect(COMBO_SERVLET_URL);
             }else {
                 // Thanh toán không thành công hoặc lỗi
                 // Xử lý lỗi hoặc chuyển hướng đến trang thông báo lỗi
-                
-            }
-        response.sendRedirect(request.getContextPath() + "/home");
+                setToastMessage(request, "Order failed. Something Wrong!!", "error");
+                response.sendRedirect(COMBO_SERVLET_URL);
+            }            
 
 
         } catch (Exception e) {
-            response.sendRedirect(request.getContextPath() + "/home");
+            setToastMessage(request, "Order failed. Something Wrong!! " + e.getMessage(), "error");
+            response.sendRedirect(COMBO_SERVLET_URL);
         }
         
 
@@ -168,7 +177,6 @@ public class BuyComboController extends HttpServlet {
         String comboIdStr = request.getParameter("comboId");
         String quantityStr = request.getParameter("quantity");
         String errorMessage = null;
-        String successMessage = null;
 
         int comboId = 0;
         int quantity = 0;
@@ -181,8 +189,9 @@ public class BuyComboController extends HttpServlet {
             }
         } catch (NumberFormatException e) {
             errorMessage = "ID combo hoặc số lượng không hợp lệ.";
-            // Chuyển hướng lại trang chi tiết combo với thông báo lỗi
-            response.sendRedirect(request.getContextPath() + "/combo-details?id=" + comboIdStr + "&error=" + java.net.URLEncoder.encode(errorMessage, "UTF-8"));
+            System.out.println("Hàm processBuyCombo: " + errorMessage);
+            setToastMessage(request, "Order failed. Something Wrong!!", "error");
+            response.sendRedirect(COMBO_SERVLET_URL);
             return;
         }
 
@@ -190,7 +199,9 @@ public class BuyComboController extends HttpServlet {
         Combo combo = comboDAO.findById(comboId);
         if (combo == null) {
             errorMessage = "Không tìm thấy combo.";
-            response.sendRedirect(request.getContextPath() + "/combo?error=" + java.net.URLEncoder.encode(errorMessage, "UTF-8"));
+            System.out.println("Hàm processBuyCombo: " + errorMessage);
+            setToastMessage(request, "Order failed. Something Wrong!!", "error");
+            response.sendRedirect(COMBO_SERVLET_URL);
             return;
         }
 
@@ -219,7 +230,7 @@ public class BuyComboController extends HttpServlet {
              stockErrorMessage.setLength(stockErrorMessage.length() - 2); // Xóa ", "
              errorMessage = stockErrorMessage.toString();
          } else if (!stockAvailable && errorMessage == null) { // Trường hợp lỗi không tìm thấy sản phẩm
-             // errorMessage đã được set ở trên
+            errorMessage = "Không tìm thấy san phẩm trong combo.";
          }
 
 
@@ -233,8 +244,10 @@ public class BuyComboController extends HttpServlet {
             response.sendRedirect(request.getContextPath() + "/ajaxServlet?amount=" + combo.getDiscountPrice());
             
         } else {
-            // Chuyển hướng lại trang chi tiết combo với thông báo lỗi tồn kho
-            response.sendRedirect(request.getContextPath() + "/combo-details?id=" + comboId + "&error=" + java.net.URLEncoder.encode(errorMessage, "UTF-8"));
+            // Xử lý khi không đủ số lượng
+            System.out.println("Hàm processBuyCombo: " + errorMessage);
+            setToastMessage(request, "Order failed. Something Wrong!!", "error");
+            response.sendRedirect(COMBO_SERVLET_URL);
         }
     }
 
@@ -242,6 +255,19 @@ public class BuyComboController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
+    }
+
+    /**
+     * Sets toast message attributes in the session.
+     *
+     * @param request The HttpServletRequest object.
+     * @param message The message to display.
+     * @param type    The type of toast (e.g., "success", "error").
+     */
+    private void setToastMessage(HttpServletRequest request, String message, String type) {
+        HttpSession session = request.getSession();
+        session.setAttribute("toastMessage", message);
+        session.setAttribute("toastType", type);
     }
 
     @Override
