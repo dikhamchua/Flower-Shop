@@ -184,4 +184,46 @@ public class ComboProductDAO extends DBContext implements I_DAO<ComboProduct> {
         }
         return comboProducts;
     }
+
+    /**
+     * Lấy danh sách sản phẩm theo combo ID.
+     * 
+     * @param comboId ID của combo.
+     * @return Danh sách các ComboProduct thuộc combo đó.
+     */
+    public List<ComboProduct> getProductsByComboId(Integer comboId) {
+        List<ComboProduct> comboProducts = new ArrayList<>();
+        String sql = "SELECT * FROM combo_product WHERE combo_id = ?";
+        try {
+            connection = getConnection();
+            statement = connection.prepareStatement(sql);
+            statement.setInt(1, comboId);
+            resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                comboProducts.add(getFromResultSet(resultSet));
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error finding combo products by combo ID: " + ex.getMessage());
+        } finally {
+            closeResources();
+        }
+        return comboProducts;
+    }
+
+    public static void main(String[] args) {
+        ComboProductDAO dao = new ComboProductDAO();
+        Integer testComboId = 1; // Thay đổi ID này để kiểm tra các combo khác nhau
+
+        System.out.println("=== Testing getProductsByComboId with comboId: " + testComboId + " ===");
+        List<ComboProduct> products = dao.getProductsByComboId(testComboId);
+
+        if (products.isEmpty()) {
+            System.out.println("Không tìm thấy sản phẩm nào cho combo ID: " + testComboId);
+        } else {
+            System.out.println("Tìm thấy " + products.size() + " sản phẩm:");
+            for (ComboProduct cp : products) {
+                System.out.println("  - ID: " + cp.getId() + ", Product ID: " + cp.getProductId() + ", Quantity: " + cp.getQuantityInCombo());
+            }
+        }
+    }
 }
