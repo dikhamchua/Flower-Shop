@@ -561,37 +561,32 @@
                     e.preventDefault();
                     const productId = $(this).data('product-id');
 
-                    // Kiểm tra đăng nhập trước khi thêm vào giỏ hàng
-            <c:if test="${empty sessionScope.account}">
-                    // Hiển thị thông báo yêu cầu đăng nhập
-                    const toast = new bootstrap.Toast(document.getElementById('cartToast'));
-                    $('#cartToast').removeClass('bg-success').addClass('bg-warning');
-                    $('#cartToast .toast-body').text('Please login to add products to your cart');
-                    toast.show();
+                    // Check login before adding to cart
+                    <c:if test="${empty sessionScope.account}">
+                        iziToast.warning({
+                            title: 'Warning',
+                            message: 'Please login to add products to your cart',
+                            position: 'topRight',
+                            timeout: 2000,
+                            onClosing: function() {
+                                window.location.href = '${pageContext.request.contextPath}/authen?action=login';
+                            }
+                        });
+                        return;
+                    </c:if>
 
-                    // Chuyển hướng đến trang đăng nhập sau 2 giây
-                    setTimeout(function () {
-                        window.location.href = '${pageContext.request.contextPath}/authen?action=login';
-                    }, 2000);
-                    return;
-            </c:if>
+                    // Check if user is admin or staff
+                    <c:if test="${not empty sessionScope.account && (sessionScope.account.role eq 'admin' || sessionScope.account.role eq 'staff')}">
+                        iziToast.error({
+                            title: 'Error',
+                            message: 'Admin and staff cannot add products to cart',
+                            position: 'topRight',
+                            timeout: 3000
+                        });
+                        return;
+                    </c:if>
 
-                    // Kiểm tra nếu người dùng là admin hoặc staff
-            <c:if test="${not empty sessionScope.account && (sessionScope.account.role eq 'admin' || sessionScope.account.role eq 'staff')}">
-                    // Hiển thị thông báo lỗi
-                    const toast = new bootstrap.Toast(document.getElementById('cartToast'));
-                    $('#cartToast').removeClass('bg-success').addClass('bg-danger');
-                    $('#cartToast .toast-body').text('Admin and staff cannot add products to cart');
-                    toast.show();
-
-                    // Auto hide toast after 3 seconds
-                    setTimeout(function () {
-                        toast.hide();
-                    }, 3000);
-                    return;
-            </c:if>
-
-                    // Nếu đã đăng nhập và không phải admin/staff, tiếp tục thêm vào giỏ hàng
+                    // If logged in and not admin/staff, proceed with adding to cart
                     $.ajax({
                         url: '${pageContext.request.contextPath}/cart',
                         type: 'POST',
@@ -600,31 +595,51 @@
                             // Update cart count in header
                             $('.cart-quantity').text(response);
 
-                            // Show toast message
-                            const toast = new bootstrap.Toast(document.getElementById('cartToast'));
-                            $('#cartToast').removeClass('bg-danger').addClass('bg-success');
-                            $('#cartToast .toast-body').text('Product has been added to your cart');
-                            toast.show();
-
-                            // Auto hide toast after 3 seconds
-                            setTimeout(function () {
-                                toast.hide();
-                            }, 3000);
+                            // Show success toast
+                            iziToast.success({
+                                title: 'Success',
+                                message: 'Product has been added to your cart',
+                                position: 'topRight',
+                                timeout: 3000
+                            });
                         },
                         error: function (xhr) {
                             // Show error toast
-                            $('#cartToast').removeClass('bg-success').addClass('bg-danger');
-                            $('#cartToast .toast-body').text('An error occurred while adding the product to cart');
-                            const toast = new bootstrap.Toast(document.getElementById('cartToast'));
-                            toast.show();
-
-                            // Auto hide toast after 3 seconds
-                            setTimeout(function () {
-                                toast.hide();
-                            }, 3000);
+                            iziToast.error({
+                                title: 'Error',
+                                message: 'An error occurred while adding the product to cart',
+                                position: 'topRight',
+                                timeout: 3000
+                            });
                         }
                     });
                 });
+
+                // Update showNotification function to use iziToast
+                function showNotification(type, message) {
+                    const toastConfig = {
+                        message: message,
+                        position: 'topRight',
+                        timeout: 3000
+                    };
+                    
+                    if (type === 'success') {
+                        iziToast.success({
+                            title: 'Success',
+                            ...toastConfig
+                        });
+                    } else if (type === 'error') {
+                        iziToast.error({
+                            title: 'Error',
+                            ...toastConfig
+                        });
+                    } else if (type === 'warning') {
+                        iziToast.warning({
+                            title: 'Warning',
+                            ...toastConfig
+                        });
+                    }
+                }
 
                 // Add to wishlist handler
                 $(document).on('click', '.add-to-wishlist', function (e) {
