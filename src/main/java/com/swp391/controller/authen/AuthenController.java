@@ -45,8 +45,8 @@ public class AuthenController extends HttpServlet {
         String url;
         switch (action) {
             case "login":
-                url = LOGIN_PAGE;
-//                 url = fakeLogin(request, response);
+//                url = LOGIN_PAGE;
+                 url = fakeLogin(request, response);
                 break;
             case "logout":
                 url = logOut(request, response);
@@ -123,9 +123,15 @@ public class AuthenController extends HttpServlet {
         Account accFoundByUsernamePass = accountDAO.findByEmailOrUsernameAndPass(account);
         // true => trang home ( set account vao trong session )
         if (accFoundByUsernamePass != null) {
+            // Kiểm tra status của account
+            if (!accFoundByUsernamePass.getStatus()) {
+                session.setAttribute("toastMessage", "Your account is banned. Please contact admin to discuss.");
+                session.setAttribute("toastType", "error");
+                return LOGIN_PAGE;
+            }
+            
             // Lưu thông tin người dùng vào session
             session.setAttribute(GlobalConfig.SESSION_ACCOUNT, accFoundByUsernamePass);
-            
             url = HOME_PAGE;
         } else {
             session.setAttribute("toastMessage", "Username or password incorrect!!");

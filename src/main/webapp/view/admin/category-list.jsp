@@ -82,8 +82,8 @@
                                 <th>Name</th>
                                 <th>Description</th>
                                 <!--<th>Status</th>-->
-                                <th>Created At</th>
-                                <th>Updated At</th>
+<!--                                <th>Created At</th>-->
+                                <!--<th>Updated At</th>-->
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -107,8 +107,8 @@
                                             ${category.status == 1 ? 'Active' : 'Inactive'}
                                         </span>
                                     </td>-->
-                                    <td>${category.createdAt}</td>
-                                    <td>${category.updatedAt}</td>
+                                    <!--<td>${category.createdAt}</td>-->
+                                    <!--<td>${category.updatedAt}</td>-->
                                     <td>
                                         <div class="d-flex gap-2">
                                             <a href="${pageContext.request.contextPath}/admin/manage-category?action=edit&id=${category.categoryId}" 

@@ -330,7 +330,7 @@
                                                 </c:otherwise>
                                             </c:choose>
 
-                                            <div class="review-form-wrapper">
+<!--                                            <div class="review-form-wrapper">
                                                 <div class="review-form">
                                                     <span class="comment-reply-title">Add a review </span>
                                                     <c:choose>
@@ -383,7 +383,7 @@
                                                         </c:otherwise>
                                                     </c:choose>
                                                 </div>
-                                            </div>
+                                            </div>-->
                                         </div>
                                     </div>
                                 </div>
@@ -592,11 +592,11 @@
                 <div class="container">
                     <div class="row">
                         <!--Section Title Start-->
-                        <div class="col-12">
+<!--                        <div class="col-12">
                             <div class="section-title text-center mb-35">
                                 <h3>Related Products</h3>
                             </div>
-                        </div>
+                        </div>-->
                         <!--Section Title End-->
                     </div>
                     <div class="row">
