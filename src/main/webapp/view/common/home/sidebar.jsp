@@ -2,32 +2,6 @@
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
         <!--Product Category Widget Start-->
 
-        <!-- <div class="shop-sidebar">
-            <h4>Product Categories</h4>
-            <div class="categori-checkbox">
-                <form action="#">
-                    <ul>
-                        <li><input name="product-categori" type="checkbox"><a href="#">Accessories</a><span class="count">(14)</span></li>
-                        <li><input name="product-categori" type="checkbox"><a href="#">Clothings</a><span class="count">(14)</span></li>
-                        <li><input name="product-categori" type="checkbox"><a href="#">Dress</a><span class="count">(14)</span></li>
-                        <li><input name="product-categori" type="checkbox"><a href="#">Drink</a><span class="count">(14)</span></li>
-                        <li><input name="product-categori" type="checkbox"><a href="#">Fashion</a><span class="count">(11)</span></li>
-                        <li><input name="product-categori" type="checkbox"><a href="#">Food </a><span class="count">(13)</span></li>
-                        <li><input name="product-categori" type="checkbox"><a href="#">Men </a><span class="count">(7)</span></li>
-                        <li><input name="product-categori" type="checkbox"><a href="#">Short</a><span class="count">(24)</span></li>
-                        <li><input name="product-categori" type="checkbox"><a href="#">Women</a><span class="count">(9)</span></li>
-                        <li><input name="product-categori" type="checkbox"><a href="#">Food </a><span class="count">(13)</span></li>
-                        <li><input name="product-categori" type="checkbox"><a href="#">Men </a><span class="count">(7)</span></li>
-                        <li><input name="product-categori" type="checkbox"><a href="#">Short</a><span class="count">(24)</span></li>
-                        <li><input name="product-categori" type="checkbox"><a href="#">Women</a><span class="count">(9)</span></li>
-                        <li><input name="product-categori" type="checkbox"><a href="#">Clothings</a><span class="count">(29)</span></li>
-                        <li><input name="product-categori" type="checkbox"><a href="#">Dress</a><span class="count">(14)</span></li>
-                        <li><input name="product-categori" type="checkbox"><a href="#">Drink</a><span class="count">(2)</span></li>
-                        <li><input name="product-categori" type="checkbox"><a href="#">Fashion</a><span class="count">(11)</span></li>
-                    </ul>
-                </form>
-            </div>
-        </div> -->
         <div class="shop-sidebar">
             <h4>Product Categories</h4>
             <div class="categori-checkbox">
