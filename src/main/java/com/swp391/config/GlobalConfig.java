@@ -68,4 +68,15 @@ public class GlobalConfig {
 
     public static final String ROLE_STAFF = "staff";
 
+    public static final String ORDER_STATUS_PENDING = "pending";
+
+    public static final String ORDER_STATUS_CANCELLED = "cancelled";
+
+    public static final String ORDER_STATUS_COMPLETED = "completed";
+
+    public static final String ORDER_STATUS_ACCEPTED = "accepted";
+
+    public static final String PAYMENT_METHOD_VNPAY = "vnpay";
+
+    
 }
