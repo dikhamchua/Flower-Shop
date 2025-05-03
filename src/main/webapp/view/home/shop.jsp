@@ -195,6 +195,41 @@
                     width: 20px;
                     height: 20px;
                 }
+                .product-action-shop {
+                    margin-top: 20px;
+                }
+
+                .product-action-shop .add-to-cart-btn {
+                    display: inline-flex;
+                    align-items: center;
+                    justify-content: center;
+                    padding: 12px 25px;
+                    background-color: #80b435;
+                    color: #fff;
+                    border-radius: 25px;
+                    font-weight: 500;
+                    transition: all 0.3s ease;
+                    text-decoration: none;
+                }
+
+                .product-action-shop .add-to-cart-btn:before {
+                    content: '\f07a';
+                    font-family: 'FontAwesome';
+                    margin-right: 8px;
+                    font-size: 16px;
+                }
+
+                .product-action-shop .add-to-cart-btn:hover {
+                    background-color: #6a9828;
+                    transform: translateY(-2px);
+                    box-shadow: 0 5px 15px rgba(128, 180, 53, 0.3);
+                }
+
+                .product-action-shop .add-to-cart-btn.disabled {
+                    background-color: #aaa;
+                    cursor: not-allowed;
+                    pointer-events: none;
+                }
             </style>
         </head>
         <body>
@@ -331,7 +366,7 @@
                                                                                         <fmt:formatNumber value="${product.price}" pattern="#,##0"/> VND
                                                                                     </span>
                                                                                 </div>
-                                                                             
+
                                                                                 <div class="product-stock">
                                                                                     <span>Stock: ${product.stock}</span>
                                                                                 </div>
@@ -395,8 +430,19 @@
                                                                             <div class="product-desc">
                                                                                 <p>${product.description}</p>
                                                                             </div>
+                                                                            <!-- Replace the product-action-shop div with this enhanced version -->
                                                                             <div class="product-action-shop">
-                                                                                <a class="add-to-cart-btn" href="#" data-product-id="${product.productId}">Add to cart</a>
+                                                                                <c:choose>
+                                                                                    <c:when test="${not empty sessionScope.account && sessionScope.account.role ne 'admin' && sessionScope.account.role ne 'staff'}">
+                                                                                        <a class="add-to-cart-btn" href="#" data-product-id="${product.productId}">Add to cart</a>
+                                                                                    </c:when>
+                                                                                    <c:when test="${empty sessionScope.account}">
+                                                                                        <a class="add-to-cart-btn login-required" href="#" data-product-id="${product.productId}">Add to cart</a>
+                                                                                    </c:when>
+                                                                                    <c:otherwise>
+                                                                                        <a class="add-to-cart-btn disabled" href="#" style="background-color: #aaa;">Not available for staff/admin</a>
+                                                                                    </c:otherwise>
+                                                                                </c:choose>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -561,29 +607,29 @@
                     const productId = $(this).data('product-id');
 
                     // Check login before adding to cart
-                    <c:if test="${empty sessionScope.account}">
-                        iziToast.warning({
-                            title: 'Warning',
-                            message: 'Please login to add products to your cart',
-                            position: 'topRight',
-                            timeout: 2000,
-                            onClosing: function() {
-                                window.location.href = '${pageContext.request.contextPath}/authen?action=login';
-                            }
-                        });
-                        return;
-                    </c:if>
+            <c:if test="${empty sessionScope.account}">
+                    iziToast.warning({
+                        title: 'Warning',
+                        message: 'Please login to add products to your cart',
+                        position: 'topRight',
+                        timeout: 2000,
+                        onClosing: function () {
+                            window.location.href = '${pageContext.request.contextPath}/authen?action=login';
+                        }
+                    });
+                    return;
+            </c:if>
 
                     // Check if user is admin or staff
-                    <c:if test="${not empty sessionScope.account && (sessionScope.account.role eq 'admin' || sessionScope.account.role eq 'staff')}">
-                        iziToast.error({
-                            title: 'Error',
-                            message: 'Admin and staff cannot add products to cart',
-                            position: 'topRight',
-                            timeout: 3000
-                        });
-                        return;
-                    </c:if>
+            <c:if test="${not empty sessionScope.account && (sessionScope.account.role eq 'admin' || sessionScope.account.role eq 'staff')}">
+                    iziToast.error({
+                        title: 'Error',
+                        message: 'Admin and staff cannot add products to cart',
+                        position: 'topRight',
+                        timeout: 3000
+                    });
+                    return;
+            </c:if>
 
                     // If logged in and not admin/staff, proceed with adding to cart
                     $.ajax({
@@ -621,7 +667,7 @@
                         position: 'topRight',
                         timeout: 3000
                     };
-                    
+
                     if (type === 'success') {
                         iziToast.success({
                             title: 'Success',
