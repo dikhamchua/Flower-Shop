@@ -259,7 +259,7 @@
                                 <div class="form-text">Tệp phải có định dạng .xls hoặc .xlsx</div>
                             </div>
                             <div class="mb-3">
-                                <a href="${pageContext.request.contextPath}/assets/templates/product_import_template.xlsx" download class="text-primary">
+                                <a href="${pageContext.request.contextPath}/assets/product_import_template.xlsx" download class="text-primary">
                                     <i class="fas fa-download"></i> Tải xuống mẫu
                                 </a>
                             </div>
