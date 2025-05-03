@@ -185,10 +185,42 @@
                                                     <div>Max Discount: $<fmt:formatNumber value="${coupon.maxDiscount}" pattern="#,##0.00"/></div>
                                                 </c:if>
                                             </div>
+                                            <!-- Add this inside the coupon-card div, after coupon-dates -->
                                             <div class="coupon-dates">
                                                 Valid from: <fmt:formatDate value="${coupon.startDate}" pattern="MMM dd, yyyy"/> -
                                                 <fmt:formatDate value="${coupon.endDate}" pattern="MMM dd, yyyy"/>
+                                                
+                                                <!-- Add remaining time indicator -->
+                                                <c:set var="now" value="<%= new java.util.Date() %>"/>
+                                                <c:set var="remainingDays" value="${((coupon.endDate.time - now.time) / (1000*60*60*24))}"/>
+                                                <div class="remaining-time ${remainingDays <= 7 ? 'urgent' : ''}">
+                                                    <c:choose>
+                                                        <c:when test="${remainingDays > 1}">
+                                                            <span>Expires in ${Math.round(remainingDays)} days</span>
+                                                        </c:when>
+                                                        <c:when test="${remainingDays > 0}">
+                                                            <span>Expires in less than a day</span>
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <span>Expired</span>
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                </div>
                                             </div>
+                                            
+                                            <!-- Add this to your existing style section -->
+                                            <style>
+                                                .remaining-time {
+                                                    margin-top: 5px;
+                                                    font-size: 12px;
+                                                    color: #666;
+                                                }
+                                                
+                                                .remaining-time.urgent span {
+                                                    color: #dc3545;
+                                                    font-weight: bold;
+                                                }
+                                            </style>
                                             <div class="coupon-usage">
                                                 <c:if test="${not empty coupon.usageLimit}">
                                                     Used ${coupon.usageCount} times out of ${coupon.usageLimit}
