@@ -293,7 +293,6 @@
                                     </div>
                                     <!--Toolbar Short Area End-->
                                 </div>
-                                <!--Grid & List View End-->
                                 <!--Shop Product Start-->
                                 <div class="shop-product">
                                     <div id="myTabContent-2" class="tab-content">
