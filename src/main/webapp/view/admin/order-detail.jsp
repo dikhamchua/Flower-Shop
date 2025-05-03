@@ -141,7 +141,7 @@
                                                 <option value="">-- Select Status --</option>
                                                 <c:if test="${order.status == 'pending'}">
                                                     <option value="accepted">Accept Order</option>
-                                                    <option value="cancelled">Cancel Order</option>
+                                                    <option value="cancelled">Reject Order</option>
                                                 </c:if>
                                                 <c:if test="${order.status == 'accepted'}">
                                                     <option value="completed">Complete Order</option>

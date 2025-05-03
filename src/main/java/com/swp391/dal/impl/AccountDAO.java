@@ -483,6 +483,29 @@ public class AccountDAO extends DBContext implements I_DAO<Account> {
         return false;
     }
 
+    /**
+     * Find account by phone number
+     * @param phone Phone number to search for
+     * @return Account if found, null otherwise
+     */
+    public Account findByPhone(String phone) {
+        String sql = "SELECT * FROM account WHERE phone = ?";
+        try {
+            connection = getConnection();
+            statement = connection.prepareStatement(sql);
+            statement.setString(1, phone);
+            resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                return getFromResultSet(resultSet);
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error finding account by phone: " + ex.getMessage());
+        } finally {
+            closeResources();
+        }
+        return null;
+    }
+
     public static void main(String[] args) {
         AccountDAO accountDAO = new AccountDAO();
         

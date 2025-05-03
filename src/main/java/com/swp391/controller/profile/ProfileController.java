@@ -80,6 +80,15 @@ public class ProfileController extends HttpServlet {
                 return;
             }
 
+            // Check for duplicate phone number
+            Account existingAccount = accountDAO.findByPhone(phone);
+            if (existingAccount != null && existingAccount.getUserId() != id) {
+                request.getSession().setAttribute("toastMessage", "This phone number is already registered!");
+                request.getSession().setAttribute("toastType", "error");
+                doGet(request, response);
+                return;
+            }
+
             // Lấy account từ session
             Account currentAccount = (Account) request.getSession().getAttribute(GlobalConfig.SESSION_ACCOUNT);
 
