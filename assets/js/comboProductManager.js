@@ -28,3 +28,57 @@ document.addEventListener('change', function(e) {
         // ... rest of your existing change event code ...
     }
 });
+
+
+function updateSavings() {
+    const originalPrice = parseFloat(document.getElementById('original_price').value) || 0;
+    const discountPrice = parseFloat(document.getElementById('discount_price').value) || 0;
+    
+    const savings = originalPrice - discountPrice;
+    
+    const savingsDisplay = document.getElementById('savings-display');
+    if (savingsDisplay) {
+        if (!isNaN(savings) && savings >= 0) {
+            savingsDisplay.textContent = savings.toLocaleString('vi-VN');
+        } else {
+            savingsDisplay.textContent = '0';
+        }
+    }
+}
+
+// Thêm event listener cho input giá khuyến mãi
+document.addEventListener('DOMContentLoaded', function() {
+    const discountPriceInput = document.getElementById('discount_price');
+    if (discountPriceInput) {
+        discountPriceInput.addEventListener('input', updateSavings);
+    }
+});
+
+// Cập nhật hàm updateTotalPrice để tự động gọi updateSavings
+function updateTotalPrice() {
+    let totalPrice = 0;
+
+    document.querySelectorAll('.product-selection-row').forEach(function (row) {
+        const select = row.querySelector('.product-select');
+        const quantity = parseInt(row.querySelector('.product-quantity')?.value) || 0;
+
+        if (select?.value) {
+            const selectedOption = select.options[select.selectedIndex];
+            const price = parseFloat(selectedOption.dataset.price) || 0;
+            const subtotal = price * quantity;
+
+            totalPrice += subtotal;
+        }
+    });
+
+    const priceDisplay = document.getElementById('original-price-display');
+    const priceInput = document.getElementById('original_price');
+
+    if (priceDisplay && priceInput) {
+        priceDisplay.textContent = totalPrice.toLocaleString('vi-VN');
+        priceInput.value = totalPrice;
+    }
+
+    // Tự động cập nhật savings sau khi cập nhật giá gốc
+    updateSavings();
+}
