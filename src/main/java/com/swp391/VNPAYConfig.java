@@ -33,7 +33,7 @@ public class VNPAYConfig {
     /**
      * VNPAY_RETURN_URL_RETAIL: URL thanh toán trả về sau khi thanh toán: bán lẻ
      */
-    public static String VNPAY_RETURN_URL_RETAIL = "";
+    public static String VNPAY_RETURN_URL_RETAIL = "http://localhost:9999/SWP391-FlowerShop/cart?action=checkout-vnpay";
     
 
     public static String md5(String message) {
