@@ -35,3 +35,5 @@
   <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/admin/css/lib/audioplayer.css">
   <!-- main css -->
   <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/admin/css/style.css">
+  <!-- custom dashboard colors -->
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/admin/css/dashboard-colors.css">

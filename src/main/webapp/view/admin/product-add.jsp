@@ -151,17 +151,17 @@
                             </div>
 
                             <div class="col-md-6">
-                                <label class="form-label">Danh mục <span class="text-danger">*</span></label>
+                                <label class="form-label">Category <span class="text-danger">*</span></label>
                                 <div class="category-input-container">
                                     <button type="button" id="categoryDropdownBtn" 
                                             class="btn btn-outline-secondary w-100 text-start d-flex justify-content-between align-items-center ${errors.categoryIds != null ? 'is-invalid' : ''}">
-                                        <span>Chọn danh mục</span>
+                                        <span>Choose category</span>
                                         <i class="fas fa-chevron-down"></i>
                                     </button>
                                     <div id="categorySuggestions" class="category-suggestions" style="display: none;"></div>
                                     <div id="selectedCategories" class="selected-categories"></div>
                                     <input type="hidden" name="categoryIds" id="categoryIds" value="${formData.categoryIds[0]}">
-                                    <div class="invalid-feedback">${errors.categoryIds != null ? errors.categoryIds : 'Vui lòng chọn ít nhất một danh mục'}</div>
+                                    <div class="invalid-feedback">${errors.categoryIds != null ? errors.categoryIds : 'Please select at least one category'}</div>
                                 </div>
                             </div>
 
