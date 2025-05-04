@@ -48,6 +48,14 @@
                                             <% session.removeAttribute("errors"); %>
                                         </c:if>
 
+                                        <c:if test="${not empty sessionScope.errors['duplicate_product']}">
+                                            <div class="alert alert-danger">
+                                                <ul class="mb-0">
+                                                    <li>${sessionScope.errors['duplicate_product']}</li>
+                                                </ul>
+                                            </div>
+                                        </c:if>
+
                                         <div class="row g-3">
                                             <div class="col-md-6">
                                                 <label for="name" class="form-label">Combo Name <span class="text-danger">*</span></label>

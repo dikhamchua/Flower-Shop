@@ -33,6 +33,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 // Add MultipartConfig annotation to the class
@@ -575,15 +577,14 @@ public class ManageComboController extends HttpServlet {
     /**
      * Validate combo data
      */
-    private Map<String, String> validateComboData(String name, Float discountPrice,
-            String[] productIds, String[] quantities, Integer comboId) {
+    private Map<String, String> validateComboData(String name, Float discountPrice, String[] productIds, String[] quantities, Integer comboId) {
         Map<String, String> errors = new HashMap<>();
     
         // Validate name
         if (name == null || name.trim().isEmpty()) {
             errors.put("name", "Tên combo không được để trống");
         } else if (!name.matches("^[a-zA-Z0-9\\sÀ-ỹà-ỹ_.,-]+$")) {
-            errors.put("name", "Tên combo không được chứa ký tự đặc biệt");
+            errors.put("name", "Combo name cannot contain special characters");
         }
     
         // Validate products
@@ -614,7 +615,18 @@ public class ManageComboController extends HttpServlet {
                 errors.put("discount_price", "Discount price must be less than original price");
             }
         }
-
+    
+        // Add validation for duplicate products
+        if (productIds != null) {
+            Set<String> uniqueProducts = new HashSet<>();
+            for (String productId : productIds) {
+                if (!uniqueProducts.add(productId)) {
+                    errors.put("duplicate_product", "Duplicate products are not allowed in a combo");
+                    break;
+                }
+            }
+        }
+        
         return errors;
     }
 
