@@ -195,6 +195,41 @@
                     width: 20px;
                     height: 20px;
                 }
+                .product-action-shop {
+                    margin-top: 20px;
+                }
+
+                .product-action-shop .add-to-cart-btn {
+                    display: inline-flex;
+                    align-items: center;
+                    justify-content: center;
+                    padding: 12px 25px;
+                    background-color: #80b435;
+                    color: #fff;
+                    border-radius: 25px;
+                    font-weight: 500;
+                    transition: all 0.3s ease;
+                    text-decoration: none;
+                }
+
+                .product-action-shop .add-to-cart-btn:before {
+                    content: '\f07a';
+                    font-family: 'FontAwesome';
+                    margin-right: 8px;
+                    font-size: 16px;
+                }
+
+                .product-action-shop .add-to-cart-btn:hover {
+                    background-color: #6a9828;
+                    transform: translateY(-2px);
+                    box-shadow: 0 5px 15px rgba(128, 180, 53, 0.3);
+                }
+
+                .product-action-shop .add-to-cart-btn.disabled {
+                    background-color: #aaa;
+                    cursor: not-allowed;
+                    pointer-events: none;
+                }
             </style>
         </head>
         <body>
@@ -293,7 +328,6 @@
                                     </div>
                                     <!--Toolbar Short Area End-->
                                 </div>
-                                <!--Grid & List View End-->
                                 <!--Shop Product Start-->
                                 <div class="shop-product">
                                     <div id="myTabContent-2" class="tab-content">
@@ -332,7 +366,7 @@
                                                                                         <fmt:formatNumber value="${product.price}" pattern="#,##0"/> VND
                                                                                     </span>
                                                                                 </div>
-                                                                             
+
                                                                                 <div class="product-stock">
                                                                                     <span>Stock: ${product.stock}</span>
                                                                                 </div>
@@ -396,8 +430,19 @@
                                                                             <div class="product-desc">
                                                                                 <p>${product.description}</p>
                                                                             </div>
+                                                                            <!-- Replace the product-action-shop div with this enhanced version -->
                                                                             <div class="product-action-shop">
-                                                                                <a class="add-to-cart-btn" href="#" data-product-id="${product.productId}">Add to cart</a>
+                                                                                <c:choose>
+                                                                                    <c:when test="${not empty sessionScope.account && sessionScope.account.role ne 'admin' && sessionScope.account.role ne 'staff'}">
+                                                                                        <a class="add-to-cart-btn" href="#" data-product-id="${product.productId}">Add to cart</a>
+                                                                                    </c:when>
+                                                                                    <c:when test="${empty sessionScope.account}">
+                                                                                        <a class="add-to-cart-btn login-required" href="#" data-product-id="${product.productId}">Add to cart</a>
+                                                                                    </c:when>
+                                                                                    <c:otherwise>
+                                                                                        <a class="add-to-cart-btn disabled" href="#" style="background-color: #aaa;">Not available for staff/admin</a>
+                                                                                    </c:otherwise>
+                                                                                </c:choose>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -561,37 +606,32 @@
                     e.preventDefault();
                     const productId = $(this).data('product-id');
 
-                    // Kiểm tra đăng nhập trước khi thêm vào giỏ hàng
+                    // Check login before adding to cart
             <c:if test="${empty sessionScope.account}">
-                    // Hiển thị thông báo yêu cầu đăng nhập
-                    const toast = new bootstrap.Toast(document.getElementById('cartToast'));
-                    $('#cartToast').removeClass('bg-success').addClass('bg-warning');
-                    $('#cartToast .toast-body').text('Please login to add products to your cart');
-                    toast.show();
-
-                    // Chuyển hướng đến trang đăng nhập sau 2 giây
-                    setTimeout(function () {
-                        window.location.href = '${pageContext.request.contextPath}/authen?action=login';
-                    }, 2000);
+                    iziToast.warning({
+                        title: 'Warning',
+                        message: 'Please login to add products to your cart',
+                        position: 'topRight',
+                        timeout: 2000,
+                        onClosing: function () {
+                            window.location.href = '${pageContext.request.contextPath}/authen?action=login';
+                        }
+                    });
                     return;
             </c:if>
 
-                    // Kiểm tra nếu người dùng là admin hoặc staff
+                    // Check if user is admin or staff
             <c:if test="${not empty sessionScope.account && (sessionScope.account.role eq 'admin' || sessionScope.account.role eq 'staff')}">
-                    // Hiển thị thông báo lỗi
-                    const toast = new bootstrap.Toast(document.getElementById('cartToast'));
-                    $('#cartToast').removeClass('bg-success').addClass('bg-danger');
-                    $('#cartToast .toast-body').text('Admin and staff cannot add products to cart');
-                    toast.show();
-
-                    // Auto hide toast after 3 seconds
-                    setTimeout(function () {
-                        toast.hide();
-                    }, 3000);
+                    iziToast.error({
+                        title: 'Error',
+                        message: 'Admin and staff cannot add products to cart',
+                        position: 'topRight',
+                        timeout: 3000
+                    });
                     return;
             </c:if>
 
-                    // Nếu đã đăng nhập và không phải admin/staff, tiếp tục thêm vào giỏ hàng
+                    // If logged in and not admin/staff, proceed with adding to cart
                     $.ajax({
                         url: '${pageContext.request.contextPath}/cart',
                         type: 'POST',
@@ -600,31 +640,51 @@
                             // Update cart count in header
                             $('.cart-quantity').text(response);
 
-                            // Show toast message
-                            const toast = new bootstrap.Toast(document.getElementById('cartToast'));
-                            $('#cartToast').removeClass('bg-danger').addClass('bg-success');
-                            $('#cartToast .toast-body').text('Product has been added to your cart');
-                            toast.show();
-
-                            // Auto hide toast after 3 seconds
-                            setTimeout(function () {
-                                toast.hide();
-                            }, 3000);
+                            // Show success toast
+                            iziToast.success({
+                                title: 'Success',
+                                message: 'Product has been added to your cart',
+                                position: 'topRight',
+                                timeout: 3000
+                            });
                         },
                         error: function (xhr) {
                             // Show error toast
-                            $('#cartToast').removeClass('bg-success').addClass('bg-danger');
-                            $('#cartToast .toast-body').text('An error occurred while adding the product to cart');
-                            const toast = new bootstrap.Toast(document.getElementById('cartToast'));
-                            toast.show();
-
-                            // Auto hide toast after 3 seconds
-                            setTimeout(function () {
-                                toast.hide();
-                            }, 3000);
+                            iziToast.error({
+                                title: 'Error',
+                                message: 'An error occurred while adding the product to cart',
+                                position: 'topRight',
+                                timeout: 3000
+                            });
                         }
                     });
                 });
+
+                // Update showNotification function to use iziToast
+                function showNotification(type, message) {
+                    const toastConfig = {
+                        message: message,
+                        position: 'topRight',
+                        timeout: 3000
+                    };
+
+                    if (type === 'success') {
+                        iziToast.success({
+                            title: 'Success',
+                            ...toastConfig
+                        });
+                    } else if (type === 'error') {
+                        iziToast.error({
+                            title: 'Error',
+                            ...toastConfig
+                        });
+                    } else if (type === 'warning') {
+                        iziToast.warning({
+                            title: 'Warning',
+                            ...toastConfig
+                        });
+                    }
+                }
 
                 // Add to wishlist handler
                 $(document).on('click', '.add-to-wishlist', function (e) {

@@ -45,8 +45,8 @@ public class AuthenController extends HttpServlet {
         String url;
         switch (action) {
             case "login":
-//                url = LOGIN_PAGE;
-                 url = fakeLogin(request, response);
+                url = LOGIN_PAGE;
+//                 url = fakeLogin(request, response);
                 break;
             case "logout":
                 url = logOut(request, response);
@@ -220,8 +220,10 @@ public class AuthenController extends HttpServlet {
                 account.setUserId(accountId);
                 session.setAttribute(GlobalConfig.SESSION_ACCOUNT, account);
                 session.setAttribute("email", email);
-                session.setMaxInactiveInterval(300);
-
+                
+                // Đặt thời gian hết hạn cho session (5 phút)
+                session.setMaxInactiveInterval(5 * 60);
+                
                 // Gửi OTP
                 String otp = EmailUtils.sendOTPMail(email);
                 session.setAttribute("otp", otp);
@@ -243,15 +245,16 @@ public class AuthenController extends HttpServlet {
         String email = (String) session.getAttribute("email");
         String enteredOTP = request.getParameter("otp");
         String purpose = (String) session.getAttribute("otp_purpose");
-
-        System.out.println("Verifying OTP: entered=" + enteredOTP + ", stored=" + storedOTP);
-        System.out.println("Purpose: " + purpose + ", Email: " + email);
-
+        
+        // Check if session has expired
         if (storedOTP == null || email == null) {
-            session.setAttribute("toastMessage", "Session expired. Please try again.");
+            session.setAttribute("toastMessage", "OTP has expired. Please request a new one.");
             session.setAttribute("toastType", "error");
             return ENTER_EMAIL_PAGE;
         }
+
+        System.out.println("Verifying OTP: entered=" + enteredOTP + ", stored=" + storedOTP);
+        System.out.println("Purpose: " + purpose + ", Email: " + email);
 
         if (storedOTP.equals(enteredOTP)) {
             System.out.println("OTP verified successfully!");
@@ -303,8 +306,8 @@ public class AuthenController extends HttpServlet {
         session.setAttribute("otp_purpose", "password_reset");
         session.setAttribute("account_id", foundAccount.getUserId());
 
-        // Đặt thời gian hết hạn cho session (ví dụ: 15 phút)
-        session.setMaxInactiveInterval(15 * 60);
+        // Đặt thời gian hết hạn cho session (5 phút)
+        session.setMaxInactiveInterval(5 * 60);
 
         url = VERIFY_OTP_PAGE;
         return url;
@@ -385,7 +388,7 @@ public class AuthenController extends HttpServlet {
         String url = null;
         // get về các thong tin người dufg nhập
         String email = "long10";
-        String password = "Edison@28";
+        String password = "1";
         // kiểm tra thông tin có tồn tại trong DB ko
         Account account = Account.builder()
                 .username(email)

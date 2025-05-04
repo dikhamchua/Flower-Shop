@@ -155,6 +155,9 @@
                                 <input type="text" class="form-control" id="otp" name="otp" placeholder="Enter OTP Code">
                                 <i class="fas fa-shield-alt form-icon"></i>
                             </div>
+                            <div class="countdown-timer text-center mb-3">
+                                <p>Time remaining: <span id="timer" class="text-danger font-weight-bold">05:00</span></p>
+                            </div>
                             <button type="submit" class="btn-verify">Verify</button>
                         </form>
                         <div class="resend-otp">
@@ -172,5 +175,36 @@
 
         <!--All Js Here-->
         <jsp:include page="../common/home/common-js.jsp"></jsp:include>
+        
+        <!-- Countdown Timer Script -->
+        <script>
+            // Set the countdown time (5 minutes = 300 seconds)
+            let timeLeft = 300;
+            
+            // Update the countdown every second
+            const countdownTimer = setInterval(function() {
+                // Calculate minutes and seconds
+                const minutes = Math.floor(timeLeft / 60);
+                const seconds = timeLeft % 60;
+                
+                // Format the time display (add leading zeros if needed)
+                const displayMinutes = minutes < 10 ? "0" + minutes : minutes;
+                const displaySeconds = seconds < 10 ? "0" + seconds : seconds;
+                
+                // Update the timer display
+                document.getElementById("timer").textContent = displayMinutes + ":" + displaySeconds;
+                
+                // Decrease the time left
+                timeLeft--;
+                
+                // If the countdown is finished, redirect to the enter email page
+                if (timeLeft < 0) {
+                    clearInterval(countdownTimer);
+                    document.getElementById("timer").textContent = "00:00";
+                    alert("OTP has expired. Please request a new one.");
+                    window.location.href = "${pageContext.request.contextPath}/authen?action=enter-email";
+                }
+            }, 1000);
+        </script>
     </body>
 </html>

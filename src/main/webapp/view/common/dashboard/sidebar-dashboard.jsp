@@ -77,7 +77,7 @@
                 <li>
                     <a href="${pageContext.request.contextPath}/admin/manage-account">
                         <iconify-icon icon="flowbite:users-group-outline" class="menu-icon"></iconify-icon>
-                        <span>Users Management</span> 
+                        <span>Account Management</span> 
                     </a>
                 </li>
                 <li>

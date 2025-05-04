@@ -44,7 +44,7 @@ public class EmailUtils {
     public static String sendOTPMail(String to) {
         int otp = GlobalUtils.generateOTP(6); // Sử dụng phương thức generateOTP để tạo OTP
         String subject = "Mã OTP";
-        String content = "Mã OTP của bạn là: " + otp;
+        String content = "Mã OTP của bạn là: " + otp + "<br><br>Mã OTP sẽ hết hạn sau 5 phút.";
 
         try {
             sendMail(to, subject, content);

@@ -190,14 +190,51 @@
                         
                         <div class="row mb-3">
                             <label class="col-sm-3 col-form-label">Status</label>
-                            <div class="col-sm-9">
-                                <div class="form-check form-switch">
+                            <div class="col-sm-9 d-flex align-items-center">
+                                <div class="form-check form-switch me-3">
                                     <input class="form-check-input" type="checkbox" id="isActive" name="isActive" 
-                                           ${coupon.active ? 'checked' : ''}>
-                                    <label class="form-check-label" for="isActive">Activate this coupon</label>
+                                           ${coupon.active ? 'checked' : ''} style="width: 3rem; height: 1.5rem;">
                                 </div>
+                                <span id="statusText" class="badge ${coupon.active ? 'bg-success' : 'bg-danger'} fs-6">
+                                    ${coupon.active ? 'Active' : 'Inactive'}
+                                </span>
                             </div>
                         </div>
+                        
+                        <style>
+                            .form-check-input:checked {
+                                background-color: #4e73df;
+                                border-color: #4e73df;
+                            }
+                            
+                            .form-check-input {
+                                cursor: pointer;
+                                transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+                            }
+                            
+                            .form-check-input:focus {
+                                box-shadow: 0 0 0 0.2rem rgba(78, 115, 223, 0.25);
+                            }
+                        </style>
+                        
+                        <script>
+                            document.addEventListener('DOMContentLoaded', function() {
+                                const statusToggle = document.getElementById('isActive');
+                                const statusText = document.getElementById('statusText');
+                                
+                                statusToggle.addEventListener('change', function() {
+                                    if (this.checked) {
+                                        statusText.textContent = 'Active';
+                                        statusText.classList.remove('bg-danger');
+                                        statusText.classList.add('bg-success');
+                                    } else {
+                                        statusText.textContent = 'Inactive';
+                                        statusText.classList.remove('bg-success');
+                                        statusText.classList.add('bg-danger');
+                                    }
+                                });
+                            });
+                        </script>
                         
                         <div class="row mb-3">
                             <label class="col-sm-3 col-form-label">Created At</label>

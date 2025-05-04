@@ -68,11 +68,54 @@
                             <input type="text" class="form-control" name="username" 
                                    value="${account.username}" readonly>
                         </div>
+                        <!-- Update the password input field -->
                         <div class="col-md-6">
                             <label class="form-label">Password</label>
-                            <input type="password" class="form-control" name="password" 
+                            <input type="password" class="form-control ${not empty sessionScope.errors.password ? 'is-invalid' : ''}" 
+                                   name="password" id="passwordInput"
                                    placeholder="Leave blank to keep current password">
+                            <div class="invalid-feedback" id="passwordError" style="display:none;">
+                                Password must be at least 8 characters long and contain at least one number, one uppercase letter, and one lowercase letter.
+                            </div>
+                            <c:if test="${not empty sessionScope.errors.password}">
+                                <div class="invalid-feedback" style="display:block;">${sessionScope.errors.password}</div>
+                            </c:if>
                         </div>
+                        
+                        <!-- Update the JavaScript validation -->
+                        <script>
+                            document.addEventListener('DOMContentLoaded', function() {
+                                // ... existing code ...
+                        // Add password validation
+                        const passwordInput = document.getElementById('passwordInput');
+                        const passwordError = document.getElementById('passwordError');
+                        
+                        document.getElementById('accountEditForm').addEventListener('submit', function(e) {
+                            let valid = true;
+                        
+                            // Existing validations...
+                        
+                            // Password validation (only if password field is not empty)
+                            const passwordValue = passwordInput.value.trim();
+                            if (passwordValue !== '') {
+                                const passwordPattern = /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+                                if (!passwordPattern.test(passwordValue)) {
+                                    passwordInput.classList.add('is-invalid');
+                                    passwordError.style.display = 'block';
+                                    valid = false;
+                                } else {
+                                    passwordInput.classList.remove('is-invalid');
+                                    passwordError.style.display = 'none';
+                                }
+                            }
+                        
+                            // Prevent form submission if not valid
+                            if (!valid) {
+                                e.preventDefault();
+                            }
+                        });
+                    });
+                </script>
                         <div class="col-md-6">
                             <label class="form-label">Role</label>
                             <select class="form-select" name="role" required>

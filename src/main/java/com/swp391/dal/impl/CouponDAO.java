@@ -37,13 +37,14 @@ public class CouponDAO extends DBContext {
 
     public List<Coupon> getAllActiveCoupons() {
         List<Coupon> coupons = new ArrayList<>();
-        String sql = "SELECT * FROM coupons WHERE is_active = 1 AND end_date >= ? ORDER BY created_at DESC";
+        String sql = "SELECT * FROM coupons WHERE is_active = 1 AND end_date >= ? AND start_date <= ? ORDER BY created_at DESC";
         
         try (Connection con = connection; 
              PreparedStatement ps = con.prepareStatement(sql)) {
             
-            // Set current timestamp to filter out expired coupons
-            ps.setTimestamp(1, new Timestamp(new Date().getTime()));
+            Timestamp currentTime = new Timestamp(new Date().getTime());
+            ps.setTimestamp(1, currentTime); // Check end_date
+            ps.setTimestamp(2, currentTime); // Check start_date
             
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
@@ -261,12 +262,15 @@ public class CouponDAO extends DBContext {
 
     public List<Coupon> searchCoupons(String keyword) {
         List<Coupon> coupons = new ArrayList<>();
-        String sql = "SELECT * FROM coupons WHERE code LIKE ? OR description LIKE ?";
+        String sql = "SELECT * FROM coupons WHERE (code LIKE ? OR description LIKE ?) " +
+                     "AND is_active = 1 AND end_date >= ? AND start_date <= ?";
 
         try (Connection con = connection; PreparedStatement ps = con.prepareStatement(sql)) {
-
+            Timestamp currentTime = new Timestamp(new Date().getTime());
             ps.setString(1, "%" + keyword + "%");
             ps.setString(2, "%" + keyword + "%");
+            ps.setTimestamp(3, currentTime); // Check end_date
+            ps.setTimestamp(4, currentTime); // Check start_date
 
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {

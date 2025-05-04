@@ -229,12 +229,12 @@ public class ManageProductController extends HttpServlet {
                 boolean isSuccess = productDAO.update(product);
                 
                 if (isSuccess) {
-                    setToastMessage(request, "Kích hoạt sản phẩm thành công!", "success");
+                    setToastMessage(request, "Product activation successful!", "success");
                 } else {
-                    setToastMessage(request, "Kích hoạt sản phẩm thất bại!", "error");
+                    setToastMessage(request, "Product activation failed!", "error");
                 }
             } else {
-                setToastMessage(request, "Không tìm thấy sản phẩm!", "error");
+                setToastMessage(request, "No products found!", "error");
             }
         } catch (Exception e) {
             setToastMessage(request, "Error: " + e.getMessage(), "error");
@@ -267,12 +267,12 @@ public class ManageProductController extends HttpServlet {
                 boolean isSuccess = productDAO.update(product);
                 
                 if (isSuccess) {
-                    setToastMessage(request, "Vô hiệu hóa sản phẩm thành công!", "success");
+                    setToastMessage(request, "Product deactivated successfully!", "success");
                 } else {
-                    setToastMessage(request, "Vô hiệu hóa sản phẩm thất bại!", "error");
+                    setToastMessage(request, "Product deactivation failed!", "error");
                 }
             } else {
-                setToastMessage(request, "Không tìm thấy sản phẩm!", "error");
+                setToastMessage(request, "No products found!", "error");
             }
         } catch (Exception e) {
             setToastMessage(request, "Error: " + e.getMessage(), "error");
@@ -324,7 +324,7 @@ public class ManageProductController extends HttpServlet {
                 request.setAttribute("product", product);
                 request.getRequestDispatcher("/view/admin/product-edit.jsp").forward(request, response);
             } else {
-                setToastMessage(request, "Không tìm thấy sản phẩm!", "error");
+                setToastMessage(request, "No products found!", "error");
                 response.sendRedirect(request.getContextPath() + "/admin/manage-product");
             }
         } catch (Exception e) {
@@ -465,12 +465,12 @@ public class ManageProductController extends HttpServlet {
                         }
                     }
                     
-                    setToastMessage(request, "Cập nhật sản phẩm thành công!", "success");
+                    setToastMessage(request, "Product update successful!", "success");
                 } else {
-                    setToastMessage(request, "Cập nhật sản phẩm thất bại!", "error");
+                    setToastMessage(request, "Product update failed!", "error");
                 }
             } else {
-                setToastMessage(request, "Không tìm thấy sản phẩm!", "error");
+                setToastMessage(request, "No products found!", "error");
             }
         } catch (Exception e) {
             setToastMessage(request, "Error: " + e.getMessage(), "error");
@@ -886,6 +886,25 @@ public class ManageProductController extends HttpServlet {
                 }
             default:
                 return 0;
+        }
+    }
+
+    // Add this new method
+    private void checkProductName(HttpServletRequest request, HttpServletResponse response) 
+    throws ServletException, IOException {
+        response.setContentType("application/json");
+        String name = request.getParameter("name");
+        
+        try {
+            ProductDAO productDAO = new ProductDAO();
+            Product existingProduct = productDAO.findByName(name.trim());
+            
+            // Create JSON response
+            String jsonResponse = String.format("{\"exists\": %b}", existingProduct != null);
+            response.getWriter().write(jsonResponse);
+        } catch (Exception e) {
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            response.getWriter().write("{\"error\": \"" + e.getMessage() + "\"}");
         }
     }
 }

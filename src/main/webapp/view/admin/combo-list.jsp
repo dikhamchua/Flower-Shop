@@ -7,18 +7,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" href="assets/images/favicon.png" sizes="16x16">
 
-    <title>Quản lý Combo | Admin</title>
+    <title>Manage Combos | Admin</title>
     <jsp:include page="../common/dashboard/css-dashboard.jsp"></jsp:include>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.min.css">
     <style>
         .fixed-width-btn {
-            min-width: 120px; /* Có thể điều chỉnh giá trị này */
-            text-align: center;
-        }
-    </style>
-    <style>
-        .fixed-width-btn {
-            min-width: 120px; /* Có thể điều chỉnh giá trị này */
+            min-width: 120px;
             text-align: center;
         }
         .product-image {
@@ -56,7 +50,7 @@
 
     <div class="dashboard-main-body">
         <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-24">
-            <h6 class="fw-semibold mb-0">Quản lý Combo</h6>
+            <h6 class="fw-semibold mb-0">Manage Combos</h6>
         </div>
 
         <!-- Filter Section -->
@@ -66,24 +60,24 @@
                     <input type="hidden" name="action" value="list">
                     <div class="row g-3">
                         <div class="col-md-4">
-                            <input type="text" class="form-control" name="search" placeholder="Tìm kiếm theo tên..." 
+                            <input type="text" class="form-control" name="search" placeholder="Search by name..." 
                                    value="${searchFilter}">
                         </div>
                         <div class="col-md-3">
                             <select class="form-select" name="status">
-                                <option value="" ${statusFilter == null || statusFilter == '' ? 'selected' : ''}>Tất cả trạng thái</option>
-                                <option value="active" ${statusFilter == 'active' ? 'selected' : ''}>Hoạt động</option>
-                                <option value="inactive" ${statusFilter == 'inactive' ? 'selected' : ''}>Ngừng hoạt động</option>
+                                <option value="" ${statusFilter == null || statusFilter == '' ? 'selected' : ''}>All statuses</option>
+                                <option value="active" ${statusFilter == 'active' ? 'selected' : ''}>Active</option>
+                                <option value="inactive" ${statusFilter == 'inactive' ? 'selected' : ''}>Inactive</option>
                             </select>
                         </div>
                         <div class="col-md-2">
                             <button type="submit" class="btn btn-primary w-100">
-                                <i class="fas fa-search"></i> Tìm kiếm
+                                <i class="fas fa-search"></i> Search
                             </button>
                         </div>
                         <div class="col-md-3">
                             <a href="${pageContext.request.contextPath}/admin/manage-combo?action=add" class="btn btn-success w-100">
-                                <i class="fas fa-plus"></i> Tạo Combo Mới
+                                <i class="fas fa-plus"></i> Create New Combo
                             </a>
                         </div>
                     </div>
@@ -99,14 +93,14 @@
                         <thead>
                             <tr>
                                 <th>No</th>
-                                <th>Hình ảnh</th> <!-- Add this column for images -->
-                                <th>Tên Combo</th>
-                                <th>Mô tả</th>
-                                <th>Giá gốc</th>
-                                <th>Giá ưu đãi</th>
-                                <th>Trạng thái</th>
-                                <th>Ngày tạo</th>
-                                <th>Thao tác</th>
+                                <th>Image</th>
+                                <th>Combo Name</th>
+                                <th>Description</th>
+                                <th>Original Price</th>
+                                <th>Discounted Price</th>
+                                <th>Status</th>
+                                <th>Created At</th>
+                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -129,7 +123,7 @@
                                     <td>
                                         <c:choose>
                                             <c:when test="${empty combo.description}">
-                                                <span class="text-muted">Không có mô tả</span>
+                                                <span class="text-muted">No description</span>
                                             </c:when>
                                             <c:otherwise>
                                                 ${combo.description}
@@ -140,7 +134,7 @@
                                     <td>${combo.discountPrice}</td>
                                     <td>
                                         <span class="badge ${combo.status eq 'active' ? 'bg-success' : 'bg-danger'}">
-                                            ${combo.status eq 'active' ? 'Hoạt động' : 'Ngừng hoạt động'}
+                                            ${combo.status eq 'active' ? 'Active' : 'Inactive'}
                                         </span>
                                     </td>
                                     <td>
@@ -158,14 +152,14 @@
                                                     <button type="button" 
                                                             class="btn btn-sm btn-danger fixed-width-btn"
                                                             onclick="confirmDeactivate('${combo.comboId}', '${currentPage}')">
-                                                        <i class="fas fa-ban"></i> Ngừng
+                                                        <i class="fas fa-ban"></i> Deactive
                                                     </button>
                                                 </c:when>
                                                 <c:otherwise>
                                                     <button type="button" 
                                                             class="btn btn-sm btn-success fixed-width-btn"
                                                             onclick="confirmActivate('${combo.comboId}', '${currentPage}')">
-                                                        <i class="fas fa-check"></i> Kích hoạt
+                                                        <i class="fas fa-check"></i> Active
                                                     </button>
                                                 </c:otherwise>
                                             </c:choose>

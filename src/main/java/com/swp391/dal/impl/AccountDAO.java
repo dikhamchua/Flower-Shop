@@ -432,7 +432,7 @@ public class AccountDAO extends DBContext implements I_DAO<Account> {
     public boolean isEmailExists(String email, Integer excludeId) {
         String sql = "SELECT COUNT(*) FROM account WHERE email = ?";
         if (excludeId != null) {
-            sql += " AND id != ?";
+            sql += " AND user_id != ?";
         }
         try {
             connection = getConnection();
@@ -462,7 +462,7 @@ public class AccountDAO extends DBContext implements I_DAO<Account> {
     public boolean isPhoneExists(String phone, Integer excludeId) {
         String sql = "SELECT COUNT(*) FROM account WHERE phone = ?";
         if (excludeId != null) {
-            sql += " AND id != ?";
+            sql += " AND user_id != ?";
         }
         try {
             connection = getConnection();
@@ -481,6 +481,29 @@ public class AccountDAO extends DBContext implements I_DAO<Account> {
             closeResources();
         }
         return false;
+    }
+
+    /**
+     * Find account by phone number
+     * @param phone Phone number to search for
+     * @return Account if found, null otherwise
+     */
+    public Account findByPhone(String phone) {
+        String sql = "SELECT * FROM account WHERE phone = ?";
+        try {
+            connection = getConnection();
+            statement = connection.prepareStatement(sql);
+            statement.setString(1, phone);
+            resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                return getFromResultSet(resultSet);
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error finding account by phone: " + ex.getMessage());
+        } finally {
+            closeResources();
+        }
+        return null;
     }
 
     public static void main(String[] args) {

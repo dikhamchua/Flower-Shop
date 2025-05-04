@@ -33,6 +33,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 // Add MultipartConfig annotation to the class
@@ -575,22 +577,21 @@ public class ManageComboController extends HttpServlet {
     /**
      * Validate combo data
      */
-    private Map<String, String> validateComboData(String name, Float discountPrice,
-            String[] productIds, String[] quantities, Integer comboId) {
+    private Map<String, String> validateComboData(String name, Float discountPrice, String[] productIds, String[] quantities, Integer comboId) {
         Map<String, String> errors = new HashMap<>();
-
+    
         // Validate name
         if (name == null || name.trim().isEmpty()) {
-            errors.put("name", "Combo name is required");
-        } else if (name.length() > 255) {
-            errors.put("name", "Combo name must be less than 255 characters");
+            errors.put("name", "Tên combo không được để trống");
+        } else if (!name.matches("^[a-zA-Z0-9\\sÀ-ỹà-ỹ_.,-]+$")) {
+            errors.put("name", "Combo name cannot contain special characters");
         }
-
+    
         // Validate products
         if (productIds == null || productIds.length == 0) {
             errors.put("products", "You must select at least one product for the combo");
         }
-
+    
         // Validate quantities
         if (quantities != null) {
             for (int i = 0; i < quantities.length; i++) {
@@ -604,7 +605,7 @@ public class ManageComboController extends HttpServlet {
                 }
             }
         }
-
+    
         // Validate discount price (must be less than original price)
         if (discountPrice != null && productIds != null && quantities != null) {
             ProductDAO productDAO = new ProductDAO();
@@ -614,7 +615,18 @@ public class ManageComboController extends HttpServlet {
                 errors.put("discount_price", "Discount price must be less than original price");
             }
         }
-
+    
+        // Add validation for duplicate products
+        if (productIds != null) {
+            Set<String> uniqueProducts = new HashSet<>();
+            for (String productId : productIds) {
+                if (!uniqueProducts.add(productId)) {
+                    errors.put("duplicate_product", "Duplicate products are not allowed in a combo");
+                    break;
+                }
+            }
+        }
+        
         return errors;
     }
 
@@ -632,7 +644,7 @@ public class ManageComboController extends HttpServlet {
     private String getSubmittedFileName(Part part) {
         for (String cd : part.getHeader("content-disposition").split(";")) {
             if (cd.trim().startsWith("filename")) {
-                String fileName = cd.substring(cd.indexOf('=') + 1).trim().replace("\"", "");
+                String fileName = cd.substring(cd.indexOf('=') + 1).trim().replace("\"", "\"");
                 return fileName.substring(fileName.lastIndexOf('/') + 1)
                         .substring(fileName.lastIndexOf('\\') + 1);
             }

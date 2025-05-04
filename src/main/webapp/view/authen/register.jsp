@@ -329,7 +329,7 @@
             <!--Register Page End-->
             
             <!--Brand Area Start-->
-            <jsp:include page="/view/common/home/brand.jsp"></jsp:include>
+            <%--<jsp:include page="/view/common/home/brand.jsp"></jsp:include>--%>
             <!--Brand Area End-->
             
             <!--Footer Area Start-->

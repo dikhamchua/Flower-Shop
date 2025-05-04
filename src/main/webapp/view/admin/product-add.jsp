@@ -151,17 +151,17 @@
                             </div>
 
                             <div class="col-md-6">
-                                <label class="form-label">Danh mục <span class="text-danger">*</span></label>
+                                <label class="form-label">Category <span class="text-danger">*</span></label>
                                 <div class="category-input-container">
                                     <button type="button" id="categoryDropdownBtn" 
                                             class="btn btn-outline-secondary w-100 text-start d-flex justify-content-between align-items-center ${errors.categoryIds != null ? 'is-invalid' : ''}">
-                                        <span>Chọn danh mục</span>
+                                        <span>Choose category</span>
                                         <i class="fas fa-chevron-down"></i>
                                     </button>
                                     <div id="categorySuggestions" class="category-suggestions" style="display: none;"></div>
                                     <div id="selectedCategories" class="selected-categories"></div>
                                     <input type="hidden" name="categoryIds" id="categoryIds" value="${formData.categoryIds[0]}">
-                                    <div class="invalid-feedback">${errors.categoryIds != null ? errors.categoryIds : 'Vui lòng chọn ít nhất một danh mục'}</div>
+                                    <div class="invalid-feedback">${errors.categoryIds != null ? errors.categoryIds : 'Please select at least one category'}</div>
                                 </div>
                             </div>
 
@@ -263,101 +263,135 @@
 
         <script>
             document.addEventListener('DOMContentLoaded', function() {
-                // Restore selected categories if form validation failed
-                const categoryIdsValue = document.getElementById('categoryIds').value;
-                if (categoryIdsValue) {
-                    const categoryIds = categoryIdsValue.split(',');
-                    categoryIds.forEach(id => {
-                        const categoryId = parseInt(id.trim());
-                        const category = window.categories.find(c => c.id === categoryId);
-                        if (category) {
-                            addSelectedCategory(category.id, category.name);
+                // Add this at the beginning of your existing DOMContentLoaded handler
+                const productForm = document.getElementById('productForm');
+                const productNameInput = document.querySelector('input[name="name"]');
+                
+                productForm.addEventListener('submit', async function(e) {
+                    e.preventDefault();
+                    
+                    // Reset previous error state
+                    productNameInput.classList.remove('is-invalid');
+                    productNameInput.nextElementSibling.style.display = 'none';
+                    
+                    try {
+                        // Check if product name exists
+                        const response = await fetch(`${pageContext.request.contextPath}/admin/manage-product/check-name?name=${encodeURIComponent(productNameInput.value)}`);
+                        const data = await response.json();
+                        
+                        if (data.exists) {
+                            // Show error if product name exists
+                            productNameInput.classList.add('is-invalid');
+                            productNameInput.nextElementSibling.textContent = 'Product name already exists';
+                            productNameInput.nextElementSibling.style.display = 'block';
+                            return;
                         }
-                    });
-                }
-                
-                // Restore selected suppliers if form validation failed
-                const supplierIdsValue = document.getElementById('supplierIdsInput').value;
-                if (supplierIdsValue) {
-                    const supplierIds = supplierIdsValue.split(',');
-                    supplierIds.forEach(id => {
-                        const supplierId = parseInt(id.trim());
-                        const supplier = window.suppliers.find(s => s.id == supplierId);
-                        if (supplier) {
-                            addSelectedSupplier(supplier.id, supplier.name);
-                        }
-                    });
-                }
-                
-                // Helper function to add a selected category to the UI
-                function addSelectedCategory(id, name) {
-                    const selectedCategoriesDiv = document.getElementById('selectedCategories');
-                    
-                    // Check if category is already selected
-                    if (document.querySelector(`.selected-category[data-id="${id}"]`)) {
-                        return;
+                        
+                        // If name doesn't exist, submit the form
+                        productForm.submit();
+                    } catch (error) {
+                        console.error('Error checking product name:', error);
+                        // Submit form anyway if the check fails
+                        productForm.submit();
                     }
-                    
-                    const categoryElement = document.createElement('div');
-                    categoryElement.className = 'selected-category';
-                    categoryElement.setAttribute('data-id', id);
-                    categoryElement.innerHTML = `
-                        <span class="category-name">${name}</span>
-                        <span class="remove-category">&times;</span>
-                    `;
-                    
-                    // Add event listener to remove button
-                    categoryElement.querySelector('.remove-category').addEventListener('click', function() {
-                        categoryElement.remove();
-                        updateCategoryIds();
-                    });
-                    
-                    selectedCategoriesDiv.appendChild(categoryElement);
-                    updateCategoryIds();
-                }
-                
-                // Helper function to add a selected supplier to the UI
-                function addSelectedSupplier(id, name) {
-                    const selectedSuppliersDiv = document.getElementById('selectedSuppliers');
-                    
-                    // Check if supplier is already selected
-                    if (document.querySelector(`.selected-supplier[data-id="${id}"]`)) {
-                        return;
-                    }
-                    
-                    const supplierElement = document.createElement('div');
-                    supplierElement.className = 'selected-supplier';
-                    supplierElement.setAttribute('data-id', id);
-                    supplierElement.innerHTML = `
-                        <span class="supplier-name">${name}</span>
-                        <span class="remove-supplier">&times;</span>
-                    `;
-                    
-                    // Add event listener to remove button
-                    supplierElement.querySelector('.remove-supplier').addEventListener('click', function() {
-                        supplierElement.remove();
-                        updateSupplierIds();
-                    });
-                    
-                    selectedSuppliersDiv.appendChild(supplierElement);
-                    updateSupplierIds();
-                }
-                
-                // Helper function to update category IDs hidden input
-                function updateCategoryIds() {
-                    const selectedCategories = document.querySelectorAll('.selected-category');
-                    const categoryIds = Array.from(selectedCategories).map(el => el.getAttribute('data-id'));
-                    document.getElementById('categoryIds').value = categoryIds.join(',');
-                }
-                
-                // Helper function to update supplier IDs hidden input
-                function updateSupplierIds() {
-                    const selectedSuppliers = document.querySelectorAll('.selected-supplier');
-                    const supplierIds = Array.from(selectedSuppliers).map(el => el.getAttribute('data-id'));
-                    document.getElementById('supplierIdsInput').value = supplierIds.join(',');
-                }
+                });
             });
-        </script>
+            
+            // Restore selected categories if form validation failed
+            const categoryIdsValue = document.getElementById('categoryIds').value;
+            if (categoryIdsValue) {
+                const categoryIds = categoryIdsValue.split(',');
+                categoryIds.forEach(id => {
+                    const categoryId = parseInt(id.trim());
+                    const category = window.categories.find(c => c.id === categoryId);
+                    if (category) {
+                        addSelectedCategory(category.id, category.name);
+                    }
+                });
+            }
+            
+            // Restore selected suppliers if form validation failed
+            const supplierIdsValue = document.getElementById('supplierIdsInput').value;
+            if (supplierIdsValue) {
+                const supplierIds = supplierIdsValue.split(',');
+                supplierIds.forEach(id => {
+                    const supplierId = parseInt(id.trim());
+                    const supplier = window.suppliers.find(s => s.id == supplierId);
+                    if (supplier) {
+                        addSelectedSupplier(supplier.id, supplier.name);
+                    }
+                });
+            }
+            
+            // Helper function to add a selected category to the UI
+            function addSelectedCategory(id, name) {
+                const selectedCategoriesDiv = document.getElementById('selectedCategories');
+                
+                // Check if category is already selected
+                if (document.querySelector(`.selected-category[data-id="${id}"]`)) {
+                    return;
+                }
+                
+                const categoryElement = document.createElement('div');
+                categoryElement.className = 'selected-category';
+                categoryElement.setAttribute('data-id', id);
+                categoryElement.innerHTML = `
+                    <span class="category-name">${name}</span>
+                    <span class="remove-category">&times;</span>
+                `;
+                
+                // Add event listener to remove button
+                categoryElement.querySelector('.remove-category').addEventListener('click', function() {
+                    categoryElement.remove();
+                    updateCategoryIds();
+                });
+                
+                selectedCategoriesDiv.appendChild(categoryElement);
+                updateCategoryIds();
+            }
+            
+            // Helper function to add a selected supplier to the UI
+            function addSelectedSupplier(id, name) {
+                const selectedSuppliersDiv = document.getElementById('selectedSuppliers');
+                
+                // Check if supplier is already selected
+                if (document.querySelector(`.selected-supplier[data-id="${id}"]`)) {
+                    return;
+                }
+                
+                const supplierElement = document.createElement('div');
+                supplierElement.className = 'selected-supplier';
+                supplierElement.setAttribute('data-id', id);
+                supplierElement.innerHTML = `
+                    <span class="supplier-name">${name}</span>
+                    <span class="remove-supplier">&times;</span>
+                `;
+                
+                // Add event listener to remove button
+                supplierElement.querySelector('.remove-supplier').addEventListener('click', function() {
+                    supplierElement.remove();
+                    updateSupplierIds();
+                });
+                
+                selectedSuppliersDiv.appendChild(supplierElement);
+                updateSupplierIds();
+            }
+            
+            // Helper function to update category IDs hidden input
+            function updateCategoryIds() {
+                const selectedCategories = document.querySelectorAll('.selected-category');
+                const categoryIds = Array.from(selectedCategories).map(el => el.getAttribute('data-id'));
+                document.getElementById('categoryIds').value = categoryIds.join(',');
+            }
+            
+            // Helper function to update supplier IDs hidden input
+            function updateSupplierIds() {
+                const selectedSuppliers = document.querySelectorAll('.selected-supplier');
+                const supplierIds = Array.from(selectedSuppliers).map(el => el.getAttribute('data-id'));
+                document.getElementById('supplierIdsInput').value = supplierIds.join(',');
+            }
+        });
+    </script>
 
     </body>
 </html>
