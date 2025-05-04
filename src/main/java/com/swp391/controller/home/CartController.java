@@ -68,6 +68,9 @@ public class CartController extends HttpServlet {
                     case "remove-coupon":
                         handleRemoveCoupon(request, response);
                         break;
+                    case "checkout-vnpay":
+                        handleVNPAYReturn(request, response);
+                        break;
                     default:
                         handleShowCart(request, response);
                         break;
@@ -135,6 +138,122 @@ public class CartController extends HttpServlet {
             session.setAttribute("cartMessage", "An error occurred: " + e.getMessage());
             response.sendRedirect(request.getContextPath() + "/cart");
         }
+    }
+
+    private void handleVNPAYReturn(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        // Xử lý logic trả về từ VNPAY
+
+        HttpSession session = request.getSession();
+        Account account = (Account) session.getAttribute(GlobalConfig.SESSION_ACCOUNT);
+
+        // Lấy thông tin từ form checkout
+        String address = (String) session.getAttribute("address");
+        // Lấy giỏ hàng
+        CartDAO cartDAO = new CartDAO();
+        int cartId = cartDAO.getCartIdByUserId(account.getUserId());
+        
+        // Check if cart exists, redirect back to cart page if not
+        if (cartId == 0) {
+            response.sendRedirect(request.getContextPath() + "/cart");
+            return;
+        }
+        
+        // Lấy sản phẩm trong giỏ hàng
+        CartItemDAO cartItemDAO = new CartItemDAO();
+        List<CartItem> cartItems = cartItemDAO.getCartItemsByCartId(cartId);
+        
+        // Check if cart is empty, redirect back to cart page if true
+        if (cartItems.isEmpty()) {
+            response.sendRedirect(request.getContextPath() + "/cart");
+            return;
+        }
+        
+        // Tính tổng giá trị
+        double cartTotal = calculateCartTotal(cartItems);
+        
+        // Áp dụng giảm giá nếu có
+        BigDecimal couponDiscount = (BigDecimal) session.getAttribute("couponDiscount");
+        Coupon appliedCoupon = (Coupon) session.getAttribute("appliedCoupon");
+        double finalTotal = cartTotal;
+        if (couponDiscount != null) {
+            // Đảm bảo finalTotal không âm
+            finalTotal = Math.max(0, cartTotal - couponDiscount.doubleValue());
+        }
+        
+        // Tạo đơn hàng trong database với finalTotal thay vì cartTotal
+        OrderDAO orderDAO = new OrderDAO();
+        Order order = new Order();
+        order.setUserId(account.getUserId());
+        order.setStatus("pending");  // Trạng thái mặc định là "pending"
+        order.setTotal(new BigDecimal(finalTotal)); // Sử dụng finalTotal thay vì total
+        order.setShippingAddress(address);
+        order.setPaymentMethod(GlobalConfig.PAYMENT_METHOD_VNPAY);
+
+        // Add coupon information if a coupon was applied
+        if (appliedCoupon != null && couponDiscount != null) {
+            order.setCouponCode(appliedCoupon.getCode());
+            order.setDiscountAmount(couponDiscount);
+        }
+
+        int orderId = orderDAO.insert(order);
+        
+        if (orderId > 0) {
+            // Tạo chi tiết đơn hàng
+            OrderItemDAO orderItemDAO = new OrderItemDAO();
+            boolean allItemsInserted = true;
+            
+            for (CartItem item : cartItems) {
+                OrderItem orderItem = new OrderItem();
+                orderItem.setOrderId(orderId);
+                orderItem.setProductId(item.getProduct().getProductId());
+                orderItem.setQuantity(item.getQuantity());
+                
+                // Sửa lại dòng này để tránh tạo BigDecimal từ BigDecimal
+                // Tùy vào kiểu dữ liệu của item.getProduct().getPrice()
+                if (item.getProduct().getPrice() instanceof BigDecimal) {
+                    orderItem.setPrice((BigDecimal) item.getProduct().getPrice());
+                } else {
+                    // Nếu là double
+                    orderItem.setPrice(new BigDecimal(item.getProduct().getPrice().toString()));
+                }
+                
+                if (!orderItemDAO.insert(orderItem)) {
+                    allItemsInserted = false;
+                    break;
+                }
+            }
+            
+            // Lưu thông tin sử dụng coupon nếu có
+            if (appliedCoupon != null) {
+                CouponUsageDAO couponUsageDAO = new CouponUsageDAO();
+                CouponUsage couponUsage = new CouponUsage();
+                couponUsage.setCouponId(appliedCoupon.getCouponId());
+                couponUsage.setUserId(account.getUserId());
+                couponUsage.setOrderId(orderId);
+                couponUsageDAO.insertCouponUsage(couponUsage);
+                
+                // Xóa coupon khỏi session sau khi sử dụng
+                session.removeAttribute("appliedCoupon");
+                session.removeAttribute("couponDiscount");
+            }
+            
+            if (allItemsInserted) {
+                // Sau khi đặt hàng thành công, xóa giỏ hàng
+                cartItemDAO.deleteAllCartItems(cartId);
+                
+                // Thông báo thành công
+                session.setAttribute("orderSuccessMessage", "Your order has been placed successfully!");
+                
+                // Chuyển hướng đến trang danh sách đơn hàng
+                response.sendRedirect(request.getContextPath() + "/orderControll");
+                return;
+            }
+        }
+        
+        // Nếu có lỗi xảy ra
+        session.setAttribute("errorMessage", "Failed to place your order. Please try again.");
+        response.sendRedirect(request.getContextPath() + "/cart?action=proceed-to-checkout");
+
     }
 
     // GET handlers
@@ -548,14 +667,22 @@ public class CartController extends HttpServlet {
         StringBuilder errorMessage = new StringBuilder();
         boolean hasStockError = false;
         
+        // Loop through each cart item to check stock availability
         for (CartItem item : cartItems) {
+            // Get the latest product info from database to check current stock
             Product product = productDAO.findById(item.getProduct().getProductId());
+            
+            // Check if product exists and requested quantity exceeds available stock
             if (product != null && item.getQuantity() > product.getStock()) {
+                // Set flag to indicate stock error was found
                 hasStockError = true;
+                
+                // Build detailed error message for this specific item
+                // Format: "- Product Name: Only X items available (you requested Y)"
                 errorMessage.append("- ").append(product.getProductName())
-                           .append(": Only ").append(product.getStock())
-                           .append(" items available (you requested ").append(item.getQuantity())
-                           .append(")\n");
+                           .append(": Only ").append(product.getStock()) // Show available stock
+                           .append(" items available (you requested ").append(item.getQuantity()) // Show requested quantity
+                           .append(")\n"); // Add newline for next item
             }
         }
         
@@ -588,17 +715,41 @@ public class CartController extends HttpServlet {
 
     private void handleProcessCheckout(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        Account account = (Account) session.getAttribute(GlobalConfig.SESSION_ACCOUNT);
-        
-        // Lấy thông tin từ form checkout
-        String address = request.getParameter("address");
         String paymentMethod = request.getParameter("paymentMethod");
         
+        switch (paymentMethod) {
+            case GlobalConfig.PAYMENT_METHOD_COD:
+                // Xử lý thanh toán khi nhận hàng (COD)
+                handleProcessCheckoutCOD(request, response);
+                break;
+            case GlobalConfig.PAYMENT_METHOD_VNPAY:
+                // Xử lý thanh toán bằng VNPAY
+                handleProcessCheckoutVNPAY(request, response);
+                break;
+            default:
+                break;
+        }
+        
+    }
+
+    private void handleProcessCheckoutVNPAY(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        HttpSession session = request.getSession();
+        Account account = (Account) session.getAttribute(GlobalConfig.SESSION_ACCOUNT);
+
+        //kiểm tra đã đăng nhập chưa
+        if (account == null) {
+            session.setAttribute("cartMessage", "Please login to proceed with checkout.");
+            response.sendRedirect(request.getContextPath() + "/login");
+            return;
+        }
+
+        // Lấy thông tin từ form checkout
+        String address = request.getParameter("address");
         // Lấy giỏ hàng
         CartDAO cartDAO = new CartDAO();
         int cartId = cartDAO.getCartIdByUserId(account.getUserId());
         
+        // Check if cart exists, redirect back to cart page if not
         if (cartId == 0) {
             response.sendRedirect(request.getContextPath() + "/cart");
             return;
@@ -608,6 +759,69 @@ public class CartController extends HttpServlet {
         CartItemDAO cartItemDAO = new CartItemDAO();
         List<CartItem> cartItems = cartItemDAO.getCartItemsByCartId(cartId);
         
+        // Check if cart is empty, redirect back to cart page if true
+        if (cartItems.isEmpty()) {
+            response.sendRedirect(request.getContextPath() + "/cart");
+            return;
+        }
+        
+        // Tính tổng giá trị
+        double cartTotal = calculateCartTotal(cartItems);
+        
+        // Áp dụng giảm giá nếu có
+        BigDecimal couponDiscount = (BigDecimal) session.getAttribute("couponDiscount");
+        Coupon appliedCoupon = (Coupon) session.getAttribute("appliedCoupon");
+        double finalTotal = cartTotal;
+        if (couponDiscount != null) {
+            // Đảm bảo finalTotal không âm
+            finalTotal = Math.max(0, cartTotal - couponDiscount.doubleValue());
+        }
+
+        //set thông tin của address lên session
+        session.setAttribute("address", address);
+
+        //chuyển sang trang ajax servlet
+        response.sendRedirect(request.getContextPath() + "/ajaxServlet?action=retail&amount=" + BigDecimal.valueOf(finalTotal));
+
+    }
+
+    /**
+     * Handles the checkout process for Cash on Delivery (COD) orders
+     * 
+     * This method processes a COD checkout by:
+     * 1. Validating the cart exists and is not empty
+     * 2. Calculating total amount including any coupon discounts
+     * 3. Creating order record in database
+     * 4. Creating order item records for each cart item
+     * 5. Handling coupon usage if applicable
+     * 6. Clearing the cart on successful order placement
+     *
+     * @param request The HTTP servlet request containing checkout form data
+     * @param response The HTTP servlet response
+     * @throws ServletException If there is an error processing the request
+     * @throws IOException If there is an error with I/O operations
+     */
+    private void handleProcessCheckoutCOD(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        HttpSession session = request.getSession();
+        Account account = (Account) session.getAttribute(GlobalConfig.SESSION_ACCOUNT);
+        
+        // Lấy thông tin từ form checkout
+        String address = request.getParameter("address");
+        // Lấy giỏ hàng
+        CartDAO cartDAO = new CartDAO();
+        int cartId = cartDAO.getCartIdByUserId(account.getUserId());
+        
+        // Check if cart exists, redirect back to cart page if not
+        if (cartId == 0) {
+            response.sendRedirect(request.getContextPath() + "/cart");
+            return;
+        }
+        
+        // Lấy sản phẩm trong giỏ hàng
+        CartItemDAO cartItemDAO = new CartItemDAO();
+        List<CartItem> cartItems = cartItemDAO.getCartItemsByCartId(cartId);
+        
+        // Check if cart is empty, redirect back to cart page if true
         if (cartItems.isEmpty()) {
             response.sendRedirect(request.getContextPath() + "/cart");
             return;
@@ -632,7 +846,7 @@ public class CartController extends HttpServlet {
         order.setStatus("pending");  // Trạng thái mặc định là "pending"
         order.setTotal(new BigDecimal(finalTotal)); // Sử dụng finalTotal thay vì total
         order.setShippingAddress(address);
-        order.setPaymentMethod(paymentMethod);
+        order.setPaymentMethod(GlobalConfig.PAYMENT_METHOD_COD);
 
         // Add coupon information if a coupon was applied
         if (appliedCoupon != null && couponDiscount != null) {

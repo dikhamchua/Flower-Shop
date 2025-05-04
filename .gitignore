@@ -25,4 +25,5 @@ replay_pid*
 /target/
 nbactions.xml
 CursorRULE latest.md
+.vscode/settings.json
 .trae/rules/project_rules.md

@@ -212,7 +212,7 @@
                                         <!-- Cash on Delivery -->
                                         <div class="payment-option">
                                             <div class="payment-label">
-                                                <input type="radio" id="cash-on-delivery" name="paymentMethod" value="cash on delivery" checked>
+                                                <input type="radio" id="cash-on-delivery" name="paymentMethod" value="cod" checked>
                                                 <div class="payment-icon">
                                                     <iconify-icon icon="uil:money-bill" width="24" height="24" style="color: #80b82d;"></iconify-icon>
                                                 </div>
@@ -240,11 +240,11 @@
                                         <!-- Bank Transfer -->
                                         <div class="payment-option">
                                             <div class="payment-label">
-                                                <input type="radio" name="paymentMethod" id="bank-transfer" value="bank transfer">
+                                                <input type="radio" name="paymentMethod" id="bank-transfer" value="vnpay">
                                                 <div class="payment-icon">
                                                     <iconify-icon icon="mdi:bank-outline" width="24" height="24" style="color: #80b82d;"></iconify-icon>
                                                 </div>
-                                                <label for="bank-transfer">Bank Transfer</label>
+                                                <label for="bank-transfer">VNPAY</label>
                                             </div>
                                             <div class="payment-details">
                                                 Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order won't be processed until the funds have cleared in our account.

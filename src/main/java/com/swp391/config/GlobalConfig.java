@@ -78,5 +78,6 @@ public class GlobalConfig {
 
     public static final String PAYMENT_METHOD_VNPAY = "vnpay";
 
+    public static final String PAYMENT_METHOD_COD = "cod";
     
 }
