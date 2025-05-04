@@ -143,6 +143,7 @@
                                 <tr>
                                     <th>ID</th>
                                     <th>Shipping Address</th>
+                                    <th>Order Type</th>
                                     <th>Payment Method</th>
                                     <th>Total</th>
                                     <th>Status</th>
@@ -151,6 +152,8 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                <!-- Display orders here -->
+                                <!-- If no order -->
                                 <c:if test="${empty orders}">
                                     <tr>
                                         <td colspan="7" class="text-center">
@@ -179,12 +182,24 @@
                                         </td>
                                     </tr>
                                 </c:if>
+                                <!-- If have order -->
                                 <c:forEach var="order" items="${orders}">
                                     <tr>
+                                        <!-- Order ID -->
                                         <td>#${order.orderId}</td>
+                                        <!-- Shipping address -->
                                         <td>${order.shippingAddress}</td>
+                                        <!-- Order type -->
+                                        <td>
+                                            <span class="badge ${order.type == 'retail' ? 'bg-success' : 'bg-warning'}">
+                                                        ${order.type}
+                                            </span>
+                                        </td>
+                                        <!-- Payment method --> 
                                         <td>${order.paymentMethod}</td>
+                                        <!-- Total -->
                                         <td><fmt:formatNumber value="${order.total}" type="currency" currencySymbol="" maxFractionDigits="0"/> VNĐ</td>
+                                        <!-- Status -->
                                         <td>
                                             <span class="badge ${order.status == 'pending' ? 'bg-warning' : 
                                                                 order.status == 'accepted' ? 'bg-info' : 
@@ -192,7 +207,9 @@
                                                 ${order.status}
                                             </span>
                                         </td>
+                                        <!-- Created Date -->
                                         <td><fmt:formatDate value="${order.createdAt}" pattern="dd/MM/yyyy HH:mm"/></td>
+                                        <!-- Action -->
                                         <td>
                                             <a href="${pageContext.request.contextPath}/orderControll?action=view&id=${order.orderId}"
                                                class="view-btn">
