@@ -38,7 +38,7 @@ public class OrderDAO extends DBContext implements I_DAO<Order> {
 
     @Override
     public int insert(Order order) {
-        String sql = "INSERT INTO orders (user_id, status, total, shipping_address, payment_method, coupon_code, discount_amount) "
+        String sql = "INSERT INTO orders (user_id, status, total, shipping_address, payment_method, coupon_code, discount_amount, type) "
                 + "VALUES (?, ?, ?, ?, ?, ?, ?)";
         try {
             connection = getConnection();
@@ -50,7 +50,8 @@ public class OrderDAO extends DBContext implements I_DAO<Order> {
             statement.setString(5, order.getPaymentMethod());
             statement.setString(6, order.getCouponCode());
             statement.setBigDecimal(7, order.getDiscountAmount());
-
+            statement.setString(8, order.getType());
+            
             int affectedRows = statement.executeUpdate();
             if (affectedRows == 0) {
                 throw new SQLException("Creating order failed, no rows affected.");
@@ -109,6 +110,7 @@ public class OrderDAO extends DBContext implements I_DAO<Order> {
         order.setPaymentMethod(rs.getString("payment_method"));
         order.setCreatedAt(rs.getTimestamp("created_at"));
         order.setUpdatedAt(rs.getTimestamp("updated_at"));
+        order.setType(rs.getString("type"));
         
         // Add coupon information
         order.setCouponCode(rs.getString("coupon_code"));

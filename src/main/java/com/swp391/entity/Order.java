@@ -26,6 +26,7 @@ public class Order {
     // Add these fields to your Order class
     private String couponCode;
     private BigDecimal discountAmount;
+    private String type; // enum: wholesale, retail
 
     // Constructors, getters, setters
     public Order() {
@@ -143,4 +144,14 @@ public class Order {
     public void setDiscountAmount(BigDecimal discountAmount) {
         this.discountAmount = discountAmount;
     }
+
+
+    public String getType() {
+        return this.type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
 }

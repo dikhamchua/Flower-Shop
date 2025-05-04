@@ -98,6 +98,7 @@ public class BuyComboController extends HttpServlet {
                 order.setShippingAddress(account.getAddress());
                 order.setTotal(BigDecimal.valueOf(combo.getDiscountPrice()));
                 order.setPaymentMethod(GlobalConfig.PAYMENT_METHOD_VNPAY);
+                order.setType(GlobalConfig.ORDER_TYPE_WHOLE_SALE);
 
                 int orderIdAfterInsrt = orderDAO.insert(order);
 

@@ -80,4 +80,17 @@ public class GlobalConfig {
 
     public static final String PAYMENT_METHOD_COD = "cod";
     
+    /**
+     * ORDER_TYPE_WHOLE_SALE: wholesale 
+     * Đơn hàng khi mua combo, mua sỉ
+     */
+    public static final String ORDER_TYPE_WHOLE_SALE = "wholesale";
+
+    /**
+     * ORDER_TYPE_RETAIL: retail
+     * Đơn hàng khi mua lẻ
+     */
+    public static final String ORDER_TYPE_RETAIL = "retail";
+
+
 }
