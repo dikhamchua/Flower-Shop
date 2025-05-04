@@ -241,7 +241,10 @@ public class BuyComboController extends HttpServlet {
             session.setAttribute("comboProducts", comboProducts);
             
             //chuyen toi trang VNPAY
-            response.sendRedirect(request.getContextPath() + "/ajaxServlet?amount=" + combo.getDiscountPrice());
+            String url = request.getContextPath() + 
+                            "/ajaxServlet?amount=" + combo.getDiscountPrice() +
+                            "&action=wholesale";
+            response.sendRedirect(url);
             
         } else {
             // Xử lý khi không đủ số lượng

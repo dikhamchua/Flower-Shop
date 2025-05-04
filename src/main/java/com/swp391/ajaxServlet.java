@@ -23,19 +23,17 @@ import jakarta.servlet.annotation.WebServlet;
  *
  * @author CTT VNPAY
  */
-@WebServlet(name = "ajaxServlet", urlPatterns = {"/ajaxServlet"})
+@WebServlet(name = "ajaxServlet", urlPatterns = { "/ajaxServlet" })
 public class ajaxServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         doPost(req, resp);
     }
-    
-    
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        
+
         try {
             // Check if amount parameter exists
             String amountParam = req.getParameter("amount");
@@ -46,25 +44,25 @@ public class ajaxServlet extends HttpServlet {
                 resp.sendRedirect(req.getContextPath() + "/cart");
                 return;
             }
-            
+
             String vnp_Version = "2.1.0";
             String vnp_Command = "pay";
             String orderType = "other";
-            long amount = (long)(Double.parseDouble(amountParam) * 100);
+            long amount = (long) (Double.parseDouble(amountParam) * 100);
             String bankCode = req.getParameter("bankCode");
-            
+
             String vnp_TxnRef = VNPAYConfig.getRandomNumber(8);
             String vnp_IpAddr = VNPAYConfig.getIpAddress(req);
 
             String vnp_TmnCode = VNPAYConfig.vnp_TmnCode;
-            
+
             Map<String, String> vnp_Params = new HashMap<>();
             vnp_Params.put("vnp_Version", vnp_Version);
             vnp_Params.put("vnp_Command", vnp_Command);
             vnp_Params.put("vnp_TmnCode", vnp_TmnCode);
             vnp_Params.put("vnp_Amount", String.valueOf(amount));
             vnp_Params.put("vnp_CurrCode", "VND");
-            
+
             if (bankCode != null && !bankCode.isEmpty()) {
                 vnp_Params.put("vnp_BankCode", bankCode);
             }
@@ -78,18 +76,32 @@ public class ajaxServlet extends HttpServlet {
             } else {
                 vnp_Params.put("vnp_Locale", "vn");
             }
-            vnp_Params.put("vnp_ReturnUrl", VNPAYConfig.vnp_ReturnUrl);
+
+            String action = req.getParameter("action") == null ? "default" : req.getParameter("action");
+            switch (action) {
+                case "wholesale":
+                    // bán sỉ : bán combo
+                    vnp_Params.put("vnp_ReturnUrl", VNPAYConfig.VNPAY_RETURN_URL_WHOLE_SALE);
+                    break;
+                case "retail":
+                    // bán lẻ: mua hàng số lượng nhỏ
+                    vnp_Params.put("vnp_ReturnUrl", VNPAYConfig.VNPAY_RETURN_URL_RETAIL);
+                default:
+                    // bán lẻ: mua hàng số lượng nhỏ
+                    vnp_Params.put("vnp_ReturnUrl", VNPAYConfig.VNPAY_RETURN_URL_RETAIL);
+                    break;
+            }
             vnp_Params.put("vnp_IpAddr", vnp_IpAddr);
 
             Calendar cld = Calendar.getInstance(TimeZone.getTimeZone("Etc/GMT+7"));
             SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
             String vnp_CreateDate = formatter.format(cld.getTime());
             vnp_Params.put("vnp_CreateDate", vnp_CreateDate);
-            
+
             cld.add(Calendar.MINUTE, 15);
             String vnp_ExpireDate = formatter.format(cld.getTime());
             vnp_Params.put("vnp_ExpireDate", vnp_ExpireDate);
-            
+
             List fieldNames = new ArrayList(vnp_Params.keySet());
             Collections.sort(fieldNames);
             StringBuilder hashData = new StringBuilder();
@@ -99,11 +111,11 @@ public class ajaxServlet extends HttpServlet {
                 String fieldName = (String) itr.next();
                 String fieldValue = (String) vnp_Params.get(fieldName);
                 if ((fieldValue != null) && (fieldValue.length() > 0)) {
-                    //Build hash data
+                    // Build hash data
                     hashData.append(fieldName);
                     hashData.append('=');
                     hashData.append(URLEncoder.encode(fieldValue, StandardCharsets.US_ASCII.toString()));
-                    //Build query
+                    // Build query
                     query.append(URLEncoder.encode(fieldName, StandardCharsets.US_ASCII.toString()));
                     query.append('=');
                     query.append(URLEncoder.encode(fieldValue, StandardCharsets.US_ASCII.toString()));
@@ -117,14 +129,14 @@ public class ajaxServlet extends HttpServlet {
             String vnp_SecureHash = VNPAYConfig.hmacSHA512(VNPAYConfig.secretKey, hashData.toString());
             queryUrl += "&vnp_SecureHash=" + vnp_SecureHash;
             String paymentUrl = VNPAYConfig.vnp_PayUrl + "?" + queryUrl;
-            
+
             // Store transaction information in session for verification later
             req.getSession().setAttribute("vnp_TxnRef", vnp_TxnRef);
             req.getSession().setAttribute("vnp_Amount", String.valueOf(amount));
-            
+
             // Redirect to VNPAY payment gateway
             resp.sendRedirect(paymentUrl);
-            
+
         } catch (NumberFormatException e) {
             // Handle number format exception (invalid amount)
             req.getSession().setAttribute("message", "Payment failed: Invalid amount format");
