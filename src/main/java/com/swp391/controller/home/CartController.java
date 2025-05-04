@@ -848,6 +848,7 @@ public class CartController extends HttpServlet {
         order.setTotal(new BigDecimal(finalTotal)); // Sử dụng finalTotal thay vì total
         order.setShippingAddress(address);
         order.setPaymentMethod(GlobalConfig.PAYMENT_METHOD_COD);
+        order.setType(GlobalConfig.ORDER_TYPE_RETAIL);
 
         // Add coupon information if a coupon was applied
         if (appliedCoupon != null && couponDiscount != null) {
