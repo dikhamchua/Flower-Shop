@@ -123,6 +123,31 @@ public class OrderComboDAO extends DBContext implements I_DAO<OrderCombo> {
         orderCombo.setTotalPrice(rs.getBigDecimal("total_price"));
         return orderCombo;
     }
+
+    /**
+     * Find the first order combo associated with a specific order ID.
+     * Note: This assumes an order might have multiple combos, but retrieves only the first one found.
+     * If an order should strictly have only one combo, consider adding constraints or adjusting logic.
+     * @param orderId ID of the order
+     * @return OrderCombo object or null if not found
+     */
+    public OrderCombo findOrderComboByOrderId(Integer orderId) {
+        String sql = "SELECT * FROM order_combo WHERE order_id = ? LIMIT 1"; // Limit 1 to get only one
+        try {
+            connection = getConnection();
+            statement = connection.prepareStatement(sql);
+            statement.setInt(1, orderId);
+            resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                return getFromResultSet(resultSet);
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error finding order combo by order ID: " + ex.getMessage());
+        } finally {
+            closeResources();
+        }
+        return null; // Return null if no combo is found for the order
+    }
     
     /**
      * Find order combos by order ID

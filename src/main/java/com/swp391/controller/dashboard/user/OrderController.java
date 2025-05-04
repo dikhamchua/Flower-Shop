@@ -4,10 +4,18 @@
  */
 package com.swp391.controller.dashboard.user;
 
+import com.swp391.config.GlobalConfig;
+import com.swp391.dal.impl.ComboDAO;
+import com.swp391.dal.impl.OrderComboDAO;
+import com.swp391.dal.impl.OrderComboProductDAO;
 import com.swp391.dal.impl.OrderDAO;
 import com.swp391.dal.impl.OrderItemDAO;
+import com.swp391.dal.impl.ProductDAO;
 import com.swp391.entity.Account;
+import com.swp391.entity.Combo;
 import com.swp391.entity.Order;
+import com.swp391.entity.OrderCombo;
+import com.swp391.entity.OrderComboProduct;
 import com.swp391.entity.OrderItem;
 
 import jakarta.servlet.ServletException;
@@ -33,11 +41,19 @@ public class OrderController extends HttpServlet {
     
     private OrderDAO orderDAO;
     private OrderItemDAO orderItemDAO;
+    private OrderComboDAO orderComboDAO;
+    private ComboDAO comboDAO;
+    private ProductDAO productDAO;
+    private OrderComboProductDAO orderComboProductDAO;
     
     @Override
     public void init() throws ServletException {
         orderDAO = new OrderDAO();
         orderItemDAO = new OrderItemDAO();
+        orderComboDAO = new OrderComboDAO();
+        comboDAO = new ComboDAO();
+        productDAO = new ProductDAO();
+        orderComboProductDAO = new OrderComboProductDAO();
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -107,10 +123,40 @@ public class OrderController extends HttpServlet {
                 response.sendRedirect(request.getContextPath() + "/orderControll");
                 return;
             }
-            
-            // Lấy danh sách sản phẩm trong đơn hàng
-            List<OrderItem> orderItems = orderItemDAO.findByOrderId(orderId);
-            order.setOrderItems(orderItems);
+            //get vể thể loai của order
+            String orderType = order.getType() == null ? "default" : order.getType();
+            switch (orderType) {
+                case GlobalConfig.ORDER_TYPE_RETAIL:
+                    // Get list of products in retail order
+                    // Retrieve order items for this order ID
+                    List<OrderItem> orderItems = orderItemDAO.findByOrderId(orderId);
+                    // Set the order items to the order object
+                    order.setOrderItems(orderItems);
+                    break;
+                    
+                case GlobalConfig.ORDER_TYPE_WHOLE_SALE:
+                    // Handle wholesale order processing
+                    // Get order combo details
+                    OrderCombo orderCombo = orderComboDAO.findOrderComboByOrderId(orderId);
+                    
+                    // Get combo information
+                    Combo combo = comboDAO.findById(orderCombo.getComboId());
+                    
+                    // Get list of products in this combo order
+                    List<OrderComboProduct> listOrderComboProduct = 
+                            orderComboProductDAO.findByOrderComboId(orderCombo.getOrderComboId());
+                    
+                    // Set attributes for the view
+                    request.setAttribute("listOrderComboProduct", listOrderComboProduct);
+                    request.setAttribute("combo", combo);
+                    request.setAttribute("orderCombo", orderCombo);
+                    request.setAttribute("productDAO", productDAO);
+                    break;
+                    
+                default:
+                    // Handle unknown order types
+                    break;
+            }
             
             // Đặt attribute và forward đến trang chi tiết
             request.setAttribute("order", order);

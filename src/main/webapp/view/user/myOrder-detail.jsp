@@ -120,44 +120,133 @@
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-hover">
-                            <thead>
-                                <tr>
-                                    <th>Image</th>
-                                    <th>Product</th>
-                                    <th>Price</th>
-                                    <th>Quantity</th>
-                                    <th>Subtotal</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <c:forEach var="item" items="${order.orderItems}">
-                                    <tr>
-                                        <td>
-                                            <img src="${item.productImage}" alt="${item.productName}" class="product-image">
-                                        </td>
-                                        <td>${item.productName}</td>
-                                        <td><fmt:formatNumber value="${item.price}" type="currency" currencySymbol="" maxFractionDigits="0"/> VNĐ</td>
-                                        <td>${item.quantity}</td>
-                                        <td><fmt:formatNumber value="${item.price * item.quantity}" type="currency" currencySymbol="" maxFractionDigits="0"/> VNĐ</td>
-                                    </tr>
-                                </c:forEach>
-                                <c:if test="${not empty order.discountAmount}">
-                                    <tr>
-                                        <td colspan="4" class="text-end"><strong>Subtotal:</strong></td>
-                                        <td><fmt:formatNumber value="${order.total.add(order.discountAmount)}" type="currency" currencySymbol="" maxFractionDigits="0"/> VNĐ</td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="4" class="text-end text-success"><strong>Discount (${order.couponCode}):</strong></td>
-                                        <td class="text-success">-<fmt:formatNumber value="${order.discountAmount}" type="currency" currencySymbol="" maxFractionDigits="0"/> VNĐ</td>
-                                    </tr>
-                                </c:if>
-                                <tr>
-                                    <td colspan="4" class="text-end"><strong>Total:</strong></td>
-                                    <td><fmt:formatNumber value="${order.total}" type="currency" currencySymbol="" maxFractionDigits="0"/> VNĐ</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <c:choose>
+                            <c:when test="${order.type == 'retail' || order.type == null}">
+                                <!-- Retail Order Items Table -->
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Image</th>
+                                            <th>Product</th>
+                                            <th>Price</th>
+                                            <th>Quantity</th>
+                                            <th>Subtotal</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <c:forEach var="item" items="${order.orderItems}">
+                                            <tr>
+                                                <td>
+                                                    <img src="${item.productImage}" alt="${item.productName}" class="product-image">
+                                                </td>
+                                                <td>${item.productName}</td>
+                                                <td><fmt:formatNumber value="${item.price}" type="currency" currencySymbol="" maxFractionDigits="0"/> VNĐ</td>
+                                                <td>${item.quantity}</td>
+                                                <td><fmt:formatNumber value="${item.price * item.quantity}" type="currency" currencySymbol="" maxFractionDigits="0"/> VNĐ</td>
+                                            </tr>
+                                        </c:forEach>
+                                        <c:if test="${not empty order.discountAmount}">
+                                            <tr>
+                                                <td colspan="4" class="text-end"><strong>Subtotal:</strong></td>
+                                                <td><fmt:formatNumber value="${order.total.add(order.discountAmount)}" type="currency" currencySymbol="" maxFractionDigits="0"/> VNĐ</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="4" class="text-end text-success"><strong>Discount (${order.couponCode}):</strong></td>
+                                                <td class="text-success">-<fmt:formatNumber value="${order.discountAmount}" type="currency" currencySymbol="" maxFractionDigits="0"/> VNĐ</td>
+                                            </tr>
+                                        </c:if>
+                                        <tr>
+                                            <td colspan="4" class="text-end"><strong>Total:</strong></td>
+                                            <td><fmt:formatNumber value="${order.total}" type="currency" currencySymbol="" maxFractionDigits="0"/> VNĐ</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </c:when>
+                            <c:when test="${order.type == 'wholesale'}">
+                                <!-- Wholesale Order Items Table -->
+                                <div class="mb-3">
+                                    <strong>Combo Name:</strong> ${combo.name}
+                                </div>
+                                <div class="mb-3">
+                                    <strong>Combo Description:</strong> ${combo.description}
+                                </div>
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Image</th>
+                                            <th>Product</th>
+                                            <th>Original Price</th>
+                                            <th>Quantity</th>
+                                            <!-- <th>Discount</th> -->
+                                            <!-- <th>Final Price</th> -->
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <c:forEach var="comboProduct" items="${listOrderComboProduct}">
+                                            <c:set var="product" value="${productDAO.findById(comboProduct.productId)}" />
+                                            <tr>
+                                                <td>
+                                                    <img src="${product.image}" alt="${product.productName}" class="product-image">
+                                                </td>
+                                                <td>${product.productName}</td>
+                                                <td><fmt:formatNumber value="${product.price}" type="currency" currencySymbol="" maxFractionDigits="0"/> VNĐ</td>
+                                                <td>${comboProduct.quantityInCombo}</td>
+                                                <!-- <td>10%</td> -->
+                                                <!-- <td><fmt:formatNumber value="${product.price * (1 - 3/100) * comboProduct.quantityInCombo}" type="currency" currencySymbol="" maxFractionDigits="0"/> VNĐ</td> -->
+                                            </tr>
+                                        </c:forEach>
+                                        <!-- <tr>
+                                            <td colspan="5" class="text-end"><strong>Total:</strong></td>
+                                            <td><fmt:formatNumber value="${order.total}" type="currency" currencySymbol="" maxFractionDigits="0"/> VNĐ</td>
+                                        </tr> -->
+                                    </tbody>
+                                </table>
+                            </c:when>
+                            <c:otherwise>
+                                <!-- Default Order Items Table (same as retail) -->
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Image</th>
+                                            <th>Product</th>
+                                            <th>Price</th>
+                                            <th>Quantity</th>
+                                            <th>Subtotal</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <c:forEach var="item" items="${order.orderItems}">
+                                            <tr>
+                                                <td>
+                                                    <img src="${item.productImage}" alt="${item.productName}" class="product-image">
+                                                </td>
+                                                <td>${item.productName}</td>
+                                                <td><fmt:formatNumber value="${item.price}" type="currency" currencySymbol="" maxFractionDigits="0"/> VNĐ</td>
+                                                <td>${item.quantity}</td>
+                                                <td><fmt:formatNumber value="${item.price * item.quantity}" type="currency" currencySymbol="" maxFractionDigits="0"/> VNĐ</td>
+                                            </tr>
+                                        </c:forEach>
+                                        <c:if test="${not empty order.discountAmount}">
+                                            <tr>
+                                                <td colspan="4" class="text-end"><strong>Subtotal:</strong></td>
+                                                <td><fmt:formatNumber value="${order.total.add(order.discountAmount)}" type="currency" currencySymbol="" maxFractionDigits="0"/> VNĐ</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="4" class="text-end text-success"><strong>Discount (${order.couponCode}):</strong></td>
+                                                <td class="text-success">-<fmt:formatNumber value="${order.discountAmount}" type="currency" currencySymbol="" maxFractionDigits="0"/> VNĐ</td>
+                                            </tr>
+                                        </c:if>
+                                        <tr>
+                                            <td colspan="4" class="text-end"><strong>Total:</strong></td>
+                                            <td><fmt:formatNumber value="${order.total}" type="currency" currencySymbol="" maxFractionDigits="0"/> VNĐ</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </c:otherwise>
+                        </c:choose>
+                    </div>
+                </div>
+            </div>
                     </div>
                 </div>
             </div>
