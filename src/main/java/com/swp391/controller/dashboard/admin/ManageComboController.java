@@ -578,19 +578,19 @@ public class ManageComboController extends HttpServlet {
     private Map<String, String> validateComboData(String name, Float discountPrice,
             String[] productIds, String[] quantities, Integer comboId) {
         Map<String, String> errors = new HashMap<>();
-
+    
         // Validate name
         if (name == null || name.trim().isEmpty()) {
-            errors.put("name", "Combo name is required");
-        } else if (name.length() > 255) {
-            errors.put("name", "Combo name must be less than 255 characters");
+            errors.put("name", "Tên combo không được để trống");
+        } else if (!name.matches("^[a-zA-Z0-9\\sÀ-ỹà-ỹ_.,-]+$")) {
+            errors.put("name", "Tên combo không được chứa ký tự đặc biệt");
         }
-
+    
         // Validate products
         if (productIds == null || productIds.length == 0) {
             errors.put("products", "You must select at least one product for the combo");
         }
-
+    
         // Validate quantities
         if (quantities != null) {
             for (int i = 0; i < quantities.length; i++) {
@@ -604,7 +604,7 @@ public class ManageComboController extends HttpServlet {
                 }
             }
         }
-
+    
         // Validate discount price (must be less than original price)
         if (discountPrice != null && productIds != null && quantities != null) {
             ProductDAO productDAO = new ProductDAO();
@@ -632,7 +632,7 @@ public class ManageComboController extends HttpServlet {
     private String getSubmittedFileName(Part part) {
         for (String cd : part.getHeader("content-disposition").split(";")) {
             if (cd.trim().startsWith("filename")) {
-                String fileName = cd.substring(cd.indexOf('=') + 1).trim().replace("\"", "");
+                String fileName = cd.substring(cd.indexOf('=') + 1).trim().replace("\"", "\"");
                 return fileName.substring(fileName.lastIndexOf('/') + 1)
                         .substring(fileName.lastIndexOf('\\') + 1);
             }
