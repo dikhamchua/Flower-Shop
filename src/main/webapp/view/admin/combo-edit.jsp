@@ -14,6 +14,8 @@
             <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/admin/plugins/select2/css/select2.min.css">
         <!-- Tagify -->
         <link rel="stylesheet" href="https://unpkg.com/@yaireo/tagify/dist/tagify.css">
+        <!-- Add this with other CSS links -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     </head>
     <body class="hold-transition sidebar-mini">
         <div class="wrapper">
@@ -136,7 +138,7 @@
                                                                    value="${comboProduct.quantityInCombo}" min="1" required>
                                                         </div>
                                                         <div class="col-md-2">
-                                                            <button type="button" class="btn btn-danger remove-product" 
+                                                            <button type="button" class="btn btn-danger remove-product" disabled>
                                                                     ${status.index == 0 && comboProducts.size() == 1 ? 'disabled' : ''}>
                                                                 <i class="fas fa-trash"></i>
                                                             </button>
@@ -151,18 +153,16 @@
                                                                 <option value="">Chọn sản phẩm</option>
                                                                 <c:forEach items="${products}" var="product">
                                                                     <option value="${product.productId}" data-price="${product.price}">
-                                                                        ${product.productName} - ${product.price}đ
+                                                                        ${product.productName} - <fmt:formatNumber value="${product.price}" type="currency" currencySymbol="" pattern="#,##0"/>đ
                                                                     </option>
                                                                 </c:forEach>
                                                             </select>
                                                         </div>
                                                         <div class="col-md-2">
-                                                            <input type="number" class="form-control product-quantity" 
-                                                                   value="1" min="1" required>
+                                                            <input type="number" class="form-control product-quantity" value="1" min="1" required>
                                                         </div>
-                                                        <div class="col-md-2">
-                                                            <button type="button" class="btn btn-danger remove-product" 
-                                                                    ${status.index == 0 && comboProducts.size() == 1 ? 'disabled' : ''}>
+                                                        <div class="col-md-1 d-flex align-items-end">
+                                                            <button type="button" class="btn btn-danger remove-product" disabled title="Xóa sản phẩm">
                                                                 <i class="fas fa-trash"></i>
                                                             </button>
                                                         </div>

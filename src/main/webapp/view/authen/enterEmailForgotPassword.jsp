@@ -146,7 +146,6 @@
                 <div class="forgot-password-card">
                     <div class="forgot-password-header">
                         <h2>Reset Your Password</h2>
-                        <p>Enter your email to receive a password reset link</p>
                     </div>
                     <div class="forgot-password-body">
                         <form action="${pageContext.request.contextPath}/authen?action=forgot-password" method="POST">
