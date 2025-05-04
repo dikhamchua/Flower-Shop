@@ -432,7 +432,7 @@ public class AccountDAO extends DBContext implements I_DAO<Account> {
     public boolean isEmailExists(String email, Integer excludeId) {
         String sql = "SELECT COUNT(*) FROM account WHERE email = ?";
         if (excludeId != null) {
-            sql += " AND id != ?";
+            sql += " AND user_id != ?";
         }
         try {
             connection = getConnection();
@@ -462,7 +462,7 @@ public class AccountDAO extends DBContext implements I_DAO<Account> {
     public boolean isPhoneExists(String phone, Integer excludeId) {
         String sql = "SELECT COUNT(*) FROM account WHERE phone = ?";
         if (excludeId != null) {
-            sql += " AND id != ?";
+            sql += " AND user_id != ?";
         }
         try {
             connection = getConnection();

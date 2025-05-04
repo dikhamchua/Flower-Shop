@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import com.swp391.dal.impl.AccountDAO;
 import com.swp391.entity.Account;
+import com.swp391.utils.MD5PasswordEncoderUtils;
 import java.util.List;
 import jakarta.servlet.RequestDispatcher;
 import java.time.LocalDateTime;
@@ -155,6 +156,14 @@ public class ManageAccountController extends HttpServlet {
         request.getRequestDispatcher("../view/admin/account-list.jsp").forward(request, response);
     }
 
+    // Add this method to validate password
+    private boolean isValidPassword(String password) {
+    // Password must be at least 8 characters long and contain at least one number, 
+    // one uppercase letter, one lowercase letter
+    String passwordRegex = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}$";
+    return Pattern.matches(passwordRegex, password);
+    }
+
     private void updateAccount(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         try {
@@ -201,7 +210,7 @@ public class ManageAccountController extends HttpServlet {
                 
                 // Cập nhật password nếu có
                 if (password != null && !password.isEmpty()) {
-                    account.setPassword(password);
+                    account.setPassword(MD5PasswordEncoderUtils.encodeMD5(password));
                 }
                 
                 // Cập nhật thời gian chỉnh sửa

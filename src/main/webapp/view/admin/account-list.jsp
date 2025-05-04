@@ -193,7 +193,7 @@
                     message: toastMessage,
                     position: 'topRight',
                     color: toastType === 'success' ? 'green' : 'red',
-                    timeout: 5000,
+                    timeout: 1500,
                     onClosing: function() {
                         fetch('${pageContext.request.contextPath}/remove-toast', {
                             method: 'POST',

@@ -888,4 +888,23 @@ public class ManageProductController extends HttpServlet {
                 return 0;
         }
     }
+
+    // Add this new method
+    private void checkProductName(HttpServletRequest request, HttpServletResponse response) 
+    throws ServletException, IOException {
+        response.setContentType("application/json");
+        String name = request.getParameter("name");
+        
+        try {
+            ProductDAO productDAO = new ProductDAO();
+            Product existingProduct = productDAO.findByName(name.trim());
+            
+            // Create JSON response
+            String jsonResponse = String.format("{\"exists\": %b}", existingProduct != null);
+            response.getWriter().write(jsonResponse);
+        } catch (Exception e) {
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            response.getWriter().write("{\"error\": \"" + e.getMessage() + "\"}");
+        }
+    }
 }
