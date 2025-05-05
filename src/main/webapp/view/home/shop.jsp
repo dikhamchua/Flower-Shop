@@ -255,7 +255,7 @@
                                                 <c:set var="count" value="0" />
                                                 <c:forEach var="slider" items="${sliders}">
                                                     <div class="carousel-item ${count == 0 ? 'active' : ''}">
-                                                        <a href="#">
+                                                        <a href="${slider.link}" target="_blank">
                                                             <img src="${slider.imageUrl}" alt="${slider.caption}" class="d-block w-100">
                                                         </a>
                                                     </div>
