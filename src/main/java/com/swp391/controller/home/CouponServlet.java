@@ -42,8 +42,9 @@ public class CouponServlet extends HttpServlet {
             int totalPages = (int) Math.ceil((double) totalCoupons / COUPONS_PER_PAGE);
             
             // Ensure page is within valid range
-            if (page < 1) page = 1;
-            if (page > totalPages) page = totalPages;
+            if (page < 1 || page > totalPages) {
+                page = 1;
+            } 
             
             // Get coupons for current page
             int startIndex = (page - 1) * COUPONS_PER_PAGE;
